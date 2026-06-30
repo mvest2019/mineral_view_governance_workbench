@@ -1,2 +1,3 @@
-# Mineral_View_Governance
-Mineral View Governance Workbench
+# mineral_view_governance_workbench
+
+Governance Workbench
