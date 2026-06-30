@@ -1,0 +1,29 @@
+# Governance Workbench - Python dependencies
+# Verified against governance_ui.py imports on 2026-05-08.
+#
+# Install with:  pip install -r requirements.txt
+# Python version: 3.13 or later
+#
+# Hard dependencies (required for the Workbench to start):
+flask>=3.0.0
+requests>=2.31.0
+
+# Soft dependencies (required for specific features; install as needed):
+# Microsoft Graph / Teams integration (per Teams_Integration_Complete_Setup_Guide.md):
+msal>=1.26.0
+
+# Environment variable loading (used by Teams integration and DB connection setup):
+python-dotenv>=1.0.0
+
+# Secret encryption (used by CRM integration and any feature that stores API keys):
+cryptography>=42.0.0
+
+# Document handling (used when reading uploaded .docx files or generating exports):
+python-docx>=1.1.0
+
+# Spreadsheet handling (used when reading uploaded .xlsx files):
+openpyxl>=3.1.0
+
+# All other imports in governance_ui.py are Python standard library:
+#   os, re, json, subprocess, datetime, sqlite3, shutil, importlib.util,
+#   socket, time, zipfile, hashlib, difflib, pathlib, xml.etree, sys

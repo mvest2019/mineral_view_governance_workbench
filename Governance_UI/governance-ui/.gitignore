@@ -1,0 +1,24 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+governance.db
+*.db
+
+.env
+.venv/
+venv/
+
+# Local settings file - contains API keys (OpenAI, Anthropic, etc.)
+# NEVER commit this. Each developer creates their own via the UI on first run.
+local_settings.json
+
+# Server logs
+*.log
+
+# Editor / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

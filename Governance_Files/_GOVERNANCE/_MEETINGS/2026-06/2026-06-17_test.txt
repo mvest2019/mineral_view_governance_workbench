@@ -1,0 +1,47 @@
+Mineral View — Data & Governance Sync
+Date: 2026-06-17
+Meeting type: 1:1 / Dev sync
+Attendees: Ryan Cochran, Nikhil Salunke
+
+----------------------------------------------------------------------
+
+Ryan: Thanks for hopping on, Nikhil. I want to cover three things today — the subscription tier naming, the decline-curve methodology, and the security cleanup. Let's start with tiers.
+
+Nikhil: Sure. Right now the code enforces four tiers — Anonymous, Free, Pro, and Premium — but the product briefing keeps using Access, Insights, and Pro. The featureAccess middleware checks plan IDs 0 through 4, so the AI persona logic is reading the code names, not the briefing names.
+
+Ryan: That mismatch has to go before we ship any pricing copy. I'll decide the canonical names, but I need you to map every plan ID to whatever we land on, including the per-tier limits — how many owner reports, how many lease claims, that kind of thing.
+
+Nikhil: Understood. I can pull the current limits from featureAccess and put them in a table so you can confirm each one. Do you want Enterprise treated as a separate fifth tier, or as a flag on Premium?
+
+Ryan: Good question — let me think on Enterprise. For now document it as its own tier and we'll confirm Friday.
+
+Nikhil: Okay. Next, decline curves. The forecast playbook still has the b-factor and initial-decline assumptions marked as TODO. I don't want to hard-code numbers without sign-off, because the same curve feeds the cashflow chart and the Mvestimate range.
+
+Ryan: Right, and Mvestimate is an estimate, not an appraisal — the disclaimer language has to stay on every output. Who's the SME that signs off on the decline methodology? I don't think it should be you and me guessing.
+
+Nikhil: Agreed. We probably need a reservoir engineer to confirm the type curves per play — Eagle Ford behaves nothing like Austin Chalk. Until then I'll keep the formulas flagged as provisional and show a low confidence level on those estimates.
+
+Ryan: Do that. Honest confidence on every number — if the data is thin, the AI says so. I'd rather under-promise than over-promise to an owner.
+
+Nikhil: One more data point — the production disposition volumes feeding the cashflow update are running about six weeks behind the RRC source. I want to add an as-of date to every cashflow output so owners know how fresh the number is.
+
+Ryan: Yes, add the as-of date everywhere. Freshness is a trust issue with mineral owners; they're already skeptical of outreach.
+
+Nikhil: Last thing — the security cleanup. There are committed secrets across several repos: database connection strings, the JWT secret, the Braintree merchant ID, the OpenAI key, a Cloudinary secret, and a TLS private key sitting in the git history. All of it needs rotating.
+
+Ryan: That's the top priority, full stop. You have my approval to rotate everything and move the values into environment variables. Scrub the history and reissue the certificate. But loop me in before you touch the Braintree credentials so payments don't break.
+
+Nikhil: Will do. I'll stage the rotation so production payments aren't interrupted, and I'll send you a checklist before the Braintree step.
+
+Ryan: Perfect. Also — the monthly owner report job, sendMonthlyReportEmails.js — confirm that's the only path that emails owners. I don't want a second forgotten cron sending duplicates.
+
+Nikhil: I'll audit the schedulers and confirm there's just the one. If I find a duplicate I'll flag it before disabling anything.
+
+Ryan: Great. Let's reconvene Friday. Send me the tier table and the security checklist before then.
+
+Nikhil: Got it — tier table, security checklist, and I'll log the decline-curve SME as an open question for you to assign.
+
+Ryan: Thanks, Nikhil. Good sync.
+
+----------------------------------------------------------------------
+End of transcript.
