@@ -12,8 +12,8 @@ at the repository root.
   `static/app.js` and `static/styles.css` (served from `public/static/`), so every
   screen renders and behaves identically.
 - Backend: every Flask route was ported to a Next.js route handler under `app/api/**`,
-  keeping the same URLs, request/response shapes, status codes, SQLite schema, and the
-  login/session/`require_login` auth flow.
+  keeping the same URLs, request/response shapes, status codes, and SQLite schema.
+- The app is open — there is no login/sign-in gate.
 
 ### Run locally
 
@@ -24,20 +24,19 @@ npm run dev      # http://localhost:3000
 npm run build && npm start
 ```
 
-Open `http://localhost:3000`, create an account, and use the workbench.
+Open `http://localhost:3000` and use the workbench (no login required).
 
 ### Environment variables (same names as the Flask app)
 
 | Variable | Purpose |
 |---|---|
-| `WORKBENCH_SECRET` | Session-cookie signing key. Set this in production. |
-| `WORKBENCH_DATA_DIR` | Where the SQLite DB / settings / secret are written. Defaults to the repo root locally, and `/tmp/governance-workbench` on Vercel. |
+| `WORKBENCH_DATA_DIR` | Where the SQLite DB / settings are written. Defaults to the repo root locally, and `/tmp/governance-workbench` on Vercel. |
 | `OPENAI_API_KEY`, `OPENAI_MODEL` | OpenAI integration (unchanged). |
 
-`governance.db`, `local_settings.json`, and `.workbench_secret` are runtime state and
-are git-ignored (mirrors the Flask app).
+`governance.db` and `local_settings.json` are runtime state and are git-ignored
+(mirrors the Flask app).
 
 ### Deploy (Vercel)
 
 The repo root is a standard Next.js project — Vercel auto-detects and builds it. Set
-`WORKBENCH_SECRET` (and any OpenAI vars) in the Vercel project settings.
+any OpenAI vars in the Vercel project settings.
