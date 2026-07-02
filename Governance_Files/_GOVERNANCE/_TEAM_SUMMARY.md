@@ -1,9 +1,9 @@
 # Mineral View — Team Summary & Contributions
 
 > **Status:** ENHANCED (deep) · **Owner:** Ryan Cochran (final authority) · **Maintainer:** Nikhil Salunke
-> **Last Updated:** 2026-06-30 · **Review cadence:** Quarterly + on any roster change
+> **Last Updated:** 2026-07-02 · **Review cadence:** Quarterly + on any roster change
 > **Source:** team-member work summaries submitted 2026-06 (16 summaries) + governance context. **Applies To:** Mineral View only.
-> **Companion:** `Ops_Departments.md`, `maintenance-cadence-and-ownership.md`, `geospatial-directional-survey-pipeline-governance.md`, the Workbench `TEAM_MEMBER_PROFILES`.
+> **Companion:** `Ops_Departments.md`, `maintenance-cadence-and-ownership.md`, `geospatial-directional-survey-pipeline-governance.md`, `pursuit-crm-governance.md`, `database-schema-reference.md`, the Workbench `TEAM_MEMBER_PROFILES`.
 
 ---
 

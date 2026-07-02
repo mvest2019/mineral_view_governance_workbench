@@ -1,5 +1,8 @@
 # Mineral View — _GOVERNANCE Index (clean, enhanced)
 
+> **2026-06-30 team profiles:** added `team_members/` — one governed profile per team member (16), each in the standard Work-Profile template, grounded in submitted summaries. See `team_members/_INDEX.md` and `_TEAM_SUMMARY.md`.
+
+
 > Last Updated: 2026-06-30. Drop-in replacement for C:\\MineralView-Org\\_GOVERNANCE.
 >
 > **2026-06-30 enhancement:** added `geospatial-directional-survey-pipeline-governance.md` (the MView_X ArcGIS pipeline) and deepened `rrc-data-governance`, `map-gis-governance`, `texas-oil-and-gas-domain-governance`, `Engineering_Standards`, `Data_Provenance_And_Freshness`, `quality-assurance-checklists`, `_REPO_INVENTORY`, and `_TEAM_SUMMARY` from the MView_X repo + Nikhil Salunke's work summary.
@@ -34,3 +37,8 @@ _INTAKE/ and _MEETINGS/ copied unchanged from your current corpus.
 
 ## Team
 - `_TEAM_SUMMARY.md` — team roster, work done so far, and current tasks (from 2026-06 work summaries)
+
+## New (2026-07-02)
+- `pursuit-crm-governance.md` — governance for the Pursuit AI-outreach CRM (architecture, read-only data boundary, prompt/template program, compliance controls, risk register).
+- Security register expanded with credential-exposure findings from the platform KB `constitution.md`, the CRM `.env`, and Cerebro plaintext auth.
+- Team profiles gained a **§21 Platform & systems grounding** section (repos, collections, CRM).
