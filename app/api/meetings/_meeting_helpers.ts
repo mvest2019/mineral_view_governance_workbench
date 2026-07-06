@@ -1,6 +1,5 @@
-import { spawnSync } from 'child_process';
+import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 import {
-  command_exists,
   openai_configured,
   get_openai_api_key,
   get_openai_model,
@@ -107,11 +106,10 @@ export function parse_meeting_ai_json(text: string): any {
 
 // run_meeting_ai (governance_ui.py:5440) - makes external calls (Claude CLI / OpenAI HTTP).
 export async function run_meeting_ai(prompt: string): Promise<[string, string | null]> {
-  if (command_exists('claude')) {
+  if (claude_cli_available()) {
     try {
-      const result = spawnSync('claude', ['-p', prompt, '--allowedTools', 'Read'], {
-        encoding: 'utf-8',
-        timeout: 180000,
+      const result = await run_claude(['-p', prompt, '--allowedTools', 'Read'], {
+        timeoutMs: 180000,
         maxBuffer: 1024 * 1024 * 64,
       });
       if (result.status === 0 && (result.stdout || '').trim()) {

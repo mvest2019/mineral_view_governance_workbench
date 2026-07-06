@@ -29,6 +29,7 @@ import {
   APP_BASE_DIR,
 } from '@/lib/paths';
 import { abort, nowIso } from '@/lib/http';
+import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 
 // Silence unused-import lint for constants re-exported for parity with Python.
 void REPO_CATEGORIES;
@@ -44,8 +45,8 @@ type DB = ReturnType<typeof getDb>;
 // ------------- Module-level constants (from governance_ui.py top) -------------
 // BASE_DIR: the original Flask app directory (Governance_UI/governance-ui).
 const BASE_DIR = APP_BASE_DIR;
-// CLAUDE_EXE = shutil.which('claude')  (None when not on PATH)
-const CLAUDE_EXE: string | null = which('claude');
+// Claude CLI execution goes through lib/claude_cli.ts (remote bridge when
+// REMOTE_CLAUDE_URL is configured, local `claude` on PATH otherwise).
 
 // ------------- Small utilities to mirror Python stdlib behavior -------------
 
@@ -388,21 +389,19 @@ export function get_openai_model(): string {
   return process.env.OPENAI_MODEL || (load_local_settings()['openai_model'] as string) || 'gpt-5';
 }
 
-export function call_claude_text(prompt: string, timeout: number | null = null): [boolean, string, string] {
-  if (!command_exists(CLAUDE_EXE || 'claude')) {
+export async function call_claude_text(prompt: string, timeout: number | null = null): Promise<[boolean, string, string]> {
+  if (!claude_cli_available()) {
     return [false, '', 'Claude CLI is not available on this machine.'];
   }
   if (timeout === null) {
     timeout = parseInt(String(load_local_settings()['claude_timeout'] ?? 600), 10);
   }
   try {
-    const result = spawnSync(
-      CLAUDE_EXE || 'claude',
+    const result = await run_claude(
       ['-p', '--allowedTools', 'Read'],
       {
         input: prompt,
-        encoding: 'utf-8',
-        timeout: timeout * 1000,
+        timeoutMs: timeout * 1000,
         cwd: String(BASE_DIR),
       },
     );
@@ -846,8 +845,8 @@ export function _parse_repo_question_json(text: string): Dict[] {
   return [];
 }
 
-export function build_repo_question_candidates_claude(company: string, repo_name: string): Dict[] {
-  if (!command_exists(CLAUDE_EXE || 'claude')) {
+export async function build_repo_question_candidates_claude(company: string, repo_name: string): Promise<Dict[]> {
+  if (!claude_cli_available()) {
     return [];
   }
   let gov = '';
@@ -880,7 +879,7 @@ export function build_repo_question_candidates_claude(company: string, repo_name
     'rules). Each question must be concrete and answerable by the repo owner.\n\n' +
     'Return ONLY a JSON array, no preamble or markdown fences. Each element:\n' +
     '{"question": "<the question>", "priority": "HIGH|MEDIUM|LOW", "topic": "<short slug>"}';
-  const [ok, text] = call_claude_text(prompt);
+  const [ok, text] = await call_claude_text(prompt);
   if (!ok || !text) {
     return [];
   }
@@ -914,13 +913,13 @@ export function build_repo_question_candidates_claude(company: string, repo_name
   return candidates;
 }
 
-export function generate_repo_questions(company: string, repo_name: string, actor = 'generator'): Dict {
+export async function generate_repo_questions(company: string, repo_name: string, actor = 'generator'): Promise<Dict> {
   const db = getDb();
   const now = nowIso();
   let created = 0;
   let skipped = 0;
   const errors: string[] = [];
-  let candidates = build_repo_question_candidates_claude(company, repo_name);
+  let candidates = await build_repo_question_candidates_claude(company, repo_name);
   let engine_used = 'claude';
   if (!candidates.length) {
     candidates = build_repo_question_candidates(company, repo_name);
@@ -971,7 +970,7 @@ export function generate_repo_questions(company: string, repo_name: string, acto
   return { repo_name, created, skipped, errors, engine: engine_used };
 }
 
-export function generate_all_repo_questions(company: string, actor = 'generator'): Dict[] {
+export async function generate_all_repo_questions(company: string, actor = 'generator'): Promise<Dict[]> {
   const sheet_root = repo_sheet_dir(company);
   const results: Dict[] = [];
   if (!fs.existsSync(sheet_root)) {
@@ -986,7 +985,7 @@ export function generate_all_repo_questions(company: string, actor = 'generator'
       continue;
     }
     const stem = name.slice(0, name.length - '.md'.length);
-    results.push(generate_repo_questions(company, stem, actor));
+    results.push(await generate_repo_questions(company, stem, actor));
   }
   return results;
 }
@@ -2150,9 +2149,9 @@ export async function analyze_team_member_file(
     error_text: '',
   };
   const requested = String(engine_preference || file_row['ai_preference'] || 'Claude').trim();
-  if (['Claude', 'Claude Code', 'Both'].includes(requested) && command_exists(CLAUDE_EXE || 'claude')) {
+  if (['Claude', 'Claude Code', 'Both'].includes(requested) && claude_cli_available()) {
     const prompt = build_member_file_openai_prompt(company, member_key, file_row, preview_text, department_catalog);
-    const [ok, output_text, err] = call_claude_text(prompt);
+    const [ok, output_text, err] = await call_claude_text(prompt);
     if (ok && output_text) {
       const parsed = parse_member_file_openai_response(output_text, department_catalog);
       if (parsed) {
@@ -2693,8 +2692,8 @@ export async function generate_team_member_questions_from_file(
   );
   let generated: Dict[] = [];
   let output_text = '';
-  if (['Claude', 'Claude Code', 'Both'].includes(engine) && command_exists(CLAUDE_EXE || 'claude')) {
-    const [ok, out, err] = call_claude_text(prompt);
+  if (['Claude', 'Claude Code', 'Both'].includes(engine) && claude_cli_available()) {
+    const [ok, out, err] = await call_claude_text(prompt);
     output_text = out;
     if (ok && output_text) {
       const parsed = parse_team_member_question_json(output_text);

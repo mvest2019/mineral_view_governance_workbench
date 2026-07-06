@@ -1,9 +1,9 @@
 import { NextRequest } from 'next/server';
 import { json, route } from '@/lib/http';
+import { claude_cli_available, remote_claude_configured } from '@/lib/claude_cli';
 import {
   get_company,
   github_cli_authenticated,
-  command_exists,
   openai_configured,
   mask_secret,
   get_openai_api_key,
@@ -12,14 +12,14 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-// CLAUDE_EXE is module-private in the Python app (shutil.which('claude')); the
-// Flask code calls command_exists(CLAUDE_EXE or 'claude'), which is equivalent
-// to command_exists('claude') since command_exists resolves via which().
+// Claude availability is resolved via lib/claude_cli: the remote execution
+// bridge when REMOTE_CLAUDE_URL is configured, otherwise `claude` on PATH
+// (equivalent to the original command_exists(CLAUDE_EXE or 'claude') check).
 export const GET = route(async (req: NextRequest) => {
   const company = req.nextUrl.searchParams.get('company') as any;
   const cfg = get_company(company);
   const [gh_ok, gh_detail] = github_cli_authenticated();
-  const claude_ok = command_exists('claude');
+  const claude_ok = claude_cli_available();
   const openai_ok = openai_configured();
   return json({
     company: company,
@@ -29,7 +29,9 @@ export const GET = route(async (req: NextRequest) => {
         status: claude_ok ? 'Active' : 'Unavailable',
         connected: claude_ok,
         detail: claude_ok
-          ? 'Claude CLI is callable from this machine and can run intake analysis directly.'
+          ? remote_claude_configured()
+            ? 'Claude CLI runs through the remote execution bridge and can run intake analysis directly.'
+            : 'Claude CLI is callable from this machine and can run intake analysis directly.'
           : 'Claude CLI is not available in PATH.',
       },
       {

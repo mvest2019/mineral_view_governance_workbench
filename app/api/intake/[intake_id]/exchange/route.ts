@@ -1,12 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { spawnSync } from 'child_process';
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/db';
+import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 import {
   append_workflow_event,
   build_exchange_prompt,
-  command_exists,
   get_company,
   get_openai_api_key,
   get_openai_model,
@@ -55,7 +54,7 @@ export const POST = route(async (req: NextRequest, ctx: { params: Promise<{ inta
     return json({ ok: false, reason: `No completed ${source_engine} run is available for this intake.` }, 409);
   }
 
-  if (target_engine === 'Claude Code' && !command_exists('claude')) {
+  if (target_engine === 'Claude Code' && !claude_cli_available()) {
     return json({ ok: false, reason: 'Claude CLI is not available on this machine.' }, 409);
   }
   if (target_engine === 'OpenAI Codex' && !openai_configured()) {
@@ -97,10 +96,9 @@ export const POST = route(async (req: NextRequest, ctx: { params: Promise<{ inta
     let target_output: string;
     if (target_engine === 'Claude Code') {
       const governanceDir = path.join(get_company(intake.company).root, '_GOVERNANCE');
-      const result = spawnSync(
-        'claude',
+      const result = await run_claude(
         ['-p', prompt, '--add-dir', intakeDir, '--add-dir', governanceDir, '--allowedTools', 'Read'],
-        { encoding: 'utf-8', timeout: 180000, cwd: intakeDir },
+        { timeoutMs: 180000, cwd: intakeDir },
       );
       if (
         result.error &&

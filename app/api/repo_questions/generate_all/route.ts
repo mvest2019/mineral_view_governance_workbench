@@ -16,7 +16,7 @@ export const POST = route(async (req: NextRequest) => {
   if (!company) {
     abort(400, 'company required');
   }
-  const results = generate_all_repo_questions(company, actor);
+  const results = await generate_all_repo_questions(company, actor);
   const totals = {
     repos: results.length,
     created: results.reduce((s: number, item: any) => s + item['created'], 0),
