@@ -145,21 +145,38 @@ function resolveClaudeCommand() {
   }
 
   const hits = pathSearch('claude');
-  // Prefer a real executable (native installer) over shell shims.
+  // 1. A real native executable (native installer) is always safe to spawn.
   const exe = hits.find((p) => p.toLowerCase().endsWith('.exe'));
   if (exe) return [exe];
-  const plain = hits.find((p) => {
-    const lower = p.toLowerCase();
-    return !lower.endsWith('.cmd') && !lower.endsWith('.bat') && !lower.endsWith('.ps1') && !lower.endsWith('.com');
-  });
-  if (plain) return [plain];
-  for (const hit of hits) {
-    const lower = hit.toLowerCase();
-    if (lower.endsWith('.cmd') || lower.endsWith('.bat')) {
-      const resolved = resolveCmdShim(hit);
-      if (resolved) return resolved;
+
+  if (process.platform === 'win32') {
+    // On Windows, `npm i -g @anthropic-ai/claude-code` drops THREE files in the
+    // npm dir: claude.cmd (the real Windows shim), claude.ps1, and a bare
+    // extensionless `claude` (a POSIX shell script for Git Bash). Windows cannot
+    // spawn() that bare shell script -> "spawn ...\npm\claude ENOENT". So we must
+    // NOT treat the bare file as the CLI here; unwrap the .cmd shim to its cli.js
+    // and run it with this Node binary (also avoids cmd.exe arg-quoting issues).
+    for (const hit of hits) {
+      const lower = hit.toLowerCase();
+      if (lower.endsWith('.cmd') || lower.endsWith('.bat')) {
+        const resolved = resolveCmdShim(hit);
+        if (resolved) return resolved;
+      }
     }
+    // Fallback: derive cli.js by npm convention from any hit's directory.
+    for (const hit of hits) {
+      const cli = path.join(path.dirname(hit), 'node_modules', '@anthropic-ai', 'claude-code', 'cli.js');
+      if (fs.existsSync(cli)) return [process.execPath, cli];
+    }
+  } else {
+    // POSIX: the bare extensionless file IS the executable CLI.
+    const plain = hits.find((p) => {
+      const lower = p.toLowerCase();
+      return !lower.endsWith('.cmd') && !lower.endsWith('.bat') && !lower.endsWith('.ps1') && !lower.endsWith('.com');
+    });
+    if (plain) return [plain];
   }
+
   throw new Error(
     'Could not resolve the Claude CLI on this machine. Install Claude Code or set CLAUDE_BRIDGE_CLAUDE_EXE ' +
     'to the full path of claude.exe (native install) or .../@anthropic-ai/claude-code/cli.js (npm install).',
@@ -230,6 +247,14 @@ function runClaude(args, input, cwd, timeoutMs) {
     let stderr = '';
     let timedOut = false;
     let spawnError = null;
+    let settled = false;
+
+    const finish = (payload) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(killTimer);
+      resolve(payload);
+    };
 
     child.stdout.setEncoding('utf-8');
     child.stderr.setEncoding('utf-8');
@@ -237,10 +262,13 @@ function runClaude(args, input, cwd, timeoutMs) {
     child.stderr.on('data', (chunk) => { stderr += chunk; });
 
     // Mirror spawnSync: write `input` to stdin (if any) and close it so the
-    // CLI never blocks waiting for more input.
+    // CLI never blocks waiting for more input. Guard against the child never
+    // starting (ENOENT) — its stdin may already be unwritable.
     child.stdin.on('error', () => { /* EPIPE when the CLI exits early */ });
-    if (input) child.stdin.write(input);
-    child.stdin.end();
+    try {
+      if (input) child.stdin.write(input);
+      child.stdin.end();
+    } catch { /* child failed to start */ }
 
     const killTimer = setTimeout(() => {
       timedOut = true;
@@ -249,10 +277,24 @@ function runClaude(args, input, cwd, timeoutMs) {
       setTimeout(() => { try { child.kill('SIGKILL'); } catch { /* ignore */ } }, 5000).unref();
     }, timeoutMs);
 
-    child.on('error', (err) => { spawnError = err; });
+    // A failed spawn (e.g. a non-executable file -> ENOENT) emits 'error' and,
+    // on some platforms, never emits 'close'. Resolve here so the request never
+    // hangs and the bridge returns the real reason.
+    child.on('error', (err) => {
+      spawnError = err;
+      finish({
+        ok: false,
+        status: null,
+        signal: null,
+        stdout,
+        stderr,
+        timed_out: false,
+        error_message: String(err.message || err),
+        error_code: err.code || undefined,
+      });
+    });
     child.on('close', (code, signal) => {
-      clearTimeout(killTimer);
-      resolve({
+      finish({
         ok: !spawnError && !timedOut && code === 0,
         status: code,
         signal: signal || (timedOut ? 'SIGTERM' : null),

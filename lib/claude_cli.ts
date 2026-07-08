@@ -213,15 +213,32 @@ function timeoutResult(): ClaudeCliResult {
   };
 }
 
+/** One-line structured trace to Vercel Runtime Logs. Never logs the token. */
+function log_claude(fields: Record<string, unknown>): void {
+  const parts = Object.entries(fields).map(([k, v]) => `${k}=${v}`);
+  console.log(`[claude] ${parts.join(' ')}`);
+}
+
 async function run_claude_remote(args: string[], opts: ClaudeCliOptions): Promise<ClaudeCliResult> {
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  const url = remote_claude_url();
   const token = remote_claude_token();
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  // item 6: mode, whether the URL/token were detected, and that we are about to
+  // hit the bridge (no local fallback path is reachable from here).
+  log_claude({
+    mode: 'remote',
+    remote_url_detected: true,
+    token_present: Boolean(token),
+    bridge_request: 'attempting',
+    endpoint: `${url}/run`,
+  });
 
   let response: Response;
   try {
-    response = await fetch(`${remote_claude_url()}/run`, {
+    response = await fetch(`${url}/run`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -234,8 +251,10 @@ async function run_claude_remote(args: string[], opts: ClaudeCliOptions): Promis
     });
   } catch (exc: any) {
     if (exc && (exc.name === 'TimeoutError' || exc.name === 'AbortError')) {
+      log_claude({ mode: 'remote', bridge_request: 'timeout', fallback: 'none' });
       return timeoutResult();
     }
+    log_claude({ mode: 'remote', bridge_request: 'unreachable', error: JSON.stringify(String(exc?.message || exc)), fallback: 'none' });
     return {
       status: null,
       signal: null,
@@ -255,6 +274,7 @@ async function run_claude_remote(args: string[], opts: ClaudeCliOptions): Promis
     const detail = payload && payload.error_message
       ? String(payload.error_message)
       : `HTTP ${response.status}`;
+    log_claude({ mode: 'remote', bridge_request: 'http_error', http_status: response.status, fallback: 'none' });
     return {
       status: null,
       signal: null,
@@ -264,6 +284,7 @@ async function run_claude_remote(args: string[], opts: ClaudeCliOptions): Promis
     };
   }
   if (payload.timed_out) {
+    log_claude({ mode: 'remote', bridge_request: 'ok', http_status: response.status, cli_timed_out: true });
     return timeoutResult();
   }
   const result: ClaudeCliResult = {
@@ -275,6 +296,13 @@ async function run_claude_remote(args: string[], opts: ClaudeCliOptions): Promis
   if (payload.error_message) {
     result.error = makeError(String(payload.error_message), payload.error_code ? String(payload.error_code) : undefined);
   }
+  log_claude({
+    mode: 'remote',
+    bridge_request: 'ok',
+    http_status: response.status,
+    cli_exit: result.status,
+    cli_error: result.error ? JSON.stringify(result.error.message) : 'none',
+  });
   return result;
 }
 
@@ -298,11 +326,18 @@ function run_claude_local(args: string[], opts: ClaudeCliOptions): ClaudeCliResu
 
 /**
  * Execute the Claude CLI with the given args (e.g. ['-p', '--allowedTools',
- * 'Read']). Runs on the remote bridge when configured, otherwise locally.
+ * 'Read']). Runs on the remote bridge when REMOTE_CLAUDE_URL is configured,
+ * otherwise locally.
+ *
+ * item 7: when REMOTE_CLAUDE_URL is set there is NO fallback to local execution.
+ * run_claude_remote() always returns a structured result (including bridge
+ * errors) and never calls run_claude_local(), so a bridge failure surfaces the
+ * bridge's error rather than attempting to spawn a local CLI.
  */
 export async function run_claude(args: string[], opts: ClaudeCliOptions = {}): Promise<ClaudeCliResult> {
   if (remote_claude_configured()) {
     return run_claude_remote(args, opts);
   }
+  log_claude({ mode: 'local', remote_url_detected: false, reason: 'REMOTE_CLAUDE_URL not set' });
   return run_claude_local(args, opts);
 }
