@@ -128,17 +128,55 @@ function resolveCmdShim(shimPath) {
   return null;
 }
 
+/**
+ * Given any `claude` launcher path on Windows (the bare npm shell script, a
+ * .cmd/.bat shim, etc.), return a command array that spawn() can actually run:
+ * the sibling claude.exe, or the .cmd shim unwrapped to its cli.js, or cli.js
+ * derived by npm convention. Returns null if none can be found. This is what
+ * prevents "spawn ...\npm\claude ENOENT": the bare extensionless file is never
+ * spawned directly on Windows.
+ */
+function windowsUpgradeCommand(p) {
+  const dir = path.dirname(p);
+  const base = path.basename(p).replace(/\.(cmd|bat|ps1)$/i, '');
+  const exe = path.join(dir, base + '.exe');
+  if (fs.existsSync(exe)) return [exe];
+  for (const ext of ['.cmd', '.bat']) {
+    const shim = path.join(dir, base + ext);
+    if (fs.existsSync(shim)) {
+      const resolved = resolveCmdShim(shim);
+      if (resolved) return resolved;
+    }
+  }
+  const cli = path.join(dir, 'node_modules', '@anthropic-ai', 'claude-code', 'cli.js');
+  if (fs.existsSync(cli)) return [process.execPath, cli];
+  return null;
+}
+
 function resolveClaudeCommand() {
   const override = String(process.env.CLAUDE_BRIDGE_CLAUDE_EXE || '').trim();
   if (override) {
     const lower = override.toLowerCase();
     if (lower.endsWith('.js')) return [process.execPath, override];
+    if (lower.endsWith('.exe')) return [override];
     if (lower.endsWith('.cmd') || lower.endsWith('.bat')) {
       const resolved = resolveCmdShim(override);
       if (resolved) return resolved;
       throw new Error(
         `CLAUDE_BRIDGE_CLAUDE_EXE points to a cmd shim (${override}) whose cli.js target could not be resolved. ` +
         'Point it at claude.exe or at .../@anthropic-ai/claude-code/cli.js instead.',
+      );
+    }
+    // Extensionless override. On Windows this is almost always the bare npm
+    // shell script that spawn() cannot launch (the reported ENOENT). Upgrade it
+    // to its .exe / cli.js sibling instead of blindly returning it. On POSIX the
+    // bare file is the real executable.
+    if (process.platform === 'win32') {
+      const upgraded = windowsUpgradeCommand(override);
+      if (upgraded) return upgraded;
+      throw new Error(
+        `CLAUDE_BRIDGE_CLAUDE_EXE=${override} is a bare npm launcher that Windows cannot spawn (ENOENT). ` +
+        'Point it at claude.exe or at ...\\@anthropic-ai\\claude-code\\cli.js instead.',
       );
     }
     return [override];
@@ -153,20 +191,12 @@ function resolveClaudeCommand() {
     // On Windows, `npm i -g @anthropic-ai/claude-code` drops THREE files in the
     // npm dir: claude.cmd (the real Windows shim), claude.ps1, and a bare
     // extensionless `claude` (a POSIX shell script for Git Bash). Windows cannot
-    // spawn() that bare shell script -> "spawn ...\npm\claude ENOENT". So we must
-    // NOT treat the bare file as the CLI here; unwrap the .cmd shim to its cli.js
-    // and run it with this Node binary (also avoids cmd.exe arg-quoting issues).
+    // spawn() that bare shell script -> "spawn ...\npm\claude ENOENT". So for
+    // every candidate we upgrade to the .exe/cli.js sibling and never spawn the
+    // bare file directly.
     for (const hit of hits) {
-      const lower = hit.toLowerCase();
-      if (lower.endsWith('.cmd') || lower.endsWith('.bat')) {
-        const resolved = resolveCmdShim(hit);
-        if (resolved) return resolved;
-      }
-    }
-    // Fallback: derive cli.js by npm convention from any hit's directory.
-    for (const hit of hits) {
-      const cli = path.join(path.dirname(hit), 'node_modules', '@anthropic-ai', 'claude-code', 'cli.js');
-      if (fs.existsSync(cli)) return [process.execPath, cli];
+      const upgraded = windowsUpgradeCommand(hit);
+      if (upgraded) return upgraded;
     }
   } else {
     // POSIX: the bare extensionless file IS the executable CLI.
@@ -185,7 +215,23 @@ function resolveClaudeCommand() {
 
 let CLAUDE_COMMAND;
 try {
+  const candidates = pathSearch('claude');
+  console.log(`[claude-bridge] claude candidates on PATH: ${candidates.length ? candidates.join(' | ') : '(none)'}`);
   CLAUDE_COMMAND = resolveClaudeCommand();
+  // Safety net: on Windows a single extensionless path is the bare npm shell
+  // script; spawn() cannot launch it and every request would fail with ENOENT.
+  // Refuse to start loudly instead of failing silently on every request.
+  if (
+    process.platform === 'win32' &&
+    CLAUDE_COMMAND.length === 1 &&
+    !CLAUDE_COMMAND[0].toLowerCase().endsWith('.exe')
+  ) {
+    throw new Error(
+      `Refusing to start: resolved Claude command "${CLAUDE_COMMAND[0]}" is not a Windows executable ` +
+      '(a bare npm launcher spawns as ENOENT). Set CLAUDE_BRIDGE_CLAUDE_EXE to claude.exe or ' +
+      '...\\@anthropic-ai\\claude-code\\cli.js and restart.',
+    );
+  }
 } catch (err) {
   console.error(`[claude-bridge] ${err.message}`);
   process.exit(1);
