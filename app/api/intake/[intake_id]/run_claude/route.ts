@@ -1,11 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import { spawnSync } from 'child_process';
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/db';
+import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 import {
   append_workflow_event,
-  command_exists,
   get_company,
   insert_ai_run,
   intake_dir_for_id,
@@ -29,9 +28,8 @@ export const POST = route(async (_req: NextRequest, ctx: { params: Promise<{ int
   const intake = db.prepare('SELECT * FROM intake WHERE id=?').get(id) as any;
   if (!intake) abort(404);
 
-  // CLAUDE_EXE is not on PATH off-Windows; mirror `CLAUDE_EXE or 'claude'`.
-  const claudeExe = 'claude';
-  if (!command_exists(claudeExe)) {
+  // Claude CLI runs via lib/claude_cli (remote bridge when configured).
+  if (!claude_cli_available()) {
     const run_id = insert_ai_run(db, id, 'Claude Code', 'blocked', '', '', '', 'Claude CLI not available');
     append_workflow_event(db, id, 'Claude run blocked', 'system', 'Claude CLI not available');
     return json({ ok: false, run_id, reason: 'Claude CLI not available' }, 409);
@@ -47,10 +45,9 @@ export const POST = route(async (_req: NextRequest, ctx: { params: Promise<{ int
 
   const governanceDir = path.join(get_company(company).root, '_GOVERNANCE');
   const claude_timeout = parseInt(String(load_local_settings().claude_timeout ?? 600), 10);
-  const result = spawnSync(
-    claudeExe,
+  const result = await run_claude(
     ['-p', prompt, '--add-dir', intake_dir, '--add-dir', governanceDir, '--allowedTools', 'Read'],
-    { encoding: 'utf-8', timeout: claude_timeout * 1000, cwd: intake_dir },
+    { timeoutMs: claude_timeout * 1000, cwd: intake_dir },
   );
 
   if (

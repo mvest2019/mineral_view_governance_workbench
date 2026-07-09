@@ -1,43 +1,15 @@
-import fs from 'fs';
-import path from 'path';
-import { spawnSync } from 'child_process';
 import { NextRequest } from 'next/server';
 import { APP_BASE_DIR } from '@/lib/paths';
+import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 import {
   build_member_question_packet,
   build_member_question_chat_prompt,
-  command_exists,
   openai_configured,
   get_openai_api_key,
   get_openai_model,
 } from '@/lib/helpers';
 import { abort, json, route } from '@/lib/http';
 
-// shutil.which('claude') — resolve the claude CLI on PATH, else null.
-// Mirrors the module-level CLAUDE_EXE in the original Flask app.
-function which(cmd: string): string | null {
-  if (!cmd) return null;
-  if ((cmd.includes('/') || cmd.includes('\\')) && fs.existsSync(cmd)) return cmd;
-  const pathEnv = process.env.PATH || '';
-  const exts =
-    process.platform === 'win32'
-      ? (process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM').split(';')
-      : [''];
-  for (const dir of pathEnv.split(path.delimiter)) {
-    if (!dir) continue;
-    for (const ext of exts) {
-      const full = path.join(dir, cmd + ext);
-      try {
-        if (fs.existsSync(full) && fs.statSync(full).isFile()) return full;
-      } catch {
-        // ignore
-      }
-    }
-  }
-  return null;
-}
-
-const CLAUDE_EXE: string | null = which('claude');
 const BASE_DIR = APP_BASE_DIR;
 
 export const dynamic = 'force-dynamic';
@@ -62,13 +34,12 @@ export const POST = route(async (req: NextRequest) => {
   const prompt = build_member_question_chat_prompt(company, packet, user_prompt, session_notes);
 
   if (engine === 'Claude Code') {
-    if (!command_exists(CLAUDE_EXE || 'claude')) {
+    if (!claude_cli_available()) {
       return json({ ok: false, reason: 'Claude CLI is not available on this machine.' }, 409);
     }
-    const result = spawnSync(CLAUDE_EXE || 'claude', ['-p', '--allowedTools', 'Read'], {
-      encoding: 'utf-8',
+    const result = await run_claude(['-p', '--allowedTools', 'Read'], {
       input: prompt,
-      timeout: 180 * 1000,
+      timeoutMs: 180 * 1000,
       cwd: String(BASE_DIR),
     });
     if (result.error && (result.error as any).code === 'ETIMEDOUT') {

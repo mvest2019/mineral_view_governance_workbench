@@ -1,12 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { spawnSync } from 'child_process';
 import { NextRequest } from 'next/server';
+import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 import {
   get_company,
   build_governance_file_index,
   build_governance_file_chat_prompt,
-  command_exists,
   openai_configured,
   get_openai_api_key,
   get_openai_model,
@@ -58,13 +57,12 @@ export const POST = route(async (req: NextRequest) => {
   const prompt = build_governance_file_chat_prompt(company, file_row, content, related_files, user_prompt);
 
   if (engine === 'Claude Code') {
-    if (!command_exists('claude')) {
+    if (!claude_cli_available()) {
       return json({ ok: false, reason: 'Claude CLI is not available on this machine.' }, 409);
     }
-    const result = spawnSync('claude', ['-p', '--allowedTools', 'Read'], {
+    const result = await run_claude(['-p', '--allowedTools', 'Read'], {
       input: prompt,
-      encoding: 'utf-8',
-      timeout: 180 * 1000,
+      timeoutMs: 180 * 1000,
       cwd: String(APP_BASE_DIR),
     });
     if (result.error) {

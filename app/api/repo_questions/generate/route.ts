@@ -17,6 +17,6 @@ export const POST = route(async (req: NextRequest) => {
   if (!company || !repo_name) {
     abort(400, 'company and repo_name required');
   }
-  const result = generate_repo_questions(company, repo_name, actor);
+  const result = await generate_repo_questions(company, repo_name, actor);
   return json({ ok: true, ...result });
 });
