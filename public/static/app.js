@@ -114,6 +114,7 @@ const NAV_LAYOUTS = {
       label: 'Intake & Workflow',
       items: [
         { type: 'view', key: 'dashboard', label: 'Dashboard', countKey: 'dashboard' },
+        { type: 'view', key: 'tasktracker', label: 'Task Tracker' },
         { type: 'view', key: 'intake', label: 'Daily Intake', countKey: 'intake' },
         { type: 'view', key: 'board', label: 'Workflow Board', countKey: 'board' },
       ],
@@ -367,6 +368,7 @@ async function showView(view) {
     await refreshNavCounts();
     await refreshIntegrationSidebar();
     if (view === 'dashboard') return renderDashboard();
+    if (view === 'tasktracker') return renderTaskTracker();
     if (view === 'intake') return renderIntake();
     if (view === 'board') return renderBoard();
     if (view === 'team') return renderTeamMembers();
@@ -1221,6 +1223,246 @@ async function renderDashboard() {
     ${intakes.slice(0, 10).map(renderIntakeRow).join('') || '<div class="text-muted">No intakes yet. Use the Daily Intake tab to upload.</div>'}
   `;
   await initIntakeForm('quick');
+}
+
+// ============================================================================
+// Task Tracker
+// Captures a task for a team member and stores it as a Markdown note under
+// Governance_Files/task_tracker/. Reuses the existing employee source, toast,
+// card, and button styles. Self-contained — no existing view is affected.
+// ============================================================================
+
+// Temporary fallback list, used only if the employee source returns nothing.
+// Replace once a richer employee source is wired in.
+const TASK_TRACKER_FALLBACK_EMPLOYEES = ['Ryan', 'John', 'Aboli', 'Pragati', 'Pooja'];
+
+function taskTrackerEmployeeLabel(raw) {
+  return String(raw || '').replace(/_+/g, ' ').trim();
+}
+
+async function renderTaskTracker() {
+  const main = document.getElementById('mainView');
+  let employees = [];
+  try {
+    employees = await fetchJSON(`/api/employees?company=${CURRENT_COMPANY}`);
+  } catch (error) {
+    employees = [];
+  }
+  if (!Array.isArray(employees) || !employees.length) {
+    employees = TASK_TRACKER_FALLBACK_EMPLOYEES;
+  }
+
+  const options = employees
+    .map((emp) => `<option value="${escapeHtml(emp)}">${escapeHtml(taskTrackerEmployeeLabel(emp))}</option>`)
+    .join('');
+
+  main.innerHTML = `
+    <h2>Task Tracker</h2>
+    <div class="small text-muted mb-3">Capture a task for a team member. Saved as a Markdown note under <code>Governance_Files/task_tracker/</code>.</div>
+    <div class="dash-card task-tracker-card">
+      <div class="mb-3">
+        <label class="form-label fw-semibold" for="ttEmployee">Employee Name</label>
+        <select class="form-select" id="ttEmployee">
+          <option value="">Select Employee</option>
+          ${options}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Task Description</label>
+        <div class="task-editor">
+          <div class="task-editor-toolbar" id="ttToolbar">
+            <button type="button" class="task-tool" data-cmd="bold" title="Bold"><strong>B</strong></button>
+            <button type="button" class="task-tool" data-cmd="italic" title="Italic"><em>I</em></button>
+            <button type="button" class="task-tool" data-cmd="underline" title="Underline"><span style="text-decoration:underline">U</span></button>
+            <button type="button" class="task-tool" data-cmd="strikeThrough" title="Strikethrough"><span style="text-decoration:line-through">S</span></button>
+            <span class="task-tool-sep"></span>
+            <button type="button" class="task-tool" data-cmd="insertUnorderedList" title="Bullet list">&bull;&nbsp;List</button>
+            <button type="button" class="task-tool" data-cmd="insertOrderedList" title="Numbered list">1.&nbsp;List</button>
+            <button type="button" class="task-tool" data-cmd="quote" title="Quote">&ldquo;&nbsp;Quote</button>
+            <span class="task-tool-sep"></span>
+            <button type="button" class="task-tool" data-cmd="link" title="Insert link">&#128279;&nbsp;Link</button>
+            <button type="button" class="task-tool" data-cmd="code" title="Inline code">&lt;/&gt;</button>
+          </div>
+          <div class="task-editor-body is-empty" id="ttEditor" contenteditable="true"
+               data-placeholder="Type task details..." role="textbox" aria-multiline="true"></div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-primary" id="ttSaveBtn" type="button" disabled onclick="saveTaskTracker()">Save Task</button>
+        <span class="small text-muted" id="ttStatus"></span>
+      </div>
+    </div>
+  `;
+  initTaskTrackerEditor();
+}
+
+function initTaskTrackerEditor() {
+  const emp = document.getElementById('ttEmployee');
+  const editor = document.getElementById('ttEditor');
+  const toolbar = document.getElementById('ttToolbar');
+  if (!emp || !editor || !toolbar) return;
+  toolbar.querySelectorAll('.task-tool').forEach((btn) => {
+    // Keep the editor selection intact when a toolbar button is pressed.
+    btn.addEventListener('mousedown', (e) => e.preventDefault());
+    btn.addEventListener('click', () => taskEditorExec(btn.dataset.cmd));
+  });
+  emp.addEventListener('change', updateTaskTrackerSaveState);
+  editor.addEventListener('input', updateTaskTrackerSaveState);
+  editor.addEventListener('blur', updateTaskTrackerSaveState);
+  updateTaskTrackerSaveState();
+}
+
+function taskEditorExec(cmd) {
+  const editor = document.getElementById('ttEditor');
+  if (!editor || !cmd) return;
+  editor.focus();
+  if (cmd === 'quote') {
+    document.execCommand('formatBlock', false, 'blockquote');
+  } else if (cmd === 'link') {
+    const url = window.prompt('Enter link URL', 'https://');
+    if (url) document.execCommand('createLink', false, url);
+  } else if (cmd === 'code') {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount && !sel.isCollapsed) {
+      document.execCommand('insertHTML', false, `<code>${escapeHtml(sel.toString())}</code>`);
+    }
+  } else {
+    document.execCommand(cmd, false, null);
+  }
+  updateTaskTrackerSaveState();
+}
+
+function taskEditorHasContent(editor) {
+  return editor.textContent.trim().length > 0 || !!editor.querySelector('li, img');
+}
+
+function updateTaskTrackerSaveState() {
+  const emp = document.getElementById('ttEmployee');
+  const editor = document.getElementById('ttEditor');
+  const btn = document.getElementById('ttSaveBtn');
+  if (!emp || !editor || !btn) return;
+  const hasContent = taskEditorHasContent(editor);
+  editor.classList.toggle('is-empty', !hasContent);
+  btn.disabled = !(emp.value && hasContent);
+}
+
+// Convert the editor's rich-text HTML into Markdown. Handles the formatting the
+// toolbar produces: bold, italic, underline, strikethrough, inline code, links,
+// bullet/numbered lists (incl. nesting), and blockquotes.
+function taskHtmlToMarkdown(root) {
+  const lines = [];
+
+  function inlineChildren(node) {
+    let out = '';
+    node.childNodes.forEach((child) => { out += inlineNode(child); });
+    return out;
+  }
+
+  function inlineNode(node) {
+    if (node.nodeType === 3) return node.nodeValue;
+    if (node.nodeType !== 1) return '';
+    const tag = node.tagName.toLowerCase();
+    if (tag === 'br') return '\n';
+    const inner = inlineChildren(node);
+    switch (tag) {
+      case 'strong': case 'b': return inner.trim() ? `**${inner}**` : inner;
+      case 'em': case 'i': return inner.trim() ? `*${inner}*` : inner;
+      case 'u': return inner.trim() ? `<u>${inner}</u>` : inner;
+      case 's': case 'strike': case 'del': return inner.trim() ? `~~${inner}~~` : inner;
+      case 'code': return inner ? `\`${inner}\`` : inner;
+      case 'a': {
+        const href = node.getAttribute('href') || '';
+        return href ? `[${inner || href}](${href})` : inner;
+      }
+      default: return inner;
+    }
+  }
+
+  function walkList(listEl, ordered, depth) {
+    let index = 1;
+    listEl.childNodes.forEach((li) => {
+      if (li.nodeType !== 1 || li.tagName.toLowerCase() !== 'li') return;
+      const nested = [];
+      let text = '';
+      li.childNodes.forEach((child) => {
+        const childTag = child.nodeType === 1 ? child.tagName.toLowerCase() : '';
+        if (childTag === 'ul' || childTag === 'ol') nested.push(child);
+        else text += inlineNode(child);
+      });
+      const prefix = ordered ? `${index}. ` : '- ';
+      lines.push(`${'  '.repeat(depth)}${prefix}${text.trim()}`);
+      nested.forEach((n) => walkList(n, n.tagName.toLowerCase() === 'ol', depth + 1));
+      index += 1;
+    });
+  }
+
+  function walkBlock(container) {
+    container.childNodes.forEach((child) => {
+      if (child.nodeType === 3) {
+        if (child.nodeValue.trim()) lines.push(child.nodeValue.trim());
+        return;
+      }
+      if (child.nodeType !== 1) return;
+      const tag = child.tagName.toLowerCase();
+      if (tag === 'ul' || tag === 'ol') {
+        walkList(child, tag === 'ol', 0);
+        lines.push('');
+      } else if (tag === 'blockquote') {
+        inlineChildren(child).trim().split('\n').forEach((l) => lines.push(`> ${l}`.trimEnd()));
+        lines.push('');
+      } else if (tag === 'p' || tag === 'div') {
+        if (child.querySelector('ul, ol, blockquote')) {
+          walkBlock(child);
+        } else {
+          const text = inlineChildren(child).trim();
+          if (text) { lines.push(text); lines.push(''); }
+        }
+      } else if (tag === 'br') {
+        // stray line break between blocks — ignore
+      } else {
+        const text = inlineNode(child).trim();
+        if (text) { lines.push(text); lines.push(''); }
+      }
+    });
+  }
+
+  walkBlock(root);
+  return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+async function saveTaskTracker() {
+  const emp = document.getElementById('ttEmployee');
+  const editor = document.getElementById('ttEditor');
+  const btn = document.getElementById('ttSaveBtn');
+  const status = document.getElementById('ttStatus');
+  if (!emp || !editor) return;
+
+  const employee = emp.value;
+  if (!employee) { showToast('Please select an employee.', 'error'); return; }
+  const markdown = taskHtmlToMarkdown(editor);
+  if (!markdown.trim()) { showToast('Please enter a task description.', 'error'); return; }
+
+  if (btn) btn.disabled = true;
+  if (status) status.textContent = 'Saving...';
+  try {
+    const response = await fetch('/api/task_tracker', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ company: CURRENT_COMPANY, employee, markdown }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || 'Save failed');
+    showToast('Task saved successfully.', 'success');
+    // Return the page to its initial state.
+    emp.value = '';
+    editor.innerHTML = '';
+    if (status) status.textContent = '';
+    updateTaskTrackerSaveState();
+  } catch (error) {
+    if (status) status.textContent = '';
+    showToast(`Save failed: ${error.message}`, 'error');
+    updateTaskTrackerSaveState();
+  }
 }
 
 async function renderDepartments() {

@@ -4124,3 +4124,79 @@ body.gw-fullscreen-open::before { display: none !important; }
 }
 .rec-time { font-size: 1.6rem; font-weight: 700; color: #0f172a; margin-top: 12px; font-variant-numeric: tabular-nums; }
 #recStatus { max-width: 520px; margin: 8px auto 0; }
+
+/* ---- Task Tracker ---------------------------------------------------------- */
+.task-tracker-card { max-width: 780px; }
+
+.task-editor {
+  border: 1px solid #d5dde5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.task-editor:focus-within {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--brand-accent) 18%, transparent);
+}
+.task-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--brand-surface-2);
+  border-bottom: 1px solid #dfe5ec;
+}
+.task-tool {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #1f2937;
+  font-size: 13px;
+  font-family: 'Lexend', system-ui, sans-serif;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease;
+}
+.task-tool:hover { background: #fff; border-color: #cfd8e3; }
+.task-tool:active { background: var(--brand-accent-soft); }
+.task-tool-sep {
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: #cbd5e1;
+}
+.task-editor-body {
+  min-height: 180px;
+  max-height: 460px;
+  overflow-y: auto;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #0f172a;
+  outline: none;
+}
+.task-editor-body.is-empty::before {
+  content: attr(data-placeholder);
+  color: #94a3b8;
+  pointer-events: none;
+}
+.task-editor-body:focus { outline: none; }
+.task-editor-body p { margin: 0 0 8px; }
+.task-editor-body ul, .task-editor-body ol { margin: 0 0 8px 1.25rem; }
+.task-editor-body blockquote {
+  margin: 0 0 8px;
+  padding: 2px 12px;
+  border-left: 3px solid var(--brand-accent);
+  color: #475569;
+}
+.task-editor-body code {
+  background: var(--brand-surface-2);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 0.9em;
+}
+.task-editor-body a { color: var(--brand-accent); }

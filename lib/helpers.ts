@@ -168,6 +168,16 @@ export function get_intake_dir(company: string): string {
   return d;
 }
 
+// Task Tracker storage: reuses the company governance root (the bundled
+// Governance_Files folder when present) so task notes land in
+// Governance_Files/task_tracker/. Mirrors get_intake_dir / meetings_dir_for_company.
+export function task_tracker_dir(company: string): string {
+  const cfg = get_company(company);
+  const target = path.join(cfg['root'], 'task_tracker');
+  fs.mkdirSync(target, { recursive: true });
+  return target;
+}
+
 export function get_team_member_files_dir(company: string, member_key: string): string {
   const cfg = get_company(company);
   let safeMember = String(member_key || 'unknown').replace(/[^A-Za-z0-9_]+/g, '_');
