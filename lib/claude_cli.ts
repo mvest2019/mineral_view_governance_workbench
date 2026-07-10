@@ -163,26 +163,107 @@ export async function check_remote_claude_health(timeoutMs = 8000): Promise<Remo
   };
 }
 
-/** shutil.which equivalent (same resolution the app used before). */
-function which(cmd: string): string | null {
-  if (!cmd) return null;
-  if ((cmd.includes('/') || cmd.includes('\\')) && fs.existsSync(cmd)) return cmd;
-  const pathEnv = process.env.PATH || '';
+/** All PATH hits for `cmd` (every PATHEXT extension on Windows, plus bare). */
+function pathSearch(cmd: string): string[] {
+  if (!cmd) return [];
+  if ((cmd.includes('/') || cmd.includes('\\')) && fs.existsSync(cmd)) return [cmd];
   const exts = process.platform === 'win32'
-    ? (process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM').split(';')
+    ? (process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM').split(';').concat([''])
     : [''];
-  for (const dir of pathEnv.split(path.delimiter)) {
+  const hits: string[] = [];
+  for (const dir of String(process.env.PATH || '').split(path.delimiter)) {
     if (!dir) continue;
     for (const ext of exts) {
       const full = path.join(dir, cmd + ext);
       try {
-        if (fs.existsSync(full) && fs.statSync(full).isFile()) return full;
+        if (fs.existsSync(full) && fs.statSync(full).isFile()) hits.push(full);
       } catch {
         // ignore
       }
     }
   }
+  return hits;
+}
+
+// npm installs `claude` on Windows as a .cmd shim wrapping
+// node_modules/@anthropic-ai/claude-code/cli.js. spawn() cannot launch the bare
+// shell script, so resolve the underlying cli.js and run it with this Node.
+function resolveCmdShim(shimPath: string): string[] | null {
+  let text = '';
+  try {
+    text = fs.readFileSync(shimPath, 'utf-8');
+  } catch {
+    return null;
+  }
+  const shimDir = path.dirname(shimPath);
+  const match = text.match(/"%(?:~dp0|dp0)%?\\([^"\r\n]+?\.js)"/i) || text.match(/%~dp0\\([^\s"]+?\.js)/i);
+  const candidates: string[] = [];
+  if (match) candidates.push(path.join(shimDir, match[1]));
+  candidates.push(path.join(shimDir, 'node_modules', '@anthropic-ai', 'claude-code', 'cli.js'));
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return [process.execPath, candidate];
+  }
   return null;
+}
+
+// Upgrade any Windows `claude` launcher path to something spawn() can run: the
+// sibling claude.exe, or the .cmd shim unwrapped to its cli.js. Prevents the
+// "spawn ...\claude(.exe) ENOENT" reported when the bare/broken launcher is run.
+function windowsUpgradeCommand(p: string): string[] | null {
+  const dir = path.dirname(p);
+  const base = path.basename(p).replace(/\.(cmd|bat|ps1)$/i, '');
+  const exe = path.join(dir, base + '.exe');
+  if (fs.existsSync(exe)) return [exe];
+  for (const ext of ['.cmd', '.bat']) {
+    const shim = path.join(dir, base + ext);
+    if (fs.existsSync(shim)) {
+      const resolved = resolveCmdShim(shim);
+      if (resolved) return resolved;
+    }
+  }
+  const cli = path.join(dir, 'node_modules', '@anthropic-ai', 'claude-code', 'cli.js');
+  if (fs.existsSync(cli)) return [process.execPath, cli];
+  return null;
+}
+
+/**
+ * Resolve a runnable Claude CLI command as an argv array (mirrors the remote
+ * bridge's resolveClaudeCommand). On Windows this upgrades the bare npm launcher
+ * or .cmd shim to claude.exe / [node, cli.js] so spawnSync never fails with
+ * "spawn ...\claude.exe ENOENT". Returns null when Claude is not installed.
+ * Honors an explicit CLAUDE_EXE override.
+ */
+function resolveClaudeCommand(): string[] | null {
+  const override = String(process.env.CLAUDE_EXE || '').trim();
+  if (override) {
+    const lower = override.toLowerCase();
+    if (lower.endsWith('.js')) return [process.execPath, override];
+    if (lower.endsWith('.exe')) return [override];
+    if (lower.endsWith('.cmd') || lower.endsWith('.bat')) {
+      const resolved = resolveCmdShim(override);
+      if (resolved) return resolved;
+    } else if (process.platform === 'win32') {
+      const upgraded = windowsUpgradeCommand(override);
+      if (upgraded) return upgraded;
+    } else {
+      return [override];
+    }
+  }
+  const hits = pathSearch('claude');
+  const exe = hits.find((p) => p.toLowerCase().endsWith('.exe'));
+  if (exe) return [exe];
+  if (process.platform === 'win32') {
+    for (const hit of hits) {
+      const upgraded = windowsUpgradeCommand(hit);
+      if (upgraded) return upgraded;
+    }
+    return null;
+  }
+  const plain = hits.find((p) => {
+    const l = p.toLowerCase();
+    return !l.endsWith('.cmd') && !l.endsWith('.bat') && !l.endsWith('.ps1') && !l.endsWith('.com');
+  });
+  return plain ? [plain] : null;
 }
 
 /**
@@ -193,7 +274,7 @@ function which(cmd: string): string | null {
  */
 export function claude_cli_available(): boolean {
   if (remote_claude_configured()) return true;
-  return Boolean(which('claude'));
+  return Boolean(resolveClaudeCommand());
 }
 
 function makeError(message: string, code?: string): Error & { code?: string } {
@@ -307,8 +388,18 @@ async function run_claude_remote(args: string[], opts: ClaudeCliOptions): Promis
 }
 
 function run_claude_local(args: string[], opts: ClaudeCliOptions): ClaudeCliResult {
-  const exe = which('claude') || 'claude';
-  const result = spawnSync(exe, args, {
+  const command = resolveClaudeCommand();
+  if (!command) {
+    return {
+      status: null,
+      signal: null,
+      stdout: '',
+      stderr: '',
+      error: makeError('Claude CLI was not found on this machine. Install Claude Code or set CLAUDE_EXE / REMOTE_CLAUDE_URL.', 'ENOENT'),
+    };
+  }
+  const [exe, ...prefixArgs] = command;
+  const result = spawnSync(exe, [...prefixArgs, ...args], {
     input: opts.input,
     encoding: 'utf-8',
     timeout: opts.timeoutMs ?? DEFAULT_TIMEOUT_MS,
