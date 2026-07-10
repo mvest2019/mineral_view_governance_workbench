@@ -572,3 +572,61 @@ Daily monitoring consolidates new-user registrations, per-user lease claim count
 Nine months of history were assembled retroactively across four metrics from three systems (Ahrefs, GA, internal registration data), with sources chosen per-month based on "where accurate historical figures could be sourced."
 
 **Needed:** a documented precedence rule and a note on which months were backfilled versus captured contemporaneously. Mineral Owner vs Professional registration counts also need a single canonical source — Cerebro or the `Production` database — before this becomes the baseline for period-over-period reporting.
+
+### Q-AI-0055 — Who verifies the rig-count claims in the video against RRC data before publishing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Who verifies the rig-count claims in the video against RRC data before publishing?
+
+The video asserts "Texas added three rigs, all three to the Permian Basin" and frames it as "operators double down on the Permian." Constitution P3 requires modeled/derived figures to be traceable and correctly labeled, and P2 forbids anything reading as a recommendation.
+
+**Needed:** named reviewer and source-of-truth (RRC vs. third-party rig count), plus the vintage/date of the figure, recorded before upload.
+
+### Q-AI-0056 — Does the Scene 11 platform walkthrough show a real member's claimed property or a synthetic demo account?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does the Scene 11 platform walkthrough show a real member's claimed property or a synthetic demo account?
+
+Scene 11 and Scene 13 are described as a live Mineral View walkthrough down to a "claimed property" with nearby wells and permits. If that is a real member's claim, the video publishes owner-scoped PII to a public YouTube channel.
+
+**Decision needed:** a mandatory demo/synthetic account for all recorded platform footage, or a documented redaction step.
+
+### Q-AI-0057 — Must AI-generated footage and AI-cloned voiceover be disclosed on the YouTube uploads?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Must AI-generated footage and AI-cloned voiceover be disclosed on the YouTube uploads?
+
+Clips are generated with Flow AI and the voiceover with ElevenLabs, deliberately prompted to look like real documentary footage ("Shot on ARRI Alexa", negative prompts to exclude CGI). YouTube's synthetic-media disclosure policy and truth-in-claims rules may both apply.
+
+**Needed:** a ruling on YouTube's "altered or synthetic content" toggle and any on-screen disclosure.
+
+### Q-AI-0058 — Does the video's call to action carry the required no-advice and estimate disclaimers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does the video's call to action carry the required no-advice and estimate disclaimers?
+
+The script ends by directing viewers to check well, permit, and production activity on MineralView.com, and its core narrative is about capital concentration — decision-adjacent framing under P2/P3. No disclaimer appears anywhere in the 13-scene breakdown.
+
+**Needed:** confirm which disclaimers (no-advice, no-reliance, Texas-only data scope) belong in the video, the description, or both.
+
+### Q-AI-0059 — Who is the named approver for YouTube content before it goes live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Who is the named approver for YouTube content before it goes live?
+
+The report covers scripting through "upload preparation" with no review gate identified. Public marketing copy is governed by brand, content, and legal bands in the master architecture, but no approver is named for video.
+
+### Q-AI-0060 — Are the Freepik, Envato, and ElevenLabs licenses cleared for commercial monetized use?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Are the Freepik, Envato, and ElevenLabs licenses cleared for commercial monetized use?
+
+Stock footage (Freepik), music (Envato), and synthetic voice (ElevenLabs) are all third-party assets on a commercial brand channel. License tier, attribution requirements, and voice-model usage rights are not documented.
+
+**Needed:** an asset-license register for published video content.
