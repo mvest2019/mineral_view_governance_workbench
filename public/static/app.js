@@ -1258,6 +1258,11 @@ async function renderTaskTracker() {
   if (!Array.isArray(employees) || !employees.length) {
     employees = TASK_TRACKER_FALLBACK_EMPLOYEES;
   }
+  // Task Tracker only: hide Ryan Cochran and Sachin Shinde from the dropdown.
+  const TASK_TRACKER_EXCLUDED = ['ryancochran', 'sachinshinde'];
+  employees = employees.filter(
+    (emp) => !TASK_TRACKER_EXCLUDED.includes(String(emp || '').toLowerCase().replace(/[^a-z]/g, '')),
+  );
 
   const options = employees
     .map((emp) => `<option value="${escapeHtml(emp)}">${escapeHtml(taskTrackerEmployeeLabel(emp))}</option>`)
