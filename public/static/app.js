@@ -5744,6 +5744,46 @@ async function renderQuestions() {
   });
 
   document.getElementById('mainView').innerHTML = `<div class="priority-questions-view">${html}</div>`;
+  // Align the summary chips, section counts, and the sidebar badge with the
+  // questions actually rendered (includes generated questions merged in).
+  refreshPriorityQuestionScoreboard();
+}
+
+// Recompute the visible Priority Questions counts from the cards currently in
+// the DOM, and update the sidebar badge. Called on render and after a question
+// is answered (its card removed), so the scores decrement live.
+function refreshPriorityQuestionScoreboard() {
+  const view = document.querySelector('.priority-questions-view');
+  if (!view) return;
+  const cards = Array.from(view.querySelectorAll('.q-card'));
+  const total = cards.length;
+  const counts = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+  cards.forEach((card) => {
+    const priority = ((card.className.match(/priority-([A-Za-z]+)/) || [])[1] || '').toUpperCase();
+    if (counts[priority] !== undefined) counts[priority] += 1;
+  });
+  const setVal = (selector, value) => {
+    const el = view.querySelector(selector);
+    if (el) el.textContent = value;
+  };
+  setVal('.q-summary-chip.total .q-summary-value', total);
+  setVal('.q-summary-chip.open .q-summary-value', total);
+  setVal('.q-summary-chip.critical .q-summary-value', counts.CRITICAL);
+  setVal('.q-summary-chip.high .q-summary-value', counts.HIGH);
+  setVal('.q-summary-chip.medium .q-summary-value', counts.MEDIUM);
+  setVal('.q-summary-chip.low .q-summary-value', counts.LOW);
+  // Numeric per-section counts (e.g. the org-wide queue heading).
+  view.querySelectorAll('.q-card-grid').forEach((grid) => {
+    let head = grid.previousElementSibling;
+    while (head && !head.classList.contains('q-section-head')) head = head.previousElementSibling;
+    const countEl = head && head.querySelector('.q-section-count');
+    if (countEl && /^\d+$/.test(countEl.textContent.trim())) {
+      countEl.textContent = grid.querySelectorAll('.q-card').length;
+    }
+  });
+  // Sidebar badge reflects the open questions currently shown.
+  CURRENT_NAV_COUNTS.questions = total;
+  renderNavMenu();
 }
 
 function renderQuestionPrioritySummary(data) {
@@ -5862,6 +5902,8 @@ async function savePriorityQuestionAnswer(qid) {
     showToast('Answer saved successfully.', 'success');
     // Remove only this answered question; the rest of the list is untouched.
     card.remove();
+    // Update the summary chips, section counts, and sidebar badge live.
+    refreshPriorityQuestionScoreboard();
   } catch (error) {
     hideProcessing();
     if (btn) { btn.disabled = false; btn.textContent = 'Save Answer'; }
