@@ -30,6 +30,12 @@ import {
 } from '@/lib/paths';
 import { abort, nowIso } from '@/lib/http';
 import { claude_cli_available, run_claude } from '@/lib/claude_cli';
+import {
+  getGitHubConfig,
+  getFileFromGitHub,
+  upsertFileOnGitHub,
+  type GitHubConfig,
+} from '@/lib/github';
 
 // Silence unused-import lint for constants re-exported for parity with Python.
 void REPO_CATEGORIES;
@@ -3495,9 +3501,12 @@ export function build_questions_payload(company: string): Dict {
 // already surfaces on the Priority Questions page).
 // ---------------------------------------------------------------------------
 
-// Normalize a question for duplicate comparison.
+// Normalize a question for duplicate comparison. Bracketed tags like
+// "[CRITICAL]" that some curated questions carry are dropped so they don't
+// defeat matching against the same question without the tag.
 function normalize_question_text(value: string): string {
   return String(value || '')
+    .replace(/\[[^\]]*\]/g, ' ')
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
@@ -3652,31 +3661,152 @@ export async function generate_priority_questions_from_task(
   }
   const rawQuestions = (Array.isArray(parsedData['questions']) ? parsedData['questions'] : []) as Dict[];
 
-  const db = getDb();
-  const created: Dict[] = [];
+  // Reduce to non-duplicate, valid questions.
   const seenThisRun = new Set<string>();
+  const fresh: Dict[] = [];
   for (const item of rawQuestions) {
     const title = String(item['title'] || '').trim();
     if (!title) continue;
     const norm = normalize_question_text(title);
     if (!norm || existingNormalized.has(norm) || seenThisRun.has(norm)) continue; // dedup
     seenThisRun.add(norm);
+    fresh.push({
+      title,
+      body: String(item['body_markdown'] || '').trim(),
+      priority: String(item['priority'] || 'MEDIUM').toUpperCase(),
+    });
+    if (fresh.length >= cap) break;
+  }
+  if (!fresh.length) {
+    return { ok: true, skipped: false, created: [], count: 0, member_key, employee_display };
+  }
+
+  // Durable storage: prefer the GitHub-backed generated-questions file so the
+  // questions survive across serverless instances and page refreshes (the DB in
+  // /tmp is per-instance/ephemeral). Fall back to the DB only when GitHub is not
+  // configured (e.g. local dev without a token) — a single-process DB still
+  // surfaces on the Priority Questions page there.
+  let cfg: GitHubConfig | null = null;
+  try {
+    cfg = getGitHubConfig();
+  } catch {
+    cfg = null;
+  }
+
+  if (cfg) {
+    const created = await store_generated_questions_on_github(cfg, fresh, existingNormalized);
+    return { ok: true, skipped: false, created, count: created.length, member_key, employee_display };
+  }
+
+  const db = getDb();
+  const created: Dict[] = [];
+  for (const item of fresh) {
     const [id, code] = create_team_member_question(
       db,
       company,
       member_key,
-      title,
-      String(item['body_markdown'] || title).trim(),
-      String(item['priority'] || 'MEDIUM').toUpperCase(),
+      String(item['title']),
+      String(item['body'] || item['title']),
+      String(item['priority']),
       'NEW',
       null,
       'Task Tracker analysis',
       'claude',
     );
-    created.push({ id, question_code: code, title, priority: String(item['priority'] || 'MEDIUM').toUpperCase() });
-    if (created.length >= cap) break;
+    created.push({ id, question_code: code, title: item['title'], priority: item['priority'] });
   }
   return { ok: true, skipped: false, created, count: created.length, member_key, employee_display };
+}
+
+// Repo-relative file holding Claude-generated Priority Questions. Read at
+// request time by /api/questions so generated questions appear immediately on
+// every serverless instance and persist across refreshes.
+export const GENERATED_PRIORITY_QUESTIONS_REPO_PATH = 'Governance_Files/_GOVERNANCE/AI_GENERATED_PRIORITY_QUESTIONS.md';
+
+// Format one generated question as a parse_questions()-compatible block.
+function format_generated_question_block(qid: string, title: string, priority: string, body: string): string {
+  const lines = [
+    `### ${qid} — ${title}`,
+    '',
+    '**Status:** OPEN',
+    `**6. Priority** — ${priority}`,
+    `**1. Short Question** — ${title}`,
+  ];
+  if (body) {
+    lines.push('', body);
+  }
+  return lines.join('\n');
+}
+
+// Append the fresh questions to the GitHub generated-questions file (create it
+// if missing), keeping qids unique and skipping any that already exist in the
+// file. Uses the blob sha to avoid clobbering concurrent writes; retries on a
+// sha conflict.
+async function store_generated_questions_on_github(
+  cfg: GitHubConfig,
+  fresh: Dict[],
+  existingNormalized: Set<string>,
+): Promise<Dict[]> {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const existing = await getFileFromGitHub(cfg, GENERATED_PRIORITY_QUESTIONS_REPO_PATH);
+    const currentContent = existing ? existing.content : '# AI-Generated Priority Questions\n\nAuto-generated by Governance Workbench from Task Tracker analysis. Do not edit by hand.\n';
+    // Seed dedup + next sequence number from the file already on record.
+    let maxSeq = 0;
+    const fileNormalized = new Set<string>(existingNormalized);
+    for (const q of parse_questions(currentContent)) {
+      const seqMatch = /Q-AI-(\d+)/.exec(String(q['qid'] || ''));
+      if (seqMatch) maxSeq = Math.max(maxSeq, parseInt(seqMatch[1], 10));
+      fileNormalized.add(normalize_question_text(String(q['title'] || '')));
+      fileNormalized.add(normalize_question_text(String(q['short_question'] || '')));
+    }
+    const blocks: string[] = [];
+    const created: Dict[] = [];
+    let seq = maxSeq;
+    for (const item of fresh) {
+      const norm = normalize_question_text(String(item['title']));
+      if (fileNormalized.has(norm)) continue; // already present in the file
+      fileNormalized.add(norm);
+      seq += 1;
+      const qid = `Q-AI-${String(seq).padStart(4, '0')}`;
+      blocks.push(format_generated_question_block(qid, String(item['title']), String(item['priority']), String(item['body'] || '')));
+      created.push({ question_code: qid, title: item['title'], priority: item['priority'] });
+    }
+    if (!created.length) return []; // nothing new to write
+    const updated = `${currentContent.replace(/\s*$/, '')}\n\n${blocks.join('\n\n')}\n`;
+    const message = `Priority Questions: add ${created.length} generated question(s) from Task Tracker analysis`;
+    const result = await upsertFileOnGitHub(cfg, GENERATED_PRIORITY_QUESTIONS_REPO_PATH, updated, message, existing?.sha);
+    if (result.ok) return created;
+    if (result.status !== 409 && result.status !== 422) {
+      console.error(`[priority_questions] generated-file commit failed (HTTP ${result.status}): ${result.error}`);
+      return []; // non-conflict failure — surface as "no questions created"
+    }
+    // sha conflict: another write landed first; retry with a fresh fetch.
+  }
+  return [];
+}
+
+// Read the durable generated Priority Questions from GitHub and shape them like
+// build_questions_payload's org-wide entries so /api/questions can merge them.
+export async function read_generated_priority_questions(company: string): Promise<Dict[]> {
+  let cfg: GitHubConfig;
+  try {
+    cfg = getGitHubConfig();
+  } catch {
+    return []; // GitHub not configured — nothing durable to read
+  }
+  const file = await getFileFromGitHub(cfg, GENERATED_PRIORITY_QUESTIONS_REPO_PATH);
+  if (!file) return [];
+  const db = getDb();
+  const assignments = get_question_assignment_map(db, company);
+  const out: Dict[] = [];
+  for (const q of parse_questions(file.content)) {
+    q['assignee'] = q['qid'] in assignments ? assignments[q['qid']] : 'Ryan Cochran';
+    q['owner_scope'] = 'org-wide';
+    q['source'] = 'claude';
+    q['context_items'] = [];
+    out.push(q);
+  }
+  return out;
 }
 
 export function build_repo_questions_payload(company: string, repo_name: string | null = null): Dict {

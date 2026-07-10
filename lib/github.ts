@@ -50,6 +50,12 @@ function ghHeaders(cfg: GitHubConfig): Record<string, string> {
   };
 }
 
+// API base — defaults to public GitHub; override with GITHUB_API_URL for GitHub
+// Enterprise (e.g. https://ghe.example.com/api/v3).
+function apiBase(): string {
+  return (process.env.GITHUB_API_URL || 'https://api.github.com').trim().replace(/\/+$/, '');
+}
+
 // Encode each path segment but keep the slashes that separate folders.
 function contentsUrl(cfg: GitHubConfig, repoPath: string): string {
   const encoded = repoPath
@@ -57,7 +63,7 @@ function contentsUrl(cfg: GitHubConfig, repoPath: string): string {
     .filter(Boolean)
     .map(encodeURIComponent)
     .join('/');
-  return `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encoded}`;
+  return `${apiBase()}/repos/${cfg.owner}/${cfg.repo}/contents/${encoded}`;
 }
 
 export interface PutFileResult {
@@ -93,6 +99,58 @@ export async function createFileOnGitHub(
   if (res.ok) {
     return { ok: true, status: res.status, data };
   }
+  return {
+    ok: false,
+    status: res.status,
+    data,
+    error: (data && (data.message as string)) || `GitHub API error (HTTP ${res.status})`,
+  };
+}
+
+// Read a file from the repo (on cfg.branch). Returns its decoded content and
+// blob sha, or null when the file does not exist / is unreadable. Best-effort:
+// never throws on HTTP errors so callers can degrade gracefully.
+export async function getFileFromGitHub(
+  cfg: GitHubConfig,
+  repoPath: string,
+): Promise<{ content: string; sha: string } | null> {
+  const url = `${contentsUrl(cfg, repoPath)}?ref=${encodeURIComponent(cfg.branch)}`;
+  let res: Response;
+  try {
+    res = await fetch(url, { headers: ghHeaders(cfg) });
+  } catch {
+    return null;
+  }
+  if (!res.ok) return null; // 404 (missing) or any error -> treat as absent
+  const data = await res.json().catch(() => null);
+  if (!data || typeof data.content !== 'string') return null;
+  const content = Buffer.from(data.content.replace(/\n/g, ''), 'base64').toString('utf-8');
+  return { content, sha: String(data.sha) };
+}
+
+// Create or update a file on cfg.branch (commit + push in one call). Pass the
+// existing blob `sha` to update; omit it to create. Returns a structured result
+// (422/409 on sha conflict) rather than throwing.
+export async function upsertFileOnGitHub(
+  cfg: GitHubConfig,
+  repoPath: string,
+  content: string,
+  commitMessage: string,
+  sha?: string,
+): Promise<PutFileResult> {
+  const body: Record<string, unknown> = {
+    message: commitMessage,
+    content: Buffer.from(content, 'utf-8').toString('base64'),
+    branch: cfg.branch,
+  };
+  if (sha) body.sha = sha;
+  const res = await fetch(contentsUrl(cfg, repoPath), {
+    method: 'PUT',
+    headers: ghHeaders(cfg),
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (res.ok) return { ok: true, status: res.status, data };
   return {
     ok: false,
     status: res.status,
