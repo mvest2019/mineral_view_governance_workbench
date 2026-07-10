@@ -13,24 +13,28 @@ export interface GitHubConfig {
 
 export class GitHubConfigError extends Error {}
 
+// Non-secret defaults for this repository. Only the token is a credential and
+// must be supplied via the environment; owner/repo/branch may be overridden too.
+const DEFAULT_OWNER = 'mvest2019';
+const DEFAULT_REPO = 'mineral_view_governance_workbench';
+const DEFAULT_BRANCH = 'Development';
+
 /**
- * Read GitHub settings from the environment. Returns a fully-populated config or
- * throws GitHubConfigError listing the missing variables. GITHUB_BRANCH defaults
- * to "Development".
+ * Read GitHub settings from the environment. Only GITHUB_TOKEN is required;
+ * owner, repo, and branch fall back to this repository's values but can be
+ * overridden with GITHUB_OWNER / GITHUB_REPO / GITHUB_BRANCH. Throws
+ * GitHubConfigError when the token is missing.
  */
 export function getGitHubConfig(): GitHubConfig {
   const token = (process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '').trim();
-  const owner = (process.env.GITHUB_OWNER || '').trim();
-  const repo = (process.env.GITHUB_REPO || '').trim();
-  const branch = (process.env.GITHUB_BRANCH || 'Development').trim() || 'Development';
+  const owner = (process.env.GITHUB_OWNER || '').trim() || DEFAULT_OWNER;
+  const repo = (process.env.GITHUB_REPO || '').trim() || DEFAULT_REPO;
+  const branch = (process.env.GITHUB_BRANCH || '').trim() || DEFAULT_BRANCH;
 
-  const missing: string[] = [];
-  if (!token) missing.push('GITHUB_TOKEN');
-  if (!owner) missing.push('GITHUB_OWNER');
-  if (!repo) missing.push('GITHUB_REPO');
-  if (missing.length) {
+  if (!token) {
     throw new GitHubConfigError(
-      `GitHub is not configured. Set the following environment variable(s): ${missing.join(', ')}.`,
+      'GitHub is not configured. Set the GITHUB_TOKEN environment variable '
+        + '(a Personal Access Token with write access to the repository contents).',
     );
   }
   return { token, owner, repo, branch };
