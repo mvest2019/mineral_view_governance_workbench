@@ -71,7 +71,7 @@ export const POST = route(async (req: NextRequest) => {
     stamp.timeDisplay,
     '',
     'Created At:',
-    stamp.createdAt,
+    `${stamp.datePart} ${stamp.timeDisplay}`,
     '',
     '---',
     '',

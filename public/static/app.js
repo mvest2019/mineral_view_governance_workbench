@@ -1465,10 +1465,41 @@ async function saveTaskTracker() {
     editor.innerHTML = '';
     if (status) status.textContent = '';
     updateTaskTrackerSaveState();
+    // Task is safely committed. Now automatically send it to Claude to analyze
+    // the governance repo and generate Priority Questions (best-effort; never
+    // affects the completed save).
+    generatePriorityQuestionsFromTask(employee, markdown);
   } catch (error) {
     if (status) status.textContent = '';
     showToast(`Save failed: ${error.message}`, 'error');
     updateTaskTrackerSaveState();
+  }
+}
+
+// Fire-and-report: ask Claude to analyze Governance_Files + this task and
+// generate deduplicated Priority Questions. Runs after the task is saved, so a
+// slow or unavailable Claude engine cannot block the save.
+async function generatePriorityQuestionsFromTask(employee, markdown) {
+  const status = document.getElementById('ttStatus');
+  if (status) status.textContent = 'Analyzing governance and generating priority questions…';
+  try {
+    const response = await fetch('/api/priority_questions/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ company: CURRENT_COMPANY, employee, task: markdown }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (payload && payload.ok && payload.count) {
+      showToast(`${payload.count} priority question(s) generated from this task.`, 'success');
+      if (status) status.textContent = `${payload.count} new priority question(s) added — open Priority Questions to review.`;
+    } else if (payload && payload.ok) {
+      if (status) status.textContent = 'No new priority questions were needed from this task.';
+    } else {
+      // Skipped/failed generation is non-fatal — the task is already saved.
+      if (status) status.textContent = payload && payload.reason ? `Priority question generation skipped: ${payload.reason}` : '';
+    }
+  } catch (error) {
+    if (status) status.textContent = '';
   }
 }
 
@@ -5815,6 +5846,8 @@ async function savePriorityQuestionAnswer(qid) {
   const question = [title, shortText].filter(Boolean).join(' — ');
   const btn = card.querySelector('.q-answer-save');
   if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+  // Same loading state as the other network-backed save flows in the app.
+  showProcessing('Saving answer…');
   try {
     const response = await fetch('/api/priority_questions/answer', {
       method: 'POST',
@@ -5825,10 +5858,12 @@ async function savePriorityQuestionAnswer(qid) {
     if (!response.ok || !payload.ok) {
       throw new Error(payload.error || payload.reason || `HTTP ${response.status}`);
     }
+    hideProcessing();
     showToast('Answer saved successfully.', 'success');
     // Remove only this answered question; the rest of the list is untouched.
     card.remove();
   } catch (error) {
+    hideProcessing();
     if (btn) { btn.disabled = false; btn.textContent = 'Save Answer'; }
     showToast(`Save failed: ${error.message}`, 'error');
   }

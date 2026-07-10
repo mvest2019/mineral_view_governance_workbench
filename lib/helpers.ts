@@ -3487,6 +3487,198 @@ export function build_questions_payload(company: string): Dict {
   return result;
 }
 
+// ---------------------------------------------------------------------------
+// Task Tracker -> Claude governance analysis -> automatic Priority Questions.
+// Reuses call_claude_text (the existing Claude integration / machine-server
+// bridge), parse_team_member_question_json (existing JSON parser), and
+// create_team_member_question (existing store that build_questions_payload
+// already surfaces on the Priority Questions page).
+// ---------------------------------------------------------------------------
+
+// Normalize a question for duplicate comparison.
+function normalize_question_text(value: string): string {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Collect the text of every question the workspace already knows about, so
+// Claude (and a server-side filter) can avoid duplicates: existing unanswered
+// and answered Priority Questions, plus the answered-question Markdown files
+// committed under Governance_Files/Priority_Questions/.
+function collect_existing_question_texts(company: string): string[] {
+  const cfg = get_company(company);
+  const texts: string[] = [];
+  try {
+    const payload = build_questions_payload(company);
+    for (const q of (payload['org_wide'] as Dict[]) || []) {
+      texts.push(String(q['title'] || ''), String(q['short_question'] || ''));
+    }
+    for (const emp of Object.values(payload['employees'] as Dict) as Dict[]) {
+      for (const q of (emp['questions'] as Dict[]) || []) {
+        texts.push(String(q['title'] || ''), String(q['short_question'] || ''));
+      }
+    }
+  } catch {
+    // ignore — dedup is best-effort
+  }
+  // Answered Priority Question files (Question: lines).
+  const answersRoot = path.join(cfg['root'], 'Priority_Questions');
+  if (fs.existsSync(answersRoot)) {
+    for (const file of rglobMd(answersRoot)) {
+      try {
+        const body = readTextReplace(file);
+        const m = /Question:\s*\n?([^\n]+)/i.exec(body);
+        if (m) texts.push(m[1]);
+      } catch {
+        // ignore unreadable file
+      }
+    }
+  }
+  return texts.filter((t) => t && t.trim());
+}
+
+// Bounded digest of all governance Markdown so Claude analyzes the whole repo
+// (governance docs, prior Task Tracker files, prior answered questions) without
+// blowing the prompt budget.
+function build_governance_digest(company: string, maxChars = 45000, perFile = 3500): string {
+  const cfg = get_company(company);
+  const files = rglobMd(cfg['root']);
+  const parts: string[] = [];
+  let total = 0;
+  for (const file of files) {
+    if (total >= maxChars) break;
+    let content = '';
+    try {
+      content = readTextReplace(file);
+    } catch {
+      continue;
+    }
+    if (!content.trim()) continue;
+    const rel = file.slice(cfg['root'].length + 1).replace(/\\/g, '/');
+    const slice = content.slice(0, perFile);
+    const block = `\n\n### FILE: ${rel}\n${slice}`;
+    parts.push(block);
+    total += block.length;
+  }
+  return parts.join('');
+}
+
+export function build_task_priority_question_prompt(
+  company: string,
+  employee_display: string,
+  task_description: string,
+  governance_digest: string,
+  existing_questions: string[],
+  cap = 6,
+): string {
+  const existingBlock = existing_questions.length
+    ? existing_questions.slice(0, 200).map((q) => `- ${q}`).join('\n')
+    : '(none on record)';
+  return `You are a governance analyst for ${company}. A new task was just submitted through the Task Tracker.
+
+New task (submitted for ${employee_display}):
+"""
+${task_description.slice(0, 8000)}
+"""
+
+Using BOTH the new task above AND the existing governance knowledge below, generate the most important NEW Priority Questions.
+
+Rules:
+1. Questions must be short and easy to understand (one sentence each).
+2. Focus ONLY on missing information, needed clarification, inconsistencies, risks, or decisions required.
+3. Do NOT repeat or paraphrase any question in the "Existing questions" list below — those already exist or are already answered.
+4. Do NOT generate a question whose answer is already present in the governance knowledge.
+5. Generate only meaningful governance questions. If nothing new is warranted, return an empty list.
+6. Return at most ${cap} questions, ranked by importance.
+
+Existing questions (do not duplicate these):
+${existingBlock}
+
+Governance knowledge (existing Markdown across Governance_Files):
+${governance_digest || '(no governance documents found)'}
+
+Return JSON only, no prose:
+{
+  "questions": [
+    { "title": "short one-sentence question", "body_markdown": "optional extra context", "priority": "HIGH" }
+  ]
+}
+`;
+}
+
+// Orchestrates the analysis + generation. Best-effort: returns a structured
+// result (never throws for a missing/failed Claude engine) so a Task Tracker
+// save is never blocked by generation.
+export async function generate_priority_questions_from_task(
+  company: string,
+  employee_key: string,
+  task_description: string,
+): Promise<Dict> {
+  const cap = 6;
+  if (!claude_cli_available()) {
+    return { ok: false, skipped: true, reason: 'Claude is not available on this deployment (set REMOTE_CLAUDE_URL for the machine-server bridge).', created: [] };
+  }
+  const member_key = String(employee_key || '').trim() || 'Ryan_Cochran';
+  const employee_display = pretty_member_name(member_key);
+  const existing = collect_existing_question_texts(company);
+  const existingNormalized = new Set(existing.map(normalize_question_text).filter(Boolean));
+  const digest = build_governance_digest(company);
+  const prompt = build_task_priority_question_prompt(company, employee_display, task_description, digest, existing, cap);
+
+  const [ok, out, err] = await call_claude_text(prompt);
+  if (!ok || !out) {
+    return { ok: false, skipped: false, reason: err || 'Claude returned no output', created: [] };
+  }
+  // Claude may wrap JSON in prose/code fences — extract the JSON object.
+  let jsonText = out.trim();
+  const fenced = /```(?:json)?\s*([\s\S]*?)```/i.exec(jsonText);
+  if (fenced) jsonText = fenced[1].trim();
+  else {
+    const first = jsonText.indexOf('{');
+    const last = jsonText.lastIndexOf('}');
+    if (first >= 0 && last > first) jsonText = jsonText.slice(first, last + 1);
+  }
+  // Lenient parse: unlike parse_team_member_question_json (which requires a
+  // body), these generated Priority Questions are one-sentence titles, so the
+  // body is optional.
+  let parsedData: Dict;
+  try {
+    parsedData = JSON.parse(jsonText);
+  } catch {
+    return { ok: false, skipped: false, reason: 'Could not parse Claude response as questions.', created: [] };
+  }
+  const rawQuestions = (Array.isArray(parsedData['questions']) ? parsedData['questions'] : []) as Dict[];
+
+  const db = getDb();
+  const created: Dict[] = [];
+  const seenThisRun = new Set<string>();
+  for (const item of rawQuestions) {
+    const title = String(item['title'] || '').trim();
+    if (!title) continue;
+    const norm = normalize_question_text(title);
+    if (!norm || existingNormalized.has(norm) || seenThisRun.has(norm)) continue; // dedup
+    seenThisRun.add(norm);
+    const [id, code] = create_team_member_question(
+      db,
+      company,
+      member_key,
+      title,
+      String(item['body_markdown'] || title).trim(),
+      String(item['priority'] || 'MEDIUM').toUpperCase(),
+      'NEW',
+      null,
+      'Task Tracker analysis',
+      'claude',
+    );
+    created.push({ id, question_code: code, title, priority: String(item['priority'] || 'MEDIUM').toUpperCase() });
+    if (created.length >= cap) break;
+  }
+  return { ok: true, skipped: false, created, count: created.length, member_key, employee_display };
+}
+
 export function build_repo_questions_payload(company: string, repo_name: string | null = null): Dict {
   const db = getDb();
   const rows = list_repo_questions(db, company, repo_name);
