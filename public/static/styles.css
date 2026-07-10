@@ -2807,6 +2807,11 @@ body { letter-spacing: 0.005em; }
 .member-packet-summary-metrics .repo-chip {
   background: #f0fdfa; border-color: #99f6e4; color: #0f766e;
 }
+/* Keep the count badges (e.g. "14 unanswered") on a single line instead of
+   wrapping into a tall multi-line blob in the narrow packet rail (SR9). */
+.member-packet-summary-metrics .repo-chip {
+  white-space: nowrap;
+}
 
 /* Quick-chat card readability */
 .member-quick-chat-card .member-chat-thread.compact {
