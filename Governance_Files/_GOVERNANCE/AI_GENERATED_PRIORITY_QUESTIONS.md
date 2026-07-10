@@ -121,3 +121,63 @@ The map is a core surface (`map-gis-governance.md`) and carries two hard constra
 Public pages carry SEO structure, CTAs, the trust line ("estimates are modeled; verify independently; not advice"), and brand copy governed by `content-governance.md` and `Customer_Communication_Style_Guide.md`. Responsive work routinely reorders headings, shortens copy, and reprioritizes CTAs.
 
 **Needed:** confirm whether a mobile reflow that changes heading order, copy length, or CTA prominence is a Content/Brand-reviewed change or a pure engineering change.
+
+### Q-AI-0013 — Do the YouTube videos carry the required no-advice, no-reliance, and modeled-estimate disclaimers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Do the YouTube videos carry the required no-advice, no-reliance, and modeled-estimate disclaimers?
+
+Both videos are decision-adjacent: Video 1 ends with a CTA to check well/permit/production activity on MineralView.com, and Scene 3 draws a chain from rigs to "Potential Royalties." Constitution P2/P3 and `Compliance_And_Disclaimers.md` require a no-advice / no-reliance / estimate label on every estimate-bearing or decision-adjacent surface.
+
+**Needed:** confirm where the disclaimer appears on a video surface — on-screen text, voiceover, description box, or all three — and who verifies it before upload.
+
+### Q-AI-0014 — Does the Reel "USA's Biggest Oil Fields" risk implying nationwide data coverage?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does the Reel "USA's Biggest Oil Fields" risk implying nationwide data coverage?
+
+P1 makes Texas the canonical data scope; US-wide content is allowed **only** as education and must not imply national data coverage. Video 1 also opens on a "North American" rig-count map and a "North America → Texas → Permian" zoom.
+
+**Needed:** confirm the required Texas-scope line for national/North-American framing in video, and whether the Reel title as written clears it.
+
+### Q-AI-0015 — Does the Scene 11 platform walkthrough show a real claimed property with real owner data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does the Scene 11 platform walkthrough show a real claimed property with real owner data?
+
+Scene 11 and Scene 13 are described as a live Mineral View walkthrough down to a "Claimed Property" with nearby wells and permits. If that is a production owner record, the footage carries PII and owner-scoping obligations and is being published publicly and permanently.
+
+**Decision needed:** use a designated demo/synthetic account for all recorded walkthroughs, or define a redaction standard.
+
+### Q-AI-0016 — Is the "rig → well → production → royalties" narrative a claim that needs Legal and Ryan sign-off?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is the "rig → well → production → royalties" narrative a claim that needs Legal and Ryan sign-off?
+
+Scene 3 presents `Operator Capital → Active Rig → New Well → Production → Potential Royalties`, and the reframed headline "Operators Double Down on the Permian" is an interpretation of rig-count data, not a record. Per `claim-risk-register` levels, value/outcome framing is a High-risk claim requiring Legal + Ryan.
+
+**Needed:** classify video scripts under the existing claim-risk workflow, and confirm the narrative does not imply owner income.
+
+### Q-AI-0017 — Must AI-generated footage and the synthetic ElevenLabs voiceover be disclosed to viewers?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Must AI-generated footage and the synthetic ElevenLabs voiceover be disclosed to viewers?
+
+The report states the prompts deliberately produce photorealistic, documentary-style footage with negative prompts excluding any CGI or illustrated look, blended with real stock footage — i.e. AI imagery presented as real footage. The voiceover is synthesized.
+
+**Needed:** a rule on AI/synthetic-media labeling (including YouTube's own altered-content disclosure) and whether "AI-generated visualization" text is required on-screen.
+
+### Q-AI-0018 — Are Flow AI, Gemini, ElevenLabs, Freepik, and Envato outputs cleared and licensed for commercial channel use?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Are Flow AI, Gemini, ElevenLabs, Freepik, and Envato outputs cleared and licensed for commercial channel use?
+
+Five external tools now sit in the content pipeline, none of which appear in the governance corpus. Open items: commercial-use rights and attribution terms for Freepik stock and Envato music, output ownership/indemnity for Flow AI clips and the ElevenLabs voice, and whether any Mineral View data was pasted into these tools.
+
+**Needed:** an approved media/AI tool list with license terms recorded, and a rule on what platform data may be entered into third-party AI tools. Related to the open "Where is ChatGPT used today?" question.
