@@ -181,3 +181,75 @@ The report states the prompts deliberately produce photorealistic, documentary-s
 Five external tools now sit in the content pipeline, none of which appear in the governance corpus. Open items: commercial-use rights and attribution terms for Freepik stock and Envato music, output ownership/indemnity for Flow AI clips and the ElevenLabs voice, and whether any Mineral View data was pasted into these tools.
 
 **Needed:** an approved media/AI tool list with license terms recorded, and a rule on what platform data may be entered into third-party AI tools. Related to the open "Where is ChatGPT used today?" question.
+
+### Q-AI-0019 — Who verifies the RRC P-5 regulatory claims (LoneSTAR mandate, RAMP, bond tiers, seven-year officer bar) before publication?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Who verifies the RRC P-5 regulatory claims (LoneSTAR mandate, RAMP, bond tiers, seven-year officer bar) before publication?
+
+The P-5 glossary page asserts specific, checkable regulatory facts: a mandatory electronic-filing transition via LoneSTAR, a Delegated Administrator process through RAMP, a sliding bond scale tied to well footage, and a rolling seven-year bar on corporate officers of a blocked operator.
+
+Under `Compliance_And_Disclaimers.md` §5 these read as **High**-risk legal statements, requiring Legal + Ryan review — not Content review. There is no named reviewer or citation standard for regulatory-mechanics content.
+
+**Needed:** a designated verifier, a rule that every regulatory assertion cites the RRC rule/statute number, and an as-of date on the page.
+
+### Q-AI-0020 — Is the "Critical 2026 Shift" content dated and put on a re-review cadence when RRC rules change?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is the "Critical 2026 Shift" content dated and put on a re-review cadence when RRC rules change?
+
+The page markets itself on "newest, highly time-sensitive operational updates." Regulatory content decays: if the RRC changes the LoneSTAR rollout, bond thresholds, or enforcement periods, a stale glossary page becomes an inaccurate compliance claim on a public surface.
+
+No governance file currently defines a freshness/vintage rule for **content** (only for data, per `Data_Provenance_And_Freshness.md`).
+
+**Decision needed:** does regulatory content carry a visible as-of date and a mandatory re-review trigger?
+
+### Q-AI-0021 — Does prescriptive guidance like "you must record a Memorandum of Farmout" cross the P2 no-advice line?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does prescriptive guidance like "you must record a Memorandum of Farmout" cross the P2 no-advice line?
+
+The BPO/APO page contains directive legal guidance aimed at land professionals — recording instruments in the county clerk's office to defend reversionary rights against third-party purchasers and bankruptcy courts — and asserts what an operator "cannot legally" deduct from payout math.
+
+Non-Negotiable **P2** prohibits legal advice and any instruction to sign, file, or transact. This is a different surface and a sharper form than the existing SEO-landing-page question: it is not neutral education, it is instruction.
+
+**Needed:** a ruling on whether this framing is permitted with a disclaimer, must be rewritten as neutral description, or must be removed.
+
+### Q-AI-0022 — Is the claim that Texas forced pooling imposes a 100–400% non-consent risk penalty accurate and sourced?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is the claim that Texas forced pooling imposes a 100–400% non-consent risk penalty accurate and sourced?
+
+The task states that BPO/APO ties "directly to statutory forced pooling regulations (specifically referencing Texas and general Mid-Continent state rules)" with a risk-penalty multiplier of 100–400% of well costs.
+
+Texas's pooling statute (the Mineral Interest Pooling Act) operates very differently from Mid-Continent forced-pooling regimes, and the specific penalty range varies materially by state. Publishing a blended Texas/Mid-Continent number as if it were Texas law is a factual-accuracy and claim risk.
+
+**Needed:** SME confirmation of the Texas-specific mechanics and per-state citation of any penalty range, or removal of the numeric range.
+
+### Q-AI-0023 — How does multi-state glossary content (Mid-Continent rules) stay compliant with the Texas-canonical scope rule?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — How does multi-state glossary content (Mid-Continent rules) stay compliant with the Texas-canonical scope rule?
+
+Non-Negotiable **P1** allows broader-US content only as education and forbids implying nationwide data coverage. This page mixes Texas RRC mechanics with generalized Mid-Continent statutory rules in a single authoritative-sounding asset.
+
+Open item **Q-C** (exact public phrasing for "Texas data, US education") is still unresolved, so there is no approved scope line for this writer to apply.
+
+**Needed:** resolve Q-C, or specify the scope banner required on any glossary page that references non-Texas jurisdictions.
+
+### Q-AI-0024 — What happened to the "old, high-level industry descriptions" that were scrubbed, and was the change logged?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — What happened to the "old, high-level industry descriptions" that were scrubbed, and was the change logged?
+
+The task describes "scrubbing" prior content and rebuilding the page. It is unclear whether existing URLs were overwritten in place, whether the prior wording had already passed Legal/claim review, and whether redirects and version history were preserved.
+
+Content replacement on an indexed public page is a change to a reviewed artifact; `Compliance_And_Disclaimers.md` §7 requires the result to be logged in the decision log.
+
+**Needed:** confirm URL/redirect handling, whether the replaced copy carried approved disclaimer language that was dropped, and where the change was recorded.
