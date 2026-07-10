@@ -452,3 +452,63 @@ Severity and Priority in this report were assigned by the tester and offered "so
 The Workbench is the tool that now generates Priority Questions and commits governance records. Five open P0s (including data loss and a blocked AI-review path) sit against a tool that governance itself depends on.
 
 **Decision needed:** who ratifies severity, and whether any open P0 blocks the Workbench from being treated as authoritative for governance records in the interim.
+
+### Q-AI-0043 — Who approved storing member PII dossiers on Google Drive and sharing that folder with a personal Gmail address?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**1. Short Question** — Who approved storing member PII dossiers on Google Drive and sharing that folder with a personal Gmail address?
+
+The task states generated files hold member PII and were deliberately kept out of git, then shares the `MineralView_Operations` Drive folder with both `ryan@colterbaytexas.com` and `ryanecochran@gmail.com`. A consumer Gmail account sits outside any corporate access control, retention, or revocation process.
+
+**Needed:** confirmation of the approved storage location and access-control rule for PII-bearing dossier files, and whether personal email accounts are permitted.
+
+### Q-AI-0044 — What approval covers sending member PII into Claude as dossier input?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**1. Short Question** — What approval covers sending member PII into Claude as dossier input?
+
+The generator embeds a "for the AI writer" guide so the file "feeds Claude directly." That means named-member ownership, royalty income, and location data are transmitted to a third-party LLM.
+
+**Needed:** the data-processing basis, whether an enterprise/zero-retention agreement is in place, and whether the Privacy Policy discloses this use.
+
+### Q-AI-0045 — How many members beyond Shannon Deckert are affected by the "Charles D. Simmons" ownership defect, and is dossier distribution blocked until Nikhil's fix lands?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — How many members beyond Shannon Deckert are affected by the "Charles D. Simmons" ownership defect, and is dossier distribution blocked until Nikhil's fix lands?
+
+The verification step surfaced a real ownership-attribution error at source. Two dossiers were already generated, reviewed, and approved against that same unfixed data. Nothing states whether the two approved files are themselves suspect, or how wide the source defect runs.
+
+**Needed:** blast radius of the ownership defect, and an explicit hold/recall rule for dossiers generated before the fix.
+
+### Q-AI-0046 — Which dossier generator is canonical — `assemble_member.py` or `build-dossier.mjs`?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Which dossier generator is canonical — `assemble_member.py` or `build-dossier.mjs`?
+
+Two independent implementations exist, with different capabilities (the `.mjs` version carries CRM signals the Python one lacks). Two generators means two sets of numbers for the same member.
+
+**Needed:** a named owner, a canonical tool, and a decision on whether to merge or deprecate — before any batch generation runs.
+
+### Q-AI-0047 — Do generated dossiers carry the required no-advice, no-reliance, and modeled-estimate disclaimers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Do generated dossiers carry the required no-advice, no-reliance, and modeled-estimate disclaimers?
+
+The dossier bundles MVestimate value, royalty income, and reserve life — all estimate-bearing under P3 — into a member-facing document. Constitution P2/P3 and `Compliance_And_Disclaimers.md` require disclaimers on every estimate-bearing or decision-adjacent surface. Two files have already been approved and stored; nothing indicates Legal reviewed the output template.
+
+**Needed:** confirmation that the disclaimer set is present in the template, and who signs off on the dossier as a High-risk claim surface.
+
+### Q-AI-0048 — What consent basis and opt-out mechanism govern the personalized scheduled emails being sent from the CRM?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — What consent basis and opt-out mechanism govern the personalized scheduled emails being sent from the CRM?
+
+The task lists scheduled-email stats and personalized email scheduling as shipped, with no mention of consent capture, unsubscribe handling, or what member data personalizes the message.
+
+**Needed:** the lawful basis for these sends, the opt-out path, and confirmation that dossier-derived estimates are not being asserted as fact in email copy.
