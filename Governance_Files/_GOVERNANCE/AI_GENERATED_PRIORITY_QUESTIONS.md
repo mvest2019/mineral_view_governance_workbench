@@ -61,3 +61,63 @@ The 2026-07-10 12:03 task introduces member types that do not match the enforced
 The redesign spans product (screen scope), legal (disclaimers, claim-bearing copy on estimate tiles), and engineering (tier gating). `Engineering_Standards.md` §6 routes pricing/claims-affecting changes to product + legal → Ryan.
 
 **Needed:** named reviewers and the approval gate for this prototype, recorded in the decision log.
+
+### Q-AI-0007 — Does "mineralview website" mean the public marketing site, the owner portal, or both?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does "mineralview website" mean the public marketing site, the owner portal, or both?
+
+The governance corpus separates the public site (`Mview-Presentation-Next`, governed by `frontend-governance.md`, brand/SEO/legal) from the owner portal screens (Dashboard, Alerts, My Leases). Mobile work on the public site is a content/brand change; mobile work on the portal touches owner-scoped, estimate-bearing surfaces with different reviewers and different risk.
+
+**Needed:** an explicit surface list before any responsive work starts.
+
+### Q-AI-0008 — On mobile, must disclaimers and source/vintage labels stay visible rather than collapse behind "read more" or truncation?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — On mobile, must disclaimers and source/vintage labels stay visible rather than collapse behind "read more" or truncation?
+
+Constitution P2/P3/P4 and `Compliance_And_Disclaimers.md` require no-advice / no-reliance / estimate labeling and "Source: Texas RRC + as-of date" on every estimate-bearing surface. Responsive layouts commonly hide, truncate, or accordion this text to save vertical space.
+
+**Risk:** hiding a disclaimer on a small viewport is a claim-risk change requiring Legal + Ryan, not a layout tweak. A binding rule is needed: disclaimers and provenance labels are never collapsed, truncated, or moved below the fold at any breakpoint.
+
+### Q-AI-0009 — What are the target breakpoints, devices, and browsers that define "responsive" as done?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — What are the target breakpoints, devices, and browsers that define "responsive" as done?
+
+No governance file states supported viewport widths, minimum device support, or an accessibility standard (e.g. WCAG level, minimum tap-target size, minimum font size). Without these, "mobile responsive" is unverifiable and QA cannot sign off.
+
+**Needed:** a written breakpoint/device/browser matrix and the accessibility bar, owned by Product.
+
+### Q-AI-0010 — Does this task overlap the Portal Field Report mobile-responsiveness changes already validated in production?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Does this task overlap the Portal Field Report mobile-responsiveness changes already validated in production?
+
+Utkarsha Chougule's 2026-07-10 11:22 entry records "Validated Portal Field Report mobile responsiveness changes" as already deployed and verified in production. The new task is a broad, undated mobile-responsiveness request with no reference to that work.
+
+**Needed:** confirm whether this is net-new scope, a continuation, or a duplicate — and which shipped patterns are the baseline to reuse.
+
+### Q-AI-0011 — How must the Texas map/GIS view degrade on small screens without implying incorrect coverage or losing geofencing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — How must the Texas map/GIS view degrade on small screens without implying incorrect coverage or losing geofencing?
+
+The map is a core surface (`map-gis-governance.md`) and carries two hard constraints: it renders RRC Districts 1–10 (P1, Texas-only scope) and owner surfaces must geofence to the owner's relevant area (Materiality/Spatial rules). A cropped, zoomed, or simplified mobile map could obscure Texas scoping or widen what an owner sees beyond their geofence.
+
+**Decision needed:** the approved mobile map fallback behavior.
+
+### Q-AI-0012 — Do mobile layout changes to public pages require content/SEO and brand review before shipping?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Do mobile layout changes to public pages require content/SEO and brand review before shipping?
+
+Public pages carry SEO structure, CTAs, the trust line ("estimates are modeled; verify independently; not advice"), and brand copy governed by `content-governance.md` and `Customer_Communication_Style_Guide.md`. Responsive work routinely reorders headings, shortens copy, and reprioritizes CTAs.
+
+**Needed:** confirm whether a mobile reflow that changes heading order, copy length, or CTA prominence is a Content/Brand-reviewed change or a pure engineering change.
