@@ -317,3 +317,63 @@ Home Options 1–3 achieve "completely different layout presentations" while kee
 This affects a governed SEO surface (`Mview-Presentation-Next`) and screen-reader reading order. CSS reordering can also break the heading hierarchy crawlers rely on.
 
 **Needed:** confirm keyboard/screen-reader order and heading structure were validated per option, not just responsive breakpoints.
+
+### Q-AI-0031 — Who approves backfill/update scripts that write to production data, and is there a rollback plan?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Who approves backfill/update scripts that write to production data, and is there a rollback plan?
+
+The task reports running **backfill/update scripts** against W-2 Completion and W-1 Permit records containing null/empty values, then verifying the values were populated. Nothing in the governance corpus defines an approval path, dry-run requirement, change window, or rollback procedure for direct writes to the PostgreSQL system-of-record.
+
+**Needed:** a named approver, a pre-change backup/snapshot rule, and a documented rollback step before the next backfill run.
+
+### Q-AI-0032 — Does backfilling null values violate P4's requirement to distinguish a true zero from a not-yet-reported gap?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does backfilling null values violate P4's requirement to distinguish a true zero from a not-yet-reported gap?
+
+Non-Negotiable **P4** requires the platform to preserve provenance/vintage and to distinguish a real zero from data the RRC has not yet reported. Filling nulls in fields like `Do Producing Interval`, `Is Completion`, `Packer Depth Type`, and `Open Hole` may destroy exactly that distinction — a null that means "RRC has not filed it" is not the same as a value.
+
+**Decision needed:** confirm which fields are safe to backfill, and whether backfilled values are marked as derived rather than sourced.
+
+### Q-AI-0033 — Is the daily scraper validation manual or automated, and who is alerted when a scraper fails?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is the daily scraper validation manual or automated, and who is alerted when a scraper fails?
+
+The task describes a person reading `scraper_process_log` each day to confirm scrapers completed. If that review is the only failure detector, a missed day means stale RRC data silently flows into MongoDB serving, the map, and MVestimate with no vintage warning.
+
+**Needed:** confirm whether automated alerting exists, who the on-call recipient is, and what the escalation path is when a scrape fails.
+
+### Q-AI-0034 — Does the W-1 permit backfill change the `statewidePermitsLast30d` figure already published by the Texas Highlights API?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does the W-1 permit backfill change the `statewidePermitsLast30d` figure already published by the Texas Highlights API?
+
+Vaishnavi's 2026-07-10 task migrated `GET /api/market/texas-highlights` to count `w1permits` rows in `MviewDownload` filtered on `status = 'Approved'` and `filing_purpose = 'New Drill'`. This task backfills null/empty values across W-1 Permit tables — including status and filing fields.
+
+**Risk:** a retroactive backfill can change a public statistic that was already displayed, with no vintage disclosure. Confirm whether the two workstreams touch the same rows and whether corrected counts need a published-figure change note.
+
+### Q-AI-0035 — Where are the daily validation queries and their pass/fail thresholds recorded?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Where are the daily validation queries and their pass/fail thresholds recorded?
+
+The task references "extensive SQL-based data quality checks" for missing values, duplicates, and referential integrity, but the checks appear to live only in the analyst's session. Governance has no artifact defining what "passing" means — how many nulls are acceptable, which referential-integrity breaks block promotion to MongoDB serving.
+
+**Needed:** a version-controlled query set with explicit thresholds, so the daily result is reproducible and auditable rather than a narrative summary.
+
+### Q-AI-0036 — Were the duplicate records and referential-integrity failures found today actually resolved, or only observed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Were the duplicate records and referential-integrity failures found today actually resolved, or only observed?
+
+The task states that duplicates, inconsistencies, and referential-integrity issues were *identified*, and separately that backfill scripts were run for null/empty values. It does not say the integrity failures were fixed, quantified, or ticketed.
+
+**Needed:** a count of open data-quality defects carried forward, and where they are tracked — this parallels the unresolved `MVEstimate = $0` / `NaN` issues Vaishnavi reported to Nikhil, which also have no owner or due date recorded.
