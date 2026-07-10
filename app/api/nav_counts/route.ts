@@ -7,7 +7,7 @@ import {
   get_company,
   list_employees,
   departments_for_company,
-  count_questions_for_company,
+  count_priority_questions_for_company,
   count_findings_for_company,
   aspect_groups_for_company,
   customer_sources_for_company,
@@ -165,7 +165,7 @@ export const GET = route(async (req: NextRequest) => {
     intake: intake_total,
     board: blocked_total,
     departments: department_data['count'],
-    questions: count_questions_for_company(cfg),
+    questions: await count_priority_questions_for_company(company),
     findings: count_findings_for_company(cfg),
     meetings: (
       db.prepare('SELECT COUNT(*) AS c FROM meetings WHERE company=? AND meeting_date>=?').get(company, sevenDaysAgoIso()) as any

@@ -3809,6 +3809,31 @@ export async function read_generated_priority_questions(company: string): Promis
   return out;
 }
 
+// Total Priority Questions shown on the page (used for the sidebar badge so it
+// matches the page exactly): curated org-wide + merged generated questions +
+// every employee question. Returns 0 when there are none (e.g. the source file
+// was deleted), and grows as questions are added.
+export async function count_priority_questions_for_company(company: string): Promise<number> {
+  const payload = build_questions_payload(company);
+  const orgWide = (payload['org_wide'] as Dict[]) || [];
+  const seen = new Set(orgWide.map((q) => q['qid']));
+  let total = orgWide.length;
+  try {
+    for (const q of await read_generated_priority_questions(company)) {
+      if (!seen.has(q['qid'])) {
+        total += 1;
+        seen.add(q['qid']);
+      }
+    }
+  } catch {
+    // best-effort — generated questions are additive
+  }
+  for (const emp of Object.values(payload['employees'] as Dict) as Dict[]) {
+    total += ((emp['questions'] as Dict[]) || []).length;
+  }
+  return total;
+}
+
 export function build_repo_questions_payload(company: string, repo_name: string | null = null): Dict {
   const db = getDb();
   const rows = list_repo_questions(db, company, repo_name);
