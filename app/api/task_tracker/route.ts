@@ -1,32 +1,18 @@
 import { NextRequest } from 'next/server';
 import { abort, json, route } from '@/lib/http';
 import {
-  createFileOnGitHub,
+  commitUniqueMarkdown,
   getGitHubConfig,
+  GitHubCommitError,
   GitHubConfigError,
+  localStamp,
+  slugifyName,
 } from '@/lib/github';
 
 export const dynamic = 'force-dynamic';
 
 // Repo-relative folder the task notes are committed under.
 const TASK_TRACKER_REPO_DIR = 'Governance_Files/task_tracker';
-
-function pad(n: number): string {
-  return String(n).padStart(2, '0');
-}
-
-// Lowercase, spaces -> underscores, drop special characters. Used for the
-// employee-name portion of the filename (e.g. "Pooja Wable" -> "pooja_wable").
-function slugifyEmployee(name: string): string {
-  const slug = String(name || '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s_-]+/g, '') // remove special characters
-    .replace(/[\s-]+/g, '_') // spaces / hyphens -> underscore
-    .replace(/_+/g, '_')
-    .replace(/^_+|_+$/g, '');
-  return slug || 'employee';
-}
 
 // Raw employee keys are stored as "First_Last"; show a readable display name.
 function employeeDisplayName(raw: string): string {
@@ -64,15 +50,8 @@ export const POST = route(async (req: NextRequest) => {
   }
 
   const employeeName = employeeDisplayName(employeeRaw);
-  const now = new Date();
-  const datePart = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-  const timePart = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
-
-  let hour12 = now.getHours() % 12;
-  if (hour12 === 0) hour12 = 12;
-  const timeDisplay = `${hour12}:${pad(now.getMinutes())} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
-
-  const slug = slugifyEmployee(employeeName);
+  const stamp = localStamp();
+  const slug = slugifyName(employeeName);
 
   const content = [
     '# Task Tracker',
@@ -81,10 +60,10 @@ export const POST = route(async (req: NextRequest) => {
     employeeName,
     '',
     '## Created Date',
-    datePart,
+    stamp.datePart,
     '',
     '## Created Time',
-    timeDisplay,
+    stamp.timeDisplay,
     '',
     '## Created By',
     createdBy,
@@ -99,35 +78,30 @@ export const POST = route(async (req: NextRequest) => {
     '',
   ].join('\n');
 
-  // Commit to GitHub. A 422 means the path already exists (same-second collision)
-  // — retry with a numeric suffix so filenames stay unique. Any other failure is
-  // surfaced to the client (no success, form is left intact).
-  const base = `${datePart}_${timePart}_${slug}_task`;
-  let lastError = '';
-  for (let attempt = 0; attempt < 5; attempt += 1) {
-    const filename = attempt === 0 ? `${base}.md` : `${base}_${attempt + 1}.md`;
-    const repoPath = `${TASK_TRACKER_REPO_DIR}/${filename}`;
-    const commitMessage = `Task Tracker: add task for ${employeeName} (${filename})`;
-    const result = await createFileOnGitHub(cfg, repoPath, content, commitMessage);
-    if (result.ok) {
-      return json({
-        ok: true,
-        company,
-        employee: employeeRaw,
-        employee_name: employeeName,
-        filename,
-        repo_path: repoPath,
-        branch: cfg.branch,
-        commit: result.data?.commit?.sha || null,
-        html_url: result.data?.content?.html_url || null,
-      });
+  const baseName = `${stamp.datePart}_${stamp.timePart}_${slug}_task`;
+  try {
+    const saved = await commitUniqueMarkdown(
+      cfg,
+      TASK_TRACKER_REPO_DIR,
+      baseName,
+      content,
+      (filename) => `Task Tracker: add task for ${employeeName} (${filename})`,
+    );
+    return json({
+      ok: true,
+      company,
+      employee: employeeRaw,
+      employee_name: employeeName,
+      filename: saved.filename,
+      repo_path: saved.repoPath,
+      branch: cfg.branch,
+      commit: saved.data?.commit?.sha || null,
+      html_url: saved.data?.content?.html_url || null,
+    });
+  } catch (err) {
+    if (err instanceof GitHubCommitError) {
+      abort(err.status === 409 ? 409 : 502, `Could not save task to GitHub: ${err.message}`);
     }
-    lastError = result.error || `GitHub API error (HTTP ${result.status})`;
-    console.error(`[task_tracker] commit failed (HTTP ${result.status}): ${lastError}`);
-    if (result.status !== 422) {
-      // Not a name collision — stop and report.
-      abort(502, `Could not save task to GitHub: ${lastError}`);
-    }
+    throw err;
   }
-  abort(409, `Could not save task to GitHub after multiple attempts: ${lastError}`);
 });

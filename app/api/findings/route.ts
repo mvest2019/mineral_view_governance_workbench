@@ -14,13 +14,18 @@ export const GET = route(async (req: NextRequest) => {
   if (!f) return json({ exists: false, findings: [] });
   const text = fs.readFileSync(f, 'utf-8');
   const last_updated = text.match(/Last Updated:\s*([^\n]+)/);
-  let generated_at = '';
-  try {
-    const mtime = fs.statSync(f).mtime;
-    const pad = (n: number) => String(n).padStart(2, '0');
-    generated_at = `${mtime.getFullYear()}-${pad(mtime.getMonth() + 1)}-${pad(mtime.getDate())}T${pad(mtime.getHours())}:${pad(mtime.getMinutes())}`;
-  } catch {
-    generated_at = '';
+  // Prefer the authoritative "Last Updated" date written inside the file. The
+  // file mtime is unreliable — on a serverless deploy it is the build/checkout
+  // time, not when the findings were produced — which showed a wrong date.
+  let generated_at = last_updated ? last_updated[1].trim() : '';
+  if (!generated_at) {
+    try {
+      const mtime = fs.statSync(f).mtime;
+      const pad = (n: number) => String(n).padStart(2, '0');
+      generated_at = `${mtime.getFullYear()}-${pad(mtime.getMonth() + 1)}-${pad(mtime.getDate())}T${pad(mtime.getHours())}:${pad(mtime.getMinutes())}`;
+    } catch {
+      generated_at = '';
+    }
   }
   const findings = parse_findings(text);
   let review_map: Record<string, any> = {};

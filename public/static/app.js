@@ -115,7 +115,6 @@ const NAV_LAYOUTS = {
       items: [
         { type: 'view', key: 'dashboard', label: 'Dashboard', countKey: 'dashboard' },
         { type: 'view', key: 'tasktracker', label: 'Task Tracker' },
-        { type: 'view', key: 'intake', label: 'Daily Intake', countKey: 'intake' },
         { type: 'view', key: 'board', label: 'Workflow Board', countKey: 'board' },
       ],
     },
@@ -162,14 +161,6 @@ document.querySelectorAll('input[name="company"]').forEach((el) => {
     renderNavMenu();
     showView(CURRENT_VIEW);
   });
-});
-
-document.getElementById('newIntakeBtn').addEventListener('click', async () => {
-  CURRENT_VIEW = 'intake';
-  setNavActive('intake');
-  await showView('intake');
-  const noteInput = document.getElementById('iNote');
-  if (noteInput) noteInput.focus();
 });
 
 function setNavActive(view) {
@@ -369,7 +360,6 @@ async function showView(view) {
     await refreshIntegrationSidebar();
     if (view === 'dashboard') return renderDashboard();
     if (view === 'tasktracker') return renderTaskTracker();
-    if (view === 'intake') return renderIntake();
     if (view === 'board') return renderBoard();
     if (view === 'team') return renderTeamMembers();
     if (view === 'departments') return renderDepartments();
@@ -798,8 +788,7 @@ function renderHeroSection(overview, intakes) {
           <div class="hero-title">${escapeHtml(brand.full)} Governance Workbench</div>
           <div class="hero-copy">${escapeHtml(brand.copy)}</div>
           <div class="hero-actions">
-            <button class="btn btn-light btn-sm fw-semibold" type="button" onclick="showView('intake')">Drop today's work</button>
-            <button class="btn btn-outline-light btn-sm" type="button" onclick="showView('board')">Open workflow board</button>
+            <button class="btn btn-light btn-sm fw-semibold" type="button" onclick="showView('board')">Open workflow board</button>
             <button class="btn btn-outline-light btn-sm" type="button" onclick="showView('classification')">Review repo categories</button>
           </div>
           <div class="hero-metrics mt-4">
@@ -1030,8 +1019,21 @@ async function initIntakeForm(prefix) {
   const input = document.getElementById(`${prefix}FileInput`);
   const staged = document.getElementById(`${prefix}Staged`);
   const createBtn = document.getElementById(`${prefix}CreateBtn`);
+  const noteInput = document.getElementById(`${prefix}Note`);
   if (!dropzone || !input) return;
   if (!window.__stagedIntake) window.__stagedIntake = {};
+
+  // Create intake requires an employee, a task description (note), and file(s).
+  function intakeFormValid() {
+    const files = (window.__stagedIntake && window.__stagedIntake[prefix]) || [];
+    const employee = (employeeSelect && employeeSelect.value || '').trim();
+    const note = (noteInput && noteInput.value || '').trim();
+    return files.length > 0 && !!employee && !!note;
+  }
+
+  function refreshCreateEnabled() {
+    if (createBtn) createBtn.disabled = !intakeFormValid();
+  }
 
   function setStaged(fileList) {
     const files = Array.from(fileList || []);
@@ -1041,7 +1043,7 @@ async function initIntakeForm(prefix) {
         ? `<strong>${files.length} file(s) ready:</strong> ${files.map((f) => escapeHtml(f.name)).join(', ')}`
         : 'No files selected yet.';
     }
-    if (createBtn) createBtn.disabled = files.length === 0;
+    refreshCreateEnabled();
   }
 
   dropzone.addEventListener('click', () => input.click());
@@ -1053,11 +1055,19 @@ async function initIntakeForm(prefix) {
     setStaged(e.dataTransfer.files);
   });
   input.addEventListener('change', (e) => setStaged(e.target.files));
+  if (employeeSelect) employeeSelect.addEventListener('change', refreshCreateEnabled);
+  if (noteInput) noteInput.addEventListener('input', refreshCreateEnabled);
+  refreshCreateEnabled();
 
   if (createBtn) {
     createBtn.addEventListener('click', async () => {
       const files = (window.__stagedIntake && window.__stagedIntake[prefix]) || [];
-      if (!files.length) return;
+      if (!intakeFormValid()) {
+        if (!files.length) showToast('Please attach at least one file.', 'error');
+        else if (!(employeeSelect && employeeSelect.value)) showToast('Please select an employee.', 'error');
+        else showToast('Please enter a task description.', 'error');
+        return;
+      }
       createBtn.disabled = true;
       await uploadFiles(prefix, files);
       window.__stagedIntake[prefix] = [];
@@ -1104,8 +1114,8 @@ async function uploadFiles(prefix, fileList) {
       </div>
     `;
     await refreshNavCounts();
-    showToast(`Intake #${payload.intake_id} created — continue in Daily Intake.`, 'success');
-    showView('intake');
+    showToast(`Intake #${payload.intake_id} created — continue on the Workflow Board.`, 'success');
+    showView('board');
   } catch (error) {
     status.innerHTML = `<div class="alert alert-danger">Upload failed: ${escapeHtml(error.message)}</div>`;
     await showAlert('The intake upload could not complete.', { title: 'Upload failed', kind: 'alert', detail: error.message });
@@ -1160,8 +1170,6 @@ async function renderDashboard() {
     ${renderHeroSection(overview, intakes)}
     <h2>Dashboard - ${escapeHtml(overview.company_full)}</h2>
     <div class="small text-muted mb-3">GitHub account: <code>${escapeHtml(overview.gh_account)}</code></div>
-
-    ${renderQuickIntakeSection()}
 
     <div class="row mt-4">
       <div class="col-md-3"><div class="dash-card stat-card"><div class="label">Total intakes</div><div class="value">${overview.counts.intakes_total}</div></div></div>
@@ -1220,9 +1228,8 @@ async function renderDashboard() {
     ${renderDepartmentDirectory(departmentData)}
 
     <h3 class="mt-3">Recent intakes</h3>
-    ${intakes.slice(0, 10).map(renderIntakeRow).join('') || '<div class="text-muted">No intakes yet. Use the Daily Intake tab to upload.</div>'}
+    ${intakes.slice(0, 10).map(renderIntakeRow).join('') || '<div class="text-muted">No intakes yet.</div>'}
   `;
-  await initIntakeForm('quick');
 }
 
 // ============================================================================
@@ -2388,7 +2395,7 @@ async function openIntake(intakeId) {
   const exchanges = data.exchanges || [];
   document.getElementById('mainView').innerHTML = `
     <button class="btn btn-sm btn-outline-secondary mb-2" onclick="showView('${CURRENT_VIEW}')">Back</button>
-    <h2>Intake #${intake.id} <span class="small text-muted">${escapeHtml(intake.uploaded_at.slice(0, 16))}</span></h2>
+    <h2>Intake #${intake.id} <span class="small text-muted">${escapeHtml(intake.uploaded_at.slice(0, 10))}</span></h2>
     ${renderEngineBadges(intake.ai_engines, intake.stage)}
 
     <div class="detail-grid">
@@ -3342,7 +3349,7 @@ async function sendTeamMemberQuickChat(memberKey) {
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || !payload.ok) {
-      throw new Error(payload.reason || `HTTP ${response.status}`);
+      throw new Error(payload.reason || payload.error || `HTTP ${response.status}`);
     }
     appendMemberQuestionChatMessage('assistant', engine, payload.response_text || '(No response text returned)');
     if (status) status.textContent = `${engine} responded using ${payload.question_count || packet.totalCount} assigned questions.`;
@@ -3788,6 +3795,13 @@ async function exportTeamMemberQuestionPacket(memberKey) {
       body: JSON.stringify({}),
     });
     const payload = await response.json().catch(() => ({}));
+    if (response.ok && payload.empty) {
+      // Expected empty state — inform, do not treat as a failure.
+      hideProcessing();
+      showToast(payload.reason || 'No questions to export yet.', 'info');
+      if (status) status.textContent = payload.reason || 'No questions to export yet.';
+      return;
+    }
     if (!response.ok || !payload.ok) {
       throw new Error(payload.error || payload.reason || `HTTP ${response.status}`);
     }
@@ -5005,7 +5019,7 @@ async function sendMemberQuestionChat() {
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || !payload.ok) {
-      throw new Error(payload.reason || `HTTP ${response.status}`);
+      throw new Error(payload.reason || payload.error || `HTTP ${response.status}`);
     }
     appendMemberQuestionChatMessage('assistant', engine, payload.response_text || '(No response text returned)');
     renderMemberQuestionDocument();
@@ -5742,7 +5756,7 @@ function renderQuestionGroup(questions, teamCounts = []) {
     memberOptions.unshift({ value: 'Ryan Cochran', label: 'Ryan Cochran' });
   }
   const cards = questions.map((question) => `
-    <div class="q-card priority-${question.priority}">
+    <div class="q-card priority-${question.priority}" id="qcard-${escapeHtml(question.qid)}">
       <div class="q-card-head">
         <span class="qid">${escapeHtml(question.qid)}</span>
         <span class="q-card-badges">
@@ -5762,6 +5776,13 @@ function renderQuestionGroup(questions, teamCounts = []) {
         </select>
         <button class="btn btn-sm btn-outline-primary q-card-open" onclick="openMemberQuestionDocument('${escapeJs(memberKeyFromAssigneeName(question.assignee || 'Ryan Cochran'))}', { anchorQid: '${escapeJs(question.qid)}', sourceView: 'questions' })">Open packet</button>
       </div>
+      <details class="q-card-answer">
+        <summary>Answer this question</summary>
+        <textarea class="form-control form-control-sm q-answer-input mt-2" id="qanswer-${escapeHtml(question.qid)}" rows="3" placeholder="Type the answer. On save it is committed to the assignee's folder under Governance_Files/Priority_Questions/."></textarea>
+        <div class="d-flex justify-content-end mt-2">
+          <button class="btn btn-sm btn-primary q-answer-save" type="button" onclick="savePriorityQuestionAnswer('${escapeJs(question.qid)}')">Save Answer</button>
+        </div>
+      </details>
     </div>
   `).join('');
   return `<div class="q-card-grid">${cards}</div>`;
@@ -5773,6 +5794,44 @@ async function saveQuestionAssignment(qid, assignee) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ company: CURRENT_COMPANY, qid, assignee }),
   });
+}
+
+// Answer a Priority Question: commit a Markdown answer to the assignee's folder
+// under Governance_Files/Priority_Questions/ (reuses the Task Tracker GitHub
+// integration), then remove only this answered question from the UI.
+async function savePriorityQuestionAnswer(qid) {
+  const card = document.getElementById(`qcard-${qid}`);
+  if (!card) return;
+  const answerEl = document.getElementById(`qanswer-${qid}`);
+  const answer = (answerEl && answerEl.value || '').trim();
+  if (!answer) {
+    showToast('Please enter an answer.', 'error');
+    return;
+  }
+  const select = card.querySelector('.q-card-select');
+  const employee = (select && select.value) || 'Ryan Cochran';
+  const title = (card.querySelector('.q-card-title')?.textContent || '').trim();
+  const shortText = (card.querySelector('.q-card-text')?.textContent || '').trim();
+  const question = [title, shortText].filter(Boolean).join(' — ');
+  const btn = card.querySelector('.q-answer-save');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+  try {
+    const response = await fetch('/api/priority_questions/answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ company: CURRENT_COMPANY, qid, employee, answered_by: employee, question, answer }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok) {
+      throw new Error(payload.error || payload.reason || `HTTP ${response.status}`);
+    }
+    showToast('Answer saved successfully.', 'success');
+    // Remove only this answered question; the rest of the list is untouched.
+    card.remove();
+  } catch (error) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Save Answer'; }
+    showToast(`Save failed: ${error.message}`, 'error');
+  }
 }
 
 function scrollToQuestionGroup(memberKey) {

@@ -100,3 +100,88 @@ export async function createFileOnGitHub(
     error: (data && (data.message as string)) || `GitHub API error (HTTP ${res.status})`,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Shared helpers reused by the Task Tracker and Priority Questions features:
+// filename slugging, local timestamps, and unique-file commits.
+// ---------------------------------------------------------------------------
+
+export class GitHubCommitError extends Error {
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
+export function pad2(n: number): string {
+  return String(n).padStart(2, '0');
+}
+
+// Lowercase, spaces/hyphens -> underscores, drop special characters. Used for
+// employee names in file/folder names (e.g. "Pooja Wable" -> "pooja_wable").
+export function slugifyName(name: string): string {
+  const slug = String(name || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s_-]+/g, '')
+    .replace(/[\s-]+/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  return slug || 'unknown';
+}
+
+export interface LocalStamp {
+  datePart: string; // YYYY-MM-DD
+  timePart: string; // HH-mm-ss (filename-safe)
+  timeDisplay: string; // h:mm AM/PM
+  createdAt: string; // YYYY-MM-DDTHH:mm:ss
+}
+
+// Local (server-time) timestamp pieces used for filenames and Markdown bodies.
+export function localStamp(now: Date = new Date()): LocalStamp {
+  const datePart = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}-${pad2(now.getDate())}`;
+  const timePart = `${pad2(now.getHours())}-${pad2(now.getMinutes())}-${pad2(now.getSeconds())}`;
+  let hour12 = now.getHours() % 12;
+  if (hour12 === 0) hour12 = 12;
+  const timeDisplay = `${hour12}:${pad2(now.getMinutes())} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+  const createdAt = `${datePart}T${pad2(now.getHours())}:${pad2(now.getMinutes())}:${pad2(now.getSeconds())}`;
+  return { datePart, timePart, timeDisplay, createdAt };
+}
+
+export interface CommitUniqueResult {
+  filename: string;
+  repoPath: string;
+  data: any;
+}
+
+/**
+ * Commit `content` as a new Markdown file under `dirPath` in the repo, keeping
+ * the filename unique. Tries `<baseName>.md`; on a 422 (path already exists)
+ * retries with a numeric suffix. Throws GitHubCommitError on any other failure
+ * or if a unique name can't be found. Reused by Task Tracker and Priority
+ * Questions so the commit/retry logic lives in one place.
+ */
+export async function commitUniqueMarkdown(
+  cfg: GitHubConfig,
+  dirPath: string,
+  baseName: string,
+  content: string,
+  messageFor: (filename: string) => string,
+): Promise<CommitUniqueResult> {
+  let lastError = '';
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const filename = attempt === 0 ? `${baseName}.md` : `${baseName}_${attempt + 1}.md`;
+    const repoPath = `${dirPath}/${filename}`;
+    const result = await createFileOnGitHub(cfg, repoPath, content, messageFor(filename));
+    if (result.ok) {
+      return { filename, repoPath, data: result.data };
+    }
+    lastError = result.error || `GitHub API error (HTTP ${result.status})`;
+    console.error(`[github] commit failed (HTTP ${result.status}): ${lastError}`);
+    if (result.status !== 422) {
+      throw new GitHubCommitError(lastError, result.status);
+    }
+  }
+  throw new GitHubCommitError(lastError || 'Could not find a unique filename', 409);
+}

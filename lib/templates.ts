@@ -12,7 +12,7 @@ export function renderIndexHtml(): string {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/styles.css?v=20260710a">
+  <link rel="stylesheet" href="/static/styles.css?v=20260710b">
 </head>
 <body>
 
@@ -31,7 +31,6 @@ export function renderIndexHtml(): string {
     </div>
   </div>
   <div class="d-flex align-items-center gap-2">
-    <button class="btn btn-warning btn-sm fw-semibold" id="newIntakeBtn" type="button">+ New Intake</button>
     <div class="text-light small text-end" id="statusBar"></div>
   </div>
 </nav>
@@ -70,7 +69,7 @@ export function renderIndexHtml(): string {
   </div>
 </div>
 
-  <script src="/static/app.js?v=20260710a"></script>
+  <script src="/static/app.js?v=20260710b"></script>
 </body>
 </html>`;
 }

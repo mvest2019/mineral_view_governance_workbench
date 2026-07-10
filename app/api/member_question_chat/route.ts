@@ -30,8 +30,17 @@ export const POST = route(async (req: NextRequest) => {
     abort(400, 'company, member_key, engine, and prompt are required');
   }
 
-  const packet = build_member_question_packet(company, member_key);
-  const prompt = build_member_question_chat_prompt(company, packet, user_prompt, session_notes);
+  // Assembling the question packet is read-only but can throw on unexpected data
+  // shapes. Guard it so a packet problem surfaces as a clear 400 instead of a
+  // bare "internal_error" 500.
+  let packet: any;
+  let prompt: string;
+  try {
+    packet = build_member_question_packet(company, member_key);
+    prompt = build_member_question_chat_prompt(company, packet, user_prompt, session_notes);
+  } catch (err) {
+    abort(400, `Could not assemble the question packet: ${(err as Error).message || 'unknown error'}`);
+  }
 
   if (engine === 'Claude Code') {
     if (!claude_cli_available()) {

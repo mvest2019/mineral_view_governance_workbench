@@ -35,7 +35,6 @@ import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 void REPO_CATEGORIES;
 void WORKFLOW_STAGES;
 void GATE_NAMES;
-void DATA_DIR;
 void GH_EXE;
 void GIT_EXE;
 
@@ -161,18 +160,28 @@ export function get_company(c: string): Dict {
   return (COMPANIES as Dict)[c];
 }
 
-export function get_intake_dir(company: string): string {
+// Writable base for runtime-generated governance files (intake uploads, meeting
+// notes, team-member files). Locally this is the company root (the bundled
+// Governance_Files folder, which is writable). On a read-only serverless host
+// (Vercel) that bundle cannot be written to, so fall back to the writable
+// DATA_DIR — the same pattern lib/paths.ts already uses for the DB and settings.
+// This turns EROFS "internal_error" 500s into working writes.
+export function governance_write_root(company: string): string {
   const cfg = get_company(company);
-  const d = path.join(cfg['root'], '_GOVERNANCE', '_INTAKE');
+  const isServerless = Boolean(process.env.VERCEL || process.env.WORKBENCH_SERVERLESS);
+  return isServerless ? path.join(DATA_DIR, company) : cfg['root'];
+}
+
+export function get_intake_dir(company: string): string {
+  const d = path.join(governance_write_root(company), '_GOVERNANCE', '_INTAKE');
   fs.mkdirSync(d, { recursive: true });
   return d;
 }
 
 export function get_team_member_files_dir(company: string, member_key: string): string {
-  const cfg = get_company(company);
   let safeMember = String(member_key || 'unknown').replace(/[^A-Za-z0-9_]+/g, '_');
   safeMember = pyStrip(safeMember, '_') || 'unknown';
-  const target = path.join(cfg['root'], '_GOVERNANCE', '_TEAM_MEMBER_FILES', safeMember);
+  const target = path.join(governance_write_root(company), '_GOVERNANCE', '_TEAM_MEMBER_FILES', safeMember);
   fs.mkdirSync(target, { recursive: true });
   return target;
 }
@@ -1085,7 +1094,7 @@ export function merged_departments_for_member(company: string, member_key: strin
 }
 
 export function meetings_dir_for_company(company: string): string {
-  const target = path.join(get_company(company)['root'], '_GOVERNANCE', '_MEETINGS');
+  const target = path.join(governance_write_root(company), '_GOVERNANCE', '_MEETINGS');
   fs.mkdirSync(target, { recursive: true });
   return target;
 }

@@ -11,7 +11,10 @@ export const POST = route(
     const db = getDb();
     const exported = export_team_member_question_packet(db, company, member_key, 'Ryan');
     if (!exported) {
-      return json({ ok: false, reason: 'No NEW or NEEDS_FOLLOW_UP questions available.' }, 400);
+      // Not an error — this member simply has no exportable questions right now.
+      // Return 200 with an `empty` flag so the UI shows an informational message
+      // instead of surfacing a hard "Export failed" error.
+      return json({ ok: false, empty: true, reason: 'No NEW or NEEDS_FOLLOW_UP questions to export.' });
     }
     return json({ ok: true, ...exported });
   },
