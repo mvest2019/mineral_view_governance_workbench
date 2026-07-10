@@ -512,3 +512,63 @@ The dossier bundles MVestimate value, royalty income, and reserve life — all e
 The task lists scheduled-email stats and personalized email scheduling as shipped, with no mention of consent capture, unsubscribe handling, or what member data personalizes the message.
 
 **Needed:** the lawful basis for these sends, the opt-out path, and confirmation that dossier-derived estimates are not being asserted as fact in email copy.
+
+### Q-AI-0049 — Is Claude's connection to the Production database — users, payments, subscriptions, activity logs — approved, and is read-only enforced at the database role level?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is Claude's connection to the Production database — users, payments, subscriptions, activity logs — approved, and is read-only enforced at the database role level?
+
+The task states Claude now queries the `Production` database and inspected users, subscriptions, payments, notifications, and activity logs. That is live customer PII and payment data reachable by an AI tool.
+
+**Needed:** (a) written approval for AI access to production PII, (b) confirmation that "read-only" is a granted DB role and not just an intention, (c) whether these queries are audit-logged. Also note the initial MongoDB connection failed and was "reworked" — what changed in that config, and where do the credentials now live? This intersects with the open **Rotate exposed secrets and keys** item.
+
+### Q-AI-0050 — Does repositioning the Operator Glossary as a data glossary with benchmarks and operational diagnostics stay inside the P2 no-advice boundary?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does repositioning the Operator Glossary as a data glossary with benchmarks and operational diagnostics stay inside the P2 no-advice boundary?
+
+The new framework and rubric explicitly reward "data-driven insight, benchmarks, regulatory context, and operational diagnostics" over definitional content, and a page cannot pass on structural compliance alone — it must tell the reader something they can't get elsewhere.
+
+**Risk:** benchmark + diagnostic framing on operator pages is the closest content has come to prescriptive guidance. Constitution P2 (data, not advice) and P3 (estimates are modeled) apply. Does the rubric award or deduct points for disclaimer presence, and who from Legal signed off on the repositioning?
+
+### Q-AI-0051 — The JOA glossary page has an unfilled live data placeholder in published content — is that page live, and what is the fix SLA?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — The JOA glossary page has an unfilled live data placeholder in published content — is that page live, and what is the fix SLA?
+
+The audit found an unfilled live data placeholder plus a verbatim duplicate paragraph and a "P-4" → "P-$" typo on the Joint Operating Agreement page. Findings were "forwarded to the content team" with no owner or date attached.
+
+**Needed:** confirm whether the page is publicly indexed today, who owns remediation, and whether an unfilled live-data placeholder counts as a P4 provenance/vintage violation requiring the page be pulled rather than queued.
+
+### Q-AI-0052 — Who approves the Operator Glossary Audit Rubric and its 90-point publication threshold, and does it apply retroactively to already-published operator pages?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Who approves the Operator Glossary Audit Rubric and its 90-point publication threshold, and does it apply retroactively to already-published operator pages?
+
+A single contributor built a 100-point rubric with a hard 90-point publication gate and a new framework mapping all six Operator Hub tools into content. This is a standing editorial standard, not a one-off deliverable.
+
+**Needed:** named approver (Ryan? content lead?), where the rubric lives as a governed artifact, and whether existing operator pages are re-scored against it or grandfathered. Without this, the rubric is authoritative in practice but unowned on paper.
+
+### Q-AI-0053 — Where does the manual tracking sheet holding registrations, lease claims, paid-user activity, and Contact Us details live, and is it a governed PII store?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Where does the manual tracking sheet holding registrations, lease claims, paid-user activity, and Contact Us details live, and is it a governed PII store?
+
+Daily monitoring consolidates new-user registrations, per-user lease claim counts, paid-user feature interactions, and Contact Us submissions into an "internal tracking sheet" — customer PII and behavioral data sitting outside PostgreSQL/MongoDB.
+
+**Needed:** location, access list, retention policy, and whether this sheet is ever treated as a source of truth. Compare to the `MineralView_Operations` Drive folder pattern already used for dossier PII.
+
+### Q-AI-0054 — For the Nov 2025–Jul 2026 organic traffic report, which system is authoritative when Ahrefs, Google Analytics, and internal registration counts disagree?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — For the Nov 2025–Jul 2026 organic traffic report, which system is authoritative when Ahrefs, Google Analytics, and internal registration counts disagree?
+
+Nine months of history were assembled retroactively across four metrics from three systems (Ahrefs, GA, internal registration data), with sources chosen per-month based on "where accurate historical figures could be sourced."
+
+**Needed:** a documented precedence rule and a note on which months were backfilled versus captured contemporaneously. Mineral Owner vs Professional registration counts also need a single canonical source — Cerebro or the `Production` database — before this becomes the baseline for period-over-period reporting.
