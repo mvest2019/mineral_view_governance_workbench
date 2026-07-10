@@ -35,6 +35,7 @@ import { claude_cli_available, run_claude } from '@/lib/claude_cli';
 void REPO_CATEGORIES;
 void WORKFLOW_STAGES;
 void GATE_NAMES;
+void DATA_DIR;
 void GH_EXE;
 void GIT_EXE;
 
@@ -165,21 +166,6 @@ export function get_intake_dir(company: string): string {
   const d = path.join(cfg['root'], '_GOVERNANCE', '_INTAKE');
   fs.mkdirSync(d, { recursive: true });
   return d;
-}
-
-// Task Tracker storage: reuses the company governance root (the bundled
-// Governance_Files folder when present) so task notes land in
-// Governance_Files/task_tracker/. Mirrors get_intake_dir / meetings_dir_for_company.
-// On a read-only serverless host (e.g. Vercel) the bundled root is not writable,
-// so fall back to the writable DATA_DIR (which resolves to /tmp there), keeping
-// the same task_tracker/ folder name.
-export function task_tracker_dir(company: string): string {
-  const cfg = get_company(company);
-  const isServerless = Boolean(process.env.VERCEL || process.env.WORKBENCH_SERVERLESS);
-  const base = isServerless ? DATA_DIR : cfg['root'];
-  const target = path.join(base, 'task_tracker');
-  fs.mkdirSync(target, { recursive: true });
-  return target;
 }
 
 export function get_team_member_files_dir(company: string, member_key: string): string {

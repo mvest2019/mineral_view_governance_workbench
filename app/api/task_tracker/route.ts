@@ -1,10 +1,15 @@
-import fs from 'fs';
-import path from 'path';
 import { NextRequest } from 'next/server';
 import { abort, json, route } from '@/lib/http';
-import { task_tracker_dir } from '@/lib/helpers';
+import {
+  createFileOnGitHub,
+  getGitHubConfig,
+  GitHubConfigError,
+} from '@/lib/github';
 
 export const dynamic = 'force-dynamic';
+
+// Repo-relative folder the task notes are committed under.
+const TASK_TRACKER_REPO_DIR = 'Governance_Files/task_tracker';
 
 function pad(n: number): string {
   return String(n).padStart(2, '0');
@@ -46,6 +51,18 @@ export const POST = route(async (req: NextRequest) => {
     abort(400, 'Please enter a task description.');
   }
 
+  // GitHub is the store — resolve credentials before doing any work.
+  let cfg;
+  try {
+    cfg = getGitHubConfig();
+  } catch (err) {
+    if (err instanceof GitHubConfigError) {
+      console.error('[task_tracker] GitHub not configured:', err.message);
+      abort(500, err.message);
+    }
+    throw err;
+  }
+
   const employeeName = employeeDisplayName(employeeRaw);
   const now = new Date();
   const datePart = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
@@ -56,16 +73,6 @@ export const POST = route(async (req: NextRequest) => {
   const timeDisplay = `${hour12}:${pad(now.getMinutes())} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
 
   const slug = slugifyEmployee(employeeName);
-  const dir = task_tracker_dir(company);
-
-  // Guarantee a unique filename even if two tasks land in the same second.
-  const base = `${datePart}_${timePart}_${slug}_task`;
-  let filename = `${base}.md`;
-  let counter = 2;
-  while (fs.existsSync(path.join(dir, filename))) {
-    filename = `${base}_${counter}.md`;
-    counter += 1;
-  }
 
   const content = [
     '# Task Tracker',
@@ -92,16 +99,35 @@ export const POST = route(async (req: NextRequest) => {
     '',
   ].join('\n');
 
-  const outputPath = path.join(dir, filename);
-  fs.writeFileSync(outputPath, content, 'utf-8');
-
-  return json({
-    ok: true,
-    company,
-    employee: employeeRaw,
-    employee_name: employeeName,
-    filename,
-    path: outputPath,
-    folder: dir,
-  });
+  // Commit to GitHub. A 422 means the path already exists (same-second collision)
+  // — retry with a numeric suffix so filenames stay unique. Any other failure is
+  // surfaced to the client (no success, form is left intact).
+  const base = `${datePart}_${timePart}_${slug}_task`;
+  let lastError = '';
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const filename = attempt === 0 ? `${base}.md` : `${base}_${attempt + 1}.md`;
+    const repoPath = `${TASK_TRACKER_REPO_DIR}/${filename}`;
+    const commitMessage = `Task Tracker: add task for ${employeeName} (${filename})`;
+    const result = await createFileOnGitHub(cfg, repoPath, content, commitMessage);
+    if (result.ok) {
+      return json({
+        ok: true,
+        company,
+        employee: employeeRaw,
+        employee_name: employeeName,
+        filename,
+        repo_path: repoPath,
+        branch: cfg.branch,
+        commit: result.data?.commit?.sha || null,
+        html_url: result.data?.content?.html_url || null,
+      });
+    }
+    lastError = result.error || `GitHub API error (HTTP ${result.status})`;
+    console.error(`[task_tracker] commit failed (HTTP ${result.status}): ${lastError}`);
+    if (result.status !== 422) {
+      // Not a name collision — stop and report.
+      abort(502, `Could not save task to GitHub: ${lastError}`);
+    }
+  }
+  abort(409, `Could not save task to GitHub after multiple attempts: ${lastError}`);
 });
