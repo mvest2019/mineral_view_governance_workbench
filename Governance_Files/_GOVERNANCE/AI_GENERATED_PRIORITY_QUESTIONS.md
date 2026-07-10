@@ -253,3 +253,67 @@ The task describes "scrubbing" prior content and rebuilding the page. It is uncl
 Content replacement on an indexed public page is a change to a reviewed artifact; `Compliance_And_Disclaimers.md` §7 requires the result to be logged in the decision log.
 
 **Needed:** confirm URL/redirect handling, whether the replaced copy carried approved disclaimer language that was dropped, and where the change was recorded.
+
+### Q-AI-0025 — Is the four-option layout switcher a client-review-only tool, or will it ship to production users?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is the four-option layout switcher a client-review-only tool, or will it ship to production users?
+
+The floating global switcher (Original / Option 1 / Option 2 / Option 3) now governs every page, including public marketing pages (Home, Pricing, FAQ). A switcher visible to real visitors means the public site has four different presentations of the same pricing and claims.
+
+**Needed:** confirm the switcher is gated to a preview/staging environment, and define who removes it (and the losing options) before release.
+
+### Q-AI-0026 — Does the new Monthly/Annual billing selector on the Pricing page reflect an approved annual price, or is it a design placeholder?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Does the new Monthly/Annual billing selector on the Pricing page reflect an approved annual price, or is it a design placeholder?
+
+Pricing Option 1 introduces a "segmented Monthly/Annual billing selector," but the governance corpus records only monthly Mineral-Owner figures ($49.99 / $99.99, still unconfirmed under Q-A) and no approved annual rates or discount.
+
+Pricing copy is a **High** claim-risk surface requiring Legal + Ryan approval. A billing toggle that displays an unapproved or invented annual price is a pricing decision made in a prototype.
+
+**Needed:** confirm whether annual billing exists, its rates, and whether Braintree/Cybersource (Q-B) supports it.
+
+### Q-AI-0027 — Did replacing the Pricing FAQ accordion with "informational cards" drop any required disclaimer, refund, or billing-terms language?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Did replacing the Pricing FAQ accordion with "informational cards" drop any required disclaimer, refund, or billing-terms language?
+
+The task says the "lengthy FAQ accordion" was replaced with "cleaner informational cards." Pricing-page FAQs typically carry refund, cancellation, and no-advice language that `Compliance_And_Disclaimers.md` says **must not** be weakened or removed by any contributor or AI agent, and that public copy must not contradict the Terms.
+
+**Needed:** a diff of removed FAQ text against the Terms/refund policy, and Legal sign-off if any disclaimer-bearing content was shortened or dropped.
+
+### Q-AI-0028 — Do the smoothed, gradient-filled production charts still distinguish a reporting gap from a true zero?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Do the smoothed, gradient-filled production charts still distinguish a reporting gap from a true zero?
+
+Constitution P4 and `Data_Provenance_And_Freshness.md` require that a `prod_report = N` zero render as a **gap**, not as ended production. "Smoother line rendering" plus a gradient area fill can visually interpolate across missing months, turning a not-yet-reported gap into an apparent continuous curve — a provenance regression disguised as a styling change.
+
+**Needed:** confirm the chart library's null/gap handling was preserved, and that no smoothing alters plotted values.
+
+### Q-AI-0029 — Do the redesigned operator cards still show source and as-of vintage for Permits, Completions, and Production Trends?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Do the redesigned operator cards still show source and as-of vintage for Permits, Completions, and Production Trends?
+
+The "Know Your Operators" cards were restructured for consistent height, with descriptions "standardized to a fixed height" and stats aligned to a baseline. Fixed-height truncation can silently clip "Source: Texas RRC" and pull-date labels that P4 requires on every customer-facing figure.
+
+**Needed:** confirm each stat still carries its source + vintage after the layout change.
+
+### Q-AI-0030 — Have the CSS-only layout transformations on Home been checked for SEO and accessibility regressions?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Have the CSS-only layout transformations on Home been checked for SEO and accessibility regressions?
+
+Home Options 1–3 achieve "completely different layout presentations" while keeping the HTML identical — meaning visual order now diverges from DOM order (hero repositioned, feature grid re-flowed, "How It Works" turned into a timeline).
+
+This affects a governed SEO surface (`Mview-Presentation-Next`) and screen-reader reading order. CSS reordering can also break the heading hierarchy crawlers rely on.
+
+**Needed:** confirm keyboard/screen-reader order and heading structure were validated per option, not just responsive breakpoints.
