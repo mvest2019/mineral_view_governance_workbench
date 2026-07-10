@@ -377,3 +377,78 @@ The task references "extensive SQL-based data quality checks" for missing values
 The task states that duplicates, inconsistencies, and referential-integrity issues were *identified*, and separately that backfill scripts were run for null/empty values. It does not say the integrity failures were fixed, quantified, or ticketed.
 
 **Needed:** a count of open data-quality defects carried forward, and where they are tracked — this parallels the unresolved `MVEstimate = $0` / `NaN` issues Vaishnavi reported to Nikhil, which also have no owner or due date recorded.
+
+### Q-AI-0037 — Are Task Tracker intakes and governance records stored durably, or does the "intakes disappear" defect mean governance records are being lost?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Are Task Tracker intakes and governance records stored durably, or does the "intakes disappear" defect mean governance records are being lost?
+
+The report logs a Critical/P0 defect: intakes vanish some time after creation. In a governance tool, a disappearing intake is not a UI bug — it is loss of an auditable record, which conflicts with the provenance/vintage discipline in non-negotiable **P4** (every figure traceable to source and pull date).
+
+**Needed:** confirmation of where intakes are persisted (ephemeral serverless storage vs. database vs. the `Governance_Files` GitHub commit path described in Aboli Mundralkar's 2026-07-10 task), and whether any records created during testing were permanently lost.
+
+### Q-AI-0038 — When the Claude bridge fails, should an intake fail closed (block) or advance through the workflow without AI review?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — When the Claude bridge fails, should an intake fail closed (block) or advance through the workflow without AI review?
+
+D-02 blocks the Workflow Board "Run" action and D-04 blocks "Open/Process this intake," both on the Claude AI-review path. Aboli Mundralkar's task separately records "analyzed communication failures" on the Claude bridge.
+
+The undecided governance rule is the **failure mode**: if Claude is unreachable, must the intake stop at its current stage with an explicit error, or may it advance to Findings/Questions without an AI review pass? Silent fail-open would let unreviewed intakes reach downstream governance surfaces.
+
+**Decision needed:** an explicit fail-closed vs. fail-open policy, plus who is paged when the bridge is down.
+
+### Q-AI-0039 — Is it approved to post Governance Workbench screenshots to the public prnt.sc image host?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Is it approved to post Governance Workbench screenshots to the public prnt.sc image host?
+
+Twelve of the sixteen defects cite evidence hosted on `prnt.sc`, a public screenshot service. Those screenshots are of Team Members, Findings for Review, Priority Questions, and Daily Intake screens — surfaces that may render employee names (Ryan Cochran is named explicitly), internal governance findings, and potentially owner-scoped data.
+
+Public paste/screenshot hosts are indexable and generally not deletable in practice.
+
+**Needed:** a ruling on whether this evidence must be moved to an internal store and the existing links revoked, and a standing rule for where QA evidence lives.
+
+### Q-AI-0040 — Which defect log is authoritative, given the summary says 14 defects but lists 16 with duplicated and mismatched IDs?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**1. Short Question** — Which defect log is authoritative, given the summary says 14 defects but lists 16 with duplicated and mismatched IDs?
+
+The report is internally inconsistent in ways that break traceability:
+
+- Claims **14 defects**; the tables list **D-01 through D-16**.
+- **D-06 and D-12** are the same defect (Team Members AI Chat, same screenshot). **D-07 and D-13** are the same defect (Findings for Review wrong date, same screenshot).
+- **D-09, D-10, and D-11** all say "Same as D-10" — including D-10 referring to itself.
+- The narrative's cross-references do not match the table: it cites "intake-persistence issue — see D-08" (D-08 is a validation gap), "blocking Run error — see D-04" (the Run error is D-02), and "D-06 (validation gap)" (D-06 is AI Chat).
+
+The dev team and Nikhil have already received the issues sheet.
+
+**Needed:** confirmation of whether the shared sheet or this summary is canonical, and a corrected ID set before triage begins.
+
+### Q-AI-0041 — Was this testing run against production, and did it write real commits or records into the Governance_Files repository?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Was this testing run against production, and did it write real commits or records into the Governance_Files repository?
+
+Testing covered intake creation, meeting upload, task creation, and stage movement — all of which, per Aboli Mundralkar's task, commit Markdown files to `Governance_Files` via a GitHub token configured on Vercel.
+
+It is not stated which environment was exercised. If production, the governance corpus may now contain test intakes, test meetings, and test tasks that are indistinguishable from real records.
+
+**Needed:** confirmation of the test environment, and a cleanup/labeling plan for any test artifacts committed to the governance repo.
+
+### Q-AI-0042 — Who owns defect triage for the Workbench, and what severity bar blocks it from being used as the system of record?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**1. Short Question** — Who owns defect triage for the Workbench, and what severity bar blocks it from being used as the system of record?
+
+Severity and Priority in this report were assigned by the tester and offered "so the team can triage quickly" — there is no named triage owner, no SLA, and no stated exit criteria.
+
+The Workbench is the tool that now generates Priority Questions and commits governance records. Five open P0s (including data loss and a blocked AI-review path) sit against a tool that governance itself depends on.
+
+**Decision needed:** who ratifies severity, and whether any open P0 blocks the Workbench from being treated as authoritative for governance records in the interim.
