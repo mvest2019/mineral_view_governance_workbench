@@ -49,3 +49,57 @@ The new behavior removes default/sample questions so the page starts at zero. Th
 **1. Short Question** — What scope, owner, and audit trail apply to the GitHub token that auto-commits governance files from Vercel?
 
 The workflow uses a GitHub token configured in Vercel to commit Task Tracker and Priority Question files automatically. We need the least-privilege scope (single repo, contents-only), the named human owner, the rotation schedule, and confirmation that bot commits are distinguishable from human commits in the governance history.
+
+### Q-AI-0007 — Which repository and branch are governance records auto-committed to, and is direct-to-main commit allowed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which repository and branch are governance records auto-committed to, and is direct-to-main commit allowed?
+
+The task covers GitHub integration for automatically saving governance records, but the target repo, branch, and commit path are not documented anywhere in the corpus. Governance records are constitutional-adjacent artifacts; committing them straight to a default branch with no PR or review bypasses the change-class controls described in `00_MASTER_GOVERNANCE_ARCHITECTURE.md`. Decision needed: target repo, target branch, and whether a PR/review gate is required.
+
+### Q-AI-0008 — Who owns the GitHub commit token, what scopes does it carry, and how often is it rotated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who owns the GitHub commit token, what scopes does it carry, and how often is it rotated?
+
+Automatic commits require a credential with write access. Missing: whether it is a fine-grained PAT, a machine/bot account, or a GitHub App; which repos and scopes it is limited to; who owns it; and its rotation cadence. This is distinct from the existing "rotate exposed secrets" item — that one is remediation, this one is the standing control for a *new* long-lived write credential.
+
+### Q-AI-0009 — Do auto-committed Task Tracker and Priority Question files contain PII, and does that conflict with the rule keeping member data out of git?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Do auto-committed Task Tracker and Priority Question files contain PII, and does that conflict with the rule keeping member data out of git?
+
+Krishna Sable's dossier work explicitly kept generated member files **out of git** because they hold member PII, storing them on Drive instead. The Governance Workbench now commits Task Tracker submissions and per-employee Priority Question answer folders directly to a repository. Task descriptions already contain employee names, member names/IDs (e.g. Shannon Deckert 3322), internal credentials discussion, and defect evidence links. Clarify what content classes are permitted in an auto-committed governance record, and whether the repo is private.
+
+### Q-AI-0010 — What happens to a governance record if the GitHub commit fails from Vercel?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — What happens to a governance record if the GitHub commit fails from Vercel?
+
+Vercel serverless functions have an ephemeral filesystem, so a failed or timed-out commit could silently lose a submitted task or answer. Needed: the failure behavior (retry, queue, surface an error to the user), and whether the record is durably stored anywhere before the commit is attempted.
+
+### Q-AI-0011 — Must a human approve Claude-generated Priority Questions before they are committed as governance records?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Must a human approve Claude-generated Priority Questions before they are committed as governance records?
+
+Aboli's workflow has Claude analyze a task and generate Priority Questions automatically; this task adds automatic commits. Combined, that means AI-authored content enters the governance corpus with no human in the loop. The governance model designates Nikhil as maintainer and Ryan as final approver — confirm whether that approval gate applies before commit, or only after.
+
+### Q-AI-0012 — Who owns the GitHub/Vercel commit-integration workstream, given two employees report the same investigation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who owns the GitHub/Vercel commit-integration workstream, given two employees report the same investigation?
+
+Aboli Mundralkar's 2026-07-10 task already reports "Investigated GitHub token configuration and deployment requirements for Vercel, including secure environment variable setup and repository permissions required for automatic commits" — the same scope now reported for Riya Wankhade, whose other tasks are scraper/data validation. Confirm the single owner so the credential and commit design has one accountable person.
