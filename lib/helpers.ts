@@ -3694,7 +3694,7 @@ export async function generate_priority_questions_from_task(
   }
 
   if (cfg) {
-    const created = await store_generated_questions_on_github(cfg, fresh, existingNormalized);
+    const created = await store_generated_questions_on_github(cfg, fresh, existingNormalized, member_key);
     return { ok: true, skipped: false, created, count: created.length, member_key, employee_display };
   }
 
@@ -3723,13 +3723,16 @@ export async function generate_priority_questions_from_task(
 // every serverless instance and persist across refreshes.
 export const GENERATED_PRIORITY_QUESTIONS_REPO_PATH = 'Governance_Files/_GOVERNANCE/AI_GENERATED_PRIORITY_QUESTIONS.md';
 
-// Format one generated question as a parse_questions()-compatible block.
-function format_generated_question_block(qid: string, title: string, priority: string, body: string): string {
+// Format one generated question as a parse_questions()-compatible block. The
+// **Employee:** line records which team member the task (and therefore the
+// question) belongs to, so it can be grouped under that employee when read back.
+function format_generated_question_block(qid: string, title: string, priority: string, body: string, member_key: string): string {
   const lines = [
     `### ${qid} — ${title}`,
     '',
     '**Status:** OPEN',
     `**6. Priority** — ${priority}`,
+    `**Employee:** ${member_key}`,
     `**1. Short Question** — ${title}`,
   ];
   if (body) {
@@ -3746,6 +3749,7 @@ async function store_generated_questions_on_github(
   cfg: GitHubConfig,
   fresh: Dict[],
   existingNormalized: Set<string>,
+  member_key: string,
 ): Promise<Dict[]> {
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const existing = await getFileFromGitHub(cfg, GENERATED_PRIORITY_QUESTIONS_REPO_PATH);
@@ -3768,7 +3772,7 @@ async function store_generated_questions_on_github(
       fileNormalized.add(norm);
       seq += 1;
       const qid = `Q-AI-${String(seq).padStart(4, '0')}`;
-      blocks.push(format_generated_question_block(qid, String(item['title']), String(item['priority']), String(item['body'] || '')));
+      blocks.push(format_generated_question_block(qid, String(item['title']), String(item['priority']), String(item['body'] || ''), member_key));
       created.push({ question_code: qid, title: item['title'], priority: item['priority'] });
     }
     if (!created.length) return []; // nothing new to write
@@ -3785,8 +3789,10 @@ async function store_generated_questions_on_github(
   return [];
 }
 
-// Read the durable generated Priority Questions from GitHub and shape them like
-// build_questions_payload's org-wide entries so /api/questions can merge them.
+// Read the durable generated Priority Questions from GitHub. Each question keeps
+// its `member_key` (the Task Tracker employee it was generated for) so it can be
+// grouped under that employee. Questions with no recorded employee (legacy) fall
+// back to org-wide.
 export async function read_generated_priority_questions(company: string): Promise<Dict[]> {
   let cfg: GitHubConfig;
   try {
@@ -3800,8 +3806,15 @@ export async function read_generated_priority_questions(company: string): Promis
   const assignments = get_question_assignment_map(db, company);
   const out: Dict[] = [];
   for (const q of parse_questions(file.content)) {
-    q['assignee'] = q['qid'] in assignments ? assignments[q['qid']] : 'Ryan Cochran';
-    q['owner_scope'] = 'org-wide';
+    const empMatch = /\*\*Employee:\*\*\s*([^\s*]+)/.exec(String(q['body'] || ''));
+    const member_key = empMatch ? empMatch[1].trim() : '';
+    q['member_key'] = member_key;
+    if (q['qid'] in assignments) {
+      q['assignee'] = assignments[q['qid']];
+    } else {
+      q['assignee'] = member_key ? pretty_member_name(member_key) : 'Ryan Cochran';
+    }
+    q['owner_scope'] = member_key ? 'employee' : 'org-wide';
     q['source'] = 'claude';
     q['context_items'] = [];
     out.push(q);
@@ -3809,25 +3822,71 @@ export async function read_generated_priority_questions(company: string): Promis
   return out;
 }
 
+// Merge the durable generated questions into a build_questions_payload() result:
+// each is grouped under its recorded employee (creating the bucket if needed),
+// or org-wide when no employee was recorded. Recomputes employee and team counts
+// so every count stays consistent. Shared by /api/questions and the nav badge.
+export async function apply_generated_questions(company: string, payload: Dict): Promise<void> {
+  let generated: Dict[];
+  try {
+    generated = await read_generated_priority_questions(company);
+  } catch {
+    return;
+  }
+  if (!generated.length) return;
+
+  const orgSeen = new Set((payload['org_wide'] as Dict[]).map((q) => q['qid']));
+  for (const q of generated) {
+    const member_key = String(q['member_key'] || '');
+    if (member_key) {
+      const employees = payload['employees'] as Dict;
+      let bucket = employees[member_key] as Dict | undefined;
+      if (!bucket) {
+        bucket = { file: null, questions: [], total_count: 0, unanswered_count: 0, display_name: pretty_member_name(member_key) };
+        employees[member_key] = bucket;
+      }
+      if (!(bucket['questions'] as Dict[]).some((x) => x['qid'] === q['qid'])) {
+        (bucket['questions'] as Dict[]).push(q);
+      }
+    } else if (!orgSeen.has(q['qid'])) {
+      (payload['org_wide'] as Dict[]).push(q);
+      orgSeen.add(q['qid']);
+    }
+  }
+
+  // Recompute employee counts.
+  for (const bucket of Object.values(payload['employees'] as Dict) as Dict[]) {
+    bucket['total_count'] = (bucket['questions'] as Dict[]).length;
+    bucket['unanswered_count'] = (bucket['questions'] as Dict[]).filter((q) => question_is_unanswered(q['status'])).length;
+  }
+
+  // Recompute team pill counts across org-wide + all employees.
+  const assignee_counts: Record<string, Dict> = {};
+  const tally = (question: Dict) => {
+    const assignee = String(question['assignee'] || 'Ryan Cochran');
+    if (!(assignee in assignee_counts)) {
+      assignee_counts[assignee] = { key: assignee.replace(/ /g, '_'), display_name: assignee, total_count: 0, unanswered_count: 0 };
+    }
+    assignee_counts[assignee]['total_count'] += 1;
+    if (question_is_unanswered(question['status'])) assignee_counts[assignee]['unanswered_count'] += 1;
+  };
+  for (const q of payload['org_wide'] as Dict[]) tally(q);
+  for (const bucket of Object.values(payload['employees'] as Dict) as Dict[]) {
+    for (const q of bucket['questions'] as Dict[]) tally(q);
+  }
+  payload['team_counts'] = Object.values(assignee_counts).sort((a, b) => {
+    if (a['unanswered_count'] !== b['unanswered_count']) return b['unanswered_count'] - a['unanswered_count'];
+    return a['display_name'] < b['display_name'] ? -1 : a['display_name'] > b['display_name'] ? 1 : 0;
+  });
+}
+
 // Total Priority Questions shown on the page (used for the sidebar badge so it
-// matches the page exactly): curated org-wide + merged generated questions +
-// every employee question. Returns 0 when there are none (e.g. the source file
-// was deleted), and grows as questions are added.
+// matches the page exactly). Returns 0 when there are none, and grows as
+// questions are added/generated.
 export async function count_priority_questions_for_company(company: string): Promise<number> {
   const payload = build_questions_payload(company);
-  const orgWide = (payload['org_wide'] as Dict[]) || [];
-  const seen = new Set(orgWide.map((q) => q['qid']));
-  let total = orgWide.length;
-  try {
-    for (const q of await read_generated_priority_questions(company)) {
-      if (!seen.has(q['qid'])) {
-        total += 1;
-        seen.add(q['qid']);
-      }
-    }
-  } catch {
-    // best-effort — generated questions are additive
-  }
+  await apply_generated_questions(company, payload);
+  let total = (payload['org_wide'] as Dict[]).length;
   for (const emp of Object.values(payload['employees'] as Dict) as Dict[]) {
     total += ((emp['questions'] as Dict[]) || []).length;
   }

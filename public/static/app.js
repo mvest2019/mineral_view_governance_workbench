@@ -5826,7 +5826,19 @@ function question_is_unanswered_client(status) {
 
 function renderQuestionGroup(questions, teamCounts = []) {
   const order = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3, UNKNOWN: 4 };
-  questions.sort((a, b) => (order[a.priority] ?? 9) - (order[b.priority] ?? 9));
+  // Newest generated questions (highest Q-AI sequence) first; otherwise by
+  // priority. Non-generated questions have no sequence, so they keep the
+  // existing priority ordering.
+  const generatedSeq = (q) => {
+    const m = /Q-AI-(\d+)/.exec(q.qid || '');
+    return m ? parseInt(m[1], 10) : 0;
+  };
+  questions.sort((a, b) => {
+    const sa = generatedSeq(a);
+    const sb = generatedSeq(b);
+    if (sa !== sb) return sb - sa;
+    return (order[a.priority] ?? 9) - (order[b.priority] ?? 9);
+  });
   const memberOptions = teamCounts.map((member) => ({ value: member.display_name, label: member.display_name }));
   if (!memberOptions.find((member) => member.value === 'Ryan Cochran')) {
     memberOptions.unshift({ value: 'Ryan Cochran', label: 'Ryan Cochran' });
@@ -5850,7 +5862,6 @@ function renderQuestionGroup(questions, teamCounts = []) {
         <select class="form-select form-select-sm q-card-select" title="Route to team member" onchange="saveQuestionAssignment('${escapeJs(question.qid)}', this.value)">
           ${memberOptions.map((member) => `<option ${member.value === (question.assignee || 'Ryan Cochran') ? 'selected' : ''} value="${escapeHtml(member.value)}">${escapeHtml(member.label)}</option>`).join('')}
         </select>
-        <button class="btn btn-sm btn-outline-primary q-card-open" onclick="openMemberQuestionDocument('${escapeJs(memberKeyFromAssigneeName(question.assignee || 'Ryan Cochran'))}', { anchorQid: '${escapeJs(question.qid)}', sourceView: 'questions' })">Open packet</button>
       </div>
       <details class="q-card-answer">
         <summary>Answer this question</summary>
