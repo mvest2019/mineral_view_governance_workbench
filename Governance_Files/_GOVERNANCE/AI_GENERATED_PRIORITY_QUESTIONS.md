@@ -103,3 +103,75 @@ Aboli's workflow has Claude analyze a task and generate Priority Questions autom
 **1. Short Question** — Who owns the GitHub/Vercel commit-integration workstream, given two employees report the same investigation?
 
 Aboli Mundralkar's 2026-07-10 task already reports "Investigated GitHub token configuration and deployment requirements for Vercel, including secure environment variable setup and repository permissions required for automatic commits" — the same scope now reported for Riya Wankhade, whose other tasks are scraper/data validation. Confirm the single owner so the credential and commit design has one accountable person.
+
+### Q-AI-0013 — Should test/dummy submissions like this one be committed to the permanent governance record?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Should test/dummy submissions like this one be committed to the permanent governance record?
+
+The task "test meeting feature" is a feature test, not a real governance artifact, yet it enters `Governance_Files` and is committed to GitHub like any other record. Decide whether test submissions should be blocked, flagged, or routed to a non-production/staging path — and who is responsible for purging the ones already committed.
+
+### Q-AI-0014 — Was the critical Meetings upload defect (D-03, internal server error) fixed and verified?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was the critical Meetings upload defect (D-03, internal server error) fixed and verified?
+
+Utkarsha Chougule's 2026-07-10 testing report logged D-03 (Meetings → upload doc → "Internal server error", Critical/P0). This 2026-07-12 submission is described as a test of the meeting feature, but there is no record of D-03 being closed. Confirm the fix status and who signed off on the retest.
+
+### Q-AI-0015 — What is the minimum required content for a Meeting record to count as a governance artifact?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What is the minimum required content for a Meeting record to count as a governance artifact?
+
+This entry contains only a title, date, and attendee list — no agenda, decisions, action items, or owner. Define the mandatory fields (decisions made, actions with owners, follow-ups) and whether the system should reject a meeting record that has none of them.
+
+### Q-AI-0016 — Do decisions recorded in Meetings flow into the governance decision log, and who approves them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do decisions recorded in Meetings flow into the governance decision log, and who approves them?
+
+The Master Governance Architecture and Punch List rely on a decision log closed out by Ryan Cochran (final approver) and maintained by Nikhil Salunke. It is unclear whether meeting records feed that log, or whether they are a parallel, unreviewed store.
+
+### Q-AI-0017 — Should test/dummy submissions like this one be committed to the permanent governance record?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Should test/dummy submissions like this one be committed to the permanent governance record?
+
+The task "test meeting feature" is a feature test, not a real governance artifact, yet it enters `Governance_Files` and is committed to GitHub like any other record. Decide whether test submissions should be blocked, flagged, or routed to a non-production/staging path — and who is responsible for purging the ones already committed.
+
+### Q-AI-0018 — Was the critical Meetings upload defect (D-03, internal server error) fixed and verified?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Was the critical Meetings upload defect (D-03, internal server error) fixed and verified?
+
+Utkarsha Chougule's 2026-07-10 testing report logged D-03 (Meetings → upload doc → "Internal server error", Critical/P0). This 2026-07-12 submission is described as a test of the meeting feature, but there is no record of D-03 being closed. Confirm the fix status and who signed off on the retest.
+
+### Q-AI-0019 — What is the minimum required content for a Meeting record to count as a governance artifact?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the minimum required content for a Meeting record to count as a governance artifact?
+
+This entry contains only a title, date, and attendee list — no agenda, decisions, action items, or owner. Define the mandatory fields (decisions made, actions with owners, follow-ups) and whether the system should reject a meeting record that has none of them.
+
+### Q-AI-0020 — Do decisions recorded in Meetings flow into the governance decision log, and who approves them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Do decisions recorded in Meetings flow into the governance decision log, and who approves them?
+
+The Master Governance Architecture and Punch List rely on a decision log closed out by Ryan Cochran (final approver) and maintained by Nikhil Salunke. It is unclear whether meeting records feed that log, or whether they are a parallel, unreviewed store.
