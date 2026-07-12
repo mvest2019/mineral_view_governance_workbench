@@ -481,6 +481,15 @@ pre {
   flex-wrap: wrap;
 }
 
+.q-card-employee {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--brand-accent, #1f3a5f);
+  margin-bottom: 4px;
+}
+
 .q-card-title {
   font-weight: 600;
   font-size: 0.98rem;

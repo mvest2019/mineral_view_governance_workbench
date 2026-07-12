@@ -4014,6 +4014,7 @@ function collectMeetingAttendeesFromForm() {
 async function submitMeetingForm() {
   const title = document.getElementById('meetingTitle')?.value?.trim();
   const meetingDate = document.getElementById('meetingDate')?.value?.trim();
+  const meetingTime = document.getElementById('meetingTime')?.value?.trim() || '';
   const meetingType = document.getElementById('meetingType')?.value || 'other';
   const organizer = document.getElementById('meetingOrganizer')?.value?.trim() || '';
   const note = document.getElementById('meetingNote')?.value?.trim() || '';
@@ -4056,18 +4057,58 @@ async function submitMeetingForm() {
       throw new Error(payload.error || payload.reason || `HTTP ${response.status}`);
     }
     CURRENT_MEETING_ID = payload.meeting_id;
-    if (status) {
-      const qc = payload.questions_created || 0;
-      if (payload.summary_status === 'generated' || payload.summary_status === 'partial') {
-        status.textContent = `Meeting saved. AI summary ready${qc ? ` and ${qc} priority question${qc === 1 ? '' : 's'} routed to attendees` : ''}.`;
-      } else {
-        status.textContent = 'Meeting saved.';
-      }
-    }
+    if (status) status.textContent = 'Meeting saved.';
+    // Commit the meeting Markdown to GitHub and generate Priority Questions for
+    // the attendees (reuses the Task Tracker workflow). Capture the form details
+    // before renderMeetings() resets the form.
+    const meetingDetails = {
+      company: CURRENT_COMPANY,
+      title,
+      meeting_date: meetingDate,
+      meeting_time: meetingTime,
+      uploaded_by: organizer || 'Ryan Cochran',
+      summary: note,
+      uploaded_file: (fileInput?.files?.[0]?.name) || '',
+      additional_details: (document.getElementById('meetingActionItems')?.value || '').trim(),
+      attendees,
+    };
     await refreshNavCounts();
     await renderMeetings();
+    analyzeMeetingAndGenerate(meetingDetails);
   } catch (error) {
     if (status) status.textContent = `Save failed: ${error.message}`;
+  }
+}
+
+// After a meeting is saved: commit the Meeting Markdown to
+// Governance_Files/Meetings/ and run Claude analysis to generate Priority
+// Questions for the attendees. Best-effort — never blocks the completed upload.
+async function analyzeMeetingAndGenerate(details) {
+  const status = document.getElementById('meetingUploadStatus');
+  if (status) status.textContent = 'Committing meeting note and analyzing for priority questions…';
+  try {
+    const response = await fetch('/api/meetings/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(details),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok) {
+      if (status) status.textContent = `Meeting saved. Analysis skipped: ${payload.error || payload.reason || `HTTP ${response.status}`}`;
+      return;
+    }
+    const qc = payload.question_count || 0;
+    if (qc > 0) {
+      showToast(`${qc} priority question(s) generated for the attendees.`, 'success');
+      if (status) status.textContent = `Meeting committed. ${qc} priority question(s) added — open Priority Questions to review.`;
+    } else if (payload.generation_skipped) {
+      if (status) status.textContent = `Meeting committed. Priority question generation skipped: ${payload.generation_reason || 'Claude unavailable'}`;
+    } else {
+      if (status) status.textContent = 'Meeting committed. No new priority questions were needed.';
+    }
+    await refreshNavCounts();
+  } catch (error) {
+    if (status) status.textContent = `Meeting saved. Analysis failed: ${error.message}`;
   }
 }
 
@@ -4177,7 +4218,7 @@ async function renderMeetings() {
   }));
   const attendeeChecklist = attendeeSource.map((member) => `
     <label class="meeting-attendee-option">
-      <input type="checkbox" class="form-check-input" data-meeting-attendee="${escapeHtml(member.key)}">
+      <input type="checkbox" class="form-check-input" data-meeting-attendee="${escapeHtml(member.key)}" onchange="updateMeetingUploadState()">
       <span class="meeting-attendee-meta">
         <span class="meeting-attendee-name">${escapeHtml(member.display_name)}</span>
         ${member.role ? `<span class="meeting-attendee-role">${escapeHtml(member.role)}</span>` : ''}
@@ -4226,11 +4267,15 @@ async function renderMeetings() {
         <div class="row g-3">
           <div class="col-md-8">
             <label class="form-label small mb-1">Meeting title</label>
-            <input id="meetingTitle" class="form-control" placeholder="Weekly PM sync">
+            <input id="meetingTitle" class="form-control" placeholder="Weekly PM sync" oninput="updateMeetingUploadState()">
           </div>
-          <div class="col-md-4">
+          <div class="col-md-2">
             <label class="form-label small mb-1">Date</label>
-            <input id="meetingDate" class="form-control" type="date" value="${new Date().toISOString().slice(0, 10)}">
+            <input id="meetingDate" class="form-control" type="date" value="${new Date().toISOString().slice(0, 10)}" oninput="updateMeetingUploadState()">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small mb-1">Time</label>
+            <input id="meetingTime" class="form-control" type="time" oninput="updateMeetingUploadState()">
           </div>
           <div class="col-md-4">
             <label class="form-label small mb-1">Type</label>
@@ -4254,7 +4299,7 @@ async function renderMeetings() {
             <div id="meetingNotesFileName" class="meeting-file-chosen small mt-1">No file chosen yet.</div>
           </div>
           <div class="col-12">
-            <label class="form-label small mb-1">Summary note</label>
+            <label class="form-label small mb-1">Summary note <span class="text-muted">(optional)</span></label>
             <textarea id="meetingNote" class="form-control" rows="3" placeholder="What this meeting covered, what changed, and what needs follow-up."></textarea>
           </div>
           <div class="col-md-7">
@@ -4271,7 +4316,7 @@ async function renderMeetings() {
         </div>
         <div class="d-flex justify-content-between align-items-center gap-2 mt-3 flex-wrap">
           <div id="meetingUploadStatus" class="small text-muted">Ready.</div>
-          <button class="btn btn-primary btn-sm" type="button" onclick="submitMeetingForm()">Upload meeting</button>
+          <button id="meetingUploadBtn" class="btn btn-primary btn-sm" type="button" onclick="submitMeetingForm()" disabled>Upload meeting</button>
         </div>
       </div>
       <div class="dash-card">
@@ -4298,6 +4343,19 @@ async function renderMeetings() {
     </div>
     </div>
   `;
+  updateMeetingUploadState();
+}
+
+// Enable "Upload meeting" only when the required fields are filled: title, date,
+// time, and at least one attendee. Summary is optional.
+function updateMeetingUploadState() {
+  const btn = document.getElementById('meetingUploadBtn');
+  if (!btn) return;
+  const title = document.getElementById('meetingTitle')?.value?.trim();
+  const date = document.getElementById('meetingDate')?.value?.trim();
+  const time = document.getElementById('meetingTime')?.value?.trim();
+  const hasAttendee = document.querySelectorAll('[data-meeting-attendee]:checked').length > 0;
+  btn.disabled = !(title && date && time && hasAttendee);
 }
 
 async function renderTeamMembers() {
@@ -5731,62 +5789,144 @@ function backToQuestionSource() {
   showView('questions');
 }
 
+// Paginated state for the Priority Questions page (infinite scroll).
+let PRIORITY_QUESTIONS_STATE = { all: [], rendered: 0, memberOptions: [], pageSize: 10, _observer: null };
+
+function priorityQuestionSeq(q) {
+  const m = /Q-AI-(\d+)/.exec(q.qid || '');
+  return m ? parseInt(m[1], 10) : 0;
+}
+
 async function renderQuestions() {
   const data = await fetchJSON(`/api/questions?company=${CURRENT_COMPANY}`);
-  let html = '<h2>Priority Questions</h2>';
-  html += '<div class="small text-muted mb-3">Questions are grouped by owner and sorted by priority. Open an assignee packet to work through them in one document.</div>';
-  html += renderQuestionPrioritySummary(data);
-  html += renderTeamCountPills(data.team_counts);
-  html += `<h3 class="q-section-head">Org-wide queue <span class="q-section-count">${data.org_wide.length}</span></h3>`;
-  html += data.org_wide.length
-    ? renderQuestionGroup(data.org_wide, data.team_counts)
-    : '<div class="alert alert-warning">No org-wide questions parsed.</div>';
-
-  Object.keys(data.employees).forEach((employeeName) => {
-    const employee = data.employees[employeeName];
-    html += `<h3 class="q-section-head" id="member-${escapeHtml(employeeName)}">${escapeHtml(employee.display_name)} <span class="q-section-count">${employee.unanswered_count} unanswered / ${employee.total_count} total</span></h3>`;
-    html += renderQuestionGroup(employee.questions, data.team_counts);
+  const order = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3, UNKNOWN: 4 };
+  // Flatten every question into one list, tagged with the team member it belongs
+  // to, then sort newest generated first (then by priority).
+  const flat = [];
+  (data.org_wide || []).forEach((q) => flat.push({ ...q, employeeLabel: q.assignee || 'Org-wide' }));
+  Object.values(data.employees || {}).forEach((emp) => {
+    (emp.questions || []).forEach((q) => flat.push({ ...q, employeeLabel: emp.display_name || q.assignee || '' }));
+  });
+  flat.sort((a, b) => {
+    const sa = priorityQuestionSeq(a);
+    const sb = priorityQuestionSeq(b);
+    if (sa !== sb) return sb - sa;
+    return (order[a.priority] ?? 9) - (order[b.priority] ?? 9);
   });
 
+  const memberOptions = (data.team_counts || []).map((m) => ({ value: m.display_name, label: m.display_name }));
+  if (!memberOptions.find((m) => m.value === 'Ryan Cochran')) {
+    memberOptions.unshift({ value: 'Ryan Cochran', label: 'Ryan Cochran' });
+  }
+  PRIORITY_QUESTIONS_STATE = { all: flat, rendered: 0, memberOptions, pageSize: 10, _observer: null };
+
+  let html = '<h2>Priority Questions</h2>';
+  html += '<div class="small text-muted mb-3">Latest generated questions first. Each card shows the team member it belongs to. Scroll to load more.</div>';
+  html += renderQuestionPrioritySummary(data);
+  html += renderTeamCountPills(data.team_counts);
+  html += '<div class="q-card-grid" id="priorityQuestionsGrid"></div>';
+  html += '<div id="priorityQuestionsSentinel" class="text-center text-muted small py-3"></div>';
   document.getElementById('mainView').innerHTML = `<div class="priority-questions-view">${html}</div>`;
-  // Align the summary chips, section counts, and the sidebar badge with the
-  // questions actually rendered (includes generated questions merged in).
+
+  appendPriorityQuestionsPage(); // render the first page (10)
+  setupPriorityQuestionsInfiniteScroll();
   refreshPriorityQuestionScoreboard();
 }
 
-// Recompute the visible Priority Questions counts from the cards currently in
-// the DOM, and update the sidebar badge. Called on render and after a question
-// is answered (its card removed), so the scores decrement live.
+// Card markup for a single Priority Question (shared by every page).
+function renderQuestionCard(question, memberOptions) {
+  return `
+    <div class="q-card priority-${question.priority}" id="qcard-${escapeHtml(question.qid)}">
+      <div class="q-card-head">
+        <span class="qid">${escapeHtml(question.qid)}</span>
+        <span class="q-card-badges">
+          <span class="badge badge-${question.priority.toLowerCase()}">${escapeHtml(question.priority)}</span>
+          <span class="badge bg-secondary">${escapeHtml(question.status)}</span>
+        </span>
+      </div>
+      <div class="q-card-employee">${escapeHtml(question.employeeLabel || question.assignee || '')}</div>
+      <div class="q-card-title">${escapeHtml(question.title)}</div>
+      <div class="q-card-text">${escapeHtml(question.short_question)}</div>
+      <details class="q-card-details">
+        <summary>Show full context</summary>
+        <pre class="small mt-2">${escapeHtml(question.body)}</pre>
+      </details>
+      <div class="q-card-foot">
+        <select class="form-select form-select-sm q-card-select" title="Route to team member" onchange="saveQuestionAssignment('${escapeJs(question.qid)}', this.value)">
+          ${memberOptions.map((member) => `<option ${member.value === (question.assignee || 'Ryan Cochran') ? 'selected' : ''} value="${escapeHtml(member.value)}">${escapeHtml(member.label)}</option>`).join('')}
+        </select>
+      </div>
+      <details class="q-card-answer">
+        <summary>Answer this question</summary>
+        <textarea class="form-control form-control-sm q-answer-input mt-2" id="qanswer-${escapeHtml(question.qid)}" rows="3" placeholder="Type the answer. On save it is committed to the assignee's folder under Governance_Files/Priority_Questions/."></textarea>
+        <div class="d-flex justify-content-end mt-2">
+          <button class="btn btn-sm btn-primary q-answer-save" type="button" onclick="savePriorityQuestionAnswer('${escapeJs(question.qid)}')">Save Answer</button>
+        </div>
+      </details>
+    </div>`;
+}
+
+// Append the next page of questions (no duplicates — slices by rendered count).
+function appendPriorityQuestionsPage() {
+  const state = PRIORITY_QUESTIONS_STATE;
+  const grid = document.getElementById('priorityQuestionsGrid');
+  const sentinel = document.getElementById('priorityQuestionsSentinel');
+  if (!grid) return;
+  const next = state.all.slice(state.rendered, state.rendered + state.pageSize);
+  if (next.length) {
+    grid.insertAdjacentHTML('beforeend', next.map((q) => renderQuestionCard(q, state.memberOptions)).join(''));
+    state.rendered += next.length;
+  }
+  if (sentinel) {
+    sentinel.textContent = state.rendered >= state.all.length
+      ? (state.all.length ? 'All priority questions loaded.' : 'No priority questions yet.')
+      : `Showing ${state.rendered} of ${state.all.length} — scroll for more…`;
+  }
+}
+
+// Load the next page when the sentinel scrolls into view.
+function setupPriorityQuestionsInfiniteScroll() {
+  const sentinel = document.getElementById('priorityQuestionsSentinel');
+  if (!sentinel || typeof IntersectionObserver === 'undefined') return;
+  if (PRIORITY_QUESTIONS_STATE._observer) PRIORITY_QUESTIONS_STATE._observer.disconnect();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && CURRENT_VIEW === 'questions'
+          && PRIORITY_QUESTIONS_STATE.rendered < PRIORITY_QUESTIONS_STATE.all.length) {
+        appendPriorityQuestionsPage();
+      }
+    });
+  }, { rootMargin: '250px' });
+  observer.observe(sentinel);
+  PRIORITY_QUESTIONS_STATE._observer = observer;
+}
+
+// Recompute the Priority Questions counts from the full in-memory list (not just
+// the paginated cards) and update the sidebar badge. Called on render and after a
+// question is answered, so the scores stay correct with infinite scroll.
 function refreshPriorityQuestionScoreboard() {
   const view = document.querySelector('.priority-questions-view');
   if (!view) return;
-  const cards = Array.from(view.querySelectorAll('.q-card'));
-  const total = cards.length;
+  const all = (PRIORITY_QUESTIONS_STATE && PRIORITY_QUESTIONS_STATE.all) || [];
+  const total = all.length;
   const counts = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
-  cards.forEach((card) => {
-    const priority = ((card.className.match(/priority-([A-Za-z]+)/) || [])[1] || '').toUpperCase();
-    if (counts[priority] !== undefined) counts[priority] += 1;
+  let open = 0;
+  all.forEach((q) => {
+    const p = (q.priority || '').toUpperCase();
+    if (counts[p] !== undefined) counts[p] += 1;
+    if (question_is_unanswered_client(q.status)) open += 1;
   });
   const setVal = (selector, value) => {
     const el = view.querySelector(selector);
     if (el) el.textContent = value;
   };
   setVal('.q-summary-chip.total .q-summary-value', total);
-  setVal('.q-summary-chip.open .q-summary-value', total);
+  setVal('.q-summary-chip.open .q-summary-value', open);
   setVal('.q-summary-chip.critical .q-summary-value', counts.CRITICAL);
   setVal('.q-summary-chip.high .q-summary-value', counts.HIGH);
   setVal('.q-summary-chip.medium .q-summary-value', counts.MEDIUM);
   setVal('.q-summary-chip.low .q-summary-value', counts.LOW);
-  // Numeric per-section counts (e.g. the org-wide queue heading).
-  view.querySelectorAll('.q-card-grid').forEach((grid) => {
-    let head = grid.previousElementSibling;
-    while (head && !head.classList.contains('q-section-head')) head = head.previousElementSibling;
-    const countEl = head && head.querySelector('.q-section-count');
-    if (countEl && /^\d+$/.test(countEl.textContent.trim())) {
-      countEl.textContent = grid.querySelectorAll('.q-card').length;
-    }
-  });
-  // Sidebar badge reflects the open questions currently shown.
+  // Sidebar badge reflects the total priority questions.
   CURRENT_NAV_COUNTS.questions = total;
   renderNavMenu();
 }
@@ -5822,57 +5962,6 @@ function renderQuestionPrioritySummary(data) {
 function question_is_unanswered_client(status) {
   const s = (status || '').trim().toUpperCase();
   return !['RESOLVED', 'ANSWERED', 'CLOSED', 'DONE'].includes(s);
-}
-
-function renderQuestionGroup(questions, teamCounts = []) {
-  const order = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3, UNKNOWN: 4 };
-  // Newest generated questions (highest Q-AI sequence) first; otherwise by
-  // priority. Non-generated questions have no sequence, so they keep the
-  // existing priority ordering.
-  const generatedSeq = (q) => {
-    const m = /Q-AI-(\d+)/.exec(q.qid || '');
-    return m ? parseInt(m[1], 10) : 0;
-  };
-  questions.sort((a, b) => {
-    const sa = generatedSeq(a);
-    const sb = generatedSeq(b);
-    if (sa !== sb) return sb - sa;
-    return (order[a.priority] ?? 9) - (order[b.priority] ?? 9);
-  });
-  const memberOptions = teamCounts.map((member) => ({ value: member.display_name, label: member.display_name }));
-  if (!memberOptions.find((member) => member.value === 'Ryan Cochran')) {
-    memberOptions.unshift({ value: 'Ryan Cochran', label: 'Ryan Cochran' });
-  }
-  const cards = questions.map((question) => `
-    <div class="q-card priority-${question.priority}" id="qcard-${escapeHtml(question.qid)}">
-      <div class="q-card-head">
-        <span class="qid">${escapeHtml(question.qid)}</span>
-        <span class="q-card-badges">
-          <span class="badge badge-${question.priority.toLowerCase()}">${escapeHtml(question.priority)}</span>
-          <span class="badge bg-secondary">${escapeHtml(question.status)}</span>
-        </span>
-      </div>
-      <div class="q-card-title">${escapeHtml(question.title)}</div>
-      <div class="q-card-text">${escapeHtml(question.short_question)}</div>
-      <details class="q-card-details">
-        <summary>Show full context</summary>
-        <pre class="small mt-2">${escapeHtml(question.body)}</pre>
-      </details>
-      <div class="q-card-foot">
-        <select class="form-select form-select-sm q-card-select" title="Route to team member" onchange="saveQuestionAssignment('${escapeJs(question.qid)}', this.value)">
-          ${memberOptions.map((member) => `<option ${member.value === (question.assignee || 'Ryan Cochran') ? 'selected' : ''} value="${escapeHtml(member.value)}">${escapeHtml(member.label)}</option>`).join('')}
-        </select>
-      </div>
-      <details class="q-card-answer">
-        <summary>Answer this question</summary>
-        <textarea class="form-control form-control-sm q-answer-input mt-2" id="qanswer-${escapeHtml(question.qid)}" rows="3" placeholder="Type the answer. On save it is committed to the assignee's folder under Governance_Files/Priority_Questions/."></textarea>
-        <div class="d-flex justify-content-end mt-2">
-          <button class="btn btn-sm btn-primary q-answer-save" type="button" onclick="savePriorityQuestionAnswer('${escapeJs(question.qid)}')">Save Answer</button>
-        </div>
-      </details>
-    </div>
-  `).join('');
-  return `<div class="q-card-grid">${cards}</div>`;
 }
 
 async function saveQuestionAssignment(qid, assignee) {
@@ -5918,7 +6007,15 @@ async function savePriorityQuestionAnswer(qid) {
     showToast('Answer saved successfully.', 'success');
     // Remove only this answered question; the rest of the list is untouched.
     card.remove();
-    // Update the summary chips, section counts, and sidebar badge live.
+    // Keep the paginated in-memory list in sync so counts stay correct.
+    if (PRIORITY_QUESTIONS_STATE && PRIORITY_QUESTIONS_STATE.all) {
+      const idx = PRIORITY_QUESTIONS_STATE.all.findIndex((q) => q.qid === qid);
+      if (idx >= 0) {
+        PRIORITY_QUESTIONS_STATE.all.splice(idx, 1);
+        if (PRIORITY_QUESTIONS_STATE.rendered > 0) PRIORITY_QUESTIONS_STATE.rendered -= 1;
+      }
+    }
+    // Update the summary chips and sidebar badge live.
     refreshPriorityQuestionScoreboard();
   } catch (error) {
     hideProcessing();
