@@ -4014,7 +4014,6 @@ function collectMeetingAttendeesFromForm() {
 async function submitMeetingForm() {
   const title = document.getElementById('meetingTitle')?.value?.trim();
   const meetingDate = document.getElementById('meetingDate')?.value?.trim();
-  const meetingTime = document.getElementById('meetingTime')?.value?.trim() || '';
   const meetingType = document.getElementById('meetingType')?.value || 'other';
   const organizer = document.getElementById('meetingOrganizer')?.value?.trim() || '';
   const note = document.getElementById('meetingNote')?.value?.trim() || '';
@@ -4065,7 +4064,6 @@ async function submitMeetingForm() {
       company: CURRENT_COMPANY,
       title,
       meeting_date: meetingDate,
-      meeting_time: meetingTime,
       uploaded_by: organizer || 'Ryan Cochran',
       summary: note,
       uploaded_file: (fileInput?.files?.[0]?.name) || '',
@@ -4269,13 +4267,9 @@ async function renderMeetings() {
             <label class="form-label small mb-1">Meeting title</label>
             <input id="meetingTitle" class="form-control" placeholder="Weekly PM sync" oninput="updateMeetingUploadState()">
           </div>
-          <div class="col-md-2">
+          <div class="col-md-4">
             <label class="form-label small mb-1">Date</label>
             <input id="meetingDate" class="form-control" type="date" value="${new Date().toISOString().slice(0, 10)}" oninput="updateMeetingUploadState()">
-          </div>
-          <div class="col-md-2">
-            <label class="form-label small mb-1">Time</label>
-            <input id="meetingTime" class="form-control" type="time" oninput="updateMeetingUploadState()">
           </div>
           <div class="col-md-4">
             <label class="form-label small mb-1">Type</label>
@@ -4347,15 +4341,14 @@ async function renderMeetings() {
 }
 
 // Enable "Upload meeting" only when the required fields are filled: title, date,
-// time, and at least one attendee. Summary is optional.
+// and at least one attendee. Summary is optional.
 function updateMeetingUploadState() {
   const btn = document.getElementById('meetingUploadBtn');
   if (!btn) return;
   const title = document.getElementById('meetingTitle')?.value?.trim();
   const date = document.getElementById('meetingDate')?.value?.trim();
-  const time = document.getElementById('meetingTime')?.value?.trim();
   const hasAttendee = document.querySelectorAll('[data-meeting-attendee]:checked').length > 0;
-  btn.disabled = !(title && date && time && hasAttendee);
+  btn.disabled = !(title && date && hasAttendee);
 }
 
 async function renderTeamMembers() {

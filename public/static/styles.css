@@ -490,6 +490,11 @@ pre {
   margin-bottom: 4px;
 }
 
+/* Space between the employee pill row and the question cards. */
+.priority-questions-view .team-pill-row {
+  margin-bottom: 18px;
+}
+
 .q-card-title {
   font-weight: 600;
   font-size: 0.98rem;

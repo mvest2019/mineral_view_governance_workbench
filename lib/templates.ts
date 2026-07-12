@@ -12,7 +12,7 @@ export function renderIndexHtml(): string {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/styles.css?v=20260710g">
+  <link rel="stylesheet" href="/static/styles.css?v=20260710h">
 </head>
 <body>
 
@@ -69,7 +69,7 @@ export function renderIndexHtml(): string {
   </div>
 </div>
 
-  <script src="/static/app.js?v=20260710g"></script>
+  <script src="/static/app.js?v=20260710h"></script>
 </body>
 </html>`;
 }
