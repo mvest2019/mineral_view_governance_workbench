@@ -159,43 +159,61 @@ export async function upsertFileOnGitHub(
   };
 }
 
-// Fetch every repository under owner/{orgs|users} with pagination. Returns
-// { ok } false when the first page 404s (so the caller can try the other kind).
-async function fetchAllRepoNames(cfg: GitHubConfig, kind: 'orgs' | 'users'): Promise<{ ok: boolean; names: string[] }> {
-  const names: string[] = [];
-  let page = 1;
-  // Safety bound: 100/page * 50 = 5000 repos max.
-  for (; page <= 50; page += 1) {
-    const url = `${apiBase()}/${kind}/${encodeURIComponent(cfg.owner)}/repos?per_page=100&type=all&sort=full_name&page=${page}`;
-    let res: Response;
-    try {
-      res = await fetch(url, { headers: ghHeaders(cfg) });
-    } catch {
-      return { ok: names.length > 0, names };
-    }
-    if (page === 1 && !res.ok) return { ok: false, names: [] };
-    if (!res.ok) break;
+// Fetch one page of a repos listing endpoint. Returns null repos on any
+// error/network failure so the caller can decide whether to continue.
+async function fetchRepoPage(
+  cfg: GitHubConfig,
+  endpointPath: string,
+  page: number,
+): Promise<{ status: number; repos: any[] | null }> {
+  const sep = endpointPath.includes('?') ? '&' : '?';
+  const url = `${apiBase()}${endpointPath}${sep}per_page=100&page=${page}`;
+  try {
+    const res = await fetch(url, { headers: ghHeaders(cfg) });
+    if (!res.ok) return { status: res.status, repos: null };
     const data = await res.json().catch(() => []);
-    if (!Array.isArray(data) || !data.length) break;
-    for (const repo of data) {
-      if (repo && repo.name) names.push(String(repo.name));
-    }
-    if (data.length < 100) break; // last page
+    return { status: res.status, repos: Array.isArray(data) ? data : [] };
+  } catch {
+    return { status: 0, repos: null };
   }
-  return { ok: true, names };
 }
 
 /**
- * List all repository names in the configured GitHub org (or user account,
- * falling back automatically). Uses the existing token/config; retrieves every
- * page. Best-effort: returns whatever it could fetch and never throws.
+ * List every repository name the configured token can see under cfg.owner.
+ * Merges the org endpoint (`/orgs/{owner}/repos`, all types) with the
+ * authenticated user's repositories filtered to that owner
+ * (`/user/repos?affiliation=owner,collaborator,organization_member`) so the
+ * fullest possible list is returned regardless of token type. Follows
+ * pagination; best-effort and never throws.
  */
 export async function listOrgRepos(cfg: GitHubConfig): Promise<string[]> {
-  let result = await fetchAllRepoNames(cfg, 'orgs');
-  if (!result.ok) {
-    result = await fetchAllRepoNames(cfg, 'users');
+  const owner = cfg.owner.toLowerCase();
+  const names = new Set<string>();
+
+  // 1) Organization repositories (public + private the token can access).
+  for (let page = 1; page <= 50; page += 1) {
+    const { repos } = await fetchRepoPage(cfg, `/orgs/${encodeURIComponent(cfg.owner)}/repos`, page);
+    if (repos === null) break; // not an org / no access — the user endpoint below still runs
+    for (const repo of repos) {
+      if (repo && repo.name) names.add(String(repo.name));
+    }
+    if (repos.length < 100) break;
   }
-  return result.names;
+
+  // 2) The authenticated user's repositories that belong to this owner. Catches
+  //    repos visible via membership/collaboration that the org endpoint omits.
+  for (let page = 1; page <= 50; page += 1) {
+    const { repos } = await fetchRepoPage(cfg, '/user/repos?affiliation=owner,collaborator,organization_member', page);
+    if (repos === null) break;
+    for (const repo of repos) {
+      if (repo && repo.name && String(repo.owner?.login || '').toLowerCase() === owner) {
+        names.add(String(repo.name));
+      }
+    }
+    if (repos.length < 100) break;
+  }
+
+  return [...names];
 }
 
 // ---------------------------------------------------------------------------

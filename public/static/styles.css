@@ -1325,6 +1325,14 @@ h3 {
   vertical-align: middle;
 }
 
+/* Keep the repo name on one line (the table already scrolls horizontally) so
+   long names like mineral_view_governance_workbench don't wrap one char per line. */
+.classification-table td:first-child,
+.classification-table th:first-child {
+  white-space: nowrap;
+  min-width: 220px;
+}
+
 .classification-table input,
 .classification-table select {
   font-size: 0.8rem;
