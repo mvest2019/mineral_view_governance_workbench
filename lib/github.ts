@@ -159,6 +159,45 @@ export async function upsertFileOnGitHub(
   };
 }
 
+// Fetch every repository under owner/{orgs|users} with pagination. Returns
+// { ok } false when the first page 404s (so the caller can try the other kind).
+async function fetchAllRepoNames(cfg: GitHubConfig, kind: 'orgs' | 'users'): Promise<{ ok: boolean; names: string[] }> {
+  const names: string[] = [];
+  let page = 1;
+  // Safety bound: 100/page * 50 = 5000 repos max.
+  for (; page <= 50; page += 1) {
+    const url = `${apiBase()}/${kind}/${encodeURIComponent(cfg.owner)}/repos?per_page=100&type=all&sort=full_name&page=${page}`;
+    let res: Response;
+    try {
+      res = await fetch(url, { headers: ghHeaders(cfg) });
+    } catch {
+      return { ok: names.length > 0, names };
+    }
+    if (page === 1 && !res.ok) return { ok: false, names: [] };
+    if (!res.ok) break;
+    const data = await res.json().catch(() => []);
+    if (!Array.isArray(data) || !data.length) break;
+    for (const repo of data) {
+      if (repo && repo.name) names.push(String(repo.name));
+    }
+    if (data.length < 100) break; // last page
+  }
+  return { ok: true, names };
+}
+
+/**
+ * List all repository names in the configured GitHub org (or user account,
+ * falling back automatically). Uses the existing token/config; retrieves every
+ * page. Best-effort: returns whatever it could fetch and never throws.
+ */
+export async function listOrgRepos(cfg: GitHubConfig): Promise<string[]> {
+  let result = await fetchAllRepoNames(cfg, 'orgs');
+  if (!result.ok) {
+    result = await fetchAllRepoNames(cfg, 'users');
+  }
+  return result.names;
+}
+
 // ---------------------------------------------------------------------------
 // Shared helpers reused by the Task Tracker and Priority Questions features:
 // filename slugging, local timestamps, and unique-file commits.
