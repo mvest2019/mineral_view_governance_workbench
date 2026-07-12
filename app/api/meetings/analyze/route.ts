@@ -36,6 +36,7 @@ export const POST = route(async (req: NextRequest) => {
   const meetingTime = String(body.meeting_time || '').trim();
   const uploadedBy = String(body.uploaded_by || '').trim() || 'Unknown';
   const summary = String(body.summary || '').trim();
+  const claudeSummary = String(body.claude_summary || '').trim();
   const uploadedFile = String(body.uploaded_file || '').trim();
   const additionalDetails = String(body.additional_details || '').trim();
   const attendees = (Array.isArray(body.attendees) ? body.attendees : []) as Array<Record<string, unknown>>;
@@ -91,13 +92,16 @@ export const POST = route(async (req: NextRequest) => {
     'Created Time:',
     stamp.timeDisplay,
     '',
-    'Summary:',
-    summary, // left blank when not provided
+    'Claude Generated Summary:',
+    claudeSummary || '(not generated)',
+    '',
+    'Original User Summary:',
+    summary, // the user's own note — preserved separately, blank when not provided
     '',
     'Uploaded File:',
     uploadedFile || '(none)',
     '',
-    'Additional Details:',
+    'Additional Notes:',
     additionalDetails || '(none)',
     '',
     '---',

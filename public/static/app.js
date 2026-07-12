@@ -4066,6 +4066,9 @@ async function submitMeetingForm() {
       meeting_date: meetingDate,
       uploaded_by: organizer || 'Ryan Cochran',
       summary: note,
+      // Claude's summary of the uploaded document, produced by the existing
+      // meeting-intelligence flow in POST /api/meetings.
+      claude_summary: String(payload.summary || ''),
       uploaded_file: (fileInput?.files?.[0]?.name) || '',
       additional_details: (document.getElementById('meetingActionItems')?.value || '').trim(),
       attendees,

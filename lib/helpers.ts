@@ -3581,19 +3581,21 @@ export function build_task_priority_question_prompt(
   task_description: string,
   governance_digest: string,
   existing_questions: string[],
+  owners: string[],
   cap = 6,
 ): string {
   const existingBlock = existing_questions.length
     ? existing_questions.slice(0, 200).map((q) => `- ${q}`).join('\n')
     : '(none on record)';
-  return `You are a governance analyst for ${company}. A new task was just submitted through the Task Tracker.
+  const ownerList = (owners.length ? owners : [employee_display]).map((o) => `- ${o}`).join('\n');
+  return `You are a governance analyst for ${company}. A new task/meeting was just submitted.
 
-New task (submitted for ${employee_display}):
+Submitted for: ${employee_display}
 """
 ${task_description.slice(0, 8000)}
 """
 
-Using BOTH the new task above AND the existing governance knowledge below, generate the most important NEW Priority Questions.
+Using BOTH the submission above AND the existing governance knowledge below, generate the most important NEW Priority Questions.
 
 Rules:
 1. Questions must be short and easy to understand (one sentence each).
@@ -3602,6 +3604,10 @@ Rules:
 4. Do NOT generate a question whose answer is already present in the governance knowledge.
 5. Generate only meaningful governance questions. If nothing new is warranted, return an empty list.
 6. Return at most ${cap} questions, ranked by importance.
+7. Assign each question to exactly ONE owner — the single most relevant person from the list below (the "employee" field must be one of these exact names). Never assign the same question to more than one owner. Each question appears once.
+
+Owners to choose from:
+${ownerList}
 
 Existing questions (do not duplicate these):
 ${existingBlock}
@@ -3612,7 +3618,7 @@ ${governance_digest || '(no governance documents found)'}
 Return JSON only, no prose:
 {
   "questions": [
-    { "title": "short one-sentence question", "body_markdown": "optional extra context", "priority": "HIGH" }
+    { "title": "short one-sentence question", "body_markdown": "optional extra context", "priority": "HIGH", "employee": "one exact name from the owners list" }
   ]
 }
 `;
@@ -3637,10 +3643,15 @@ export async function generate_priority_questions_from_task(
   const member_keys = rawKeys.map((k) => String(k || '').trim()).filter(Boolean);
   if (!member_keys.length) member_keys.push('Ryan_Cochran');
   const employee_display = member_keys.map((k) => pretty_member_name(k)).join(', ');
+  // Map each candidate owner's display name back to its member key so Claude's
+  // per-question assignment can be resolved.
+  const owners = member_keys.map((k) => pretty_member_name(k));
+  const displayToKey: Record<string, string> = {};
+  member_keys.forEach((k) => { displayToKey[pretty_member_name(k).toLowerCase()] = k; });
   const existing = collect_existing_question_texts(company);
   const existingNormalized = new Set(existing.map(normalize_question_text).filter(Boolean));
   const digest = build_governance_digest(company);
-  const prompt = build_task_priority_question_prompt(company, employee_display, task_description, digest, existing, cap);
+  const prompt = build_task_priority_question_prompt(company, employee_display, task_description, digest, existing, owners, cap);
 
   const [ok, out, err] = await call_claude_text(prompt);
   if (!ok || !out) {
@@ -3666,19 +3677,22 @@ export async function generate_priority_questions_from_task(
   }
   const rawQuestions = (Array.isArray(parsedData['questions']) ? parsedData['questions'] : []) as Dict[];
 
-  // Reduce to non-duplicate, valid questions.
+  // Reduce to non-duplicate, valid questions, each assigned to exactly one owner
+  // (Claude's choice; unmatched/absent falls back to the first candidate).
   const seenThisRun = new Set<string>();
   const fresh: Dict[] = [];
   for (const item of rawQuestions) {
     const title = String(item['title'] || '').trim();
     if (!title) continue;
     const norm = normalize_question_text(title);
-    if (!norm || existingNormalized.has(norm) || seenThisRun.has(norm)) continue; // dedup
+    if (!norm || existingNormalized.has(norm) || seenThisRun.has(norm)) continue; // dedup by question
     seenThisRun.add(norm);
+    const assigned = displayToKey[String(item['employee'] || '').trim().toLowerCase()] || member_keys[0];
     fresh.push({
       title,
       body: String(item['body_markdown'] || '').trim(),
       priority: String(item['priority'] || 'MEDIUM').toUpperCase(),
+      member_key: assigned,
     });
     if (fresh.length >= cap) break;
   }
@@ -3699,28 +3713,26 @@ export async function generate_priority_questions_from_task(
   }
 
   if (cfg) {
-    const created = await store_generated_questions_on_github(cfg, fresh, member_keys);
+    const created = await store_generated_questions_on_github(cfg, fresh);
     return { ok: true, skipped: false, created, count: created.length, question_count: fresh.length, member_keys, employee_display };
   }
 
   const db = getDb();
   const created: Dict[] = [];
-  for (const mk of member_keys) {
-    for (const item of fresh) {
-      const [id, code] = create_team_member_question(
-        db,
-        company,
-        mk,
-        String(item['title']),
-        String(item['body'] || item['title']),
-        String(item['priority']),
-        'NEW',
-        null,
-        'Task Tracker analysis',
-        'claude',
-      );
-      created.push({ id, question_code: code, title: item['title'], priority: item['priority'], member_key: mk });
-    }
+  for (const item of fresh) {
+    const [id, code] = create_team_member_question(
+      db,
+      company,
+      String(item['member_key'] || member_keys[0]),
+      String(item['title']),
+      String(item['body'] || item['title']),
+      String(item['priority']),
+      'NEW',
+      null,
+      'Task Tracker analysis',
+      'claude',
+    );
+    created.push({ id, question_code: code, title: item['title'], priority: item['priority'], member_key: item['member_key'] });
   }
   return { ok: true, skipped: false, created, count: created.length, question_count: fresh.length, member_keys, employee_display };
 }
@@ -3755,36 +3767,31 @@ function format_generated_question_block(qid: string, title: string, priority: s
 async function store_generated_questions_on_github(
   cfg: GitHubConfig,
   fresh: Dict[],
-  member_keys: string[],
 ): Promise<Dict[]> {
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const existing = await getFileFromGitHub(cfg, GENERATED_PRIORITY_QUESTIONS_REPO_PATH);
     const currentContent = existing ? existing.content : '# AI-Generated Priority Questions\n\nAuto-generated by Governance Workbench from Task Tracker analysis. Do not edit by hand.\n';
-    // Seed dedup on (question, employee) pairs + the next sequence number from
-    // the file already on record, so the same question can be assigned to more
-    // than one attendee but is never duplicated for the same employee.
+    // Global dedup by question text + the next sequence number: a question is
+    // stored once (under its single assigned owner) and never duplicated.
     let maxSeq = 0;
-    const filePairs = new Set<string>();
+    const fileTitles = new Set<string>();
     for (const q of parse_questions(currentContent)) {
       const seqMatch = /Q-AI-(\d+)/.exec(String(q['qid'] || ''));
       if (seqMatch) maxSeq = Math.max(maxSeq, parseInt(seqMatch[1], 10));
-      const empMatch = /\*\*Employee:\*\*\s*([^\s*]+)/.exec(String(q['body'] || ''));
-      const emp = empMatch ? empMatch[1].trim() : '';
-      filePairs.add(`${normalize_question_text(String(q['title'] || ''))}::${emp}`);
+      fileTitles.add(normalize_question_text(String(q['title'] || '')));
     }
     const blocks: string[] = [];
     const created: Dict[] = [];
     let seq = maxSeq;
-    for (const mk of member_keys) {
-      for (const item of fresh) {
-        const pairKey = `${normalize_question_text(String(item['title']))}::${mk}`;
-        if (filePairs.has(pairKey)) continue; // already present for this employee
-        filePairs.add(pairKey);
-        seq += 1;
-        const qid = `Q-AI-${String(seq).padStart(4, '0')}`;
-        blocks.push(format_generated_question_block(qid, String(item['title']), String(item['priority']), String(item['body'] || ''), mk));
-        created.push({ question_code: qid, title: item['title'], priority: item['priority'], member_key: mk });
-      }
+    for (const item of fresh) {
+      const norm = normalize_question_text(String(item['title']));
+      if (fileTitles.has(norm)) continue; // already present — never duplicate
+      fileTitles.add(norm);
+      const mk = String(item['member_key'] || '');
+      seq += 1;
+      const qid = `Q-AI-${String(seq).padStart(4, '0')}`;
+      blocks.push(format_generated_question_block(qid, String(item['title']), String(item['priority']), String(item['body'] || ''), mk));
+      created.push({ question_code: qid, title: item['title'], priority: item['priority'], member_key: mk });
     }
     if (!created.length) return []; // nothing new to write
     const updated = `${currentContent.replace(/\s*$/, '')}\n\n${blocks.join('\n\n')}\n`;
@@ -3816,7 +3823,13 @@ export async function read_generated_priority_questions(company: string): Promis
   const db = getDb();
   const assignments = get_question_assignment_map(db, company);
   const out: Dict[] = [];
+  const seenTitles = new Set<string>();
   for (const q of parse_questions(file.content)) {
+    // De-duplicate by question text so any legacy duplicates (the same question
+    // stored under several attendees) show only once on the page.
+    const norm = normalize_question_text(String(q['title'] || ''));
+    if (norm && seenTitles.has(norm)) continue;
+    if (norm) seenTitles.add(norm);
     const empMatch = /\*\*Employee:\*\*\s*([^\s*]+)/.exec(String(q['body'] || ''));
     const member_key = empMatch ? empMatch[1].trim() : '';
     q['member_key'] = member_key;
