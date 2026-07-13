@@ -325,3 +325,57 @@ Canceling the monthly recurring subscription mid-cycle raises a billing-fairness
 **1. Short Question** — Are users notified when they are auto-downgraded, and where are the downgrade and webhook events audit-logged?
 
 Silent loss of a paid tier is a support and trust risk. Confirm the notification (email/in-app) sent on payment failure and on downgrade, and identify the audit trail (table/log) that lets support reconstruct why a specific account was downgraded.
+
+### Q-AI-0075 — Who approved the 0–5 month recompletion window as an official business rule, and where is it documented?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Who approved the 0–5 month recompletion window as an official business rule, and where is it documented?
+
+The five-month condition is the core change in this task, but the submission does not say where the rule came from (engineering judgment, operator practice, or a stakeholder decision) or who signed off on 0–5 months rather than a different window. Governance needs a named approver and a written rule definition before allocation output built on it is trusted.
+
+### Q-AI-0076 — What happens to production segments that fail the 5-month rule — are they dropped, left unallocated, or queued for review?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — What happens to production segments that fail the 5-month rule — are they dropped, left unallocated, or queued for review?
+
+The submission says invalid segments are "marked invalid" and unmatched wells are "collected separately," but not what the pipeline ultimately does with that volume. Please state the disposition of failed segments and give the actual counts for the linkage-not-found, decline-not-found, and unallocated lists, plus what count is considered acceptable to ship.
+
+### Q-AI-0077 — Does this allocation output feed live product numbers (production, MVestimate, royalty income), and is there a before/after impact comparison?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Does this allocation output feed live product numbers (production, MVestimate, royalty income), and is there a before/after impact comparison?
+
+Tightening allocation will move per-well and per-owner production figures. If this output flows into member-facing reports or valuations, we need a before/after delta showing how many wells and how much volume changed, and confirmation that the change was reviewed before it reaches users.
+
+### Q-AI-0078 — Which MongoDB database and collection does the new allocation write to, and was this run against production or a copy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Which MongoDB database and collection does the new allocation write to, and was this run against production or a copy?
+
+The task describes reading from linkage, decline, and well-metadata collections but does not name the write target or the environment. Please confirm the output collection, whether the run touched production data directly, and what the rollback path is if the new logic is wrong.
+
+### Q-AI-0079 — Who approved excluding shut-in producer and shut-in UIC wells, and how is the kept record chosen when duplicate APIs are removed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Who approved excluding shut-in producer and shut-in UIC wells, and how is the kept record chosen when duplicate APIs are removed?
+
+Both filters silently reduce the candidate well set. Excluding shut-in wells could drop wells with legitimate historical production, and de-duplicating by API needs a defined tie-break (latest recompletion date, most complete record, etc.). Please confirm who approved these filters and what the de-dup rule is.
+
+### Q-AI-0080 — Where does this notebook live in version control, and will it be productionized and scheduled or stay a one-off notebook?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Where does this notebook live in version control, and will it be productionized and scheduled or stay a one-off notebook?
+
+The work is described as notebook-based with no repository, branch, or run cadence given. Governance needs to know where the code is committed, whether the allocation is re-runnable per county on a schedule, and who owns it going forward.
