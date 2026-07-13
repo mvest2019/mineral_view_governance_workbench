@@ -5871,7 +5871,7 @@ function renderQuestionCard(question, memberOptions) {
       </div>
       <div class="q-card-employee">${escapeHtml(question.employeeLabel || question.assignee || '')}</div>
       <div class="q-card-title">${escapeHtml(question.title)}</div>
-      <div class="q-card-text">${escapeHtml(question.short_question)}</div>
+      ${question.short_question && question.short_question.trim() !== (question.title || '').trim() ? `<div class="q-card-text">${escapeHtml(question.short_question)}</div>` : ''}
       <details class="q-card-details">
         <summary>Show full context</summary>
         <pre class="small mt-2">${escapeHtml(question.body)}</pre>
