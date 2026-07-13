@@ -337,3 +337,57 @@ Prior defect evidence was shared via public screenshot links (prnt.sc). Lease/We
 **1. Short Question** — Is this task testing-and-logging only, or does it also include fixes and retest — and who owns the UI fixes?
 
 The Expected Result states all three reports "should be fully responsive," which is a development outcome, not a testing outcome. Confirm the exit criteria (defects logged vs defects closed), who fixes the responsive issues, and whether any of the 14 open defects from the prior round block this run.
+
+### Q-AI-0039 — Is the trending audio track licensed for commercial use on Mineral View's brand accounts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is the trending audio track licensed for commercial use on Mineral View's brand accounts?
+
+The workflow says the edit was synced with "trending audio." Trending sounds on Instagram/TikTok are generally licensed only for personal accounts — business/brand accounts usually need a commercial or royalty-free track. Confirm the exact track, its license, and whether it clears for Instagram Reels, YouTube Shorts, and Facebook.
+
+### Q-AI-0040 — Do the Mineral View platform screen recordings show any real owner names, leases, or MVestimate values?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Do the Mineral View platform screen recordings show any real owner names, leases, or MVestimate values?
+
+The reel uses Map and MVestimate screen recordings as product footage. Member/owner data is PII (see the dossier work, where generated files are kept out of git for exactly this reason). Confirm whether the footage uses demo/synthetic records or real production data, and whether any owner names, addresses, or claim details are visible on screen.
+
+### Q-AI-0041 — Has legal cleared using "World Cup" and FIFA-adjacent framing in a branded marketing reel?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Has legal cleared using "World Cup" and FIFA-adjacent framing in a branded marketing reel?
+
+The disclaimer covers footage, logos, and player likenesses, but not the use of the event name/association itself. FIFA aggressively protects "World Cup" as a trademark and restricts implied sponsorship or ambush marketing. Confirm who reviewed the concept for trademark and ambush-marketing risk before publication.
+
+### Q-AI-0042 — Which specific sources back the oil and gas statistics shown in the reel, and are they cited on screen?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Which specific sources back the oil and gas statistics shown in the reel, and are they cited on screen?
+
+"Verified using publicly available industry sources" is not traceable. List the exact figures used, their sources and as-of dates, so the claims can be re-verified if challenged.
+
+### Q-AI-0043 — Who approves this reel before it is published to Instagram, YouTube, and Facebook?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who approves this reel before it is published to Instagram, YouTube, and Facebook?
+
+The task ends at export with no named reviewer or sign-off step. Confirm the approval path (content/brand + legal) and whether publishing is blocked until that approval is recorded.
+
+### Q-AI-0044 — Does the reel display any MVestimate value, and if so does it carry the estimate/no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel display any MVestimate value, and if so does it carry the estimate/no-advice disclaimer?
+
+Showing a dollar valuation in a short-form social video risks reading as an investment or valuation claim. Confirm whether any MVestimate figure appears on screen and, if so, what disclaimer wording accompanies it.
