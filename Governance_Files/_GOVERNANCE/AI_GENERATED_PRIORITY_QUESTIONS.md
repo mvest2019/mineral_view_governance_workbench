@@ -283,3 +283,57 @@ Nikhil will review the log before production, but there is no stated place where
 **1. Short Question** — Does the county + normalized-name index roll out to all counties or only Hockley?
 
 The collection is sharded by county and today most collections carry only the default `_id` index. Clarify whether the compound index is created for every county collection and confirm the off-peak window and expected build time.
+
+### Q-AI-0033 — What are the official supported breakpoints and pass/fail criteria for calling a report "responsive"?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What are the official supported breakpoints and pass/fail criteria for calling a report "responsive"?
+
+The task lists checks (no horizontal scroll, no overlap, touch-friendly) but no measurable standard. Governance needs a stated minimum supported width (e.g. 320px / iPhone SE), a minimum touch-target size, and an explicit pass/fail bar — otherwise sign-off is subjective and not repeatable.
+
+### Q-AI-0034 — Which environment, build, and test accounts/records will this mobile testing run against?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which environment, build, and test accounts/records will this mobile testing run against?
+
+Not specified: staging vs production, which branch/build, and which specific lease, reservoir, and well records will be used as fixtures. Reports render live Texas RRC/Mongo-served data, so results are not reproducible without a fixed environment and named test records.
+
+### Q-AI-0035 — Are real physical devices available, or is this browser/emulator testing only — and does emulator-only testing count as sign-off?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are real physical devices available, or is this browser/emulator testing only — and does emulator-only testing count as sign-off?
+
+iPhone SE, iPhone 12–14, Galaxy S21/S22, and Pixel 7/8 are listed, but device availability is not stated. Emulated viewports do not reproduce iOS Safari download behavior, touch/gesture handling on maps, or real font scaling — the exact areas this task is checking. Confirm what is actually being tested on and whether the Expected Result can be certified without real hardware.
+
+### Q-AI-0036 — Are Field Reports and the Lease Report Download gated by subscription tier, and which tier will be used for testing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are Field Reports and the Lease Report Download gated by subscription tier, and which tier will be used for testing?
+
+Free/Pro/Premium tiers exist and feature gating is an open governance item. If the Download button or full report sections are tier-gated, a "button not visible on mobile" finding could be a correct entitlement block rather than a responsiveness defect. Confirm the tier used and the expected gated-vs-ungated behavior before defects are logged.
+
+### Q-AI-0037 — Do Field Report screenshots contain owner PII, and where should defect evidence be stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do Field Report screenshots contain owner PII, and where should defect evidence be stored?
+
+Prior defect evidence was shared via public screenshot links (prnt.sc). Lease/Well/Reservoir reports can display owner names, ownership, and valuation data. Confirm whether evidence must be redacted and moved to an access-controlled location (e.g. the MineralView_Operations Drive) instead of public image hosts.
+
+### Q-AI-0038 — Is this task testing-and-logging only, or does it also include fixes and retest — and who owns the UI fixes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is this task testing-and-logging only, or does it also include fixes and retest — and who owns the UI fixes?
+
+The Expected Result states all three reports "should be fully responsive," which is a development outcome, not a testing outcome. Confirm the exit criteria (defects logged vs defects closed), who fixes the responsive issues, and whether any of the 14 open defects from the prior round block this run.
