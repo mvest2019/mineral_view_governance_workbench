@@ -109,3 +109,57 @@ The task mentions investigating failed/delayed jobs and fixing XPath/extraction 
 **1. Short Question** — Are these daily manual SQL checks going to be codified as automated validation with alerts, and who owns that work?
 
 The same null/duplicate/mandatory-field checks appear to be re-run by hand every day. Deciding whether to automate them (and who builds it) determines whether validation survives this person being unavailable.
+
+### Q-AI-0051 — What data sources back the "Texas Oil Is Booming" claim, and who fact-checked the figures before publish?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — What data sources back the "Texas Oil Is Booming" claim, and who fact-checked the figures before publish?
+
+The submission covers production and editing but never names the underlying rig/permit/production data or a reviewer who verified it. A public video asserting a boom needs a traceable source and a named fact-check owner.
+
+### Q-AI-0052 — Who signs off on final publish, and on which channels and date will this video go live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Who signs off on final publish, and on which channels and date will this video go live?
+
+The task says the video is "ready for publishing" but no approver, channel, or publish date is recorded. Confirm the approval gate before it reaches a public audience.
+
+### Q-AI-0053 — Are the AI visuals, background music, and voice-over cleared for commercial use, and is AI generation disclosed to viewers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Are the AI visuals, background music, and voice-over cleared for commercial use, and is AI generation disclosed to viewers?
+
+Licensing for the music track and rights/ownership of AI-generated scenes and the voice-over are unstated. Confirm license terms and whether an AI-generated disclosure is required on the platform.
+
+### Q-AI-0054 — Does the video carry the educational-only / no-investment-advice disclaimer, and does any footage show real member or owner data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Does the video carry the educational-only / no-investment-advice disclaimer, and does any footage show real member or owner data?
+
+Governance already restricts advice-style claims elsewhere. Confirm the disclaimer is on-screen and that any platform screen recordings use demo data, not real mineral-owner PII.
+
+### Q-AI-0055 — Where are the final export, project files, and source assets stored so the video can be re-edited or corrected later?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Where are the final export, project files, and source assets stored so the video can be re-edited or corrected later?
+
+No storage location or version reference is given. Identify the canonical location for the master export and editable project files.
+
+### Q-AI-0056 — What is the call-to-action for this video, and how will its performance be measured?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — What is the call-to-action for this video, and how will its performance be measured?
+
+The task ends at publish-readiness with no stated CTA, tracking link, or success metric, so its contribution to acquisition cannot be evaluated.
