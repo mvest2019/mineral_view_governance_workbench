@@ -541,3 +541,57 @@ Observations were "documented for future improvements" but no destination or own
 **1. Short Question** — Are the AI-generated glossary text and images cleared for accuracy and licensing before publication?
 
 The page used an AI-generated illustration (uploaded to Cloudinary) and an "AI-friendly FAQ structure". Confirm which tool generated the image, that its output licence permits commercial use on the site, and whether AI-drafted regulatory explanations get a human factual-accuracy pass before publish.
+
+### Q-AI-0099 — What is the status of the ownership-data and MVEstimate/valuation fixes assigned to you, which are currently blocking other work?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the status of the ownership-data and MVEstimate/valuation fixes assigned to you, which are currently blocking other work?
+
+Krishna's full dossier batch generation is on hold pending "Nikhil's ownership-data fix" (Shannon's leases tracing to owner "Charles D. Simmons"), and Vaishnavi reported two data-quality issues to Nikhil: valuation fields stored as text (monetary totals = 0) and `MVEstimate = $0` caused by `NaN` values on depleted leases. Today's report does not mention any of these. Please confirm whether they are fixed, in progress, or not yet started, and give an ETA so the dependent work can unblock.
+
+### Q-AI-0100 — Will the ~130 already-processed Texas counties be re-run to backfill the missing State Code, or does the fix only apply to new counties?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Will the ~130 already-processed Texas counties be re-run to backfill the missing State Code, or does the fix only apply to new counties?
+
+The State Code gap was found after ~130 counties were already "successfully processed and verified." If those counties are not reprocessed, the dataset will be split into records with and without State Code. Please confirm the backfill plan, the cost/time to re-run, and how downstream consumers will know which counties carry the field.
+
+### Q-AI-0101 — What is the authoritative State Code → property-classification mapping, and where is it documented?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the authoritative State Code → property-classification mapping, and where is it documented?
+
+The report treats State Code as the driver of property classification (Oil & Gas Lease, Residential, Multi-Family, Agricultural/Rural, Commercial, Industrial, etc.), but "State Code" normally means a jurisdiction code. This needs a single documented code table with its source, because MVEstimate and any "is this a mineral property" logic will depend on it. Please confirm the mapping, the source of truth, and what happens to records with an unknown or blank code.
+
+### Q-AI-0102 — What accuracy threshold and human QA step must Directional Survey extractions pass before the Excel output is used for engineering analysis?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What accuracy threshold and human QA step must Directional Survey extractions pass before the Excel output is used for engineering analysis?
+
+OCR-derived MD, TVD, Inclination, Azimuth and DLS values feed downstream engineering work where a single misread digit is materially wrong. The report says extraction is "highly accurate" and "ready for large-scale county processing" but cites no measured accuracy rate, no sample-vs-source benchmark, and no human sign-off gate. Please define the accepted error rate, the validation sample size, and who signs off before large-scale runs begin.
+
+### Q-AI-0103 — Where are the extracted mineral-owner outputs stored, and are we permitted to redistribute the source appraisal data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Where are the extracted mineral-owner outputs stored, and are we permitted to redistribute the source appraisal data?
+
+The 2025 Texas mineral-owner extraction produces owner names and addresses (PII), and Krishna's dossier work already keeps generated member files off git for exactly this reason. Please confirm the storage location and access controls for the extraction outputs, the target ingestion database, and whether the county/appraisal source documents carry terms-of-use restrictions on republishing owner data to subscribers.
+
+### Q-AI-0104 — Where is your Mineral View redesign feedback logged, and is it reconciled with the QA team's existing defect sheet?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Where is your Mineral View redesign feedback logged, and is it reconciled with the QA team's existing defect sheet?
+
+Utkarsha and Aboli are separately logging UI/UX defects and redesign feedback for the same platform. If your "detailed feedback compiled for the frontend team" lives in a different document, the frontend team will receive three overlapping and possibly conflicting lists. Please confirm the single tracker, and who arbitrates when recommendations disagree.
