@@ -5868,7 +5868,7 @@ async function renderQuestions() {
 // Card markup for a single Priority Question (shared by every page).
 function renderQuestionCard(question, memberOptions) {
   return `
-    <div class="q-card priority-${question.priority}" id="qcard-${escapeHtml(question.qid)}">
+    <div class="q-card priority-${question.priority}" id="qcard-${escapeHtml(question.qid)}" data-assignee="${escapeHtml(question.employeeLabel || question.assignee || 'Ryan Cochran')}">
       <div class="q-card-head">
         <span class="qid">${escapeHtml(question.qid)}</span>
         <span class="q-card-badges">
@@ -5883,11 +5883,6 @@ function renderQuestionCard(question, memberOptions) {
         <summary>Show full context</summary>
         <pre class="small mt-2">${escapeHtml(question.body)}</pre>
       </details>
-      <div class="q-card-foot">
-        <select class="form-select form-select-sm q-card-select" title="Route to team member" onchange="saveQuestionAssignment('${escapeJs(question.qid)}', this.value)">
-          ${memberOptions.map((member) => `<option ${member.value === (question.assignee || 'Ryan Cochran') ? 'selected' : ''} value="${escapeHtml(member.value)}">${escapeHtml(member.label)}</option>`).join('')}
-        </select>
-      </div>
       <details class="q-card-answer">
         <summary>Answer this question</summary>
         <textarea class="form-control form-control-sm q-answer-input mt-2" id="qanswer-${escapeHtml(question.qid)}" rows="3" placeholder="Type the answer. On save it is committed to the assignee's folder under Governance_Files/Priority_Questions/."></textarea>
@@ -6040,8 +6035,8 @@ async function savePriorityQuestionAnswer(qid) {
     showToast('Please enter an answer.', 'error');
     return;
   }
-  const select = card.querySelector('.q-card-select');
-  const employee = (select && select.value) || 'Ryan Cochran';
+  // Owner is read-only (assigned at generation) — read it from the card.
+  const employee = (card.dataset.assignee || card.querySelector('.q-card-employee')?.textContent || 'Ryan Cochran').trim();
   const title = (card.querySelector('.q-card-title')?.textContent || '').trim();
   const shortText = (card.querySelector('.q-card-text')?.textContent || '').trim();
   const question = [title, shortText].filter(Boolean).join(' — ');
