@@ -3846,18 +3846,66 @@ export async function read_generated_priority_questions(company: string): Promis
   return out;
 }
 
+// Durable record of answered question ids (one qid per line) so an answered
+// question does not reappear on the Priority Questions page after a refresh.
+export const ANSWERED_QIDS_REPO_PATH = 'Governance_Files/Priority_Questions/_answered_qids.md';
+
+export async function read_answered_qids(company: string): Promise<Set<string>> {
+  void company;
+  let cfg: GitHubConfig;
+  try {
+    cfg = getGitHubConfig();
+  } catch {
+    return new Set();
+  }
+  const file = await getFileFromGitHub(cfg, ANSWERED_QIDS_REPO_PATH);
+  if (!file) return new Set();
+  const set = new Set<string>();
+  for (const rawLine of file.content.split(/\r?\n/)) {
+    const line = rawLine.trim().replace(/^[-*]\s*/, '');
+    if (line && !line.startsWith('#')) set.add(line);
+  }
+  return set;
+}
+
+// Append a qid to the durable answered list (best-effort; retries on sha
+// conflict; no duplicates).
+export async function record_answered_qid(company: string, qid: string): Promise<boolean> {
+  void company;
+  const cleaned = String(qid || '').trim();
+  if (!cleaned) return false;
+  let cfg: GitHubConfig;
+  try {
+    cfg = getGitHubConfig();
+  } catch {
+    return false;
+  }
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const existing = await getFileFromGitHub(cfg, ANSWERED_QIDS_REPO_PATH);
+    const current = existing ? existing.content : '# Answered Priority Question IDs\n\nAuto-maintained by Governance Workbench. Do not edit by hand.\n';
+    if (current.split(/\r?\n/).some((l) => l.trim() === cleaned)) return true;
+    const updated = `${current.replace(/\s*$/, '')}\n${cleaned}\n`;
+    const result = await upsertFileOnGitHub(cfg, ANSWERED_QIDS_REPO_PATH, updated, `Priority Questions: mark ${cleaned} answered`, existing?.sha);
+    if (result.ok) return true;
+    if (result.status !== 409 && result.status !== 422) {
+      console.error(`[priority_questions] failed to record answered qid ${cleaned} (HTTP ${result.status}): ${result.error}`);
+      return false;
+    }
+  }
+  return false;
+}
+
 // Merge the durable generated questions into a build_questions_payload() result:
 // each is grouped under its recorded employee (creating the bucket if needed),
 // or org-wide when no employee was recorded. Recomputes employee and team counts
 // so every count stays consistent. Shared by /api/questions and the nav badge.
 export async function apply_generated_questions(company: string, payload: Dict): Promise<void> {
-  let generated: Dict[];
+  let generated: Dict[] = [];
   try {
     generated = await read_generated_priority_questions(company);
   } catch {
-    return;
+    generated = [];
   }
-  if (!generated.length) return;
 
   const orgSeen = new Set((payload['org_wide'] as Dict[]).map((q) => q['qid']));
   for (const q of generated) {
@@ -3875,6 +3923,18 @@ export async function apply_generated_questions(company: string, payload: Dict):
     } else if (!orgSeen.has(q['qid'])) {
       (payload['org_wide'] as Dict[]).push(q);
       orgSeen.add(q['qid']);
+    }
+  }
+
+  // Durably answered questions are removed from the active list so they do not
+  // reappear after a refresh.
+  const answered = await read_answered_qids(company);
+  if (answered.size) {
+    payload['org_wide'] = (payload['org_wide'] as Dict[]).filter((q) => !answered.has(String(q['qid'])));
+    const employees = payload['employees'] as Dict;
+    for (const key of Object.keys(employees)) {
+      const bucket = employees[key] as Dict;
+      bucket['questions'] = (bucket['questions'] as Dict[]).filter((q) => !answered.has(String(q['qid'])));
     }
   }
 

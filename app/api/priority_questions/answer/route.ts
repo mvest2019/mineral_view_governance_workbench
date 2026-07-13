@@ -8,6 +8,7 @@ import {
   localStamp,
   slugifyName,
 } from '@/lib/github';
+import { record_answered_qid } from '@/lib/helpers';
 
 export const dynamic = 'force-dynamic';
 
@@ -65,13 +66,13 @@ export const POST = route(async (req: NextRequest) => {
     answeredBy,
     '',
     'Answered Date:',
-    stamp.datePart,
+    stamp.dateDisplay,
     '',
     'Answered Time:',
     stamp.timeDisplay,
     '',
     'Created At:',
-    `${stamp.datePart} ${stamp.timeDisplay}`,
+    stamp.createdAt,
     '',
     '---',
     '',
@@ -88,6 +89,15 @@ export const POST = route(async (req: NextRequest) => {
       content,
       (filename) => `Priority Questions: answer${qid ? ` ${qid}` : ''} for ${employee} (${filename})`,
     );
+    // Persist the answered state so this question is dropped from the active
+    // list and does not reappear after a refresh. Best-effort.
+    if (qid) {
+      try {
+        await record_answered_qid(company, qid);
+      } catch (err) {
+        console.error('[priority_questions] record_answered_qid failed:', err);
+      }
+    }
     return json({
       ok: true,
       company,

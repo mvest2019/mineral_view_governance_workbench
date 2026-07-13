@@ -247,21 +247,40 @@ export function slugifyName(name: string): string {
 }
 
 export interface LocalStamp {
-  datePart: string; // YYYY-MM-DD
-  timePart: string; // HH-mm-ss (filename-safe)
-  timeDisplay: string; // h:mm AM/PM
-  createdAt: string; // YYYY-MM-DDTHH:mm:ss
+  datePart: string; // YYYY-MM-DD (IST) — filename-safe
+  timePart: string; // HH-mm-ss (IST) — filename-safe
+  timeDisplay: string; // "05:45 PM IST"
+  createdAt: string; // "2026-07-13 05:45 PM IST"
+  dateDisplay: string; // "13 July 2026"
 }
 
-// Local (server-time) timestamp pieces used for filenames and Markdown bodies.
+// Indian Standard Time — used for every timestamp written into governance
+// Markdown so files are consistent regardless of the (UTC) server timezone.
+const IST_TIMEZONE = 'Asia/Kolkata';
+
+// Timestamp pieces in IST (Asia/Kolkata) via Intl — no hardcoded offset. Shared
+// by Task Tracker, Meetings, and Priority Question answers.
 export function localStamp(now: Date = new Date()): LocalStamp {
-  const datePart = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}-${pad2(now.getDate())}`;
-  const timePart = `${pad2(now.getHours())}-${pad2(now.getMinutes())}-${pad2(now.getSeconds())}`;
-  let hour12 = now.getHours() % 12;
-  if (hour12 === 0) hour12 = 12;
-  const timeDisplay = `${hour12}:${pad2(now.getMinutes())} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
-  const createdAt = `${datePart}T${pad2(now.getHours())}:${pad2(now.getMinutes())}:${pad2(now.getSeconds())}`;
-  return { datePart, timePart, timeDisplay, createdAt };
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: IST_TIMEZONE,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+  }).formatToParts(now);
+  const p: Record<string, string> = {};
+  for (const part of parts) p[part.type] = part.value;
+  if (p.hour === '24') p.hour = '00'; // guard for midnight rendering as 24
+  const datePart = `${p.year}-${p.month}-${p.day}`;
+  const timePart = `${p.hour}-${p.minute}-${p.second}`;
+  const h = parseInt(p.hour, 10);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  let h12 = h % 12;
+  if (h12 === 0) h12 = 12;
+  const timeDisplay = `${pad2(h12)}:${p.minute} ${ampm} IST`;
+  const dateDisplay = new Intl.DateTimeFormat('en-GB', {
+    timeZone: IST_TIMEZONE, day: 'numeric', month: 'long', year: 'numeric',
+  }).format(now);
+  const createdAt = `${datePart} ${timeDisplay}`;
+  return { datePart, timePart, timeDisplay, createdAt, dateDisplay };
 }
 
 export interface CommitUniqueResult {

@@ -1452,6 +1452,18 @@ h3 {
   font-weight: 700;
 }
 
+/* Selected employee filter pill on the Priority Questions page. */
+.q-filter-pill { cursor: pointer; }
+.q-filter-pill.active {
+  border-color: var(--brand-accent, #1f3a5f);
+  background: var(--brand-accent, #1f3a5f);
+  color: #fff;
+}
+.q-filter-pill.active .team-pill-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
 .member-list-stack {
   display: flex;
   flex-direction: column;

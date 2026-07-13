@@ -5812,12 +5812,19 @@ function backToQuestionSource() {
   showView('questions');
 }
 
-// Paginated state for the Priority Questions page (infinite scroll).
-let PRIORITY_QUESTIONS_STATE = { all: [], rendered: 0, memberOptions: [], pageSize: 10, _observer: null };
+// Paginated state for the Priority Questions page (infinite scroll + employee filter).
+let PRIORITY_QUESTIONS_STATE = { all: [], rendered: 0, memberOptions: [], pageSize: 10, filter: null, _observer: null };
 
 function priorityQuestionSeq(q) {
   const m = /Q-AI-(\d+)/.exec(q.qid || '');
   return m ? parseInt(m[1], 10) : 0;
+}
+
+// The currently-displayed subset: all questions, or only the selected employee's.
+function priorityQuestionsView() {
+  const s = PRIORITY_QUESTIONS_STATE;
+  if (!s.filter) return s.all;
+  return s.all.filter((q) => (q.employeeLabel || q.assignee || '') === s.filter);
 }
 
 async function renderQuestions() {
@@ -5843,12 +5850,12 @@ async function renderQuestions() {
   if (!memberOptions.find((m) => m.value === 'Ryan Cochran')) {
     memberOptions.unshift({ value: 'Ryan Cochran', label: 'Ryan Cochran' });
   }
-  PRIORITY_QUESTIONS_STATE = { all: flat, rendered: 0, memberOptions, pageSize: 10, _observer: null };
+  PRIORITY_QUESTIONS_STATE = { all: flat, rendered: 0, memberOptions, pageSize: 10, filter: null, _observer: null };
 
   let html = '<h2>Priority Questions</h2>';
-  html += '<div class="small text-muted mb-3">Latest generated questions first. Each card shows the team member it belongs to. Scroll to load more.</div>';
+  html += '<div class="small text-muted mb-3">Latest generated questions first. Click an employee to see only their questions. Scroll to load more.</div>';
   html += renderQuestionPrioritySummary(data);
-  html += renderTeamCountPills(data.team_counts);
+  html += renderPriorityQuestionFilterPills(data.team_counts, flat.length);
   html += '<div class="q-card-grid" id="priorityQuestionsGrid"></div>';
   html += '<div id="priorityQuestionsSentinel" class="text-center text-muted small py-3"></div>';
   document.getElementById('mainView').innerHTML = `<div class="priority-questions-view">${html}</div>`;
@@ -5891,21 +5898,22 @@ function renderQuestionCard(question, memberOptions) {
     </div>`;
 }
 
-// Append the next page of questions (no duplicates — slices by rendered count).
+// Append the next page from the current view (no duplicates — slices by rendered count).
 function appendPriorityQuestionsPage() {
   const state = PRIORITY_QUESTIONS_STATE;
   const grid = document.getElementById('priorityQuestionsGrid');
   const sentinel = document.getElementById('priorityQuestionsSentinel');
   if (!grid) return;
-  const next = state.all.slice(state.rendered, state.rendered + state.pageSize);
+  const view = priorityQuestionsView();
+  const next = view.slice(state.rendered, state.rendered + state.pageSize);
   if (next.length) {
     grid.insertAdjacentHTML('beforeend', next.map((q) => renderQuestionCard(q, state.memberOptions)).join(''));
     state.rendered += next.length;
   }
   if (sentinel) {
-    sentinel.textContent = state.rendered >= state.all.length
-      ? (state.all.length ? 'All priority questions loaded.' : 'No priority questions yet.')
-      : `Showing ${state.rendered} of ${state.all.length} — scroll for more…`;
+    sentinel.textContent = state.rendered >= view.length
+      ? (view.length ? 'All priority questions loaded.' : 'No priority questions to show.')
+      : `Showing ${state.rendered} of ${view.length} — scroll for more…`;
   }
 }
 
@@ -5917,13 +5925,36 @@ function setupPriorityQuestionsInfiniteScroll() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && CURRENT_VIEW === 'questions'
-          && PRIORITY_QUESTIONS_STATE.rendered < PRIORITY_QUESTIONS_STATE.all.length) {
+          && PRIORITY_QUESTIONS_STATE.rendered < priorityQuestionsView().length) {
         appendPriorityQuestionsPage();
       }
     });
   }, { rootMargin: '250px' });
   observer.observe(sentinel);
   PRIORITY_QUESTIONS_STATE._observer = observer;
+}
+
+// Clickable employee filter pills (reuses the existing team-pill style).
+function renderPriorityQuestionFilterPills(teamCounts, totalCount) {
+  const all = `<button class="team-pill q-filter-pill active" data-employee="" type="button" onclick="filterPriorityQuestionsByEmployee('')">All <span class="team-pill-count">${totalCount || 0}</span></button>`;
+  const pills = (teamCounts || []).map((member) => `
+    <button class="team-pill q-filter-pill" data-employee="${escapeHtml(member.display_name)}" type="button" onclick="filterPriorityQuestionsByEmployee('${escapeJs(member.display_name)}')">
+      ${escapeHtml(member.display_name)} <span class="team-pill-count">${member.unanswered_count}</span>
+    </button>`).join('');
+  return `<div class="team-pill-row">${all}${pills}</div>`;
+}
+
+// Show only the selected employee's questions (empty name = show all).
+function filterPriorityQuestionsByEmployee(name) {
+  const state = PRIORITY_QUESTIONS_STATE;
+  state.filter = name || null;
+  state.rendered = 0;
+  const grid = document.getElementById('priorityQuestionsGrid');
+  if (grid) grid.innerHTML = '';
+  appendPriorityQuestionsPage();
+  document.querySelectorAll('.priority-questions-view .q-filter-pill').forEach((pill) => {
+    pill.classList.toggle('active', (pill.dataset.employee || '') === (state.filter || ''));
+  });
 }
 
 // Recompute the Priority Questions counts from the full in-memory list (not just
