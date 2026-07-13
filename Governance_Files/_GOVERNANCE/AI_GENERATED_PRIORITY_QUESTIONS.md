@@ -379,3 +379,57 @@ Both filters silently reduce the candidate well set. Excluding shut-in wells cou
 **1. Short Question** — Where does this notebook live in version control, and will it be productionized and scheduled or stay a one-off notebook?
 
 The work is described as notebook-based with no repository, branch, or run cadence given. Governance needs to know where the code is committed, whether the allocation is re-runnable per county on a schedule, and who owns it going forward.
+
+### Q-AI-0081 — Was a backup or snapshot taken before the unused staging databases were dropped, and who approved the deletion?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was a backup or snapshot taken before the unused staging databases were dropped, and who approved the deletion?
+
+The submission says unused databases were removed from staging after verification, but does not say whether the drops are recoverable. Database deletion is irreversible without a snapshot, and staging is used by scraper/validation work (W-1/W-2 pipelines) that may not appear as an "active application." Please confirm: (a) the exact list of databases dropped, (b) whether a dump/snapshot exists and where it is stored, (c) the retention period for that backup, and (d) who signed off.
+
+### Q-AI-0082 — Has the MongoDB password actually been changed yet, and what is the cutover plan across all services that hold the connection string?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Has the MongoDB password actually been changed yet, and what is the cutover plan across all services that hold the connection string?
+
+The task describes an inventory of MongoDB connection-string usage "before performing any password changes," which implies the rotation is still pending. Governance needs the plan, not just the inventory: which services/repos/env files must be updated, whether the rotation happens in a maintenance window, who updates Vercel and server-side env vars, and what the rollback is if a service fails to reconnect. This is the execution plan for the rotation, distinct from the standing "Rotate exposed secrets and keys" item.
+
+### Q-AI-0083 — Did the connection-string audit find any MongoDB credentials hard-coded or committed in source control rather than held in environment variables?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Did the connection-string audit find any MongoDB credentials hard-coded or committed in source control rather than held in environment variables?
+
+The audit covered config files, environment variables, and startup logic across backend projects. The governance-relevant output is the finding: were any live credentials present in committed files, and if so which repos and branches, so they can be purged from history rather than merely overwritten by the new password.
+
+### Q-AI-0084 — Does the read-only database access given to Claude Desktop reach production data containing mineral-owner PII, and is that approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does the read-only database access given to Claude Desktop reach production data containing mineral-owner PII, and is that approved?
+
+Claude AI Desktop was connected to the databases using provided read-only credentials, with GitHub also connected. Read-only prevents writes but not reads — if the connected database includes production owner records, query results leave the environment and go to a third-party model. Please confirm which environment and databases Claude can reach, whether owner PII is in scope, whether the read-only credential is per-person or shared, and who approved this access.
+
+### Q-AI-0085 — How was "no longer being used" determined for the staging databases, and were the scraper and data-validation pipelines checked as consumers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — How was "no longer being used" determined for the staging databases, and were the scraper and data-validation pipelines checked as consumers?
+
+Verification appears to have been based on active applications and services. Scheduled scrapers and W-1/W-2 validation jobs read and write staging tables outside of the running application layer and could be missed. Please state the method used (access logs, connection metrics, code search, team confirmation) and the time window it covered.
+
+### Q-AI-0086 — Were any logs deleted during the staging cleanup that are subject to audit or retention requirements?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were any logs deleted during the staging cleanup that are subject to audit or retention requirements?
+
+The cleanup removed logs, temporary files, and obsolete artifacts to free disk space. Some logs (scraper process logs, authentication/RDP access logs, application audit trails) may be needed for incident investigation or for verifying earlier security work such as the firewall allowlist reduction. Please confirm what categories of logs were deleted and whether MView has a defined log-retention policy that should govern future cleanups.
