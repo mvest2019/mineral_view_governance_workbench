@@ -217,3 +217,57 @@ A Danger Zone implies irreversible operations such as account deletion. Before t
 **1. Short Question** — Where are the documented per-page UI/UX issues and suggestions stored, and have they been severity-ranked for the dev team?
 
 The submission states that issues and suggestions were documented, but does not say where (sheet, repo, Drive) or whether they are prioritized. Without a linked, ranked artifact, none of this work is traceable or actionable in governance.
+
+### Q-AI-0063 — What is the root cause of the new-job scanning error, and is it tracked as a defect with an owner and ETA?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What is the root cause of the new-job scanning error, and is it tracked as a defect with an owner and ETA?
+
+The submission says only 1 email could be sent because scanning new jobs errored. Governance needs the error details, whether it was logged/reported, who owns the fix, and whether the CRM outreach pipeline is currently blocked or degraded.
+
+### Q-AI-0064 — Who reviewed and approved the Trendelier merge to main and the production deploy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who reviewed and approved the Trendelier merge to main and the production deploy?
+
+The work was merged to the main branch and deployed to production the same day. Confirm the review/approval path, what testing gate was passed before deploy, and whether a rollback plan exists.
+
+### Q-AI-0065 — Where are the credentials/OAuth tokens for the multiple social media accounts stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Where are the credentials/OAuth tokens for the multiple social media accounts stored?
+
+Multi-account support means storing third-party access tokens. Confirm the storage location (env vars, DB, encrypted vault), who can access them, and whether refresh/revocation is handled.
+
+### Q-AI-0066 — Does a human approve AI-drafted CRM emails before they are sent to real users?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Does a human approve AI-drafted CRM emails before they are sent to real users?
+
+Email drafts were audited using GPT, Gemini, and Claude, then 1 email was sent to a user. Confirm whether a human sign-off step exists before outbound send, and which no-advice/compliance guardrails apply to AI-generated email content.
+
+### Q-AI-0067 — What is the expected daily CRM email volume, and is 1 email a hard failure or within normal range?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What is the expected daily CRM email volume, and is 1 email a hard failure or within normal range?
+
+Needed to know whether the outreach campaign is materially behind target, and whether any send-rate, deliverability, or consent/opt-out limits are being applied.
+
+### Q-AI-0068 — Is Trendelier an internal marketing tool or a customer-facing product, and which repo governs it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Is Trendelier an internal marketing tool or a customer-facing product, and which repo governs it?
+
+Trendelier is not documented in the existing governance knowledge. Confirm its scope, owner, repository, and whether it falls under the repo classification and data-topology documentation already in progress.
