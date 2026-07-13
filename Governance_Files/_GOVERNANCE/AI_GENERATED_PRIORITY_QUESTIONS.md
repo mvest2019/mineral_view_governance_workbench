@@ -433,3 +433,57 @@ Verification appears to have been based on active applications and services. Sch
 **1. Short Question** — Were any logs deleted during the staging cleanup that are subject to audit or retention requirements?
 
 The cleanup removed logs, temporary files, and obsolete artifacts to free disk space. Some logs (scraper process logs, authentication/RDP access logs, application audit trails) may be needed for incident investigation or for verifying earlier security work such as the firewall allowlist reduction. Please confirm what categories of logs were deleted and whether MView has a defined log-retention policy that should govern future cleanups.
+
+### Q-AI-0087 — Does the multi-tranche undercount also affect the MVestimate values owners see in the live portal, not just the dossier tool?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Krishna_Sable
+**1. Short Question** — Does the multi-tranche undercount also affect the MVestimate values owners see in the live portal, not just the dossier tool?
+
+The submission says summing multiple interest slices per lease corrected Shannon +$13.6K, Keon +$230K and Kezia +$21.9M. If the same summing gap exists in the portal/pipeline, real owners are currently being shown materially wrong values. Need a clear statement of blast radius (portal, reports, emails) and who owns the source-side fix.
+
+### Q-AI-0088 — Are the multi-tranche and duplicate/$0 MVestimate issues being fixed at the data source, or only worked around inside the dossier tool?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the multi-tranche and duplicate/$0 MVestimate issues being fixed at the data source, or only worked around inside the dossier tool?
+
+Both fixes appear to live in the generator. If the underlying claim/valuation records are still wrong, every other consumer stays wrong and the two are guaranteed to drift. Confirm whether Nikhil has accepted a source-level fix and by when.
+
+### Q-AI-0089 — Who gives final accuracy sign-off on the 8 dossiers before any of them are sent to an owner?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who gives final accuracy sign-off on the 8 dossiers before any of them are sent to an owner?
+
+Ryan reviewed the first two files in the earlier pass; it is not stated whether the 8 regenerated files carry the same approval, or whether Drive upload alone counts as release.
+
+### Q-AI-0090 — What is the decision and owner for the 9 over-claim and 3 unverified claim-holders — hold indefinitely, contact the user, or correct the claims?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — What is the decision and owner for the 9 over-claim and 3 unverified claim-holders — hold indefinitely, contact the user, or correct the claims?
+
+A hold note was drafted for Ryan and Nikhil, but no decision, remediation path, or deadline is recorded for the 12 accounts that cannot be dossiered.
+
+### Q-AI-0091 — Was pulling Nicholas Farmar's live portal export authorized, and is one member's export enough to sign off value accuracy for all owners?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Was pulling Nicholas Farmar's live portal export authorized, and is one member's export enough to sign off value accuracy for all owners?
+
+Reconciliation used a single real member's portal data. Clarify the consent/authorization basis for using a live member export as a validation artifact, and how many members must reconcile before we call values 'validated'.
+
+### Q-AI-0092 — How stale can a dossier snapshot be before it must be regenerated, and who enforces that rule?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — How stale can a dossier snapshot be before it must be regenerated, and who enforces that rule?
+
+The tool now self-documents freshness, but there is no stated expiry (e.g. 7/30 days) or owner responsible for preventing an outdated PII-bearing file on Drive from being sent to an owner.
