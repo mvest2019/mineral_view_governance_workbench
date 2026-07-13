@@ -1,9 +1,24 @@
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/db';
 import { abort, json, nowIso, route } from '@/lib/http';
-import { getGitHubConfig, listOrgRepos } from '@/lib/github';
 
 export const dynamic = 'force-dynamic';
+
+// Explicit repository list to display in the Classification table while the
+// GitHub org integration is not returning the full set reliably.
+const CLASSIFICATION_REPOS: string[] = [
+  'PresentationSiteAPI', 'Mview-Presentation-Next', 'MViewPortalAPI',
+  'mineral_view_governance_workbench', 'Scrapers', 'mview-platform-next15',
+  'mineralview-weekly', 'NewProject', 'Mview-Cerebro-web', 'MView-Community-FE',
+  'MViewPortalUI', 'MineralView-Portal-Next', 'Mview-Portal-NextJS', 'MviewPortal-Next',
+  'Mview-Portal-Next', 'gis-poc', 'MineralVest', 'ImageUploadAPI', 'W2API',
+  'Decline_curve', 'MView-Analytics', 'CerebroAPIs', 'CerebroUI', 'W1NewsGeneration',
+  'W2NewsGeneration', 'MviewDataExploreAPI', 'mvestimateAPI', 'MVestimateCalculator',
+  'MViewDataExploration', 'mview-iOSApp', 'GenerateInvestorPresentations',
+  'WellLocationScraper', 'WellboreScraper', 'MineralRollScraper', 'MarketUpdatesScraper',
+  'G5FormScraper', 'InvestorPresentationScraper', 'DirectionalSurveyScraper',
+  'CompletionScraper', 'W1PermitScraper', 'mviewmessageAPI', 'FileUploadAPI',
+];
 
 export const GET = route(async (req: NextRequest) => {
   const company = req.nextUrl.searchParams.get('company');
@@ -15,20 +30,8 @@ export const GET = route(async (req: NextRequest) => {
     rows[r.repo_name] = r;
   }
 
-  // Data source: every repository in the GitHub organization, fetched via the
-  // existing GitHub integration (all pages). Best-effort — on any failure
-  // (unconfigured / rate-limited / unreachable) fall back to the saved
-  // classification rows so the page shows the existing empty/error state.
-  let repoNames: string[] = [];
-  try {
-    repoNames = await listOrgRepos(getGitHubConfig());
-  } catch {
-    repoNames = [];
-  }
-
   const out: any[] = [];
-  const source = repoNames.length ? repoNames : Object.keys(rows);
-  for (const repoName of [...source].sort((a, b) => a.localeCompare(b))) {
+  for (const repoName of CLASSIFICATION_REPOS) {
     const existing = rows[repoName];
     if (existing) {
       out.push(existing);

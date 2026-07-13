@@ -37,6 +37,7 @@ export const POST = route(async (req: NextRequest) => {
   const uploadedBy = String(body.uploaded_by || '').trim() || 'Unknown';
   const summary = String(body.summary || '').trim();
   const claudeSummary = String(body.claude_summary || '').trim();
+  const transcript = String(body.transcript || '').trim();
   const uploadedFile = String(body.uploaded_file || '').trim();
   const additionalDetails = String(body.additional_details || '').trim();
   const attendees = (Array.isArray(body.attendees) ? body.attendees : []) as Array<Record<string, unknown>>;
@@ -130,15 +131,17 @@ export const POST = route(async (req: NextRequest) => {
     throw err;
   }
 
-  // Build the analysis text from the meeting information, then reuse the Task
-  // Tracker generation (analyzes all Governance_Files) to produce Priority
-  // Questions assigned to the attendees — only when genuinely warranted.
+  // Build the analysis text — the full transcript comes first so Claude can
+  // determine per-question ownership from the actual conversation (who was
+  // assigned / committed to which work), not just from the attendee list.
   const analysisText = [
     `Meeting: ${title}`,
     meetingDate ? `Date: ${meetingDate}${meetingTime ? ` ${meetingTime}` : ''}` : '',
     attendeeNames.length ? `Attendees: ${attendeeNames.join(', ')}` : '',
-    summary ? `Summary: ${summary}` : '',
-    additionalDetails ? `Additional details: ${additionalDetails}` : '',
+    transcript ? `Meeting transcript (who said what, action items, owners, decisions, risks, follow-ups):\n"""\n${transcript}\n"""` : '',
+    claudeSummary ? `Meeting summary: ${claudeSummary}` : '',
+    summary ? `User note: ${summary}` : '',
+    additionalDetails ? `Additional notes: ${additionalDetails}` : '',
   ].filter(Boolean).join('\n');
 
   let generation: any = { ok: true, count: 0, question_count: 0, created: [] };

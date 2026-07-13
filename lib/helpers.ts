@@ -1007,7 +1007,7 @@ export async function generate_all_repo_questions(company: string, actor = 'gene
 
 // Employees who have left and must not appear anywhere in the workbench.
 export const REMOVED_EMPLOYEES: Record<string, Set<string>> = {
-  MView: new Set(['Sanket_Nandanwar', 'Vedika_Kannawar', 'Dhiraj_Kakade', 'Ruchita_Vitkar']),
+  MView: new Set(['Vedika_Kannawar', 'Dhiraj_Kakade', 'Ruchita_Vitkar']),
 };
 
 export const ROLE_GROUP_MAP: Record<string, string> = {
@@ -3604,7 +3604,7 @@ Rules:
 4. Do NOT generate a question whose answer is already present in the governance knowledge.
 5. Generate only meaningful governance questions. If nothing new is warranted, return an empty list.
 6. Return at most ${cap} questions, ranked by importance.
-7. Assign each question to exactly ONE owner — the single most relevant person from the list below (the "employee" field must be one of these exact names). Never assign the same question to more than one owner. Each question appears once.
+7. Assign each question to exactly ONE owner via the "employee" field (an exact name from the list below). When a transcript is provided, choose the owner from the CONVERSATION — the person who was assigned, committed to, or is responsible for that work (e.g. if Nikhil asks Aboli to do X and Aboli commits, a question about X belongs to Aboli, not Nikhil). Never assign the same question to more than one owner; each question appears once.
 
 Owners to choose from:
 ${ownerList}

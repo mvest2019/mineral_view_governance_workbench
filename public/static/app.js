@@ -342,7 +342,15 @@ async function refreshIntegrationSidebar() {
   sidebar.innerHTML = renderIntegrationCards(integrations.items, false);
 }
 
+// Monotonic navigation token. Bumped on every showView so a slow render started
+// for a previous page can detect it is stale and skip its write.
+let VIEW_REQUEST = 0;
+function viewRequestIsStale(req) {
+  return req !== VIEW_REQUEST;
+}
+
 async function showView(view) {
+  const reqId = ++VIEW_REQUEST;
   CURRENT_VIEW = view;
   if (view !== 'departments') {
     CURRENT_DEPARTMENT = null;
@@ -358,6 +366,7 @@ async function showView(view) {
     await loadStages();
     await refreshNavCounts();
     await refreshIntegrationSidebar();
+    if (viewRequestIsStale(reqId)) return; // navigated away during the prefix
     if (view === 'dashboard') return renderDashboard();
     if (view === 'tasktracker') return renderTaskTracker();
     if (view === 'board') return renderBoard();
@@ -1156,11 +1165,13 @@ function statusChipClass(stage) {
 }
 
 async function renderDashboard() {
+  const _r = VIEW_REQUEST;
   const overview = await fetchJSON(`/api/overview?company=${CURRENT_COMPANY}`);
   const intakes = await fetchJSON(`/api/intake?company=${CURRENT_COMPANY}`);
   const integrations = await loadIntegrations();
   const questionData = await fetchJSON(`/api/questions?company=${CURRENT_COMPANY}`);
   const departmentData = await fetchJSON(`/api/departments?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   const blockedOnEmployee = intakes.filter((i) => i.stage === 'Employee Questions Pending').length;
   const blockedOnRyan = intakes.filter((i) => i.stage === 'Ryan Questions Pending' || i.stage === 'Awaiting Ryan Approval').length;
   const readyCommit = intakes.filter((i) => i.stage === 'Awaiting Commit Approval').length;
@@ -1248,6 +1259,7 @@ function taskTrackerEmployeeLabel(raw) {
 }
 
 async function renderTaskTracker() {
+  const _r = VIEW_REQUEST;
   const main = document.getElementById('mainView');
   let employees = [];
   try {
@@ -1255,6 +1267,7 @@ async function renderTaskTracker() {
   } catch (error) {
     employees = [];
   }
+  if (viewRequestIsStale(_r)) return;
   if (!Array.isArray(employees) || !employees.length) {
     employees = TASK_TRACKER_FALLBACK_EMPLOYEES;
   }
@@ -1509,7 +1522,9 @@ async function generatePriorityQuestionsFromTask(employee, markdown) {
 }
 
 async function renderDepartments() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/departments?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   if (CURRENT_DEPARTMENT) {
     const department = (data.all || []).find((dept) => dept.key === CURRENT_DEPARTMENT);
     if (department) {
@@ -2350,7 +2365,9 @@ async function renderIntake() {
 }
 
 async function renderBoard() {
+  const _r = VIEW_REQUEST;
   const intakes = await fetchJSON(`/api/intake?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   renderBoardWithItems(intakes, null);
 }
 
@@ -2843,8 +2860,10 @@ async function addLink(intakeId) {
 }
 
 async function renderClassification() {
+  const _r = VIEW_REQUEST;
   const rows = await fetchJSON(`/api/classification?company=${CURRENT_COMPANY}`);
   const categories = await fetchJSON('/api/categories');
+  if (viewRequestIsStale(_r)) return;
   document.getElementById('mainView').innerHTML = `
     <h2>Repo Classification</h2>
     <p class="small text-muted">
@@ -3075,7 +3094,9 @@ function renderConstitutionCard(intake) {
 }
 
 async function renderConstitution() {
+  const _r = VIEW_REQUEST;
   const intakes = await fetchJSON(`/api/intake?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   const candidates = intakes.filter((item) => item.stage === 'Constitution Candidate' || item.stage === 'Constitution Approved');
   const pending = candidates.filter((c) => c.stage === 'Constitution Candidate');
   const approved = candidates.filter((c) => c.stage === 'Constitution Approved');
@@ -4069,6 +4090,8 @@ async function submitMeetingForm() {
       // Claude's summary of the uploaded document, produced by the existing
       // meeting-intelligence flow in POST /api/meetings.
       claude_summary: String(payload.summary || ''),
+      // Raw transcript text so Claude can assign questions by conversation ownership.
+      transcript: String(payload.notes_preview || ''),
       uploaded_file: (fileInput?.files?.[0]?.name) || '',
       additional_details: (document.getElementById('meetingActionItems')?.value || '').trim(),
       attendees,
@@ -4188,6 +4211,7 @@ async function regenerateMeetingSummary(meetingId, btn) {
 }
 
 async function renderMeetings() {
+  const _r = VIEW_REQUEST;
   const main = document.getElementById('mainView');
   main.innerHTML = '<div class="text-muted">Loading meetings...</div>';
   let meetingsPayload, teamMembers;
@@ -4206,6 +4230,7 @@ async function renderMeetings() {
       </div>`;
     return;
   }
+  if (viewRequestIsStale(_r)) return;
   LAST_TEAM_MEMBERS = teamMembers || [];
   const meetings = (meetingsPayload && meetingsPayload.rows) || [];
   CURRENT_MEETINGS_CACHE = meetings;
@@ -4355,6 +4380,7 @@ function updateMeetingUploadState() {
 }
 
 async function renderTeamMembers() {
+  const _r = VIEW_REQUEST;
   hideProcessing();
   renderTeamMembersShell();
   let members;
@@ -4390,6 +4416,7 @@ async function renderTeamMembers() {
     return;
   }
 
+  if (viewRequestIsStale(_r)) return;
   if (!CURRENT_TEAM_MEMBER || !members.find((member) => member.key === CURRENT_TEAM_MEMBER)) {
     CURRENT_TEAM_MEMBER = members[0]?.key || null;
   }
@@ -5794,7 +5821,9 @@ function priorityQuestionSeq(q) {
 }
 
 async function renderQuestions() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/questions?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   const order = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3, UNKNOWN: 4 };
   // Flatten every question into one list, tagged with the team member it belongs
   // to, then sort newest generated first (then by priority).
@@ -6052,7 +6081,9 @@ function prettyName(memberKey) {
 }
 
 async function renderCustomers() {
+  const _r = VIEW_REQUEST;
   const departmentData = await fetchJSON(`/api/departments?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   const customerWorkspace = (departmentData.company_specific || []).find((dept) => dept.key === 'CUSTOMER_RELATIONS');
   if (customerWorkspace) {
     CURRENT_DEPARTMENT = 'CUSTOMER_RELATIONS';
@@ -6233,7 +6264,9 @@ function aspectKey(name) {
 }
 
 async function renderAspectGroups() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/aspect_groups?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   const groups = data.groups || [];
   const totalRepos = groups.reduce((sum, group) => sum + (group.count || 0), 0);
   const reviewGroup = groups.find((group) => (group.confidence || '').toLowerCase().includes('review'));
@@ -6355,7 +6388,9 @@ async function saveFindingReview(fid) {
 }
 
 async function renderFindings() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/findings?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   if (!data.exists) {
     document.getElementById('mainView').innerHTML = '<div class="findings-view"><h2>Findings for Review</h2><div class="alert alert-info">No findings file yet.</div></div>';
     return;
@@ -6446,21 +6481,27 @@ function formatFindingDate(iso) {
 }
 
 async function renderDecisions() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/decisions?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   document.getElementById('mainView').innerHTML = data.exists
     ? `<h2>Decision Log</h2><pre>${escapeHtml(data.content)}</pre>`
     : '<h2>Decision Log</h2><div class="alert alert-info">No decision log yet.</div>';
 }
 
 async function renderGlossary() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/glossary?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   document.getElementById('mainView').innerHTML = data.exists
     ? `<h2>Glossary <span class="small text-muted">(${escapeHtml(data.file)})</span></h2><pre>${escapeHtml(data.content)}</pre>`
     : '<h2>Glossary</h2><div class="alert alert-info">No glossary yet.</div>';
 }
 
 async function renderInventory() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/inventory?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   document.getElementById('mainView').innerHTML = data.exists
     ? `<h2>Repo Inventory</h2><pre>${escapeHtml(data.content)}</pre>`
     : '<h2>Repo Inventory</h2><div class="alert alert-info">No inventory yet.</div>';
@@ -6776,7 +6817,9 @@ function useGovernanceFilePromptSuggestion(promptText) {
 }
 
 async function renderFiles() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/files?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   CURRENT_GOVERNANCE_FILES = data.rows || [];
   CURRENT_GOVERNANCE_FILE_CATEGORIES = data.categories || [];
   CURRENT_GOVERNANCE_FILE_DETAILS = {};
@@ -6877,7 +6920,9 @@ async function sendGovernanceFileChat() {
 }
 
 async function renderGit() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/git/status?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   let html = '<h2>Git Status</h2>';
   ['governance', 'legal_vault'].forEach((label) => {
     const repo = data[label];
@@ -6898,7 +6943,9 @@ async function renderGit() {
 }
 
 async function renderExchanges() {
+  const _r = VIEW_REQUEST;
   const exchanges = await fetchJSON(`/api/exchanges?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   const grouped = {
     pending: exchanges.filter((item) => (item.agreement_status || 'Needs review') === 'Needs review' || item.status === 'running'),
     reviewed: exchanges.filter((item) => (item.agreement_status || 'Needs review') !== 'Needs review' && item.status !== 'running'),
@@ -6948,7 +6995,9 @@ async function renderExchanges() {
 }
 
 async function renderHistory() {
+  const _r = VIEW_REQUEST;
   const data = await fetchJSON(`/api/version_history?company=${CURRENT_COMPANY}`);
+  if (viewRequestIsStale(_r)) return;
   document.getElementById('mainView').innerHTML = `
     <h2>Version History</h2>
     <p class="small text-muted">

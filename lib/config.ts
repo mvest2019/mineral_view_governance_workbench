@@ -272,6 +272,20 @@ export const TEAM_MEMBER_PROFILES: Record<string, Record<string, { role: string;
         'C:\\MineralView-Org\\_GOVERNANCE\\team_members\\MVIEW_TEAM_ASSIGNMENTS_AND_QUESTIONS_2026-05-12.md',
       ],
     },
+    Prasad_Shinde: {
+      role: 'Developer',
+      purpose: 'Mineral View team member.',
+      departments: ['DEVELOPMENT'],
+      repos: [],
+      operating_sources: [],
+    },
+    Sanket_Nandanwar: {
+      role: 'Developer',
+      purpose: 'Mineral View team member.',
+      departments: ['DEVELOPMENT'],
+      repos: [],
+      operating_sources: [],
+    },
   },
 };
 

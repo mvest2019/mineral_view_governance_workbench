@@ -146,5 +146,8 @@ export const POST = route(async (req: NextRequest) => {
     summary: summary_payload.summary,
     summary_status: summary_payload.summary_status,
     questions_created: summary_payload.questions_created ?? 0,
+    // Extracted transcript text so the analyze step can determine question
+    // ownership from the actual conversation (who committed to which work).
+    notes_preview: (notes_text || '').slice(0, 8000),
   });
 });
