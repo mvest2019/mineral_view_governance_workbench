@@ -55,3 +55,57 @@ The task ends at export with no named reviewer or sign-off step. Confirm the app
 **1. Short Question** — Does the reel display any MVestimate value, and if so does it carry the estimate/no-advice disclaimer?
 
 Showing a dollar valuation in a short-form social video risks reading as an investment or valuation claim. Confirm whether any MVestimate figure appears on screen and, if so, what disclaimer wording accompanies it.
+
+### Q-AI-0045 — What is the documented pass/fail gate that must be met before scraped W-1/W-2 data is released downstream, and who signs off?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — What is the documented pass/fail gate that must be met before scraped W-1/W-2 data is released downstream, and who signs off?
+
+The submission says validated data "met quality standards before downstream processing and publication," but no threshold, checklist, or approver is named. Without a written gate, publication is a judgment call and cannot be audited or repeated by anyone else.
+
+### Q-AI-0046 — Which store is the system of record for W-1/W-2 data, and what is SQL Server's role given prior work only mentions PostgreSQL and MongoDB?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which store is the system of record for W-1/W-2 data, and what is SQL Server's role given prior work only mentions PostgreSQL and MongoDB?
+
+This task introduces SQL Server as a third validated database. Earlier governance records (Vaishnavi, Rohit) describe only PostgreSQL and MongoDB. Either the topology is wider than documented or the same records live in three places with no declared master.
+
+### Q-AI-0047 — Who reviews and approves the backfill/update scripts run against production tables, and are those runs logged and reversible?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who reviews and approves the backfill/update scripts run against production tables, and are those runs logged and reversible?
+
+Backfill scripts are being executed to populate null/empty values in live W-1/W-2 tables. Need to know whether there is a review step, an execution log, and a rollback path if a backfill writes bad values at scale.
+
+### Q-AI-0048 — Is AI tooling approved to receive production data, logs, and SQL during debugging, and what data is redacted before it is pasted in?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is AI tooling approved to receive production data, logs, and SQL during debugging, and what data is redacted before it is pasted in?
+
+AI is being used to analyze logs, optimize SQL, and debug Python against production databases. Clarify which AI tool is used, whether production rows or connection details ever enter the prompt, and who approved that.
+
+### Q-AI-0049 — Where are scraper failures and recurring data-quality defects tracked, and who is alerted when a source-site HTML/XPath change breaks extraction?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are scraper failures and recurring data-quality defects tracked, and who is alerted when a source-site HTML/XPath change breaks extraction?
+
+The task mentions investigating failed/delayed jobs and fixing XPath/extraction logic, but names no defect tracker or alerting path. Silent breakage on the source site is the main way bad data reaches the platform.
+
+### Q-AI-0050 — Are these daily manual SQL checks going to be codified as automated validation with alerts, and who owns that work?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are these daily manual SQL checks going to be codified as automated validation with alerts, and who owns that work?
+
+The same null/duplicate/mandatory-field checks appear to be re-run by hand every day. Deciding whether to automate them (and who builds it) determines whether validation survives this person being unavailable.
