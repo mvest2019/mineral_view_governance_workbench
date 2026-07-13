@@ -163,3 +163,57 @@ No storage location or version reference is given. Identify the canonical locati
 **1. Short Question** — What is the call-to-action for this video, and how will its performance be measured?
 
 The task ends at publish-readiness with no stated CTA, tracking link, or success metric, so its contribution to acquisition cannot be evaluated.
+
+### Q-AI-0057 — Which exact application or prototype build did this dashboard review cover — the live Mineral Owner Portal, the HTML prototype, or a specific branch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Which exact application or prototype build did this dashboard review cover — the live Mineral Owner Portal, the HTML prototype, or a specific branch?
+
+The submission says "the provided prototype/application" without naming a URL, repo, or branch. Aboli reviewed a "provided HTML prototype" of the Mineral Owner Portal and Pragati is layering Option 1/2/3 concepts onto a marketing/portal prototype. Governance needs to know whether all three reviews looked at the same artifact, otherwise findings cannot be reconciled or actioned.
+
+### Q-AI-0058 — Three separate UI/UX reviews of the same portal are now in flight — who merges them into one approved backlog and decides what gets built?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Three separate UI/UX reviews of the same portal are now in flight — who merges them into one approved backlog and decides what gets built?
+
+Pooja (dashboard pages), Aboli (Home/Dashboard/Pricing/Registration/Blog), and Pragati (multi-option layout concepts) have all produced UI/UX recommendations in the same week. Without a single owner and a single consolidated list, the same pages risk conflicting redesigns.
+
+### Q-AI-0059 — Do the proposed AI-generated summaries, insights, and recommendations need a no-advice / legal review before they are built?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the proposed AI-generated summaries, insights, and recommendations need a no-advice / legal review before they are built?
+
+AI-generated content is proposed on Activities, Alerts, Weekly Report, and Lease Audit. MineralView already has no-advice guardrails as a governance concern. Recommendations shown to mineral owners about their leases and royalties are far closer to advice than marketing copy, so the guardrail and disclaimer position needs to be settled before implementation, along with which AI vendor and what per-user cost this implies.
+
+### Q-AI-0060 — Who owns the methodology behind the proposed Lease Audit health score and confidence indicators?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who owns the methodology behind the proposed Lease Audit health score and confidence indicators?
+
+The review suggests visualizing a health score and showing confidence indicators. It is unclear whether a defined scoring methodology already exists, or whether this is a new number the UI would invent. A user-facing score with no agreed methodology is a credibility and compliance risk.
+
+### Q-AI-0061 — What destructive actions belong in the proposed Settings "Danger Zone," and what is the account-deletion and data-retention policy behind them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — What destructive actions belong in the proposed Settings "Danger Zone," and what is the account-deletion and data-retention policy behind them?
+
+A Danger Zone implies irreversible operations such as account deletion. Before this is designed, we need to know what actually happens to the user's claimed leases, saved filters, and payment/subscription records, and whether deletion is a soft delete or a hard purge.
+
+### Q-AI-0062 — Where are the documented per-page UI/UX issues and suggestions stored, and have they been severity-ranked for the dev team?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Where are the documented per-page UI/UX issues and suggestions stored, and have they been severity-ranked for the dev team?
+
+The submission states that issues and suggestions were documented, but does not say where (sheet, repo, Drive) or whether they are prioritized. Without a linked, ranked artifact, none of this work is traceable or actionable in governance.
