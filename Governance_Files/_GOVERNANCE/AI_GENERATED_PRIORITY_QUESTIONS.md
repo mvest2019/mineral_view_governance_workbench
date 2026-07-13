@@ -271,3 +271,57 @@ Needed to know whether the outreach campaign is materially behind target, and wh
 **1. Short Question** — Is Trendelier an internal marketing tool or a customer-facing product, and which repo governs it?
 
 Trendelier is not documented in the existing governance knowledge. Confirm its scope, owner, repository, and whether it falls under the repo classification and data-topology documentation already in progress.
+
+### Q-AI-0069 — Is there a grace or dunning period before a failed payment auto-downgrades a user to Free, or does it happen immediately?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Is there a grace or dunning period before a failed payment auto-downgrades a user to Free, or does it happen immediately?
+
+The Braintree webhook work downgrades users to Free on payment failure, past-due, or cancellation. Auto-downgrading on the first failed charge can strip a paying customer of access over a transient card decline. We need a stated retry/grace window (e.g. Braintree retry attempts + N days past-due) and confirmation of who approved that policy.
+
+### Q-AI-0070 — If canceling the monthly subscription succeeds but activating the yearly one fails, what is the rollback?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — If canceling the monthly subscription succeeds but activating the yearly one fails, what is the rollback?
+
+The monthly-to-yearly upgrade cancels the existing recurring subscription before activating the yearly one. That ordering creates a window where the user could end up with no active subscription (or, if reversed, double billing). Please document the failure handling, ordering guarantee, and whether the operation is transactional or compensating.
+
+### Q-AI-0071 — Is the Braintree webhook endpoint signature-verified and idempotent against duplicate or replayed events?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Is the Braintree webhook endpoint signature-verified and idempotent against duplicate or replayed events?
+
+A webhook that mutates subscription state (downgrade to Free) is a security-sensitive endpoint. Confirm Braintree signature/payload verification is enforced, that events are de-duplicated by webhook ID, and that out-of-order events cannot downgrade an already-recovered account.
+
+### Q-AI-0072 — What happens to a user's claimed leases and saved data that exceed Free plan limits after an automatic downgrade?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — What happens to a user's claimed leases and saved data that exceed Free plan limits after an automatic downgrade?
+
+Downgrades are now automatic and unattended. Define whether over-limit claims/saved filters/reports are deleted, hidden, or retained read-only, and whether the data is restored if the user re-subscribes.
+
+### Q-AI-0073 — What is the refund or proration policy for the unused portion of a monthly plan when a user upgrades to yearly?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — What is the refund or proration policy for the unused portion of a monthly plan when a user upgrades to yearly?
+
+Canceling the monthly recurring subscription mid-cycle raises a billing-fairness question. Confirm the agreed policy (prorated credit, no refund, or start yearly at monthly period end) and that it matches what the Pricing page and terms tell customers.
+
+### Q-AI-0074 — Are users notified when they are auto-downgraded, and where are the downgrade and webhook events audit-logged?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — Are users notified when they are auto-downgraded, and where are the downgrade and webhook events audit-logged?
+
+Silent loss of a paid tier is a support and trust risk. Confirm the notification (email/in-app) sent on payment failure and on downgrade, and identify the audit trail (table/log) that lets support reconstruct why a specific account was downgraded.
