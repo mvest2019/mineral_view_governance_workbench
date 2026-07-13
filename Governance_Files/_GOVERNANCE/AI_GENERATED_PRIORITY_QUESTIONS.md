@@ -229,3 +229,57 @@ The Priority Questions page now auto-populates from Claude analysis with no docu
 **1. Short Question** — What is the retention and access policy for meeting records, given they may contain member PII or confidential discussion?
 
 Krishna Sable's dossier outputs were deliberately kept out of git because they hold member PII. Meeting records are committed straight to the repo — define what may not be pasted into a meeting body and who can read the repo.
+
+### Q-AI-0027 — How will owner records already over-merged by the old name-only match be found and repaired?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — How will owner records already over-merged by the old name-only match be found and repaired?
+
+The county key and value bucket fix prevents *new* over-merges, but the transcript does not say what happens to records that were already collapsed by the previous name-only logic. A backfill/repair plan and a way to detect existing bad merges is needed before the Hockley refresh overwrites the serving collection.
+
+### Q-AI-0028 — What exact raw-vs-clean drop percentage blocks the run from going to production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What exact raw-vs-clean drop percentage blocks the run from going to production?
+
+"More than a couple percent" is not an enforceable gate. Define the numeric threshold (e.g. >2%) and whether breaching it halts the pipeline automatically or only triggers a notification.
+
+### Q-AI-0029 — What is the rollback plan if the Hockley refresh writes bad owner data into the MongoDB serving collection?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What is the rollback plan if the Hockley refresh writes bad owner data into the MongoDB serving collection?
+
+The run writes directly into the collection that backs the owner lookup API. Confirm whether a pre-run snapshot/backup is taken and how a bad load is reverted without downtime.
+
+### Q-AI-0030 — Is the appraised value bucket a safe match key when appraisals change year to year?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the appraised value bucket a safe match key when appraisals change year to year?
+
+Keying on normalized name + value bucket risks the opposite failure of over-merging: the same owner splitting into two records when their appraised value crosses a bucket boundary after a reappraisal. Confirm the bucket definition and how re-runs stay stable.
+
+### Q-AI-0031 — Who records the final go/no-go decision for flipping the sync to production, and where?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Who records the final go/no-go decision for flipping the sync to production, and where?
+
+Nikhil will review the log before production, but there is no stated place where that approval is recorded. Confirm the approver and where the sign-off is logged for governance traceability.
+
+### Q-AI-0032 — Does the county + normalized-name index roll out to all counties or only Hockley?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does the county + normalized-name index roll out to all counties or only Hockley?
+
+The collection is sharded by county and today most collections carry only the default `_id` index. Clarify whether the compound index is created for every county collection and confirm the off-peak window and expected build time.
