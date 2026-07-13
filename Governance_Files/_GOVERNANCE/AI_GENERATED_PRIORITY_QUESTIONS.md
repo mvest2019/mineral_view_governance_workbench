@@ -487,3 +487,57 @@ Reconciliation used a single real member's portal data. Clarify the consent/auth
 **1. Short Question** — How stale can a dossier snapshot be before it must be regenerated, and who enforces that rule?
 
 The tool now self-documents freshness, but there is no stated expiry (e.g. 7/30 days) or owner responsible for preventing an outdated PII-bearing file on Drive from being sent to an owner.
+
+### Q-AI-0093 — Who reviews and approves glossary content before it is published live on the Mineral View site?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who reviews and approves glossary content before it is published live on the Mineral View site?
+
+The submission describes content being audited, revised, scored "publish-ready", built into HTML, and published to the live site plus sitemap — with no reviewer or approval gate named. Regulatory content (Texas RRC P-4 / P-5) is being published under Mineral View's name. Please confirm: who signs off before publish, what the "publish-ready quality score" threshold is, and whether that score is self-assessed or independently verified.
+
+### Q-AI-0094 — An incorrect "Limitation of Expenditures" citation was live — have the other glossary pages been audited for the same class of error?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — An incorrect "Limitation of Expenditures" citation was live — have the other glossary pages been audited for the same class of error?
+
+A wrong section reference was found on a published page and corrected. That implies the citation-verification step is not reliable at publish time. Needed: (a) a back-audit of already-published glossary pages for incorrect statute/rule citations, (b) the root cause of how the wrong citation shipped, and (c) a required source-of-truth check (RRC rule text) before any regulatory citation is published.
+
+### Q-AI-0095 — Where does the daily tracking sheet live, and does it contain user PII from registrations and Contact Us submissions?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where does the daily tracking sheet live, and does it contain user PII from registrations and Contact Us submissions?
+
+The sheet consolidates new user registrations, lease claim requests, paid-user activity, and Contact Us inquiry details. If it holds names, emails, or claimed-lease identifiers, it is a PII store outside the product. Confirm its location (Google Sheet? Drive folder?), who has access, retention period, and whether it is covered by the same PII handling rules applied to dossier/member files.
+
+### Q-AI-0096 — Are Microsoft Clarity session recordings and per-user journey tracking disclosed in the privacy policy, with PII masking enabled?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are Microsoft Clarity session recordings and per-user journey tracking disclosed in the privacy policy, with PII masking enabled?
+
+Clarity session replays plus Cerebro cross-referencing of individual named accounts to on-site behavior is user-level surveillance. Confirm the privacy policy / cookie consent covers session recording, that Clarity's masking of sensitive fields (email, ownership, payment) is switched on, and that recordings have a defined retention limit.
+
+### Q-AI-0097 — Where are the usability friction points found in Clarity logged, and who owns fixing them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where are the usability friction points found in Clarity logged, and who owns fixing them?
+
+Observations were "documented for future improvements" but no destination or owner is named. Without a ticket/backlog route these findings never reach the dev team. Confirm the intake path (issues sheet, Governance Workbench, Jira?) and who triages them.
+
+### Q-AI-0098 — Are the AI-generated glossary text and images cleared for accuracy and licensing before publication?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the AI-generated glossary text and images cleared for accuracy and licensing before publication?
+
+The page used an AI-generated illustration (uploaded to Cloudinary) and an "AI-friendly FAQ structure". Confirm which tool generated the image, that its output licence permits commercial use on the site, and whether AI-drafted regulatory explanations get a human factual-accuracy pass before publish.
