@@ -1081,3 +1081,57 @@ The submission says non-conforming wells stay unallocated, which is the right co
 **1. Short Question** — When latitude/longitude values conflict across datasets, which source is authoritative, and who approved the search radii used for the neighbor summaries?
 
 The refinement step selects 'the most reliable values' from multiple coordinate sources and evaluates 'configurable distances', but neither the source-precedence rule nor the chosen radii are stated. Both are decisions that affect every downstream spatial result and should be written down rather than left in code.
+
+### Q-AI-0159 — Were the 5 emails sent to real mineral owners, and who approved the content before send?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Were the 5 emails sent to real mineral owners, and who approved the content before send?
+
+The submission records "Sent 5 user emails" from the CRM but not who the recipients were, whether they had opted in, whether an unsubscribe/consent path was honored, or who signed off on the copy before it went out. Real-user outbound email carries CAN-SPAM and reputational exposure and should have a named approver.
+
+### Q-AI-0160 — Did any real mineral-owner PII go into GPT or Gemini while auditing the email drafts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Did any real mineral-owner PII go into GPT or Gemini while auditing the email drafts?
+
+Email drafts were verified and audited using GPT, Gemini, and Claude. If those drafts contained real names, addresses, lease details, or other owner PII, that data was sent to third-party LLM providers. Confirm whether the drafts were anonymized, and whether sending owner data to non-Anthropic providers is approved.
+
+### Q-AI-0161 — Who approved the Instagram ad spend, what is the budget cap, and where is performance tracked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who approved the Instagram ad spend, what is the budget cap, and where is performance tracked?
+
+An Instagram ad was created and launched, but the submission records no budget, no approver, no targeting parameters, and no reporting destination. Paid spend needs a named approver and a cap.
+
+### Q-AI-0162 — Is there any alerting for scans that hang on a Gemini timeout, or was this one caught by chance?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Is there any alerting for scans that hang on a Gemini timeout, or was this one caught by chance?
+
+A scan became stuck because of a Gemini timeout and had to be manually re-queued. Clarify whether stuck scans are detected automatically (alert, watchdog, auto-retry) or only found by manual inspection — and how many other scans may currently be silently stuck.
+
+### Q-AI-0163 — What is "Trendelier", and what exactly do the scans check and get verified against?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What is "Trendelier", and what exactly do the scans check and get verified against?
+
+Trendelier appears nowhere else in the governance record. Define what the system does, what the 3 scans produce, what "verified the outputs" means (pass/fail criteria), and where the scan results are stored.
+
+### Q-AI-0164 — Who approves social and YouTube content before publishing, and does it carry the no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Who approves social and YouTube content before publishing, and does it carry the no-investment-advice disclaimer?
+
+A reel, an Instagram ad, and a "BOLD" YouTube video were all published. Confirm whether published content requires a pre-publish review, and whether oil-and-gas/mineral content aimed at owners carries the required educational-only, no-advice disclaimer.
