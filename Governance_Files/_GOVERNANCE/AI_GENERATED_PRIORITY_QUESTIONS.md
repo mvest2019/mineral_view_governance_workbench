@@ -649,3 +649,57 @@ Other Mineral View video content (e.g. Tejas's World Cup concept reel) ships wit
 **1. Short Question** — Where are the final export and project files stored, and what metric defines success for this reel?
 
 The task states goals of "reach and engagement" but sets no measurable target and names no storage location. Confirm the shared Drive/asset path for the export and source project, and the specific metric (views, saves, profile visits, claims) that will be reviewed after posting.
+
+### Q-AI-0111 — Which prototype build and layout option (Original / Option 1 / Option 2 / Option 3) did you review these pages against?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Which prototype build and layout option (Original / Option 1 / Option 2 / Option 3) did you review these pages against?
+
+Pragati's work introduced a global switcher with four layout concepts (Original, Option 1–3) that the client has not yet chosen between. If your Groups / Dossier / Billing / Invite / Lease Audit / Claim findings were written against one option, we need to know which build and which option, otherwise the issues may not apply to the layout that is finally selected.
+
+### Q-AI-0112 — Did the Dossier, Billing, and Claim pages you reviewed show real member data or mock data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Did the Dossier, Billing, and Claim pages you reviewed show real member data or mock data?
+
+Dossier outputs are known to contain member PII (Krishna's generator files are deliberately kept out of git and stored on Drive). If the prototype you reviewed is wired to real owner/billing records, we need to confirm that screenshots and notes from this review do not carry PII, and where that evidence is stored.
+
+### Q-AI-0113 — In the Invite Co-Owners flow, what verifies an invitee before they can see owner and lease data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — In the Invite Co-Owners flow, what verifies an invitee before they can see owner and lease data?
+
+The review covered invitation form usability but not the authorization model. Governance needs to know what check prevents an invited co-owner from gaining access to another person's mineral, claim, or valuation data, and who approves an invite.
+
+### Q-AI-0114 — What is visible to non-members in Public Groups, and can any owner identity or holdings leak there?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — What is visible to non-members in Public Groups, and can any owner identity or holdings leak there?
+
+Public vs Private Groups was reviewed from a usability angle only. We need an explicit statement of what content and member attributes are exposed publicly, and whether that exposure was an intentional product decision.
+
+### Q-AI-0115 — Where are the ownership documents uploaded in the Claim flow stored, and who reviews and approves a claim?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Where are the ownership documents uploaded in the Claim flow stored, and who reviews and approves a claim?
+
+The claim submission and document upload experience was reviewed, but the back end of that flow is undocumented: storage location, retention, and the human approval step for a claim.
+
+### Q-AI-0116 — Does the Lease Audit report need a no-advice disclaimer, and who signs off that its findings are accurate?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the Lease Audit report need a no-advice disclaimer, and who signs off that its findings are accurate?
+
+Lease Audit presents prioritized issues to mineral owners, which edges toward advice. Confirm whether the existing no-advice guardrails apply to this output and who owns accuracy of the audit results before the page is shipped.
