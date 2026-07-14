@@ -757,3 +757,57 @@ Video categories, video search, separate operator detail pages, and new report s
 **1. Short Question** — What accessibility standard are the accessibility recommendations measured against, and was a real audit run?
 
 "Improve accessibility" is listed for every page with no stated target (e.g. WCAG 2.1 AA), no tooling, and no pass/fail criteria. Without a standard we cannot tell whether a page is compliant or claim compliance externally.
+
+### Q-AI-0123 — Which subscription issues are still pending from development, and do they block the Yearly Subscription go-live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which subscription issues are still pending from development, and do they block the Yearly Subscription go-live?
+
+The report says "a few issues are still pending from the development team" but does not name them, assign severity, or state whether Yearly Subscription can ship with them open. Governance needs the specific list, severity/priority, owner, and an explicit go/no-go call.
+
+### Q-AI-0124 — Was the subscription regression run in payment sandbox/test mode, or did it create real charges on live accounts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was the subscription regression run in payment sandbox/test mode, or did it create real charges on live accounts?
+
+End-to-end billing testing across Monthly and Yearly plans touches a payment provider. Confirm which environment and which payment keys were used, and whether any real cards, live customers, or production subscription records were affected (and cleaned up).
+
+### Q-AI-0125 — What is the approved proration and refund policy for upgrade/downgrade between Monthly and Yearly?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is the approved proration and refund policy for upgrade/downgrade between Monthly and Yearly?
+
+Upgrade/downgrade flow was tested, but the expected billing behavior (proration, credit, refund on mid-cycle change from Yearly to Monthly) needs a documented, approved rule to test against — otherwise "passed" only means "matched current code."
+
+### Q-AI-0126 — What do V25, V35, and V37 refer to, and which build/environment were the UI/UX suggestions reviewed against?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What do V25, V35, and V37 refer to, and which build/environment were the UI/UX suggestions reviewed against?
+
+The version labels are used as the organizing structure for the suggestions but are not defined anywhere in governance. Clarify whether these are releases, sprints, or prototype versions, and which deployed build/URL was reviewed.
+
+### Q-AI-0127 — Who approves and prioritizes these UI/UX suggestions, and how do they reconcile with the parallel redesign work already underway?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who approves and prioritizes these UI/UX suggestions, and how do they reconcile with the parallel redesign work already underway?
+
+There are now at least three concurrent UI/UX streams (the layout-option prototype work, the Mineral Owner Portal UI review, and these V25/V35/V37 suggestions). Without one owner and one backlog, suggestions may conflict or be silently dropped.
+
+### Q-AI-0128 — What happens to a user's claimed leases and gated features when a subscription is downgraded or a yearly plan lapses?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What happens to a user's claimed leases and gated features when a subscription is downgraded or a yearly plan lapses?
+
+Downgrade was tested for flow and messaging, but the expected data/feature outcome (are claims retained, hidden, or lost; what is the grace period) is not documented. This is a customer-impacting rule that needs a written expected result before sign-off.
