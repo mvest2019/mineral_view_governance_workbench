@@ -15,7 +15,7 @@ export const COMPANIES: Record<string, CompanyConfig> = {
     root: 'C:\\MineralView-Org',
     vault: 'C:\\MineralView-LegalVault',
     mirror: 'C:\\MineralView-Repos',
-    gh_account: 'MVest2018',
+    gh_account: 'mvest2019',
     name_full: 'Mineral View (MVest LLC)',
   },
 };

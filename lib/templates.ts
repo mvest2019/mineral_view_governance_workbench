@@ -7,7 +7,7 @@ export function renderIndexHtml(): string {
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Governance Workbench v3</title>
+  <title>Governance Workbench</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
