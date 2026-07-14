@@ -703,3 +703,57 @@ The claim submission and document upload experience was reviewed, but the back e
 **1. Short Question** — Does the Lease Audit report need a no-advice disclaimer, and who signs off that its findings are accurate?
 
 Lease Audit presents prioritized issues to mineral owners, which edges toward advice. Confirm whether the existing no-advice guardrails apply to this output and who owns accuracy of the audit results before the page is shipped.
+
+### Q-AI-0117 — Which build did you review — the live Mineral View app or the HTML redesign prototype — and does the feedback apply to both?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which build did you review — the live Mineral View app or the HTML redesign prototype — and does the feedback apply to both?
+
+The task lists pages (Home, Pricing, Community, Glossary, Alert Preferences, Map, Activities, Weekly Report, Dossier, Lease Audit, Operators, Media) but never names an environment, URL, or build. Prior work references both a redesigned prototype and the production app; feedback written against the wrong surface will not be actionable.
+
+### Q-AI-0118 — Who triages these suggestions into a prioritized backlog with owners and target dates?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who triages these suggestions into a prioritized backlog with owners and target dates?
+
+A large volume of recommendations was produced across 12+ pages with no stated acceptance, prioritization, or implementation owner. Without a triage step this becomes an unowned document rather than governed work.
+
+### Q-AI-0119 — Are your page recommendations reconciled with the parallel redesign work already in flight (the Original/Option 1–3 layout switcher and the Map Well Explorer 4th view)?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are your page recommendations reconciled with the parallel redesign work already in flight (the Original/Option 1–3 layout switcher and the Map Well Explorer 4th view)?
+
+Other team members are actively redesigning the Pricing page (three layout concepts behind a global switcher) and the Map module (rail navigation, filters, saved filters, well paths). Independent UI/UX recommendations for the same pages risk conflicting design direction and duplicated effort.
+
+### Q-AI-0120 — Do the proposed operator pages and "owner-focused insights" expose mineral-owner PII or imply investment advice?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the proposed operator pages and "owner-focused insights" expose mineral-owner PII or imply investment advice?
+
+Operator detail pages with owner-focused insights could surface identifiable mineral-owner data on publicly reachable pages and could read as advice. Clarify what data is in scope and who approves it against the existing no-advice guardrails.
+
+### Q-AI-0121 — Which of these are net-new features requiring roadmap and subscription-tier decisions rather than UI polish?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which of these are net-new features requiring roadmap and subscription-tier decisions rather than UI polish?
+
+Video categories, video search, separate operator detail pages, and new report summaries are new functionality, not layout refinement. Each needs a build decision and a call on whether it sits behind Free, Pro, or Premium.
+
+### Q-AI-0122 — What accessibility standard are the accessibility recommendations measured against, and was a real audit run?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What accessibility standard are the accessibility recommendations measured against, and was a real audit run?
+
+"Improve accessibility" is listed for every page with no stated target (e.g. WCAG 2.1 AA), no tooling, and no pass/fail criteria. Without a standard we cannot tell whether a page is compliant or claim compliance externally.
