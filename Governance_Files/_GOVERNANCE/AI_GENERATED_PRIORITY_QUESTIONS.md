@@ -865,3 +865,57 @@ If the luxury jewelry presentation is sponsored or commissioned, platform rules 
 **1. Short Question** — Where are the project files, source assets, and final export for this Reel stored?
 
 No repository, Drive folder, or asset link is given for the storyboard, After Effects project, source footage, or final export. Provide the storage location so the asset is recoverable and auditable rather than living only on a local machine.
+
+### Q-AI-0135 — Who reviewed and approved the Python script that bulk-updates the MongoDB Activity collection, and what is the rollback plan if a bulk update corrupts records?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who reviewed and approved the Python script that bulk-updates the MongoDB Activity collection, and what is the rollback plan if a bulk update corrupts records?
+
+The submission says a Python script was developed to sync missing fields into the MongoDB Activity collection, with bulk updates run after single-record testing. This is a direct write to a production dataset. We need to know: who code-reviewed it, was a backup/snapshot taken before the bulk run, how many documents were modified, and how a bad run gets reverted.
+
+### Q-AI-0136 — Why is the MongoDB Activity collection missing data the scraper should have written — is the sync script a permanent fix or a recurring manual patch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Why is the MongoDB Activity collection missing data the scraper should have written — is the sync script a permanent fix or a recurring manual patch?
+
+Repeated backfill/sync scripts to fill NULL, blank, and missing fields suggest an upstream ingestion defect rather than a one-off gap. Clarify whether the root cause in the scraper/ingestion pipeline is being fixed, or whether manual backfills will be needed after every run — and who owns the permanent fix.
+
+### Q-AI-0137 — When PostgreSQL, SQL Server, and MongoDB disagree, which system is the authoritative source of record for W-2 Completion and W-1 Permit data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree, which system is the authoritative source of record for W-2 Completion and W-1 Permit data?
+
+Cross-database verification is being performed across three systems, but no tie-breaker is documented. Without a declared system of record, corrections may be applied in the wrong direction. (Related to the existing 'Document the data topology' item, but this asks specifically for the authority rule used during reconciliation.)
+
+### Q-AI-0138 — What is the documented pass/fail threshold that lets validated data be released for downstream processing and publication?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — What is the documented pass/fail threshold that lets validated data be released for downstream processing and publication?
+
+The summary states validated data 'satisfied quality requirements before downstream processing and publication,' but the criteria are not defined anywhere in governance. Specify the completeness/accuracy thresholds, who signs off, and what happens when a batch fails.
+
+### Q-AI-0139 — Were any production records, connection strings, or credentials pasted into AI tools during the AI-assisted log review, SQL optimization, and Python debugging?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Were any production records, connection strings, or credentials pasted into AI tools during the AI-assisted log review, SQL optimization, and Python debugging?
+
+AI assistance was used for log review, SQL work, and root-cause analysis. Confirm which AI tool was used, whether any real data or secrets left our environment, and whether that channel is approved for production data.
+
+### Q-AI-0140 — Where do the scraper XPath/Selenium fixes get committed and reviewed, and how are we alerted when the source website changes structure?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where do the scraper XPath/Selenium fixes get committed and reviewed, and how are we alerted when the source website changes structure?
+
+Extraction logic, HTML elements, and XPaths were changed in response to website structure changes, then validated by rerunning the scraper. Clarify whether these edits are in source control with review, and whether there is automated detection/alerting for source-site changes instead of discovering them through failed validation.
