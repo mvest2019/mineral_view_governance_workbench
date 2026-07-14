@@ -595,3 +595,57 @@ The 2025 Texas mineral-owner extraction produces owner names and addresses (PII)
 **1. Short Question** — Where is your Mineral View redesign feedback logged, and is it reconciled with the QA team's existing defect sheet?
 
 Utkarsha and Aboli are separately logging UI/UX defects and redesign feedback for the same platform. If your "detailed feedback compiled for the frontend team" lives in a different document, the frontend team will receive three overlapping and possibly conflicting lists. Please confirm the single tracker, and who arbitrates when recommendations disagree.
+
+### Q-AI-0105 — Is the trending audio licensed for commercial brand use, and who cleared it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Is the trending audio licensed for commercial brand use, and who cleared it?
+
+The reel uses "trending music" selected for reach. Trending audio on Instagram/TikTok is generally licensed only for personal accounts — business/brand accounts are often restricted to the commercial music library. Using a viral track on a Mineral View brand account risks takedown, muted audio, or a copyright strike. Please confirm the exact track, its license source, and who approved commercial use.
+
+### Q-AI-0106 — What is the license and origin of the footage sourced from Magnific?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — What is the license and origin of the footage sourced from Magnific?
+
+The task says footage was "gathered from Magnific." Magnific is an AI upscaler/generator, not a stock library. We need to know whether these clips are AI-generated, upscaled from third-party stock, or scraped from elsewhere — and whether we hold redistribution rights for each clip used in brand marketing.
+
+### Q-AI-0107 — Which accounts will the reel be published on, and who gives final approval before it goes live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Which accounts will the reel be published on, and who gives final approval before it goes live?
+
+No publishing target or sign-off step is named. Tejas Zurange is also producing reels for the Mineral View channels — we need one named approver and a clear channel list (Instagram / YouTube Shorts / Facebook / LinkedIn) so two editors aren't posting unreviewed brand content in parallel.
+
+### Q-AI-0108 — Do any clips or platform visuals in the reel show real mineral-owner names, leases, or production data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Do any clips or platform visuals in the reel show real mineral-owner names, leases, or production data?
+
+The reel showcases "platform capabilities" and "data analytics" visuals. If any screen recording shows live member data, real owner names, or actual lease/valuation records, that is member PII being broadcast publicly. Confirm whether demo/synthetic data was used, and if not, what was masked.
+
+### Q-AI-0109 — Do the subtitles and on-screen claims about Mineral View carry the required educational-only / no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Do the subtitles and on-screen claims about Mineral View carry the required educational-only / no-advice disclaimer?
+
+Other Mineral View video content (e.g. Tejas's World Cup concept reel) ships with an explicit educational-content disclaimer. This reel adds text overlays highlighting "features and benefits" and "industry intelligence." Confirm the claims were fact-checked and that the same no-advice guardrail applies here.
+
+### Q-AI-0110 — Where are the final export and project files stored, and what metric defines success for this reel?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Where are the final export and project files stored, and what metric defines success for this reel?
+
+The task states goals of "reach and engagement" but sets no measurable target and names no storage location. Confirm the shared Drive/asset path for the export and source project, and the specific metric (views, saves, profile visits, claims) that will be reviewed after posting.
