@@ -919,3 +919,57 @@ AI assistance was used for log review, SQL work, and root-cause analysis. Confir
 **1. Short Question** — Where do the scraper XPath/Selenium fixes get committed and reviewed, and how are we alerted when the source website changes structure?
 
 Extraction logic, HTML elements, and XPaths were changed in response to website structure changes, then validated by rerunning the scraper. Clarify whether these edits are in source control with review, and whether there is automated detection/alerting for source-site changes instead of discovering them through failed validation.
+
+### Q-AI-0141 — Are the 27 dossier files (member PII) moved off local Downloads into the approved MineralView_Operations Drive folder and kept out of git?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the 27 dossier files (member PII) moved off local Downloads into the approved MineralView_Operations Drive folder and kept out of git?
+
+The batch is described as "built and staged in Downloads." Prior governance says generated dossier files hold member PII and must live in the `MineralView_Operations` Drive folder, not in the repo. Confirm the 19 new files were moved (not copied) and that no PII landed in the two commits pushed to `main`.
+
+### Q-AI-0142 — Did Nikhil's ownership-data fix actually land, or was the 19-file batch generated on data that is still unfixed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Did Nikhil's ownership-data fix actually land, or was the 19-file batch generated on data that is still unfixed?
+
+The previous update said full batch generation was **on hold pending Nikhil's ownership-data fix**. This update reports the batch complete without stating that the fix shipped. If it did not, the 27 files may carry known-bad ownership data.
+
+### Q-AI-0143 — Who approved shipping member-facing dossiers that knowingly carry inflated interest/value figures (even >100%) rather than de-duping?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approved shipping member-facing dossiers that knowingly carry inflated interest/value figures (even >100%) rather than de-duping?
+
+The "match the portal + auto-flag" decision is described as "locked," but no approver is named. Clarify who signed off (Ryan? Nikhil?) and whether sending members figures we know are wrong — with only a ⚠️DUP caveat — is acceptable from a customer-trust and no-advice standpoint.
+
+### Q-AI-0144 — Are the three Needs-Attention accounts (Baker, Oneto, Elliott) blocked from release, and who signs off before their dossiers go to the member?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the three Needs-Attention accounts (Baker, Oneto, Elliott) blocked from release, and who signs off before their dossiers go to the member?
+
+James Baker (1401) — title, Miguel Oneto (3382) — bad data, Liz Elliott (3041) — resolved. Needs a named approver and a rule on whether a held account's dossier can be sent while unresolved.
+
+### Q-AI-0145 — What triggers the full regeneration once 2025 clean CAD data lands, who owns it, and how do we know which 27 files were built on bad 2024 data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — What triggers the full regeneration once 2025 clean CAD data lands, who owns it, and how do we know which 27 files were built on bad 2024 data?
+
+The plan defers the real fix to "regenerate when 2025 clean data arrives." Without an owner, a date, and a provenance marker on each file, the flagged-but-wrong dossiers can quietly become permanent.
+
+### Q-AI-0146 — Who reviews and approves the three drafted group messages before they are sent, given they reference member names and values?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who reviews and approves the three drafted group messages before they are sent, given they reference member names and values?
+
+The batch-complete, data-notes, and Nikhil data-issue write-ups appear to name specific members (e.g. Catherine Urban, Miguel Oneto) and dollar figures. Confirm the approval path and which channel/audience each is cleared for.
