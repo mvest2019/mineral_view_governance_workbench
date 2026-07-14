@@ -973,3 +973,57 @@ The plan defers the real fix to "regenerate when 2025 clean data arrives." Witho
 **1. Short Question** — Who reviews and approves the three drafted group messages before they are sent, given they reference member names and values?
 
 The batch-complete, data-notes, and Nikhil data-issue write-ups appear to name specific members (e.g. Catherine Urban, Miguel Oneto) and dollar figures. Confirm the approval path and which channel/audience each is cleared for.
+
+### Q-AI-0147 — Was the incorrect Claimed Leases count (1586) used in any reporting before it was corrected to 792?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the incorrect Claimed Leases count (1586) used in any reporting before it was corrected to 792?
+
+The Professional tab count dropped from 1586 to 792 — a ~50% correction. We need to know which number is authoritative, what caused the inflation (duplicate rows, wrong join, wrong data source), whether the Mineral Owners count is affected by the same defect, and whether the inflated figure was shared in investor, marketing, or internal KPI reporting that now needs to be restated.
+
+### Q-AI-0148 — Who can see the Newsletter subscriber emails in Cerebro, and is that PII access approved and logged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who can see the Newsletter subscriber emails in Cerebro, and is that PII access approved and logged?
+
+The new Newsletter module exposes the PostgreSQL `email_subscribe_users` table with search, sorting, and pagination. Clarify: is it restricted by role, can subscriber lists be exported, is access audit-logged, and does the listing reflect unsubscribe/consent status so we stay compliant when the list is used for sending.
+
+### Q-AI-0149 — Was the missing log service behind the Cerebro 500 error a side effect of the staging database cleanup?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the missing log service behind the Cerebro 500 error a side effect of the staging database cleanup?
+
+The Dashboard 500 was traced to empty MongoDB collections and a missing log service. If those collections or that service were removed during the recent staging cleanup, other consumers may also be silently broken — we need confirmation of the root cause and a check for other dependents.
+
+### Q-AI-0150 — Which redesign prototype version (v35 or v37) is the canonical build that feedback is being written against?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which redesign prototype version (v35 or v37) is the canonical build that feedback is being written against?
+
+Feedback items 45–57 were raised against "v35/v37". If reviewers are on different builds, items may already be fixed or may not reproduce. Name the single build under review and where it is hosted.
+
+### Q-AI-0151 — What is the source-of-truth rule for classifying a claimed lease as Mineral Owner vs Professional?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What is the source-of-truth rule for classifying a claimed lease as Mineral Owner vs Professional?
+
+The Claimed Leases split now routes to two tabs with different data sources and detail pages. Document the classification rule and the owning table/field, otherwise the two tabs can double-count or drop records.
+
+### Q-AI-0152 — Were these Cerebro changes tested and reviewed before going live, and who signs off on Cerebro releases?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were these Cerebro changes tested and reviewed before going live, and who signs off on Cerebro releases?
+
+A 500-error fix, a count correction, a tab restructure, and a new PII-bearing module all landed together. Confirm whether QA reviewed them, whether they went straight to production, and who is the approver for Cerebro changes.
