@@ -1027,3 +1027,57 @@ The Claimed Leases split now routes to two tabs with different data sources and 
 **1. Short Question** — Were these Cerebro changes tested and reviewed before going live, and who signs off on Cerebro releases?
 
 A 500-error fix, a count correction, a tab restructure, and a new PII-bearing module all landed together. Confirm whether QA reviewed them, whether they went straight to production, and who is the approver for Cerebro changes.
+
+### Q-AI-0153 — Who approved the six-to-twelve-month allocation window as an official business rule, and where is it documented?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Who approved the six-to-twelve-month allocation window as an official business rule, and where is it documented?
+
+The first phase used a five-month window; this phase extends it to 6–12 months. The submission does not say who signed off on the new window, what evidence justified 6–12 months (rather than, say, 6–18), or whether the rule is recorded anywhere as canonical. Allocation rules drive owner-facing production and value numbers, so this needs a named approver and a written rule definition.
+
+### Q-AI-0154 — How is double-allocation prevented between the five-month run and the six-to-twelve-month run?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — How is double-allocation prevented between the five-month run and the six-to-twelve-month run?
+
+The new phase reads leases left over from the first cycle, but it is not stated whether a production segment already consumed by the five-month allocation can be re-used here. Please confirm the deduplication key and whether the two phases are re-runnable without inflating total allocated volumes.
+
+### Q-AI-0155 — Do these newly allocated volumes feed owner-facing numbers such as MVEstimate or royalty income, and what QA gate must they pass first?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Do these newly allocated volumes feed owner-facing numbers such as MVEstimate or royalty income, and what QA gate must they pass first?
+
+Extending the window increases allocation coverage, which changes production attributed to individual wells/leases. If those figures surface in MVEstimate, royalty income, or the Owner Report, we need a stated accuracy threshold and a human validation step before they go live — and confirmation of whether this phase is currently write-enabled to any production dataset.
+
+### Q-AI-0156 — Which MongoDB databases/collections do the allocation and spatial outputs write to, and are prior results overwritten or versioned?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Which MongoDB databases/collections do the allocation and spatial outputs write to, and are prior results overwritten or versioned?
+
+Both workstreams end in MongoDB storage, but no target collections are named. Please confirm the exact destinations, whether existing allocation/spatial collections are overwritten in place, and whether a backup or version tag exists so a bad run can be rolled back.
+
+### Q-AI-0157 — What happens to leases that remain unallocated after this extended window — is a further phase planned, or are they treated as having no production?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — What happens to leases that remain unallocated after this extended window — is a further phase planned, or are they treated as having no production?
+
+The submission says non-conforming wells stay unallocated, which is the right conservative choice, but it does not say how many leases that leaves, or how downstream consumers should interpret an unallocated lease. A count and a defined end-state (further phase vs. permanent 'no allocation') is needed.
+
+### Q-AI-0158 — When latitude/longitude values conflict across datasets, which source is authoritative, and who approved the search radii used for the neighbor summaries?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — When latitude/longitude values conflict across datasets, which source is authoritative, and who approved the search radii used for the neighbor summaries?
+
+The refinement step selects 'the most reliable values' from multiple coordinate sources and evaluates 'configurable distances', but neither the source-precedence rule nor the chosen radii are stated. Both are decisions that affect every downstream spatial result and should be written down rather than left in code.
