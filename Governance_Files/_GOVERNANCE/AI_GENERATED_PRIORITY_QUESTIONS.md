@@ -811,3 +811,57 @@ There are now at least three concurrent UI/UX streams (the layout-option prototy
 **1. Short Question** — What happens to a user's claimed leases and gated features when a subscription is downgraded or a yearly plan lapses?
 
 Downgrade was tested for flow and messaging, but the expected data/feature outcome (are claims retained, hidden, or lost; what is the grace period) is not documented. This is a customer-impacting rule that needs a written expected result before sign-off.
+
+### Q-AI-0129 — Is this football × luxury jewelry Reel for Mineral View, or for a different brand or client?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is this football × luxury jewelry Reel for Mineral View, or for a different brand or client?
+
+Every other logged production (drilling rig counts, Texas World Cup concept, MVestimate/Map footage) is Mineral View oil-and-gas content aimed at mineral owners. A luxury jewelry product reveal has no stated connection to the platform. Governance needs to know which brand this asset belongs to, who requested it, and whether it will be posted on Mineral View channels.
+
+### Q-AI-0130 — Does the football prediction challenge involve entry, prizes, or wagering, and who approved it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the football prediction challenge involve entry, prizes, or wagering, and who approved it?
+
+A public "prediction challenge" can trigger contest/sweepstakes rules and platform promotion policies, and sits close to the existing no-advice guardrails. Clarify the mechanics (how viewers enter, whether anything is won), and who signed off on the legal/compliance side before publishing.
+
+### Q-AI-0131 — Are any football or jewelry brand logos, player likenesses, licensed match footage, or trending audio used in this Reel, and are they cleared?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Are any football or jewelry brand logos, player likenesses, licensed match footage, or trending audio used in this Reel, and are they cleared?
+
+The 13 July World Cup reel carried an explicit disclaimer that no FIFA footage, team logos, player likenesses, or copyrighted match content were used. This report contains no equivalent statement while describing football content, a luxury product presentation, and platform-optimized export. Confirm the licensing status of all footage, music, and marks, and add the same disclaimer if applicable.
+
+### Q-AI-0132 — Who reviews and approves this Reel before it is published, and has it been published yet?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who reviews and approves this Reel before it is published, and has it been published yet?
+
+The report ends at "export-ready" with no named approver and no publish decision. Identify the approval owner for social content and the current publication status across Instagram, YouTube Shorts, and Facebook.
+
+### Q-AI-0133 — Is the jewelry product a paying sponsor or partner, and does the Reel require a paid-partnership disclosure?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is the jewelry product a paying sponsor or partner, and does the Reel require a paid-partnership disclosure?
+
+If the luxury jewelry presentation is sponsored or commissioned, platform rules and advertising standards require branded-content disclosure. Confirm the commercial relationship, or confirm the product is generic/stock with no advertiser behind it.
+
+### Q-AI-0134 — Where are the project files, source assets, and final export for this Reel stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Where are the project files, source assets, and final export for this Reel stored?
+
+No repository, Drive folder, or asset link is given for the storyboard, After Effects project, source footage, or final export. Provide the storage location so the asset is recoverable and auditable rather than living only on a local machine.
