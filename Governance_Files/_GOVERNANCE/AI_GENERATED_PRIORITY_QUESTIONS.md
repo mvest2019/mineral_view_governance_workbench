@@ -1135,3 +1135,57 @@ Trendelier appears nowhere else in the governance record. Define what the system
 **1. Short Question** — Who approves social and YouTube content before publishing, and does it carry the no-investment-advice disclaimer?
 
 A reel, an Instagram ad, and a "BOLD" YouTube video were all published. Confirm whether published content requires a pre-publish review, and whether oil-and-gas/mineral content aimed at owners carries the required educational-only, no-advice disclaimer.
+
+### Q-AI-0165 — Where is the daily tracking sheet stored, and who can access the registration, paid-user, and Contact Us data in it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where is the daily tracking sheet stored, and who can access the registration, paid-user, and Contact Us data in it?
+
+The submission describes consolidating new registrations, lease claim requests, paid user activity, and Contact Us inquiries into an internal tracking sheet. That sheet holds mineral-owner PII and paying-customer behavior. Governance needs to know the storage location (Drive? personal sheet?), the access list, the retention period, and whether it is covered by the same PII handling rules as platform data.
+
+### Q-AI-0166 — Who gave final subject-matter sign-off before the glossary page was published live, or is the reviewer verification section still empty?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who gave final subject-matter sign-off before the glossary page was published live, or is the reviewer verification section still empty?
+
+The page was published to the live site and submitted to Google/Bing for indexing, but the work also says reviewer verification sections were "added for final subject-matter approval." Clarify whether a named SME actually approved the content before publication, or whether publication happened ahead of that review.
+
+### Q-AI-0167 — Does the published tax and non-consent guidance require attorney or CPA review before going live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the published tax and non-consent guidance require attorney or CPA review before going live?
+
+The Non-Operated Working Interest page expands guidance on tax considerations and non-consent thresholds, and links out to resources for attorneys, CPAs, and royalty auditors. This is the closest MView content gets to legal/tax advice. Confirm what review gate applies and who owns it.
+
+### Q-AI-0168 — Have previously published glossary pages been re-checked for the same citation error found in this audit?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Have previously published glossary pages been re-checked for the same citation error found in this audit?
+
+A "critical citation issue" was found and corrected on one page. If the same wrong section reference or citation pattern was copied across other already-published glossary pages, those are live with incorrect authoritative references. Confirm whether a backfill audit is planned or the fix was page-local.
+
+### Q-AI-0169 — Are the Microsoft Clarity session recordings masked, and do they capture owner PII or logged-in paid-user sessions?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the Microsoft Clarity session recordings masked, and do they capture owner PII or logged-in paid-user sessions?
+
+Session replay of real user journeys can capture form fields, claimed lease details, and account information. Confirm whether masking is enabled, whether recordings include authenticated paid users, and how long Clarity retains them.
+
+### Q-AI-0170 — What is our policy for AI-generated diagrams published on the site, and does it require any disclosure?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — What is our policy for AI-generated diagrams published on the site, and does it require any disclosure?
+
+Three AI-generated operator diagrams were produced from a prompt, uploaded to Cloudinary, and embedded on a live public page. Clarify licensing/ownership of the generated assets, whether AI-generated illustrations need disclosure, and who approves visual assets before publication.
