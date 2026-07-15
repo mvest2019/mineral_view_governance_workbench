@@ -1234,3 +1234,57 @@ The report cites premium jewelry references, football content, and trending audi
 **1. Short Question** — Where is the final export stored and what is the deliverable link for review before publishing?
 
 The task lists an 'export-ready Reel' but provides no storage location or link, so the output cannot be reviewed or approved.
+
+### Q-AI-0176 — When PostgreSQL, SQL Server, and MongoDB disagree during cross-database validation, which system is the authoritative source of truth?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree during cross-database validation, which system is the authoritative source of truth?
+
+The submission validates record consistency across all three databases but does not state a conflict-resolution rule. A single documented system-of-record is needed so corrections are applied in the right direction rather than propagating a wrong value.
+
+### Q-AI-0177 — Where are the W-1/W-2 validation discrepancies logged, and who owns fixing them once you document them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the W-1/W-2 validation discrepancies logged, and who owns fixing them once you document them?
+
+The report says discrepancies and inconsistent/missing/duplicate records are investigated and documented, but not where that log lives or who remediates the findings. Without a remediation owner and tracked location these defects can be documented and then dropped.
+
+### Q-AI-0178 — Are AI-assisted SQL optimizations and backfill scripts run against production data, and what change-control approval gates them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are AI-assisted SQL optimizations and backfill scripts run against production data, and what change-control approval gates them?
+
+AI is used for SQL optimization and validation-fix scripts that are 'confirmed before implementation.' If these run on production tables, a review/approval and backup gate should be defined before execution rather than at the individual reviewer's discretion.
+
+### Q-AI-0179 — Is there automated alerting when a source-website structure change breaks scraper selectors, or is detection only this manual daily review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is there automated alerting when a source-website structure change breaks scraper selectors, or is detection only this manual daily review?
+
+Scraper logic and selector review are done daily by hand to confirm website updates didn't break extraction. Relying solely on a daily manual pass means a mid-cycle site change could corrupt data before anyone notices.
+
+### Q-AI-0180 — What is the defined pass/fail threshold for declaring the daily scraping cycle 'validated,' and who signs off before that data is exposed to users?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — What is the defined pass/fail threshold for declaring the daily scraping cycle 'validated,' and who signs off before that data is exposed to users?
+
+The report ends with 'final end-to-end validation' but no explicit acceptance criteria or sign-off step. A clear go/no-go threshold prevents partially-validated data from reaching the portal.
+
+### Q-AI-0181 — Is the application-vs-source-website comparison full-coverage or sampled, and what sample size counts as a reliable data-accuracy confirmation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is the application-vs-source-website comparison full-coverage or sampled, and what sample size counts as a reliable data-accuracy confirmation?
+
+W-2 and W-1 accuracy is confirmed by comparing application data against the source website, but coverage depth is unstated. If it is spot-sampled, the sampling method and size should be defined so accuracy claims are defensible.
