@@ -1630,3 +1630,57 @@ The review covered the map's property information panel and property selection. 
 **1. Short Question** — Does the proposed Dossier profile-completion flow prompt owners for PII or documents, and where would that data be stored?
 
 The Dossier (My Profile) review recommends a profile-completion/guidance flow. If completing a profile asks owners to submit personal or ownership information, governance needs the storage location, retention, and review approach defined before the flow is built.
+
+### Q-AI-0220 — Is the Data Lookup free-preview lock enforced server-side, since it can be bypassed by sorting/filtering and the locked data is readable in page source?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the Data Lookup free-preview lock enforced server-side, since it can be bypassed by sorting/filtering and the locked data is readable in page source?
+
+The review found the paywall/free-preview lock can be bypassed via sort/filter and that locked (paid) records are present in the page source. This suggests gating is client-side only — a paywall bypass and data-leak risk. Need to confirm whether this is a prototype-only artifact or a real production defect, and who owns implementing server-side gating.
+
+### Q-AI-0221 — Is publicly exposing full home addresses of mineral owners in the unauthenticated Data Lookup demo approved, and what is the PII policy for it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is publicly exposing full home addresses of mineral owners in the unauthenticated Data Lookup demo approved, and what is the PII policy for it?
+
+The Data Lookup demo shows full home addresses publicly to unauthenticated visitors. Publishing owner PII without a login gate is a privacy/compliance risk distinct from the portal PII questions already tracked; needs an explicit decision on what owner data may appear pre-authentication.
+
+### Q-AI-0222 — Is commercially selling and redistributing the scraped source datasets via the Data for Business page legally cleared, and what license/refund/freshness terms apply?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is commercially selling and redistributing the scraped source datasets via the Data for Business page legally cleared, and what license/refund/freshness terms apply?
+
+The Data for Business offering resells platform datasets to third parties and the review flagged a missing data-buyer FAQ (freshness/license/refund). Selling/redistributing scraped RRC and appraisal-derived data commercially raises licensing and liability questions that need a legal/business decision before launch.
+
+### Q-AI-0223 — Which page holds the authoritative well count, given the inconsistent well counts found across the prototype surfaces?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which page holds the authoritative well count, given the inconsistent well counts found across the prototype surfaces?
+
+The review found well counts differ across pages. This undermines data trust and needs a single authoritative source designated before the numbers are shown to prospects.
+
+### Q-AI-0224 — Is there approved canonical pricing for the individual Data for Business datasets, or is exact pricing still an open decision?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is there approved canonical pricing for the individual Data for Business datasets, or is exact pricing still an open decision?
+
+The review noted missing price info before unlock in the Lookup demo and requested exact pricing on the Data for Business page. This is separate from the subscription-tier pricing and needs a confirmed source of truth or a pricing decision.
+
+### Q-AI-0225 — Is the proposed Heir Search a sanctioned new product to pursue, and who owns that decision?
+
+**Status:** OPEN
+**6. Priority** — LOW
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the proposed Heir Search a sanctioned new product to pursue, and who owns that decision?
+
+The review proposes a new 'Heir Search' product and a 'This is me — claim my record' owner path. These are new product/scope ideas that need a go/no-go owner rather than being assumed in the redesign backlog.
