@@ -1432,3 +1432,48 @@ A content-writing sprint produced frontend design recommendations. It is unclear
 **1. Short Question** — Is a content writer the appropriate owner to author authoritative legal mechanics (JIB default liens, non-consent penalties, JOA rights), or must legal/accounting sign off first?
 
 The NOWI and JIB pages state specific legal consequences (operator liens on production revenue, severe non-consent penalties, audit-dispute timelines). These are legal/accounting determinations that likely require review by a qualified party before being published as definitive guidance.
+
+### Q-AI-0198 — Can accessibility findings like keyboard access, focus order, and screen-reader behavior be signed off from static screenshots alone, or must the live app be re-tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Can accessibility findings like keyboard access, focus order, and screen-reader behavior be signed off from static screenshots alone, or must the live app be re-tested?
+
+The review was done entirely from user-provided screenshots because browser policies and robots.txt blocked live access. Dynamic accessibility concerns listed (keyboard accessibility, focus visibility, ARIA, screen reader compatibility, accordion/carousel behavior) cannot be validated from static images, so the accessibility portion may not be reliable evidence for launch sign-off.
+
+### Q-AI-0199 — Is unlabeled illustrative or sample data currently shown to prospective customers, and who approves the 'honest positioning' fixes before launch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Is unlabeled illustrative or sample data currently shown to prospective customers, and who approves the 'honest positioning' fixes before launch?
+
+The review gave 'special attention' to illustrative content labels, data transparency, and honest product positioning. If sample/illustrative figures appear as real product data on the marketing site, that is a trust and potential-misrepresentation risk that needs an owner and a fix decision.
+
+### Q-AI-0200 — What WCAG conformance level must the redesign meet, and who signs off accessibility before the site goes live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — What WCAG conformance level must the redesign meet, and who signs off accessibility before the site goes live?
+
+Roughly 60 recommendations include many WCAG accessibility items, but no target conformance level (A / AA) or accessibility sign-off gate is defined for launch.
+
+### Q-AI-0201 — Do the hash-based URLs flagged in the review undermine the SEO landing-page strategy, and is a routing migration required?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Do the hash-based URLs flagged in the review undermine the SEO landing-page strategy, and is a routing migration required?
+
+The frontend review noted hash-based routing on the marketing site. Hash URLs are typically not indexed well and could conflict with the SEO landing-page effort, so a decision is needed on whether to migrate routing.
+
+### Q-AI-0202 — Are the marketing website and Owner Product Demo separate codebases, and does the redesign/design-system standardization apply to both or only one?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Are the marketing website and Owner Product Demo separate codebases, and does the redesign/design-system standardization apply to both or only one?
+
+The review spans two distinct applications and recommends component standardization and a shared design system. It is unclear whether both share a codebase/design system or diverge, which affects how the ~60 recommendations get implemented and which team owns each.
