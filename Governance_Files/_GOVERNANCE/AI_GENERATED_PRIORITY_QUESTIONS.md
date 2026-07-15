@@ -1288,3 +1288,48 @@ The report ends with 'final end-to-end validation' but no explicit acceptance cr
 **1. Short Question** — Is the application-vs-source-website comparison full-coverage or sampled, and what sample size counts as a reliable data-accuracy confirmation?
 
 W-2 and W-1 accuracy is confirmed by comparing application data against the source website, but coverage depth is unstated. If it is spot-sampled, the sampling method and size should be defined so accuracy claims are defensible.
+
+### Q-AI-0182 — Are the homepage testimonials real and consented, and who decides which reviews count as "most impactful" to feature?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are the homepage testimonials real and consented, and who decides which reviews count as "most impactful" to feature?
+
+The review recommends showing only the most impactful testimonials on the homepage. We need to confirm these customer reviews are genuine and have display consent, and define who curates the selection so it isn't cherry-picked or misleading.
+
+### Q-AI-0183 — Who approves the new information architecture (dedicated For Owners, Reviews, and split Glossary pages), and what is the SEO and URL-redirect plan for the changed structure?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approves the new information architecture (dedicated For Owners, Reviews, and split Glossary pages), and what is the SEO and URL-redirect plan for the changed structure?
+
+Creating new pages and splitting the Glossary index from detail pages changes URLs and site structure. This can break existing SEO rankings and inbound links unless redirects and a sign-off owner are defined.
+
+### Q-AI-0184 — Was this review conducted against the live marketing site or a specific prototype/build?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was this review conducted against the live marketing site or a specific prototype/build?
+
+The submission does not state the environment reviewed. Recommendations may not apply cleanly if the reviewed version differs from what is in production.
+
+### Q-AI-0185 — Do the new Trust Messaging explanatory claims need factual or legal review before replacing the existing trust badges?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the new Trust Messaging explanatory claims need factual or legal review before replacing the existing trust badges?
+
+Swapping badges for meaningful explanatory content may introduce claims about security, data accuracy, or reliability that require accuracy and no-advice sign-off before going live.
+
+### Q-AI-0186 — Will the proposed conversion-focused content restructuring and hero/CTA changes be validated (e.g., A/B tested) and approved before rollout, and who owns that decision?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Will the proposed conversion-focused content restructuring and hero/CTA changes be validated (e.g., A/B tested) and approved before rollout, and who owns that decision?
+
+Restructuring the user journey to increase conversion directly affects subscription acquisition. We need to know whether these changes are validated and who signs off before they ship.
