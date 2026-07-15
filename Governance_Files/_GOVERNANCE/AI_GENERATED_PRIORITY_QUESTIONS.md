@@ -1189,3 +1189,48 @@ Session replay of real user journeys can capture form fields, claimed lease deta
 **1. Short Question** — What is our policy for AI-generated diagrams published on the site, and does it require any disclosure?
 
 Three AI-generated operator diagrams were produced from a prompt, uploaded to Cloudinary, and embedded on a live public page. Clarify licensing/ownership of the generated assets, whether AI-generated illustrations need disclosure, and who approves visual assets before publication.
+
+### Q-AI-0171 — Is this football × luxury jewelry Reel actually a Mineral View deliverable, given it has no connection to oil, gas, or mineral rights?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is this football × luxury jewelry Reel actually a Mineral View deliverable, given it has no connection to oil, gas, or mineral rights?
+
+All prior Tejas Zurange output was oil-and-gas / mineral-rights content for the Mineral View channel. This task is 'premium football × luxury jewelry' with a football prediction challenge — no stated tie to MView. Confirm whether this is company work, a client project, or unrelated freelance, and who authorized the topic.
+
+### Q-AI-0172 — Which brand account and platform will this Reel be published to, and who approved publishing it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Which brand account and platform will this Reel be published to, and who approved publishing it?
+
+The report says the edit was optimized for Instagram Reels, YouTube Shorts, and Facebook Reels but names no destination account or approver. Publishing off-brand jewelry/football content on a Mineral View channel could confuse the audience and brand.
+
+### Q-AI-0173 — Does the 'football prediction challenge' involve betting or predictions that require a disclaimer or legal review?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the 'football prediction challenge' involve betting or predictions that require a disclaimer or legal review?
+
+Prediction/challenge framing can imply gambling or advice. Unlike the July 13 Texas World Cup reel, this report contains no educational/no-advice disclaimer. Confirm whether one is required.
+
+### Q-AI-0174 — Are the luxury jewelry product, football imagery, and trending audio all licensed and cleared for commercial use?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Are the luxury jewelry product, football imagery, and trending audio all licensed and cleared for commercial use?
+
+The report cites premium jewelry references, football content, and trending audio but no source or rights clearance. Football/league marks and licensed music carry real IP and copyright-strike risk.
+
+### Q-AI-0175 — Where is the final export stored and what is the deliverable link for review before publishing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Where is the final export stored and what is the deliverable link for review before publishing?
+
+The task lists an 'export-ready Reel' but provides no storage location or link, so the output cannot be reviewed or approved.
