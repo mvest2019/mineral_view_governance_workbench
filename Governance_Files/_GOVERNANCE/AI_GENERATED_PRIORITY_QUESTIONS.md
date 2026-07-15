@@ -1684,3 +1684,57 @@ The review noted missing price info before unlock in the Lookup demo and request
 **1. Short Question** — Is the proposed Heir Search a sanctioned new product to pursue, and who owns that decision?
 
 The review proposes a new 'Heir Search' product and a 'This is me — claim my record' owner path. These are new product/scope ideas that need a go/no-go owner rather than being assumed in the redesign backlog.
+
+### Q-AI-0226 — What is the approval, budget, and targeting policy for the Instagram ad campaign that was launched?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What is the approval, budget, and targeting policy for the Instagram ad campaign that was launched?
+
+An Instagram ad campaign was created and launched, but there is no record of who approved the spend, the budget cap, the audience targeting, or the ad claims. Paid advertising is real money leaving the company and needs a named approver and a documented budget.
+
+### Q-AI-0227 — Were the 3 user emails reviewed and approved before sending, and do recipients have consent and an opt-out?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Were the 3 user emails reviewed and approved before sending, and do recipients have consent and an opt-out?
+
+Three emails were sent to real users. Governance needs to know who signed off on the final content before send, that recipients consented, and that a CAN-SPAM-style unsubscribe was included, since these went to live user inboxes.
+
+### Q-AI-0228 — Were real user emails or PII pasted into GPT, Gemini, and Claude when auditing the email drafts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Were real user emails or PII pasted into GPT, Gemini, and Claude when auditing the email drafts?
+
+Email drafts were reviewed using three third-party AI tools. If real user names, addresses, or holdings were included in those prompts, that is PII leaving to external services and needs a data-handling ruling.
+
+### Q-AI-0229 — Do the published BOLD and Mineral View reels need a no-advice / accuracy disclaimer before going live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Do the published BOLD and Mineral View reels need a no-advice / accuracy disclaimer before going live?
+
+Reels published to Instagram, Facebook, and YouTube may make claims about mineral value or oil-and-gas activity. Governance should confirm whether social content requires the same no-advice guardrail and accuracy sign-off applied elsewhere.
+
+### Q-AI-0230 — Is there automated alerting for scan failures, or was the Gemini-timeout issue only caught by manual review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Is there automated alerting for scan failures, or was the Gemini-timeout issue only caught by manual review?
+
+A scan failed due to a Gemini timeout and was re-queued manually. If detection depends on someone reviewing outputs, silent failures could ship bad data; confirm whether monitoring/alerting exists and whether the re-queued output was re-validated.
+
+### Q-AI-0231 — What is "Trendelier," and do its scan outputs feed user-facing data or only internal content research?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What is "Trendelier," and do its scan outputs feed user-facing data or only internal content research?
+
+"Trendelier" scans are referenced with no definition of the tool, its scope, or whether its outputs reach the platform or public content. Governance needs its purpose and data path documented.
