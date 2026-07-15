@@ -1738,3 +1738,57 @@ A scan failed due to a Gemini timeout and was re-queued manually. If detection d
 **1. Short Question** — What is "Trendelier," and do its scan outputs feed user-facing data or only internal content research?
 
 "Trendelier" scans are referenced with no definition of the tool, its scope, or whether its outputs reach the platform or public content. Governance needs its purpose and data path documented.
+
+### Q-AI-0232 — Did the 150 newsletter subscribers opt in, and does the Mailchimp campaign include a compliant unsubscribe link?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Did the 150 newsletter subscribers opt in, and does the Mailchimp campaign include a compliant unsubscribe link?
+
+The submission verifies a 150-subscriber list and schedules a campaign, but does not record consent/opt-in status or CAN-SPAM compliance (unsubscribe, sender identity). Confirm the source of the list and that the campaign meets email-marketing legal requirements before it sends.
+
+### Q-AI-0233 — Who reviewed and approved the 15 personalized emails before they were scheduled to send?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who reviewed and approved the 15 personalized emails before they were scheduled to send?
+
+The task says emails were reviewed and scheduled, but does not name an approver or sign-off gate. Personalized emails to mineral owners need a clear human approval step before they go out.
+
+### Q-AI-0234 — Do the 15 personalized emails rely on owner data that is still on hold pending Nikhil's ownership-data fix?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the 15 personalized emails rely on owner data that is still on hold pending Nikhil's ownership-data fix?
+
+Krishna's dossier work has the full batch on hold pending Nikhil's ownership-data correction. Confirm these scheduled emails do not send unvalidated ownership/valuation figures to members.
+
+### Q-AI-0235 — Who is James Boland, and is sharing the email reply/data with them an approved disclosure?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who is James Boland, and is sharing the email reply/data with them an approved disclosure?
+
+The email reply was shared with James Boland with no role or approval context. Clarify whether this is an internal or external recipient and whether sharing member/campaign data with them is authorized.
+
+### Q-AI-0236 — Is the AI-generated email image cleared for licensing and accuracy before the campaign sends?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Is the AI-generated email image cleared for licensing and accuracy before the campaign sends?
+
+An image was created for the email draft. Confirm it is licensing-clean and factually accurate before it reaches subscribers.
+
+### Q-AI-0237 — Does the email/newsletter content need a no-advice disclaimer and accuracy sign-off before reaching mineral owners?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Does the email/newsletter content need a no-advice disclaimer and accuracy sign-off before reaching mineral owners?
+
+Content is being sent to owners but no accuracy review or no-advice guardrail is noted. Confirm who signs off on content accuracy and whether a disclaimer is required.
