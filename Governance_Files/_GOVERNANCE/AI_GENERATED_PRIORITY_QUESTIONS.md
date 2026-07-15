@@ -1585,3 +1585,48 @@ The task updated server configuration for secure email sending. Confirm the SMTP
 **1. Short Question** — Which email/CRM service and recipient source does the dispatcher use, and does it contain member PII?
 
 Clarify whether this dispatcher draws on the CRM scheduled-email data (which holds member PII) and which service actually delivers the mail, so data-handling can be governed.
+
+### Q-AI-0215 — Is the proposed Lease → Reservoir → Well navigation a build-approved change or just a recommendation, and who signs off?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the proposed Lease → Reservoir → Well navigation a build-approved change or just a recommendation, and who signs off?
+
+The submission proposes a new hierarchical navigation flow between the Lease, Reservoir, and Well reports. This is a structural change to report navigation, not a cosmetic tweak — governance needs to confirm whether it is approved to build, how it reconciles with the existing report flow, and who owns implementation.
+
+### Q-AI-0216 — Does this Map Module review conflict with or supersede your own earlier Well Explorer (4th view) map work, and which is canonical?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does this Map Module review conflict with or supersede your own earlier Well Explorer (4th view) map work, and which is canonical?
+
+You previously developed the 4th view of the Map – Well Explorer (search, filters, saved filters, well paths, active-filter chips). This new review again covers map search, filters, active-filter visibility, and first-time guidance — governance needs to know whether these findings extend, contradict, or replace the shipped Well Explorer design so there is a single canonical map spec.
+
+### Q-AI-0217 — Did the chart, map, and production-data readability review surface any data-accuracy issues, or was every finding purely visual?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Did the chart, map, and production-data readability review surface any data-accuracy issues, or was every finding purely visual?
+
+The review evaluated readability of charts, maps, and production data in the Lease/Reservoir/Well reports. If any values looked wrong or inconsistent (not just hard to read), those are data-quality defects that must be routed to the data team, not filed as UI suggestions.
+
+### Q-AI-0218 — Does the Map property information panel expose any owner identity or holdings, and is that acceptable?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the Map property information panel expose any owner identity or holdings, and is that acceptable?
+
+The review covered the map's property information panel and property selection. Governance needs to confirm what owner-level data that panel reveals to a viewing user, since mineral-owner identity or holdings leaking through the map is a privacy risk.
+
+### Q-AI-0219 — Does the proposed Dossier profile-completion flow prompt owners for PII or documents, and where would that data be stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the proposed Dossier profile-completion flow prompt owners for PII or documents, and where would that data be stored?
+
+The Dossier (My Profile) review recommends a profile-completion/guidance flow. If completing a profile asks owners to submit personal or ownership information, governance needs the storage location, retention, and review approach defined before the flow is built.
