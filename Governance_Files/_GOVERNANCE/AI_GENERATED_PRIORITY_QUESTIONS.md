@@ -1531,3 +1531,57 @@ The GIS map enhancement updated mapping datasets but does not identify where the
 **1. Short Question** — Will the existing inconsistent API14 numbers already stored across datasets be corrected once the new generation methodology is finalized?
 
 The analysis identified inconsistencies in current API14 values across datasets. Clarify whether the fix only applies going forward or whether already-stored records will be backfilled/corrected, and who owns that remediation.
+
+### Q-AI-0209 — Why is the email dispatcher scheduled on the staging server, and is staging sending real emails to live members?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Why is the email dispatcher scheduled on the staging server, and is staging sending real emails to live members?
+
+The submission says the Windows Task Scheduler was configured on the *staging* server. Governance needs to know whether production emails are being dispatched from staging, whether that reaches real member inboxes, and whether the intended home is actually production.
+
+### Q-AI-0210 — What now prevents duplicate or repeated sends when the scheduler retries stuck emails every 5 minutes?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — What now prevents duplicate or repeated sends when the scheduler retries stuck emails every 5 minutes?
+
+A 5-minute retry loop over previously 'stuck' emails introduces a real risk of double-sending. What idempotency/locking marks an email as sent so it is not dispatched twice?
+
+### Q-AI-0211 — Do the randomized send intervals risk pushing time-sensitive emails past their corrected scheduled time?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Prasad_Shinde
+**1. Short Question** — Do the randomized send intervals risk pushing time-sensitive emails past their corrected scheduled time?
+
+Randomizing intervals for deliverability appears to conflict with the timezone fix meant to send at the correct scheduled time. What is the maximum jitter, and are any time-critical emails exempt?
+
+### Q-AI-0212 — Are these scheduled emails compliant with consent, unsubscribe, and anti-spam rules given the goal of making sends 'appear more natural'?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Are these scheduled emails compliant with consent, unsubscribe, and anti-spam rules given the goal of making sends 'appear more natural'?
+
+Deliberately making automated sends 'appear more natural' to improve deliverability can read as spam-filter evasion. Confirm the recipient list is opt-in, includes working unsubscribe handling, and meets CAN-SPAM.
+
+### Q-AI-0213 — Where are the SMTP/email-sending credentials from the 'secure email sending' config stored, and are they in env vars rather than committed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Where are the SMTP/email-sending credentials from the 'secure email sending' config stored, and are they in env vars rather than committed?
+
+The task updated server configuration for secure email sending. Confirm the SMTP/API credentials are held in environment variables/secret store and were not hard-coded or committed to source control.
+
+### Q-AI-0214 — Which email/CRM service and recipient source does the dispatcher use, and does it contain member PII?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Prasad_Shinde
+**1. Short Question** — Which email/CRM service and recipient source does the dispatcher use, and does it contain member PII?
+
+Clarify whether this dispatcher draws on the CRM scheduled-email data (which holds member PII) and which service actually delivers the mail, so data-handling can be governed.
