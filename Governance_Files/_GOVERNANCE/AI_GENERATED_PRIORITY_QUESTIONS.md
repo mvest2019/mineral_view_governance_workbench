@@ -1387,3 +1387,48 @@ Swapping the current mineralview.com for the new layout risks breaking existing 
 **1. Short Question** — How does this requirements doc reconcile with the parallel portal redesign tracks, and who resolves the listed open items?
 
 Separate portal redesign efforts (the Option switcher work and prototype reviews) are already in flight; it must be clear whether this doc supersedes them and who closes out its "open items to confirm."
+
+### Q-AI-0193 — Are the specific tax claims (100% Year-1 IDC write-off against active income, 15% depletion allowance) verified by a licensed tax professional before publishing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Are the specific tax claims (100% Year-1 IDC write-off against active income, 15% depletion allowance) verified by a licensed tax professional before publishing?
+
+The NOWI page states non-op partners can write off 100% of IDCs against active income in Year 1 and shield revenue via a 15% depletion allowance. These are consequential, situation-dependent tax assertions aimed at accredited investors and could be inaccurate or misleading if published as authoritative without professional sign-off.
+
+### Q-AI-0194 — Does the investor-targeted 'tax shield / massive incentives' framing of the NOWI page need securities/legal review so it does not read as investment solicitation?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Does the investor-targeted 'tax shield / massive incentives' framing of the NOWI page need securities/legal review so it does not read as investment solicitation?
+
+The NOWI asset is written as an 'investment playbook' for accredited investors and wealth managers, promoting upside and tax benefits. On a data platform this promotional framing may cross into investment advice or solicitation and likely needs a legal/no-advice review distinct from a plain glossary definition.
+
+### Q-AI-0195 — Are the newly asserted 'industry standard' figures (10% AFE overrun threshold, 80–85% IDC proportion) sourced and citation-backed, or asserted?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Are the newly asserted 'industry standard' figures (10% AFE overrun threshold, 80–85% IDC proportion) sourced and citation-backed, or asserted?
+
+Given a prior live glossary page carried an incorrect 'Limitation of Expenditures' citation, the new numeric standards added today for AFE/JIB/NOWI should be traceable to authoritative sources before publication rather than stated as generally-accepted norms.
+
+### Q-AI-0196 — Are the UI/UX proposals (responsive CSS for tables, Hover Dictionary tooltips, sticky table of contents) formal dev deliverables with an assigned owner, or just recommendations?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Are the UI/UX proposals (responsive CSS for tables, Hover Dictionary tooltips, sticky table of contents) formal dev deliverables with an assigned owner, or just recommendations?
+
+A content-writing sprint produced frontend design recommendations. It is unclear whether these were handed to the web/dev team as scoped work, who owns implementation, and how they reconcile with the parallel portal UI/UX redesign tracks already in flight.
+
+### Q-AI-0197 — Is a content writer the appropriate owner to author authoritative legal mechanics (JIB default liens, non-consent penalties, JOA rights), or must legal/accounting sign off first?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Is a content writer the appropriate owner to author authoritative legal mechanics (JIB default liens, non-consent penalties, JOA rights), or must legal/accounting sign off first?
+
+The NOWI and JIB pages state specific legal consequences (operator liens on production revenue, severe non-consent penalties, audit-dispute timelines). These are legal/accounting determinations that likely require review by a qualified party before being published as definitive guidance.
