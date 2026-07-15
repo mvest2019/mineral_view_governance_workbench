@@ -1477,3 +1477,57 @@ The frontend review noted hash-based routing on the marketing site. Hash URLs ar
 **1. Short Question** — Are the marketing website and Owner Product Demo separate codebases, and does the redesign/design-system standardization apply to both or only one?
 
 The review spans two distinct applications and recommends component standardization and a shared design system. It is unclear whether both share a codebase/design system or diverge, which affects how the ~60 recommendations get implemented and which team owns each.
+
+### Q-AI-0203 — Are the API14 last-four "well identifier" digits being synthetically generated rather than sourced from the regulator, and who validates they match real assigned numbers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Are the API14 last-four "well identifier" digits being synthetically generated rather than sourced from the regulator, and who validates they match real assigned numbers?
+
+The report says the existing logic lacks a reliable way to generate/validate the final four digits and that a new generation methodology was designed. Synthesizing API14 numbers risks producing identifiers that don't match RRC/regulator-assigned values, corrupting joins to wells, permits, and production. Clarify whether these digits are ever authoritative-sourced vs. generated, and what QA gate confirms correctness before use.
+
+### Q-AI-0204 — Which AI vendor and model were selected for the website AI integration, and will it send mineral-owner PII to a third-party service?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Which AI vendor and model were selected for the website AI integration, and will it send mineral-owner PII to a third-party service?
+
+The AI Integration Strategy work compares implementation strategies for cost and scalability but names no chosen vendor/model or data-handling boundary. A governance decision is needed on which service is approved and whether any owner PII or member data leaves the platform to a third-party AI provider.
+
+### Q-AI-0205 — What accuracy/completeness gate had to pass before the ~150 counties' mineral-owner records were written to the database, and was a backup taken?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What accuracy/completeness gate had to pass before the ~150 counties' mineral-owner records were written to the database, and was a backup taken?
+
+The pipeline reportedly populated the database across ~150 Texas counties with owner data, but no defined pass/fail threshold or sign-off is stated. Clarify the validation gate, whether this targeted production, and whether a snapshot was taken before insertion. Relates to the State Code backfill question already open.
+
+### Q-AI-0206 — What measured coverage percentage defines the "closely aligns with RRC" claim, and what threshold counts as acceptable completeness?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What measured coverage percentage defines the "closely aligns with RRC" claim, and what threshold counts as acceptable completeness?
+
+The RRC comparison concludes coverage is high across production, well, and operator data, but gives no quantified figures or pass threshold. Define the measured coverage numbers and the completeness bar before this is treated as validated.
+
+### Q-AI-0207 — What is the source and licensing of the updated GIS mapping dataset, and are we cleared to redistribute it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the source and licensing of the updated GIS mapping dataset, and are we cleared to redistribute it?
+
+The GIS map enhancement updated mapping datasets but does not identify where the new data came from or whether its license permits use/redistribution in the Mineral View mapping environment.
+
+### Q-AI-0208 — Will the existing inconsistent API14 numbers already stored across datasets be corrected once the new generation methodology is finalized?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Will the existing inconsistent API14 numbers already stored across datasets be corrected once the new generation methodology is finalized?
+
+The analysis identified inconsistencies in current API14 values across datasets. Clarify whether the fix only applies going forward or whether already-stored records will be backfilled/corrected, and who owns that remediation.
