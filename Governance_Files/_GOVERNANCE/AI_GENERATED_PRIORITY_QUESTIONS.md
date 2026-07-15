@@ -1792,3 +1792,57 @@ An image was created for the email draft. Confirm it is licensing-clean and fact
 **1. Short Question** — Does the email/newsletter content need a no-advice disclaimer and accuracy sign-off before reaching mineral owners?
 
 Content is being sent to owners but no accuracy review or no-advice guardrail is noted. Confirm who signs off on content accuracy and whether a disclaimer is required.
+
+### Q-AI-0238 — Are the customer testimonials real, verifiable, and consented for public display before being moved to a prominent section?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the customer testimonials real, verifiable, and consented for public display before being moved to a prominent section?
+
+The recommendation moves testimonials out of a hidden accordion into a visible trust section. Before that goes live we need confirmation each testimonial is genuine, attributable, and has the customer's consent for public marketing use.
+
+### Q-AI-0239 — Who approves splitting the professional-focused content onto a separate page before this landing-page restructuring is built?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approves splitting the professional-focused content onto a separate page before this landing-page restructuring is built?
+
+Making the landing page exclusively for mineral owners and moving professional content to a dedicated page changes site architecture and the conversion funnel. This is a strategic decision that needs a named approver before implementation.
+
+### Q-AI-0240 — Will the AI-assisted design changes from the voice-memo transcript be reviewed by a human before going live on the conversion page?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Will the AI-assisted design changes from the voice-memo transcript be reviewed by a human before going live on the conversion page?
+
+The findings were converted into a voice-memo transcript to feed AI-assisted design improvements. We need a governance checkpoint confirming a human reviews AI-generated changes before they ship to a live, revenue-driving page.
+
+### Q-AI-0241 — Are the varied trust signals proposed to replace the repeated badges backed by substantiated, non-misleading claims?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the varied trust signals proposed to replace the repeated badges backed by substantiated, non-misleading claims?
+
+Replacing repeated trust badges with varied trust signals risks introducing unverified credibility claims. Confirm each new signal is factually supported before it is placed near a call-to-action.
+
+### Q-AI-0242 — How do these landing-page recommendations reconcile with the parallel marketing/portal redesign tracks, and who owns the single backlog?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — How do these landing-page recommendations reconcile with the parallel marketing/portal redesign tracks, and who owns the single backlog?
+
+Pragati and Aboli have parallel prototype redesign work in flight. These landing-page optimizations need to be merged into one approved backlog so changes don't conflict or get built twice.
+
+### Q-AI-0243 — Who owns follow-up on the Contact Us inquiries, and what is the response SLA?
+
+**Status:** OPEN
+**6. Priority** — LOW
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns follow-up on the Contact Us inquiries, and what is the response SLA?
+
+New Contact Us submissions were documented for follow-up, but the report doesn't say who acts on them or by when. Confirm the owner and turnaround expectation so inbound leads aren't dropped.
