@@ -1333,3 +1333,57 @@ Swapping badges for meaningful explanatory content may introduce claims about se
 **1. Short Question** — Will the proposed conversion-focused content restructuring and hero/CTA changes be validated (e.g., A/B tested) and approved before rollout, and who owns that decision?
 
 Restructuring the user journey to increase conversion directly affects subscription acquisition. We need to know whether these changes are validated and who signs off before they ship.
+
+### Q-AI-0187 — Is the Vercel marketing prototype meant to replace the live mineralview.com, and who approves the go-live cutover?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the Vercel marketing prototype meant to replace the live mineralview.com, and who approves the go-live cutover?
+
+The task benchmarks the new layout (mineralview-marketing.vercel.app) against the current live site (mineralview.com) but does not state whether the prototype becomes canonical, when it ships, or who authorizes replacing the production site.
+
+### Q-AI-0188 — Do the cross-cutting font/styling/icon directives override the existing rule to keep MineralView branding, typography, and color palette unchanged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the cross-cutting font/styling/icon directives override the existing rule to keep MineralView branding, typography, and color palette unchanged?
+
+Pragati's redesign work explicitly preserved branding, typography, and color palette, yet this doc issues cross-cutting font, styling, and icon changes — which directive governs needs to be resolved to avoid conflicting specs.
+
+### Q-AI-0189 — Who has sign-off authority to accept each item's Acceptance Note before the dev team builds it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who has sign-off authority to accept each item's Acceptance Note before the dev team builds it?
+
+The document format ends each item with an Acceptance Note, but it is unclear who reviews and formally approves those notes as the accepted spec for implementation.
+
+### Q-AI-0190 — What data sources drive the proposed post-login personalization, and does personalizing with owner data need privacy and no-advice review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What data sources drive the proposed post-login personalization, and does personalizing with owner data need privacy and no-advice review?
+
+The personalization cross-cutting directive on the post-login portal could surface owner PII or advice-like content and may require privacy and legal review before being specified as a requirement.
+
+### Q-AI-0191 — Before replacing the live marketing site, who validates URL, redirect, and SEO parity to prevent traffic regressions?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Before replacing the live marketing site, who validates URL, redirect, and SEO parity to prevent traffic regressions?
+
+Swapping the current mineralview.com for the new layout risks breaking existing SEO landing pages and inbound links; a parity check and owner should be named.
+
+### Q-AI-0192 — How does this requirements doc reconcile with the parallel portal redesign tracks, and who resolves the listed open items?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — How does this requirements doc reconcile with the parallel portal redesign tracks, and who resolves the listed open items?
+
+Separate portal redesign efforts (the Option switcher work and prototype reviews) are already in flight; it must be clear whether this doc supersedes them and who closes out its "open items to confirm."
