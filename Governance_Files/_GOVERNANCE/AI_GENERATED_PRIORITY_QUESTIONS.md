@@ -2053,3 +2053,57 @@ Prior reviews covered the HTML prototype and the Owner Portal. The canonical Pre
 **1. Short Question** — Who accepts this marketing-site feedback as a dev deliverable, and where is it logged with severity and a target release?
 
 The task produces recommendations only. Without a named approver, a tracked backlog, and a release target, this risks joining the parallel UI/UX review tracks with no one deciding what actually gets built.
+
+### Q-AI-0267 — Who owns resolving the five listed open items, and what is the deadline before this spec goes to development?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who owns resolving the five listed open items, and what is the deadline before this spec goes to development?
+
+The submission lists five unresolved open items (Leases Audit labels, the $226,340 estimate example, multiple-reserve differentiation, pre-claim side polish, Operator Change card). A spec handed to devs with open items risks rework.
+
+### Q-AI-0268 — Is the Vercel demo app publicly accessible without authentication, and does it show real mineral-owner data or mock data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the Vercel demo app publicly accessible without authentication, and does it show real mineral-owner data or mock data?
+
+`mineralview-owner-demo.vercel.app` appears to be an unauthenticated public URL. Confirm whether real leases, owner names, or MVEstimate values are exposed, and whether screenshots in the spec contain PII.
+
+### Q-AI-0269 — Removing the Expected Change and Operator Change alert cards deletes user-facing signals — who approved that, and are those alerts unused or inaccurate?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Removing the Expected Change and Operator Change alert cards deletes user-facing signals — who approved that, and are those alerts unused or inaccurate?
+
+Removal of alert types is a product decision, not a UX polish item. Needs a stated reason and an approver.
+
+### Q-AI-0270 — How does this spec reconcile with the three other in-flight portal UI/UX reviews, and who merges them into one approved backlog?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — How does this spec reconcile with the three other in-flight portal UI/UX reviews, and who merges them into one approved backlog?
+
+Pragati's layout options, Aboli's portal review, and the dashboard review already cover overlapping surfaces. Without a single merge owner, conflicting specs reach devs.
+
+### Q-AI-0271 — Does the $226,340 estimate example use a real member's valuation, and is the MVEstimate NaN/$0 defect a prerequisite for the Estimated Value card work?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the $226,340 estimate example use a real member's valuation, and is the MVEstimate NaN/$0 defect a prerequisite for the Estimated Value card work?
+
+A known open defect stores valuations as text and returns MVEstimate = $0 for depleted leases. The Estimated Value card spec may be built on broken data.
+
+### Q-AI-0272 — Is the WCAG AA fix scoped only to the green CTA, or does the whole new layout need an accessibility audit before launch?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the WCAG AA fix scoped only to the green CTA, or does the whole new layout need an accessibility audit before launch?
+
+One contrast fix suggests no systematic accessibility pass was run. Clarify whether AA conformance is a launch requirement for the full app.
