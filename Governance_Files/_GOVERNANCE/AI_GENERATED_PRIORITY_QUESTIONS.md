@@ -2215,3 +2215,57 @@ Planning was discussed with the team but no artifact or owner is named.
 **1. Short Question** — Who owns Trendelier, and is it an internal tool or an external product with its own data-handling and access rules?
 
 Trendelier is not described anywhere in existing governance knowledge; its scope, hosting, and access model are undefined.
+
+### Q-AI-0285 — Is this marketing-site review the same effort as your earlier navigation/IA review, or a separate round with its own deliverable?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Is this marketing-site review the same effort as your earlier navigation/IA review, or a separate round with its own deliverable?
+
+Multiple overlapping marketing-site UX reviews are now recorded against you (navigation/IA, conversion/content restructuring, and this one). Governance needs to know whether these consolidate into one backlog or remain distinct deliverables.
+
+### Q-AI-0286 — Which navigation items are proposed for removal as "redundant," and who approves losing those entry points?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which navigation items are proposed for removal as "redundant," and who approves losing those entry points?
+
+Removing nav items changes discoverability and possibly indexed URLs. Needs a named approver and an explicit list before implementation.
+
+### Q-AI-0287 — Which "high-value product features" are being promoted in navigation, and are any of them gated behind paid tiers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which "high-value product features" are being promoted in navigation, and are any of them gated behind paid tiers?
+
+Promoting gated features in public navigation can expose paywalled functionality or create dead-end journeys for anonymous visitors.
+
+### Q-AI-0288 — What evidence supports these recommendations — live analytics/Clarity/session data, or your own expert walkthrough?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — What evidence supports these recommendations — live analytics/Clarity/session data, or your own expert walkthrough?
+
+The submission says findings were "validated against the live design," which validates that the issue exists, not that the fix improves conversion. Clarity and GA data already exist under Rohit's tracking work; state whether it was used.
+
+### Q-AI-0289 — Which "modern SaaS usability standards" are you measuring against, and is that a documented benchmark or a judgment call?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which "modern SaaS usability standards" are you measuring against, and is that a documented benchmark or a judgment call?
+
+The claim of alignment to a standard implies a reference. Naming it makes recommendations reviewable rather than opinion-based.
+
+### Q-AI-0290 — Which observations were removed as duplicates, and were any dropped findings real issues that now go untracked?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which observations were removed as duplicates, and were any dropped findings real issues that now go untracked?
+
+The submission mentions removing duplicate observations and refining wording. Governance needs assurance that de-duplication did not silently drop valid defects.
