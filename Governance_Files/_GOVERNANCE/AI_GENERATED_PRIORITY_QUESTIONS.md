@@ -1999,3 +1999,57 @@ Tournament-themed content is time-bound; a reel keyed to a specific fixture beco
 **1. Short Question** — Is there a documented content calendar showing how much of the output is World Cup tie-in versus core mineral education?
 
 This is at least the second World Cup-themed reel. Governance needs visibility on whether the content mix still serves the mineral-owner audience.
+
+### Q-AI-0261 — Does adding production columns to the public Know Your Operators and Operator Detail pages expose data currently gated behind paid subscription tiers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does adding production columns to the public Know Your Operators and Operator Detail pages expose data currently gated behind paid subscription tiers?
+
+The review recommends expanding the operator listing table with additional production-related columns and adding BOE visualization plus county filtering on Operator Detail. The marketing website is public/unauthenticated, while production and BOE data are core Free/Pro/Premium portal features. Needs a decision on what production depth is allowed pre-login before this is built.
+
+### Q-AI-0262 — Have the proposed content removals on the Home, Blog, and Operator Detail pages been checked for SEO impact before implementation?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Have the proposed content removals on the Home, Blog, and Operator Detail pages been checked for SEO impact before implementation?
+
+Recommendations include removing 'redundant informational text', 'unnecessary labels', and 'unnecessary introductory content', and moving reviews to a separate page with a See All Reviews link. The marketing site is the organic-traffic acquisition channel tracked monthly in Ahrefs/GSC reporting, and SEO landing pages are already a governance item. Confirm who signs off that these cuts do not drop indexed content or rankings.
+
+### Q-AI-0263 — Is the BOE conversion methodology for the proposed Operator Detail chart defined and approved, or would it be invented during implementation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the BOE conversion methodology for the proposed Operator Detail chart defined and approved, or would it be invented during implementation?
+
+A BOE visualization requires an agreed oil/gas conversion ratio and aggregation rule. Analytics methodology ownership is already an open governance question; this adds a public-facing number that must match the portal's figures.
+
+### Q-AI-0264 — Are the customer reviews being moved to a dedicated page real, attributed, and consented to for public display?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are the customer reviews being moved to a dedicated page real, attributed, and consented to for public display?
+
+The recommendation creates a standalone Customer Reviews page. Confirm whether the reviews are genuine member testimonials with permission to publish names, or placeholder/marketing copy — misrepresenting testimonials carries advertising-compliance risk.
+
+### Q-AI-0265 — Was this review performed against the live MineralView marketing site or a prototype build, and which branch will the fixes land on?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was this review performed against the live MineralView marketing site or a prototype build, and which branch will the fixes land on?
+
+Prior reviews covered the HTML prototype and the Owner Portal. The canonical PresentationSiteAPI branch is already an open question, so the target codebase for these changes must be named explicitly.
+
+### Q-AI-0266 — Who accepts this marketing-site feedback as a dev deliverable, and where is it logged with severity and a target release?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who accepts this marketing-site feedback as a dev deliverable, and where is it logged with severity and a target release?
+
+The task produces recommendations only. Without a named approver, a tracked backlog, and a release target, this risks joining the parallel UI/UX review tracks with no one deciding what actually gets built.
