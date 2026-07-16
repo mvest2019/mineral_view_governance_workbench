@@ -2269,3 +2269,57 @@ The claim of alignment to a standard implies a reference. Naming it makes recomm
 **1. Short Question** — Which observations were removed as duplicates, and were any dropped findings real issues that now go untracked?
 
 The submission mentions removing duplicate observations and refining wording. Governance needs assurance that de-duplication did not silently drop valid defects.
+
+### Q-AI-0291 — Is the trending background music for this World Cup reel licensed for commercial brand use, and who cleared it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Is the trending background music for this World Cup reel licensed for commercial brand use, and who cleared it?
+
+The task describes researching "music patterns" and short-form trends but never states the final audio source or its license. Trending audio on Reels/Shorts is generally not cleared for brand accounts.
+
+### Q-AI-0292 — Does the reel use any FIFA/World Cup trademarks, national team kits, real player likenesses, or official trophy design?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Does the reel use any FIFA/World Cup trademarks, national team kits, real player likenesses, or official trophy design?
+
+The submission specifies "a championship trophy," national flags, and stadium environments. FIFA marks and the World Cup trophy design are protected; unofficial commercial use around a live tournament carries ambush-marketing exposure. A prior reel (Tejas, 13 July) explicitly disclaimed FIFA footage/logos/likenesses — this one carries no such statement.
+
+### Q-AI-0293 — Which AI tools generated the visuals, and are their outputs cleared for commercial use with AI generation disclosed to viewers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Which AI tools generated the visuals, and are their outputs cleared for commercial use with AI generation disclosed to viewers?
+
+The task references image-to-video prompts and AI-generated movement but names no tool and no commercial-use terms or disclosure decision.
+
+### Q-AI-0294 — Do the "momentum" and mineral-ownership framings need the educational-only / no-investment-advice disclaimer before publish?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Do the "momentum" and mineral-ownership framings need the educational-only / no-investment-advice disclaimer before publish?
+
+The reel connects mineral ownership and oil-field activity to a competition/winner narrative for a public audience. Prior video tasks carry an educational-only disclaimer; this one does not state one.
+
+### Q-AI-0295 — Who gives final approval, on which accounts, and by what date must this publish relative to the World Cup window?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Who gives final approval, on which accounts, and by what date must this publish relative to the World Cup window?
+
+The concept is time-pegged to a live tournament, so approval and publish timing are coupled. No approver, channel list, or date is stated.
+
+### Q-AI-0296 — Is depicting mineral owners as football players a sanctioned brand-persona direction, and who approved that creative choice?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Is depicting mineral owners as football players a sanctioned brand-persona direction, and who approved that creative choice?
+
+The screenplay deliberately casts "fit, mature mineral owners" as the on-field players instead of generic talent. That is a brand representation decision about the actual customer segment, not just a visual one, and no approver is named.
