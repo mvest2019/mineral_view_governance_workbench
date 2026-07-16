@@ -1891,3 +1891,57 @@ You previously developed the Map Well Explorer 4th view. Confirm the new Well Da
 **1. Short Question** — Who signs off on the proposed content removals and drill-down flows before any of it is built?
 
 The submission mixes analysis with concrete change proposals (remove content, restructure summary cards, new flows). Clarify the approver and how these changes enter the dev backlog versus remaining recommendations.
+
+### Q-AI-0249 — Who is the legal or licensed-CPA reviewer that must approve the NOWI page's specific tax claims before publish?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Who is the legal or licensed-CPA reviewer that must approve the NOWI page's specific tax claims before publish?
+
+The page asserts a 100% Year-1 IDC write-off against active income and a 15% statutory depletion allowance. Existing governance already flags whether these are verified; what is missing is the named approver and the gate that blocks publish until they sign off.
+
+### Q-AI-0250 — Does the NOWI page's Section 469 anchor account for passive-activity and at-risk limits that could contradict the blanket "write off against active income" claim?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Does the NOWI page's Section 469 anchor account for passive-activity and at-risk limits that could contradict the blanket "write off against active income" claim?
+
+The alignment matrix cites Section 469 as the core anchor, but the body text states non-op partners can write off 100% of IDCs against active income in Year 1. These interact through the working-interest exception and are not unconditional. Clarify whether the page states the conditions or presents the deduction as universal.
+
+### Q-AI-0251 — Should the AFE and JIB pages be re-audited against the same class of citation error already found on the "Limitation of Expenditures" page?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Should the AFE and JIB pages be re-audited against the same class of citation error already found on the "Limitation of Expenditures" page?
+
+A prior incorrect citation was found live on a glossary page. This sprint revised AFE and JIB with new standards claims (COPAS methods, AAPL overrun standards) but does not say whether a citation audit was part of the QA pass.
+
+### Q-AI-0252 — Are the AFE audit-rights and JIB exception timelines stated as fixed numbers, and do they vary by the governing JOA rather than being universal?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Are the AFE audit-rights and JIB exception timelines stated as fixed numbers, and do they vary by the governing JOA rather than being universal?
+
+The submission says "strict timelines required to file formal exceptions" and 10% overrun thresholds were added as standards. Audit and exception windows are contract-specific (24-month norms under many COPAS forms, but negotiable). Publishing them as absolutes creates a reliance risk.
+
+### Q-AI-0253 — Does a content writer conducting a full frontend UI audit fall inside your assigned scope, and who agreed to that reallocation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Does a content writer conducting a full frontend UI audit fall inside your assigned scope, and who agreed to that reallocation?
+
+Several hours of an editorial sprint went to a page-by-page UI/UX audit. Three separate UI/UX review tracks are already in flight from other owners (Pragati, Aboli, QA). Confirm this was requested rather than self-directed, and whether it duplicates existing work.
+
+### Q-AI-0254 — What is the source for the "non-op partners can be liable for environmental cleanup" risk framing, and does it need legal review alongside the tax claims?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — What is the source for the "non-op partners can be liable for environmental cleanup" risk framing, and does it need legal review alongside the tax claims?
+
+The risk section asserts non-operator exposure to environmental liability and cost overruns, plus operator lien and non-consent penalty mechanics. These are legal conclusions that vary by JOA form and state law, and the page targets accredited investors making capital decisions.
