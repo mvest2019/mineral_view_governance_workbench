@@ -2161,3 +2161,57 @@ Multiple parallel UI/UX review tracks already exist (Aboli's portal review, Prag
 **1. Short Question** — What logic selects the single insight behind the proposed "One Thing Worth a Look" dashboard hero, and does it need a no-advice review?
 
 Surfacing one "most important insight or recommended action" per owner after login is a recommendation engine, not a layout change. It needs a defined methodology, an owner for that methodology, and confirmation it does not cross the no-advice guardrails already tracked for other AI-generated insights.
+
+### Q-AI-0279 — Which accounts were the BOLD reel and the Mineral View reel published from, and who approved them before they went live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which accounts were the BOLD reel and the Mineral View reel published from, and who approved them before they went live?
+
+The submission says both reels were published to Instagram/Facebook, but no approver is named. Confirm the approval gate for anything already live.
+
+### Q-AI-0280 — Does the Instagram Views / Facebook engagement data flowing into Trendelier contain personal data from platform users, and under what API terms is it stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the Instagram Views / Facebook engagement data flowing into Trendelier contain personal data from platform users, and under what API terms is it stored?
+
+Social platform APIs restrict retention and redistribution of user-level engagement data. Clarify what is stored and for how long.
+
+### Q-AI-0281 — What verification was done to confirm the dashboard numbers match the source platform data, beyond "displaying properly"?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What verification was done to confirm the dashboard numbers match the source platform data, beyond "displaying properly"?
+
+Confirming rendering is not the same as confirming accuracy of the underlying metrics.
+
+### Q-AI-0282 — You confirmed updates are live in production — was there a code review and release approval, or were changes pushed directly?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — You confirmed updates are live in production — was there a code review and release approval, or were changes pushed directly?
+
+The submission covers both verifying the code and confirming deployment, which suggests self-approved release.
+
+### Q-AI-0283 — Where are the planned reels and content directions documented, and who signs off on the content calendar?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Where are the planned reels and content directions documented, and who signs off on the content calendar?
+
+Planning was discussed with the team but no artifact or owner is named.
+
+### Q-AI-0284 — Who owns Trendelier, and is it an internal tool or an external product with its own data-handling and access rules?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Who owns Trendelier, and is it an internal tool or an external product with its own data-handling and access rules?
+
+Trendelier is not described anywhere in existing governance knowledge; its scope, hosting, and access model are undefined.
