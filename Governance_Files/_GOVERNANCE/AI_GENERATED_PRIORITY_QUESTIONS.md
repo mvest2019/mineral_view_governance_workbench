@@ -2323,3 +2323,57 @@ The concept is time-pegged to a live tournament, so approval and publish timing 
 **1. Short Question** — Is depicting mineral owners as football players a sanctioned brand-persona direction, and who approved that creative choice?
 
 The screenplay deliberately casts "fit, mature mineral owners" as the on-field players instead of generic talent. That is a brand representation decision about the actual customer segment, not just a visual one, and no approver is named.
+
+### Q-AI-0297 — Do the 16 leads who received these emails have consent and a working unsubscribe, and were they checked against opt-outs?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the 16 leads who received these emails have consent and a working unsubscribe, and were they checked against opt-outs?
+
+The submission covers claimed and unclaimed owners across a Jan 2025–Jan 2026 queue. Unclaimed owners in particular may never have opted in to marketing contact.
+
+### Q-AI-0298 — Who reviews and approves the inject-bridge drafts before they are ticked and sent, given they bypass the normal CRM authoring path?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who reviews and approves the inject-bridge drafts before they are ticked and sent, given they bypass the normal CRM authoring path?
+
+The bridge pushes hand-written Claude content directly into the *Schedule emails* queue as ready-to-send drafts. Clarify whether a human approval gate exists separate from the person who wrote them.
+
+### Q-AI-0299 — Does the inject bridge write to the live production CRM, and what stops a bad batch from being sent to real members?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Does the inject bridge write to the live production CRM, and what stops a bad batch from being sent to real members?
+
+Also clarify rollback: can injected drafts be recalled or purged from the queue if an error is found after injection?
+
+### Q-AI-0300 — Where does the inject bridge code live, who reviewed it, and where are its CRM credentials stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Where does the inject bridge code live, who reviewed it, and where are its CRM credentials stored?
+
+It is described as the enabler that makes the whole workflow repeatable, so it needs a repo, review, and env-var-based secret handling rather than local/ad-hoc config.
+
+### Q-AI-0301 — Do the emails using dossier value, activity, and operator data expose owner PII or MVEstimate figures that are known to be defective?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the emails using dossier value, activity, and operator data expose owner PII or MVEstimate figures that are known to be defective?
+
+Prior governance records note valuation stored as text and `MVEstimate = $0` / `NaN` on depleted leases, with the fix still pending. Sending those numbers to leads could publish wrong values.
+
+### Q-AI-0302 — Are the 5 seeded test drafts for Prasad on internal accounts guaranteed not to send externally, and when will they be purged?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the 5 seeded test drafts for Prasad on internal accounts guaranteed not to send externally, and when will they be purged?
+
+Test data sitting in a live scheduling queue can be ticked and sent by mistake.
