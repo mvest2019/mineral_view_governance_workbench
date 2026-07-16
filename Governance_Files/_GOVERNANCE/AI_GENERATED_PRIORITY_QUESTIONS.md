@@ -1945,3 +1945,57 @@ Several hours of an editorial sprint went to a page-by-page UI/UX audit. Three s
 **1. Short Question** — What is the source for the "non-op partners can be liable for environmental cleanup" risk framing, and does it need legal review alongside the tax claims?
 
 The risk section asserts non-operator exposure to environmental liability and cost overruns, plus operator lien and non-consent penalty mechanics. These are legal conclusions that vary by JOA form and state law, and the page targets accredited investors making capital decisions.
+
+### Q-AI-0255 — Does this Spain vs Argentina reel use FIFA marks, team crests, or player likenesses that we are not licensed to use?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does this Spain vs Argentina reel use FIFA marks, team crests, or player likenesses that we are not licensed to use?
+
+The 13 July reel explicitly disclaimed use of FIFA footage, logos, and player likenesses. This submission describes a Spain 🇪🇸 vs Argentina 🇦🇷 themed reel and does not state the same limits. FIFA and national federation marks are aggressively enforced, and unauthorised World Cup tie-ins can be treated as ambush marketing.
+
+### Q-AI-0256 — How does a Spain vs Argentina football reel connect to Mineral View's business, and who approved that concept?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — How does a Spain vs Argentina football reel connect to Mineral View's business, and who approved that concept?
+
+Prior video work tied World Cup attention back to Texas minerals and the Mineral View platform. This reel is described as purely football content with no stated mineral link or call to action. Confirm the strategic rationale and the approver.
+
+### Q-AI-0257 — Where did the football visuals in this reel come from, and what is their licence?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Where did the football visuals in this reel come from, and what is their licence?
+
+The submission says visuals were "organized" but does not name the source (AI-generated, stock, broadcast clips, or scraped social content). Match broadcast footage cannot be used at all.
+
+### Q-AI-0258 — Do the finalized captions make any prediction or claim about the Spain vs Argentina match outcome?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Do the finalized captions make any prediction or claim about the Spain vs Argentina match outcome?
+
+Predictive or betting-adjacent framing on a brand account carries regulatory and reputational risk, especially for a company in a regulated financial-adjacent niche.
+
+### Q-AI-0259 — What is the planned publish date for this reel relative to the actual match, and does it expire if the fixture changes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — What is the planned publish date for this reel relative to the actual match, and does it expire if the fixture changes?
+
+Tournament-themed content is time-bound; a reel keyed to a specific fixture becomes stale or wrong if the matchup does not occur. Confirm the publish window and the takedown/expiry plan.
+
+### Q-AI-0260 — Is there a documented content calendar showing how much of the output is World Cup tie-in versus core mineral education?
+
+**Status:** OPEN
+**6. Priority** — LOW
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is there a documented content calendar showing how much of the output is World Cup tie-in versus core mineral education?
+
+This is at least the second World Cup-themed reel. Governance needs visibility on whether the content mix still serves the mineral-owner audience.
