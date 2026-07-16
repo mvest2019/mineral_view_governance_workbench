@@ -1846,3 +1846,48 @@ Pragati and Aboli have parallel prototype redesign work in flight. These landing
 **1. Short Question** — Who owns follow-up on the Contact Us inquiries, and what is the response SLA?
 
 New Contact Us submissions were documented for follow-up, but the report doesn't say who acts on them or by when. Confirm the owner and turnaround expectation so inbound leads aren't dropped.
+
+### Q-AI-0244 — On the Data Coverage maps and county-level tables, is mineral-owner data exposed to non-members or the public, and could owner identity leak?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — On the Data Coverage maps and county-level tables, is mineral-owner data exposed to non-members or the public, and could owner identity leak?
+
+The Mineral Owner Data page shows county-level mineral-owner data via map and data tables. Governance needs to confirm what is visible pre-login versus gated behind membership/subscription, and whether any owner name or holding can be enumerated from the map or table.
+
+### Q-AI-0245 — Do the proposed County → Owner → Lease → Well drill-down flows depend on backend data joins that don't exist yet, and who validates that linkage?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the proposed County → Owner → Lease → Well drill-down flows depend on backend data joins that don't exist yet, and who validates that linkage?
+
+The submission proposes drill-down flows for Mineral Owner, Production, and Well Data. These are data-model dependencies, not just UI. Clarify whether the County→Owner→Lease→Well linkage is already available and accurate in the data layer, or requires new joins/backfill before the UI can be built.
+
+### Q-AI-0246 — Does removing explanatory text, info cards, and Go Back navigation risk stripping any required no-advice or compliance disclaimers from these pages?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does removing explanatory text, info cards, and Go Back navigation risk stripping any required no-advice or compliance disclaimers from these pages?
+
+The recommendations to reduce 'excessive explanatory text' and 'unnecessary information cards' need a check that no legally required disclaimer, data-source attribution, or no-advice notice is removed in the process.
+
+### Q-AI-0247 — Does this Well Data drill-down design align with the separate Well Explorer (4th view) you built, or are two well experiences now diverging?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does this Well Data drill-down design align with the separate Well Explorer (4th view) you built, or are two well experiences now diverging?
+
+You previously developed the Map Well Explorer 4th view. Confirm the new Well Data page (County → Well Statistics → Well Details) is consistent with that work rather than creating a second, conflicting well experience.
+
+### Q-AI-0248 — Who signs off on the proposed content removals and drill-down flows before any of it is built?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who signs off on the proposed content removals and drill-down flows before any of it is built?
+
+The submission mixes analysis with concrete change proposals (remove content, restructure summary cards, new flows). Clarify the approver and how these changes enter the dev backlog versus remaining recommendations.
