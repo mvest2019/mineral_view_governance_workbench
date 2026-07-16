@@ -2107,3 +2107,57 @@ A known open defect stores valuations as text and returns MVEstimate = $0 for de
 **1. Short Question** — Is the WCAG AA fix scoped only to the green CTA, or does the whole new layout need an accessibility audit before launch?
 
 One contrast fix suggests no systematic accessibility pass was run. Clarify whether AA conformance is a launch requirement for the full app.
+
+### Q-AI-0273 — Is the correct county coverage 196 or 161, and which system is the authoritative source for that number?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Is the correct county coverage 196 or 161, and which system is the authoritative source for that number?
+
+The review flags the landing page showing **161 counties** and recommends changing it to **196**. Prior governance records mention ~130 already-processed Texas counties, so three different counts are now in circulation. A public marketing claim about coverage needs one authoritative, verifiable source and a defined counting rule (counties with any data vs. fully processed counties).
+
+### Q-AI-0274 — If the landing page is to show real platform statistics instead of marketing copy, who verifies those figures and how often are they refreshed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — If the landing page is to show real platform statistics instead of marketing copy, who verifies those figures and how often are they refreshed?
+
+Replacing marketing copy with "real platform statistics and measurable data" turns the landing page into a live data claim. Needs a named owner for accuracy, a defined refresh cadence, and confirmation that no aggregate figure exposes member or owner-level information.
+
+### Q-AI-0275 — Reducing the "sample data" disclaimer to a single mention — who approved that, and does the page still show sample rather than real data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Reducing the "sample data" disclaimer to a single mention — who approved that, and does the page still show sample rather than real data?
+
+The recommendation is to mention "sample data" once instead of repeating it. If the page content is in fact sample/synthetic (consistent with the open question on `comprehensive-lease-data.json`), reducing the disclaimer is a transparency decision, not a readability one, and should have a named approver.
+
+### Q-AI-0276 — Which demo/reference website is the Professionals page benchmarked against, and is it an approved internal reference?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which demo/reference website is the Professionals page benchmarked against, and is it an approved internal reference?
+
+The Professionals page was reviewed against a "reference demo website" whose pricing section is acknowledged as placeholder. Governance needs to know what that demo is, whether it is the same Vercel demo app already under question, whether it is publicly accessible, and whether it is a sanctioned benchmark.
+
+### Q-AI-0277 — Where do these landing page and dashboard recommendations get logged, and who decides which ones are built?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where do these landing page and dashboard recommendations get logged, and who decides which ones are built?
+
+Multiple parallel UI/UX review tracks already exist (Aboli's portal review, Pragati's layout options, the marketing-site feedback). These are a second review pass with no stated owner, severity ranking, or target release. Clarify the single backlog these land in and who accepts them.
+
+### Q-AI-0278 — What logic selects the single insight behind the proposed "One Thing Worth a Look" dashboard hero, and does it need a no-advice review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — What logic selects the single insight behind the proposed "One Thing Worth a Look" dashboard hero, and does it need a no-advice review?
+
+Surfacing one "most important insight or recommended action" per owner after login is a recommendation engine, not a layout change. It needs a defined methodology, an owner for that methodology, and confirmation it does not cross the no-advice guardrails already tracked for other AI-generated insights.
