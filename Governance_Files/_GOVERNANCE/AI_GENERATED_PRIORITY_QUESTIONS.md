@@ -2719,3 +2719,57 @@ Appraised Value and owner counts are potentially monetizable and sensitive. Need
 **1. Short Question** — Where are these Map/Data Coverage findings and screenshots logged, and who decides which become development tickets?
 
 Multiple parallel UI/UX reviews are already in flight. This review's issues and suggestions need a single documented location and an owner who merges them into the approved backlog with severity ranking.
+
+### Q-AI-0341 — Who verified that filing a Form P-4 without the outgoing operator's signature is actually permitted by the RRC today, and on what evidence?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Who verified that filing a Form P-4 without the outgoing operator's signature is actually permitted by the RRC today, and on what evidence?
+
+The page tells compliance managers they can submit a P-4 without the transferor's signature if they attach a foreclosure, JOA removal vote, or court order. This is actionable regulatory procedure — if the RRC's current policy differs, a reader following it stalls a transfer or files improperly. Needs a named source (RRC rule/manual section) and a reviewer sign-off.
+
+### Q-AI-0342 — Have the LoneSTAR filing workflow and the P-5 prerequisite been checked against the RRC's currently published procedure, and as of what date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Have the LoneSTAR filing workflow and the P-5 prerequisite been checked against the RRC's currently published procedure, and as of what date?
+
+The asset states changes of operator are initiated through the LoneSTAR portal and require an active Form P-5 on file. State filing systems and their names change; a procedural page with no verification date silently goes stale. Record the source URL and the date checked on the page.
+
+### Q-AI-0343 — Are the specific non-consent penalty ranges (100–200% and 300–400%) citation-backed, or asserted from general industry familiarity?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Are the specific non-consent penalty ranges (100–200% and 300–400%) citation-backed, or asserted from general industry familiarity?
+
+These are concrete numbers a working-interest owner could rely on when weighing an election. Given the citation error already found on the Limitation of Expenditures page, this class of figure needs an explicit source (AAPL Form 610 text, COPAS material, or state pooling statute) rather than an assertion.
+
+### Q-AI-0344 — Does the M&A escrow, indemnity, and holdback guidance cross the site's no-advice line, and who cleared it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Does the M&A escrow, indemnity, and holdback guidance cross the site's no-advice line, and who cleared it?
+
+The P-4 asset advises transaction teams on structuring post-closing indemnity windows and holdback escrows. That is transactional deal structuring rather than glossary explanation. Confirm it falls inside the educational-only guardrails or route it to legal before publish.
+
+### Q-AI-0345 — What supports the claim that banks heavily discount non-consenting BPO interests when extending reserve-based lending?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — What supports the claim that banks heavily discount non-consenting BPO interests when extending reserve-based lending?
+
+This is a lending and collateral-valuation assertion aimed at investors, with no source given. Either cite it or reframe it as general context rather than a statement about how banks behave.
+
+### Q-AI-0346 — The Upstream Regulatory and Operational Integration Matrix is cut off mid-sentence — is it finished, and where does it live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — The Upstream Regulatory and Operational Integration Matrix is cut off mid-sentence — is it finished, and where does it live?
+
+The submitted table ends abruptly at "the initial well proposal no". Clarify whether the matrix is a published on-page element, an internal planning artifact, or still in progress, and where the complete version is stored.
