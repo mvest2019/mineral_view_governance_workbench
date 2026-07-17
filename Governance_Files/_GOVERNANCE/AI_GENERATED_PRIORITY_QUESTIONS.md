@@ -2773,3 +2773,57 @@ This is a lending and collateral-valuation assertion aimed at investors, with no
 **1. Short Question** — The Upstream Regulatory and Operational Integration Matrix is cut off mid-sentence — is it finished, and where does it live?
 
 The submitted table ends abruptly at "the initial well proposal no". Clarify whether the matrix is a published on-page element, an internal planning artifact, or still in progress, and where the complete version is stored.
+
+### Q-AI-0347 — Which build or commit of the two Vercel prototypes did this review cover, and are the other reviewers on the same build?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which build or commit of the two Vercel prototypes did this review cover, and are the other reviewers on the same build?
+
+Multiple UI/UX reviews of the marketing site and owner demo are in flight (Aboli's HTML prototype review, Pragati's Original/Option 1-3 layout options, and this Chrome-verified review). Without a pinned build/URL/commit, findings cannot be reconciled or retested.
+
+### Q-AI-0348 — Are the two Vercel prototype URLs publicly reachable without authentication, and do they expose any real owner records?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Are the two Vercel prototype URLs publicly reachable without authentication, and do they expose any real owner records?
+
+The review covers Dashboard, My Leases, Dossier, Billing, and Claim flows on mineralview-owner-demo.vercel.app. If the demo is indexable/unauthenticated, confirm it contains only clearly-labelled fictional data and no real mineral-owner PII.
+
+### Q-AI-0349 — Who decided to replace real production data and real pricing with fictional samples and illustrative pricing in the new design?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who decided to replace real production data and real pricing with fictional samples and illustrative pricing in the new design?
+
+Finding #4 flags this as a regression vs. the live site. Need to know whether this is an intentional prototype-stage placeholder with a plan to swap in real data before launch, or an actual product decision — and who owns that call.
+
+### Q-AI-0350 — Is the new design approved to launch as a replacement for mineralview.com, and is there a go/no-go gate for the Critical stability finding?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the new design approved to launch as a replacement for mineralview.com, and is there a go/no-go gate for the Critical stability finding?
+
+An 8+ tab-freeze rate and ~18k mounted DOM nodes is a launch blocker. Confirm whether the Critical/High findings are formal launch gates with an owner and a retest step, or advisory notes handed to development.
+
+### Q-AI-0351 — Do the $26,340 vs $26,369 discrepancy and conflicting as-of dates come from the prototype's mock data or from the real valuation pipeline?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Do the $26,340 vs $26,369 discrepancy and conflicting as-of dates come from the prototype's mock data or from the real valuation pipeline?
+
+Existing governance already tracks MVEstimate $0/NaN and multi-tranche undercount defects. If these disagreeing numbers trace to the same live data layer rather than prototype mock data, this is a data-accuracy issue, not a UI one.
+
+### Q-AI-0352 — Where are the ~55 findings and the .docx stored, who accepts them, and how are they merged with the other in-flight portal reviews into one backlog?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Where are the ~55 findings and the .docx stored, who accepts them, and how are they merged with the other in-flight portal reviews into one backlog?
+
+The 37-item requirements list is described as ready for development handoff, but three separate UI/UX review tracks now exist. Need a named acceptor and a single merged, deduplicated backlog before development starts.
