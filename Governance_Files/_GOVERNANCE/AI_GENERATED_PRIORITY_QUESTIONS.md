@@ -2935,3 +2935,57 @@ These are live conversion and trust elements on the marketing site. Removing the
 **1. Short Question** — Does forcing an audience-selection popup before the pricing page loads block or harm SEO indexing and conversion?
 
 Replacing the Mineral Owner / Professional toggle with a pre-load interstitial adds a gate in front of a key conversion page. Existing governance tracks an SEO landing-page strategy that this could undercut, and it also interacts with the open question about splitting professional content onto a separate page.
+
+### Q-AI-0365 — Where is the off-page SEO research documented, and who approves outreach before we contact Mineral Rights Forum or Chas Middleton?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where is the off-page SEO research documented, and who approves outreach before we contact Mineral Rights Forum or Chas Middleton?
+
+The submission identifies two outreach targets but does not say where the findings live or who signs off before anyone posts or pitches externally on Mineral View's behalf.
+
+### Q-AI-0366 — Does posting on the Mineral Rights Forum risk giving legal or valuation advice, and what guardrails apply?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does posting on the Mineral Rights Forum risk giving legal or valuation advice, and what guardrails apply?
+
+Community participation on a mineral rights forum means employees answering owner questions in public. Confirm whether the no-advice guardrails that apply to site content also govern forum replies, and who reviews posts.
+
+### Q-AI-0367 — Does the sitemap count of 45 glossary terms match the actual published glossary inventory in the CMS?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the sitemap count of 45 glossary terms match the actual published glossary inventory in the CMS?
+
+The count was verified from the XML sitemap alone. Confirm whether any published pages are missing from the sitemap, or any sitemap URLs point to unpublished/removed pages.
+
+### Q-AI-0368 — Which nine websites were evaluated for blog commenting, and is that evidence recorded anywhere reusable?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which nine websites were evaluated for blog commenting, and is that evidence recorded anywhere reusable?
+
+The conclusion rules out an entire channel. Without the list and the criteria used, the decision cannot be re-checked or revisited later.
+
+### Q-AI-0369 — Who decided the five glossary topical clusters and the cluster priority ranking, or is this your own proposal awaiting approval?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who decided the five glossary topical clusters and the cluster priority ranking, or is this your own proposal awaiting approval?
+
+The clustering and the Legal/Ownership prioritization now drive future off-page effort. Clarify whether this is an approved strategy or a recommendation still needing a decision-maker.
+
+### Q-AI-0370 — Are the Workbench answers you prepared submitted by you personally, or on behalf of other employees who did the work?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the Workbench answers you prepared submitted by you personally, or on behalf of other employees who did the work?
+
+Governance answers are attributed to an owner. If one person drafts answers covering work performed by others, attribution and accuracy accountability need to be defined.
