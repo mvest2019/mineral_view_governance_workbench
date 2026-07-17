@@ -2665,3 +2665,57 @@ The review covers Financials, Monthly Reports, and statements without noting dis
 **1. Short Question** — Where is the .docx deliverable stored, and who accepts it before it becomes a development backlog?
 
 A Word document is not a tracked backlog. Confirm the storage location, the reviewer who signs off, and how the P0/P1/P2 items get converted into tickets with owners and dates.
+
+### Q-AI-0335 — Should the header Map link open the interactive map directly, and who approves that navigation change?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Should the header Map link open the interactive map directly, and who approves that navigation change?
+
+The review found the new header Map link opens an informational page instead of the interactive Map. Changing it affects the marketing site's SEO landing strategy and the navigation IA work already in flight — needs an explicit owner and decision.
+
+### Q-AI-0336 — Which map prototype or build was reviewed, and how does this reconcile with your earlier Well Explorer 4th-view work?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Which map prototype or build was reviewed, and how does this reconcile with your earlier Well Explorer 4th-view work?
+
+Prior task tracker records show a 4th view (Well Explorer) built with rail navigation, filters, saved filters, and well paths. This submission reviews "alternative Map layout options" without stating whether it is the same prototype, the Original/Option 1/2/3 switcher, or the live map.
+
+### Q-AI-0337 — Do the county-level screens reviewed show real mineral-owner data or mock data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the county-level screens reviewed show real mineral-owner data or mock data?
+
+The review covers Mineral Owner Data, Appraised Value, and Mineral Owner Count at county level, plus supporting screenshots. Need confirmation on whether real owner data or values appeared in the reviewed screens and in the screenshots captured.
+
+### Q-AI-0338 — Are the proposed new county columns (Appraised Value, Mineral Owner Count, Oil/Gas Produced, Completion Records) available in existing APIs, or do they require new backend work?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Are the proposed new county columns (Appraised Value, Mineral Owner Count, Oil/Gas Produced, Completion Records) available in existing APIs, or do they require new backend work?
+
+The recommendations add fields across Mineral Owner, Production, and Well county tables. Governance needs to know whether these are sourced from the existing Map/Presentation APIs or need new endpoints and a backend owner.
+
+### Q-AI-0339 — Would exposing Appraised Value and Mineral Owner Count at county level be gated by subscription tier, or shown to free/public users?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Would exposing Appraised Value and Mineral Owner Count at county level be gated by subscription tier, or shown to free/public users?
+
+Appraised Value and owner counts are potentially monetizable and sensitive. Needs a decision on tier gating before it is built.
+
+### Q-AI-0340 — Where are these Map/Data Coverage findings and screenshots logged, and who decides which become development tickets?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Where are these Map/Data Coverage findings and screenshots logged, and who decides which become development tickets?
+
+Multiple parallel UI/UX reviews are already in flight. This review's issues and suggestions need a single documented location and an owner who merges them into the approved backlog with severity ranking.
