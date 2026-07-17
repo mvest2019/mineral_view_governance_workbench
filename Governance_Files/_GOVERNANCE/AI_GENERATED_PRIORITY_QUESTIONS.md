@@ -2557,3 +2557,57 @@ Unclear whether this is a deliberate channel decision or an incomplete publish.
 **1. Short Question** — Who monitors bounces, complaints, and unsubscribes from the 10 scheduled emails, and where are those results recorded?
 
 Scheduling is logged, but no post-send monitoring owner or tracking location is documented.
+
+### Q-AI-0323 — Are the UI/UX recommendations for the Dashboard and My Leases a formal dev deliverable with an assigned owner, or advisory only?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the UI/UX recommendations for the Dashboard and My Leases a formal dev deliverable with an assigned owner, or advisory only?
+
+Three or more separate UI/UX reviews of the Mineral Owner Portal are now in flight (Pragati, Aboli, and this submission). It is unclear whether this documentation enters a backlog, who accepts it, and how it reconciles with the parallel redesign tracks.
+
+### Q-AI-0324 — Which environment and build did you review for the Dashboard and My Leases module — live production, the HTML prototype, or a branch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which environment and build did you review for the Dashboard and My Leases module — live production, the HTML prototype, or a branch?
+
+A QA/validation role reviewing UI implies access to a specific build. Without naming it, the acceptance criteria cannot be verified and the findings cannot be reproduced by the frontend team.
+
+### Q-AI-0325 — Does UI/UX review work fall inside your assigned data-validation scope, and who approved that reallocation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Does UI/UX review work fall inside your assigned data-validation scope, and who approved that reallocation?
+
+Prior submissions from this owner are exclusively scraper monitoring and W-1/W-2 database validation. A detailed UI/UX documentation deliverable is a scope change that should have an approver.
+
+### Q-AI-0326 — Were the AI-generated SQL queries, Python debug fixes, and validation recommendations reviewed by anyone other than yourself before use?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Were the AI-generated SQL queries, Python debug fixes, and validation recommendations reviewed by anyone other than yourself before use?
+
+The submission states AI recommendations were 'reviewed and verified' but names only the submitter. For changes touching validation logic and data, a second reviewer or documented gate should exist.
+
+### Q-AI-0327 — Did any scheduled scrapers fail or run late today, and where is that outcome recorded?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did any scheduled scrapers fail or run late today, and where is that outcome recorded?
+
+The submission says execution was reviewed to 'identify failed or delayed' runs but never states the result. Governance needs the actual finding, not just the activity.
+
+### Q-AI-0328 — What were the actual validation exceptions and discrepancies found today, and were any corrections applied to production data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — What were the actual validation exceptions and discrepancies found today, and were any corrections applied to production data?
+
+The report mentions investigating exceptions and validating 'corrections for incomplete or inconsistent records' without listing any. If records were changed, the count, method, and approval should be recorded.
