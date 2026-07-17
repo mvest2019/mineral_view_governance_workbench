@@ -2881,3 +2881,57 @@ Editable campaign names plus automatic grouping raises the risk that metrics are
 **1. Short Question** — What is the definition and calculation method behind Reply Rate and First Reply Time, and who verified them?
 
 These metrics will be used to judge outreach performance. Confirm the denominator for Reply Rate (sent vs delivered) and how a reply is detected, so the numbers are not misread by stakeholders.
+
+### Q-AI-0359 — Who decides which of these homepage and pricing recommendations get built, and where is the consolidated document stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Who decides which of these homepage and pricing recommendations get built, and where is the consolidated document stored?
+
+The submission describes a single structured review document consolidating all findings, but no owner, storage location, or acceptance path is named. This is now at least the fourth UI/UX review round in flight across the marketing site and portal.
+
+### Q-AI-0360 — Which duplicate observations were removed, and were any of them still-open issues that now go untracked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which duplicate observations were removed, and were any of them still-open issues that now go untracked?
+
+"Removed duplicate feedback points from previous reviews" and "verified the changes already implemented by the client" both drop findings from the record. Without a list of what was dropped and why, a real unfixed issue can silently disappear between review rounds.
+
+### Q-AI-0361 — Who verifies the proposed Texas Oil Production, Gas Production, Well Records, and Recent Permits homepage statistics, and how often are they refreshed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Who verifies the proposed Texas Oil Production, Gas Production, Well Records, and Recent Permits homepage statistics, and how often are they refreshed?
+
+Replacing existing statistics with live industry metrics puts unverified numbers on the public homepage. Existing governance already flags a county-coverage discrepancy (196 vs 161) and an unresolved authoritative-source question, so a source of truth and refresh cadence are needed before these go live.
+
+### Q-AI-0362 — Are any of the nine proposed product cards gated behind paid tiers, and what does "Explore it Live" show to a signed-out visitor?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Are any of the nine proposed product cards gated behind paid tiers, and what does "Explore it Live" show to a signed-out visitor?
+
+MVEstimate, Lease Audit, Cash Flow, and Alerts are likely tier-gated. "Explore it Live" on a public marketing page could expose gated features or real owner data to anonymous visitors.
+
+### Q-AI-0363 — Who approved removing the trust information bar, Free Forever card, and Ask MineralView Sample widget, and were their conversion impacts measured?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Who approved removing the trust information bar, Free Forever card, and Ask MineralView Sample widget, and were their conversion impacts measured?
+
+These are live conversion and trust elements on the marketing site. Removing them on usability judgment alone, without analytics or Clarity data, risks losing signups; the Free Forever card in particular is a pricing-positioning decision, not a layout one.
+
+### Q-AI-0364 — Does forcing an audience-selection popup before the pricing page loads block or harm SEO indexing and conversion?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Does forcing an audience-selection popup before the pricing page loads block or harm SEO indexing and conversion?
+
+Replacing the Mineral Owner / Professional toggle with a pre-load interstitial adds a gate in front of a key conversion page. Existing governance tracks an SEO landing-page strategy that this could undercut, and it also interacts with the open question about splitting professional content onto a separate page.
