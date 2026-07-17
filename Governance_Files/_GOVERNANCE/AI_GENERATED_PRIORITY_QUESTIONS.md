@@ -2377,3 +2377,21 @@ Prior governance records note valuation stored as text and `MVEstimate = $0` / `
 **1. Short Question** — Are the 5 seeded test drafts for Prasad on internal accounts guaranteed not to send externally, and when will they be purged?
 
 Test data sitting in a live scheduling queue can be ticked and sent by mistake.
+
+### Q-AI-0303 — Does this reel include any Mineral View branding, platform footage, or call-to-action, or is it purely football content with no product tie-in?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does this reel include any Mineral View branding, platform footage, or call-to-action, or is it purely football content with no product tie-in?
+
+Unlike the earlier 'Same Ground' Texas reel, this submission describes only Spain vs Argentina creative (concept, captions, transitions, audio) with no mention of Mineral View's Map, MVestimate, oil/gas data, or a CTA. Governance needs to know whether the finished reel actually carries a product connection or is football-only content published under the brand.
+
+### Q-AI-0304 — Could framing this as a Spain vs Argentina 'promotional reel' imply an unauthorized official FIFA/World Cup partnership or endorsement, separate from any logo/mark usage?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Could framing this as a Spain vs Argentina 'promotional reel' imply an unauthorized official FIFA/World Cup partnership or endorsement, separate from any logo/mark usage?
+
+Beyond direct use of crests or footage, positioning a branded reel as 'promotional' around a specific World Cup fixture can create a false-association / implied-endorsement risk that may need legal review even if no protected marks appear on screen.
