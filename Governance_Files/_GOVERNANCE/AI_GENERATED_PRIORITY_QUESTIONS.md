@@ -2503,3 +2503,57 @@ The review argues these sections should be restored for business context and SEO
 **1. Short Question** — Has loading all Texas operators by default been checked for page-load performance and API cost?
 
 Removing the default filter means the unfiltered statewide operator set loads on first visit. Needs a performance and query-cost check before the change ships.
+
+### Q-AI-0317 — Is "BOLD" a Mineral View brand, or a separate client whose reel is going out on our accounts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Is "BOLD" a Mineral View brand, or a separate client whose reel is going out on our accounts?
+
+The submission lists a BOLD reel published to Instagram and Facebook alongside a Mineral View reel, but nothing in the governance record explains what BOLD is or its relationship to Mineral View.
+
+### Q-AI-0318 — When GPT and Gemini disagree on an email output, what is the pass/fail rule and who decides?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — When GPT and Gemini disagree on an email output, what is the pass/fail rule and who decides?
+
+"Verified and validated email outputs using GPT and Gemini" implies a two-model check, but no threshold, tie-breaker, or human sign-off step is documented before emails are scheduled to real users.
+
+### Q-AI-0319 — Does the GPT/Gemini validation step send mineral-owner names, values, or other PII to third-party AI services?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the GPT/Gemini validation step send mineral-owner names, values, or other PII to third-party AI services?
+
+CRM email content is known to include dossier values, operator activity, and personalized member details. Pasting that into external LLMs is a data-disclosure decision that needs explicit approval.
+
+### Q-AI-0320 — What were the "minor refinements" made after validation, and were the edited emails re-checked before scheduling?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What were the "minor refinements" made after validation, and were the edited emails re-checked before scheduling?
+
+Editing content after the AI validation pass means the scheduled version is not the version that was validated.
+
+### Q-AI-0321 — Why was the Mineral View reel published to Facebook only while the BOLD reel went to both Instagram and Facebook?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Why was the Mineral View reel published to Facebook only while the BOLD reel went to both Instagram and Facebook?
+
+Unclear whether this is a deliberate channel decision or an incomplete publish.
+
+### Q-AI-0322 — Who monitors bounces, complaints, and unsubscribes from the 10 scheduled emails, and where are those results recorded?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Who monitors bounces, complaints, and unsubscribes from the 10 scheduled emails, and where are those results recorded?
+
+Scheduling is logged, but no post-send monitoring owner or tracking location is documented.
