@@ -2989,3 +2989,48 @@ The clustering and the Legal/Ownership prioritization now drive future off-page 
 **1. Short Question** — Are the Workbench answers you prepared submitted by you personally, or on behalf of other employees who did the work?
 
 Governance answers are attributed to an owner. If one person drafts answers covering work performed by others, attribution and accuracy accountability need to be defined.
+
+### Q-AI-0371 — Do the personalized "Mineral Right Value" emails to the 21 users show MVEstimate/valuation figures, and do they carry the estimate/no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the personalized "Mineral Right Value" emails to the 21 users show MVEstimate/valuation figures, and do they carry the estimate/no-investment-advice disclaimer?
+
+The CRM campaign is built around per-owner Mineral Right Value. If those figures appear in the email body, they must carry the same no-advice/estimate disclaimer applied elsewhere.
+
+### Q-AI-0372 — Are the 21 "old register users" still validly consented (not dormant or unsubscribed) before being loaded into this CRM campaign?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the 21 "old register users" still validly consented (not dormant or unsubscribed) before being loaded into this CRM campaign?
+
+These are described as old registrations; re-adding dormant contacts to a new send raises CAN-SPAM/consent exposure separate from the newsletter opt-in.
+
+### Q-AI-0373 — Why does the newsletter subscriber count show 139 here versus 150 recorded earlier, and which figure is authoritative?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Why does the newsletter subscriber count show 139 here versus 150 recorded earlier, and which figure is authoritative?
+
+Prior governance records list 150 newsletter subscribers; this submission schedules to 139. The discrepancy should be reconciled.
+
+### Q-AI-0374 — Are the GPT-generated header/footer and Lease Report banner images cleared for commercial/brand use, and is AI generation approved?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the GPT-generated header/footer and Lease Report banner images cleared for commercial/brand use, and is AI generation approved?
+
+New banner imagery was created with GPT and pushed into CRM and MailChimp campaigns; licensing and brand sign-off are unaddressed.
+
+### Q-AI-0375 — Who reviewed and approved the Lease Report email content and banner before it was scheduled to 139 subscribers?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who reviewed and approved the Lease Report email content and banner before it was scheduled to 139 subscribers?
+
+The MailChimp Lease Report content approval owner and sign-off are not identified.
