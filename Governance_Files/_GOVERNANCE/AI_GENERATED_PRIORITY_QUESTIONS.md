@@ -2827,3 +2827,57 @@ Existing governance already tracks MVEstimate $0/NaN and multi-tranche undercoun
 **1. Short Question** — Where are the ~55 findings and the .docx stored, who accepts them, and how are they merged with the other in-flight portal reviews into one backlog?
 
 The 37-item requirements list is described as ready for development handoff, but three separate UI/UX review tracks now exist. Need a named acceptor and a single merged, deduplicated backlog before development starts.
+
+### Q-AI-0353 — Are campaign recipient lists checked against opt-outs and unsubscribe consent before a bulk campaign sends?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Are campaign recipient lists checked against opt-outs and unsubscribe consent before a bulk campaign sends?
+
+The Campaigns feature tracks Opt-outs as a metric, but it is unclear whether the bulk/scheduled send flow enforces opt-out suppression at send time. Confirm whether an owner who opted out can be re-included in a new campaign group.
+
+### Q-AI-0354 — Does safe campaign deletion also remove the underlying sent-email and metrics history, and what is the retention policy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Does safe campaign deletion also remove the underlying sent-email and metrics history, and what is the retention policy?
+
+Deletion cancels pending emails, but governance needs to know whether historical delivery, reply, and opt-out records survive deletion for audit purposes, or whether a campaign delete destroys evidence of what was sent to members.
+
+### Q-AI-0355 — Was this feature deployed straight to production, and who reviewed and approved the release?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Was this feature deployed straight to production, and who reviewed and approved the release?
+
+The submission states it was tested, merged, and deployed to production in one pass. Identify the reviewer/approver and whether it went through staging first, given the same CRM email path has open governance issues.
+
+### Q-AI-0356 — Does the Campaigns report page expose mineral-owner PII, and is it gated by role or subscription tier?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Prasad_Shinde
+**1. Short Question** — Does the Campaigns report page expose mineral-owner PII, and is it gated by role or subscription tier?
+
+Recipients, Delivered, Bounced, and Opt-out metrics may be drillable to individual member identities. Clarify who can view the Campaigns tab and whether per-recipient detail is visible.
+
+### Q-AI-0357 — How is "automatic campaign grouping" defined, and can it retroactively regroup or mis-attribute previously sent emails?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Prasad_Shinde
+**1. Short Question** — How is "automatic campaign grouping" defined, and can it retroactively regroup or mis-attribute previously sent emails?
+
+Editable campaign names plus automatic grouping raises the risk that metrics are attributed to the wrong campaign or that renaming breaks historical reporting continuity.
+
+### Q-AI-0358 — What is the definition and calculation method behind Reply Rate and First Reply Time, and who verified them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Prasad_Shinde
+**1. Short Question** — What is the definition and calculation method behind Reply Rate and First Reply Time, and who verified them?
+
+These metrics will be used to judge outreach performance. Confirm the denominator for Reply Rate (sent vs delivered) and how a reply is detected, so the numbers are not misread by stakeholders.
