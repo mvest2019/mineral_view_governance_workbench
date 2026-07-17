@@ -2395,3 +2395,57 @@ Unlike the earlier 'Same Ground' Texas reel, this submission describes only Spai
 **1. Short Question** — Could framing this as a Spain vs Argentina 'promotional reel' imply an unauthorized official FIFA/World Cup partnership or endorsement, separate from any logo/mark usage?
 
 Beyond direct use of crests or footage, positioning a branded reel as 'promotional' around a specific World Cup fixture can create a false-association / implied-endorsement risk that may need legal review even if no protected marks appear on screen.
+
+### Q-AI-0305 — Which platform accounts will this World Cup reel publish to, and who gave final approval before it goes live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Which platform accounts will this World Cup reel publish to, and who gave final approval before it goes live?
+
+The submission says the reel is "suitable for publishing across social media platforms" (Instagram, Facebook, YouTube Shorts) but names no approver and no target account.
+
+### Q-AI-0306 — What are the sources and licences for the "real football footage" collected and used in this reel?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — What are the sources and licences for the "real football footage" collected and used in this reel?
+
+The submission says real football footage was collected and selected for crowd, action, stadium, and celebration moments, but does not state where it came from or whether it is cleared for commercial brand use.
+
+### Q-AI-0307 — Which AI video tools generated the clips, and is AI generation disclosed to viewers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Which AI video tools generated the clips, and is AI generation disclosed to viewers?
+
+Multiple AI clips and variations were generated for trophy, stadium, crowd, and celebration scenes. Governance needs the tool names, their commercial-use terms, and whether AI-generated content is disclosed on the post.
+
+### Q-AI-0308 — The submission lists removing "unnecessary oil and gas references" as a quality fix — is this reel still a Mineral View deliverable?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — The submission lists removing "unnecessary oil and gas references" as a quality fix — is this reel still a Mineral View deliverable?
+
+Prior World Cup reels were approved specifically because they tied Texas football attention back to mineral data. Actively stripping oil and gas references inverts that rationale and needs a stated business purpose and approver.
+
+### Q-AI-0309 — Which title, description, and hashtag set were actually chosen, and who signed off on that final packaging?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Which title, description, and hashtag set were actually chosen, and who signed off on that final packaging?
+
+The submission describes researching and reviewing options but never states the selected combination or the reviewer.
+
+### Q-AI-0310 — Where are the rendered final export and the project/source files stored so the reel can be reviewed or re-edited?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Sanket_Nandanwar
+**1. Short Question** — Where are the rendered final export and the project/source files stored so the reel can be reviewed or re-edited?
+
+The reel was rendered and reviewed, but no deliverable link or storage location is given.
