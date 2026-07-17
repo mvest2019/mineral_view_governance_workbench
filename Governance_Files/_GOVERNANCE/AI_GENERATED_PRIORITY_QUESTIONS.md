@@ -2611,3 +2611,57 @@ The submission says execution was reviewed to 'identify failed or delayed' runs 
 **1. Short Question** — What were the actual validation exceptions and discrepancies found today, and were any corrections applied to production data?
 
 The report mentions investigating exceptions and validating 'corrections for incomplete or inconsistent records' without listing any. If records were changed, the count, method, and approval should be recorded.
+
+### Q-AI-0329 — Did the demo app you reviewed show real mineral-owner data, and is Ledbetter a real member's lease?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Did the demo app you reviewed show real mineral-owner data, and is Ledbetter a real member's lease?
+
+The review references Ledbetter standing in for the whole portfolio and specific MVEstimate/portfolio totals. Need to confirm whether the claimed/post-claim demo state is backed by real owner records or mock data, since that changes both the PII handling and whether the data-integrity findings are real defects or artifacts of seeded data.
+
+### Q-AI-0330 — Are the two P0 data-integrity findings already tracked as engineering defects, or is this doc their only record?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are the two P0 data-integrity findings already tracked as engineering defects, or is this doc their only record?
+
+Unstable MVEstimate values and non-reconciling portfolio totals are correctness issues, not UX findings. Governance knowledge already shows MVEstimate = $0 / NaN reported to Nikhil and ownership-data fixes pending. Confirm whether these P0s are the same root cause and are logged in the defect sheet with an owner, or whether they only exist inside this .docx.
+
+### Q-AI-0331 — Is the $0-fallback being displayed as a real value a UI change or a data-source fix, and who owns it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the $0-fallback being displayed as a real value a UI change or a data-source fix, and who owns it?
+
+Showing a $0 fallback as a genuine valuation is materially misleading to a mineral owner. Clarify whether the agreed fix is to suppress/label the fallback in the UI or to fix the underlying valuation data, and who is accountable for the chosen path.
+
+### Q-AI-0332 — Which build, branch, or URL of the Owner Demo App does this review cover, and is it the same one other reviewers are reviewing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which build, branch, or URL of the Owner Demo App does this review cover, and is it the same one other reviewers are reviewing?
+
+Multiple parallel UI/UX reviews of MineralView surfaces are in flight. Without a pinned build identifier these findings cannot be reproduced or reconciled against the other tracks.
+
+### Q-AI-0333 — Do the MVEstimate figures shown in the reports carry the estimate / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the MVEstimate figures shown in the reports carry the estimate / no-investment-advice disclaimer?
+
+The review covers Financials, Monthly Reports, and statements without noting disclaimer coverage. Confirm whether the no-advice guardrail is present on every surface that displays a valuation, and flag it as a finding if not.
+
+### Q-AI-0334 — Where is the .docx deliverable stored, and who accepts it before it becomes a development backlog?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Where is the .docx deliverable stored, and who accepts it before it becomes a development backlog?
+
+A Word document is not a tracked backlog. Confirm the storage location, the reviewer who signs off, and how the P0/P1/P2 items get converted into tickets with owners and dates.
