@@ -2449,3 +2449,57 @@ The submission describes researching and reviewing options but never states the 
 **1. Short Question** — Where are the rendered final export and the project/source files stored so the reel can be reviewed or re-edited?
 
 The reel was rendered and reviewed, but no deliverable link or storage location is given.
+
+### Q-AI-0311 — Is the Eagle Ford default on the Play Type filter a bug or an intentional product decision, and who owns the fix?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the Eagle Ford default on the Play Type filter a bug or an intentional product decision, and who owns the fix?
+
+The review says the Operators Listing pre-selects Eagle Ford by default. Governance needs to know whether this was a deliberate choice (e.g. demo data coverage) before it is changed, and who is accountable for the change.
+
+### Q-AI-0312 — Does the Operators module currently display real production data or sample/placeholder data to the public?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does the Operators module currently display real production data or sample/placeholder data to the public?
+
+Several recommendations are deferred "until live production data is available," implying what is shown now may not be live. If the public marketing site shows non-live operator production figures, it needs a clear label.
+
+### Q-AI-0313 — Who approved removing the production charts, county BOE comparison, and heatmap from the redesigned Operator Detail page?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approved removing the production charts, county BOE comparison, and heatmap from the redesigned Operator Detail page?
+
+The review frames these as accidental omissions, but they may be a deliberate scope cut or paywall decision. Needs confirmation before restoration work is scheduled.
+
+### Q-AI-0314 — Are any of the proposed operator production columns (Oil Produced, Gas Produced, Lease Count) gated behind a paid tier?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are any of the proposed operator production columns (Oil Produced, Gas Produced, Lease Count) gated behind a paid tier?
+
+Adding production metrics to a public marketing page could expose data that is currently a paid-tier feature. Needs a tier/gating decision before build.
+
+### Q-AI-0315 — Where do the company overview and company profile texts come from, and who verifies their accuracy?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Where do the company overview and company profile texts come from, and who verifies their accuracy?
+
+The review argues these sections should be restored for business context and SEO. If the content is AI-generated or scraped from operator sites, it needs a source, licensing check, and accuracy sign-off.
+
+### Q-AI-0316 — Has loading all Texas operators by default been checked for page-load performance and API cost?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Has loading all Texas operators by default been checked for page-load performance and API cost?
+
+Removing the default filter means the unfiltered statewide operator set loads on first visit. Needs a performance and query-cost check before the change ships.
