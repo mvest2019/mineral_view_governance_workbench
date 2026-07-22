@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
+  <title id="title">Governance Workbench - BOLD Precious Metals and Mineral View</title>
+  <desc id="desc">Dual-company governance composition. Left side represents BOLD Precious Metals with stacked bullion bars in gold tones. Right side represents Mineral View with layered geological strata in green and earth tones. Both halves meet at a central governance shield.</desc>
+
+  <defs>
+    <!-- BOLD gradient (gold) -->
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6d26a"/>
+      <stop offset="1" stop-color="#b8860b"/>
+    </linearGradient>
+    <linearGradient id="goldGradDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9a7212"/>
+      <stop offset="1" stop-color="#5a4308"/>
+    </linearGradient>
+    <linearGradient id="boldBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1410"/>
+      <stop offset="1" stop-color="#2c2317"/>
+    </linearGradient>
+
+    <!-- MView gradient (green / earth) -->
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5a8f4a"/>
+      <stop offset="1" stop-color="#284a1f"/>
+    </linearGradient>
+    <linearGradient id="earthGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b6f47"/>
+      <stop offset="0.5" stop-color="#5d4830"/>
+      <stop offset="1" stop-color="#3d2f1f"/>
+    </linearGradient>
+    <linearGradient id="mviewBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1a0e"/>
+      <stop offset="1" stop-color="#152517"/>
+    </linearGradient>
+
+    <!-- Center shield gradient -->
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8e4d8"/>
+      <stop offset="1" stop-color="#a8a294"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background halves -->
+  <rect x="0" y="0" width="600" height="480" fill="url(#boldBg)"/>
+  <rect x="600" y="0" width="600" height="480" fill="url(#mviewBg)"/>
+
+  <!-- BOLD side: stacked bullion bars -->
+  <g transform="translate(150, 130)">
+    <!-- Back row (smaller, slightly offset) -->
+    <rect x="20" y="60" width="180" height="36" rx="3" fill="url(#goldGradDark)" opacity="0.7"/>
+    <rect x="40" y="100" width="180" height="36" rx="3" fill="url(#goldGradDark)" opacity="0.8"/>
+    <!-- Front row -->
+    <rect x="0" y="140" width="220" height="44" rx="4" fill="url(#goldGrad)" stroke="#7a5a08" stroke-width="1"/>
+    <rect x="60" y="184" width="220" height="44" rx="4" fill="url(#goldGrad)" stroke="#7a5a08" stroke-width="1"/>
+    <!-- Stamp marks on front bar -->
+    <text x="110" y="170" font-family="Georgia, serif" font-size="14" fill="#5a4308" text-anchor="middle" font-weight="bold">BOLD</text>
+    <text x="170" y="212" font-family="Georgia, serif" font-size="11" fill="#5a4308" text-anchor="middle">.9999 FINE</text>
+  </g>
+
+  <!-- BOLD label -->
+  <text x="200" y="390" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#f6d26a" letter-spacing="3">BOLD</text>
+  <text x="200" y="420" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#d4af37" letter-spacing="2">PRECIOUS METALS</text>
+
+  <!-- MView side: geological strata layers -->
+  <g transform="translate(750, 200)">
+    <!-- Strata layers -->
+    <path d="M 0,40 Q 100,10 200,30 Q 300,50 380,25 L 380,60 L 0,60 Z" fill="#3d2f1f" opacity="0.9"/>
+    <path d="M 0,75 Q 100,55 200,70 Q 300,85 380,65 L 380,95 L 0,95 Z" fill="#5d4830" opacity="0.9"/>
+    <path d="M 0,108 Q 100,90 200,105 Q 300,120 380,100 L 380,128 L 0,128 Z" fill="#8b6f47" opacity="0.9"/>
+    <path d="M 0,140 Q 100,125 200,138 Q 300,150 380,135 L 380,160 L 0,160 Z" fill="#a88b5d" opacity="0.85"/>
+    <path d="M 0,170 Q 100,158 200,168 Q 300,178 380,165 L 380,200 L 0,200 Z" fill="#5a8f4a" opacity="0.95"/>
+    <!-- Surface / grass top -->
+    <rect x="0" y="195" width="380" height="8" fill="#4a7a3a"/>
+    <!-- A subtle wellhead silhouette -->
+    <g transform="translate(160, 100)">
+      <line x1="0" y1="100" x2="0" y2="20" stroke="#1a1a1a" stroke-width="3"/>
+      <rect x="-8" y="-4" width="16" height="24" fill="#2a2a2a"/>
+      <line x1="-15" y1="10" x2="15" y2="10" stroke="#1a1a1a" stroke-width="2"/>
+    </g>
+    <!-- Decline curve glyph -->
+    <path d="M 240,30 Q 280,32 305,55 Q 325,80 335,120 Q 340,150 340,175"
+          stroke="#9bd87a" stroke-width="2.5" fill="none" stroke-dasharray="0"/>
+    <circle cx="240" cy="30" r="3" fill="#9bd87a"/>
+    <circle cx="340" cy="175" r="3" fill="#9bd87a"/>
+  </g>
+
+  <!-- MView label -->
+  <text x="1000" y="390" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#9bd87a" text-anchor="middle" letter-spacing="3">MINERAL VIEW</text>
+  <text x="1000" y="420" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7ab85e" text-anchor="middle" letter-spacing="2">MVEST LLC</text>
+
+  <!-- Center divider with governance shield -->
+  <g transform="translate(600, 240)">
+    <!-- Vertical thin divider lines -->
+    <line x1="0" y1="-220" x2="0" y2="-100" stroke="#444" stroke-width="1" opacity="0.6"/>
+    <line x1="0" y1="100" x2="0" y2="220" stroke="#444" stroke-width="1" opacity="0.6"/>
+    <!-- Shield shape -->
+    <path d="M 0,-90 L 60,-65 L 60,30 Q 60,80 0,100 Q -60,80 -60,30 L -60,-65 Z"
+          fill="url(#shieldGrad)" stroke="#3a3a3a" stroke-width="2"/>
+    <!-- Inner shield detail -->
+    <path d="M 0,-70 L 45,-50 L 45,25 Q 45,60 0,78 Q -45,60 -45,25 L -45,-50 Z"
+          fill="none" stroke="#5a5a5a" stroke-width="1"/>
+    <!-- Centered text -->
+    <text x="0" y="-15" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#2a2a2a" text-anchor="middle" letter-spacing="2">GOVERNANCE</text>
+    <text x="0" y="5" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#2a2a2a" text-anchor="middle" letter-spacing="2">WORKBENCH</text>
+    <!-- Crossed checkmark and pen icon -->
+    <g transform="translate(0, 35)">
+      <path d="M -12,0 L -4,8 L 12,-10" stroke="#1a4a1a" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- Top tagline -->
+  <text x="600" y="50" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#888" text-anchor="middle" letter-spacing="3">TWO COMPANIES - ONE GOVERNANCE FRAMEWORK - HARD ISOLATION</text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="465" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666" text-anchor="middle" letter-spacing="2">RESEARCH - INTAKE - APPROVAL - GOVERNANCE</text>
+</svg>

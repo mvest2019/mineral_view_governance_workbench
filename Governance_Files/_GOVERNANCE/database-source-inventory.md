@@ -322,3 +322,13 @@ MongoDB is **derived**: every analytics value must be reproducible from PostgreS
 ## 8. Evidence notes
 
 Column lists and table set are taken directly from the 2026-06 PostgreSQL dump. Row counts marked with figures are from verified counts during analysis; `—` means not separately counted this pass. MongoDB collection-level detail is from prior-session analysis and should be re-verified against the live backup.
+
+---
+
+## Addendum (2026-07-02) — production PostgreSQL backup analysed
+
+The June 2026 production PostgreSQL backup (`Postgress_Production_Backup`, **526 table exports, ~29.8 GB uncompressed**) has been analysed and documented:
+- **`database-and-schema-governance.md`** — governance rules, canonical keys, data-domain ownership (RACI), provenance/vintage, privacy/security, backup scope, and schema-change control.
+- **`database-schema-reference.md`** — the exhaustive per-table inventory (every table by category with sizes + column counts, plus detailed columns for the business-critical tables).
+
+Headline: three trees — `Production/public` (92 live-app tables, ~0.95 GB), `MviewDownload` (~28.5 GB data spine, incl. the ~22 GB RRC production/disposition), and `Archive` (~1.9 GB history). Canonical keys: API-14, lease_number+district, ownernumber, member_id, joined via `linkage_data_new`.

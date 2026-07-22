@@ -63,3 +63,16 @@ An **automated PostgreSQL backup** solution is in place (built by the backend/in
 - **Restore drills:** periodically **test-restore** to prove recoverability (a backup that has never been restored is unproven).
 - **Security:** backup artifacts may contain owner/financial data — encrypt/restrict per `privacy-and-data-use-governance.md` and `security-governance.md`; never commit backup credentials to code.
 - **Governance data:** the governance corpus + `governance.db` (Workbench reviews/approvals) are included in backup scope so the approval trail survives recovery.
+
+---
+
+## Addendum (2026-07-02) — verified backup scope from the June export
+
+The June 2026 backup confirms the real shape of what must be protected (see `database-and-schema-governance.md` / `database-schema-reference.md`): **~30 GB across ~526 tables**, dominated by **`MviewDownload/rrc_og_production` (~22 GB)** — the RRC production/disposition history (the crown jewels).
+
+**MUST (scope checks):**
+- The automated PostgreSQL → Google Drive backup must capture the **entire `MviewDownload` warehouse (~28.5 GB)**, not just the small `public` schema — confirm the dump includes it.
+- The backup contains **PII + password hashes** (`members_entity`) and payment references (Braintree) — the offsite copy stays **encrypted and access-controlled** (no public Drive links).
+- Include the **governance corpus + `governance.db`** so the approval trail survives recovery.
+- **Test-restore** at ~30 GB scale periodically and record restore time as a DR metric.
+- **MongoDB and Redis** (serving/cache) are not in this PostgreSQL backup — confirm their DR coverage separately.

@@ -1,0 +1,34 @@
+# Next.js
+/.next/
+/out/
+
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Production
+/build
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env*.local
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts.bak
+
+# Runtime state (mirrors the Flask app's governance.db exclusion)
+governance.db
+governance.db-shm
+governance.db-wal
+local_settings.json
+.workbench_secret
