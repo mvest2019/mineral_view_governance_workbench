@@ -12,7 +12,7 @@
 | Field | Value |
 |---|---|
 | **Member Name** | Nikhil Salunke |
-| **Role / Title** | Data Scientist / AI Engineer / Data Engineer + Governance Maintainer |
+| **Role / Title** | Data Scientist / AI Engineer / Data Engineer + Governance Maintainer / Team Coordinator |
 | **Department(s)** | DATA_SCIENCE · PLATFORM_INFRASTRUCTURE · GOVERNANCE |
 | **Reports To** | Ryan Cochran |
 | **Experience in Project** | 2.5+ years |
