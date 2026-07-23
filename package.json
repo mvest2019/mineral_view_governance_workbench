@@ -9,10 +9,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mongo:health": "node scripts/mongo-healthcheck.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
+    "mongodb": "^6.21.0",
     "next": "^15.5.19",
     "react": "19.0.0",
     "react-dom": "19.0.0"
