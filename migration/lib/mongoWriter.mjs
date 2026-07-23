@@ -96,6 +96,25 @@ export async function createWriter() {
       return db.collection(collection).countDocuments(filter || {});
     },
 
+    /** List a collection's indexes (name + key). Read-only. */
+    async listIndexes(collection) {
+      guard(collection);
+      return db.collection(collection).indexes();
+    },
+
+    /** Return the collection's stored options (incl. $jsonSchema validator). Read-only. */
+    async getCollectionInfo(collection) {
+      guard(collection);
+      const arr = await db.listCollections({ name: collection }).toArray();
+      return arr[0] || null;
+    },
+
+    /** Find documents (read-only) — used for source-vs-DB verification. */
+    async find(collection, filter, projection) {
+      guard(collection);
+      return db.collection(collection).find(filter || {}, projection ? { projection } : {}).toArray();
+    },
+
     /**
      * Roll back a run: delete every document tagged with the given migration
      * runId across the writable business collections. Returns per-collection

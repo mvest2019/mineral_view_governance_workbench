@@ -33,6 +33,7 @@ function parseArgs(argv) {
     const a = argv[i];
     if (a === '--dry-run') opts.mode = 'dry-run';
     else if (a === '--execute') opts.mode = 'execute';
+    else if (a === '--verify') opts.mode = 'verify';
     else if (a === '--rollback') { opts.mode = 'rollback'; opts.rollbackRunId = argv[i + 1]; i += 1; }
     else if (a.startsWith('--rollback=')) { opts.mode = 'rollback'; opts.rollbackRunId = a.split('=')[1]; }
     else if (a === '--all') opts.all = true;
@@ -110,6 +111,30 @@ async function doExecute(opts, collections) {
   }
 }
 
+async function doVerify(opts, collections) {
+  const { createWriter } = await import('./lib/mongoWriter.mjs');
+  const { verifyCollection, renderVerify } = await import('./verify.mjs');
+  const { writeReportFile } = await import('./lib/report.mjs');
+  let writer;
+  try {
+    writer = await createWriter();
+    let allOk = true;
+    for (const collection of collections) {
+      const report = await verifyCollection(collection, { runId: opts.runId }, writer);
+      console.log(renderVerify(report));
+      const p = writeReportFile(report, MIGRATION_CONFIG.paths.reports);
+      console.log(`Verification report written: ${p}`);
+      if (report.verdict !== 'VERIFIED') allOk = false;
+    }
+    if (!allOk) process.exitCode = 2;
+  } catch (err) {
+    console.error(`✖ Verification failed: ${err && err.message ? err.message : err}`);
+    process.exitCode = 1;
+  } finally {
+    if (writer) await writer.close();
+  }
+}
+
 async function doRollback(opts) {
   if (!opts.rollbackRunId) { console.error('✖ --rollback requires a runId.'); process.exitCode = 1; return; }
   if (!opts.confirm) {
@@ -151,6 +176,7 @@ async function main() {
   }
 
   if (opts.mode === 'execute') await doExecute(opts, collections);
+  else if (opts.mode === 'verify') await doVerify(opts, collections);
   else await doDryRun(opts, collections);
 }
 

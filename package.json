@@ -30,7 +30,8 @@
     "db:provision:audit-logs": "node --env-file-if-exists=.env.local scripts/provision-audit-logs.mjs",
     "migrate:dry-run": "node migration/cli.mjs --dry-run",
     "migrate:execute": "node --env-file-if-exists=.env.local migration/cli.mjs --execute",
-    "migrate:rollback": "node --env-file-if-exists=.env.local migration/cli.mjs --rollback"
+    "migrate:rollback": "node --env-file-if-exists=.env.local migration/cli.mjs --rollback",
+    "migrate:verify": "node --env-file-if-exists=.env.local migration/cli.mjs --verify"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
