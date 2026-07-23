@@ -40,6 +40,26 @@ export function readConfigDepartments() {
   return [...set];
 }
 
+/**
+ * Aspect-group membership from ASPECT_GROUP_RULES: repoName -> groupName.
+ * Best-effort text parse of the config's `{ name: '…', repos: [ … ] }` blocks.
+ */
+export function readConfigAspectGroups() {
+  const t = text();
+  const start = t.indexOf('ASPECT_GROUP_RULES');
+  if (start < 0) return new Map();
+  const slice = t.slice(start);
+  const map = new Map();
+  const blockRe = /name:\s*'([^']+)'[\s\S]*?repos:\s*\[([^\]]*)\]/g;
+  for (const m of slice.matchAll(blockRe)) {
+    const group = m[1];
+    for (const r of m[2].matchAll(/'([^']+)'/g)) {
+      if (!map.has(r[1])) map.set(r[1], group);
+    }
+  }
+  return map;
+}
+
 /** True if lib/config.ts was readable. */
 export function configAvailable() {
   return text().length > 0;
