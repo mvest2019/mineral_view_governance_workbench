@@ -11,6 +11,22 @@ import { slugify, normalizeTitle, upcaseEnum } from '../lib/utils.mjs';
 import { ENUMS } from '../config.mjs';
 import { readGeneratedQuestions } from '../readers/github.mjs';
 
+/**
+ * Normalize a source priority to the V1 enum.
+ *  - Known value → used as-is.
+ *  - "CRITICAL"  → mapped to URGENT, original preserved in metadata.sourcePriority
+ *    (lossless, per readiness report §1). No warning — this is an intended mapping.
+ *  - Anything else unknown → default MEDIUM + a warning + preserve the original.
+ */
+function normalizePriority(raw, report, code) {
+  const up = upcaseEnum(raw, ENUMS.PRIORITY);
+  if (up.ok) return { value: up.value, sourcePriority: null };
+  const upper = String(raw || '').trim().toUpperCase().replace(/[\s-]+/g, '_');
+  if (upper === 'CRITICAL') return { value: 'URGENT', sourcePriority: 'CRITICAL' };
+  report.warnings.push(`${code}: unknown priority "${raw}" → defaulted to MEDIUM (preserved in metadata.sourcePriority)`);
+  return { value: 'MEDIUM', sourcePriority: upper || 'UNKNOWN' };
+}
+
 export function dryRun(ctx) {
   const report = createCollectionReport('priorityQuestions');
   report.sources = ['Governance_Files/_GOVERNANCE/AI_GENERATED_PRIORITY_QUESTIONS.md'];
@@ -24,11 +40,13 @@ export function dryRun(ctx) {
   for (const q of questions) {
     report.recordsRead += 1;
     const targetEmployeeKey = q.employee ? slugify(q.employee) : undefined;
-    const priority = upcaseEnum(q.priority, ENUMS.PRIORITY);
+    const pr = normalizePriority(q.priority, report, q.questionCode);
     const status = upcaseEnum(q.status, ENUMS.QUESTION_STATUS);
-    if (!priority.ok) report.warnings.push(`${q.questionCode}: unknown priority "${q.priority}"`);
     if (!status.ok) report.warnings.push(`${q.questionCode}: unknown status "${q.status}"`);
     const normalized = normalizeTitle(q.title || q.shortQuestion);
+
+    const metadata = { legacy: { githubBlock: q.questionCode } };
+    if (pr.sourcePriority) metadata.sourcePriority = pr.sourcePriority;
 
     const candidate = {
       companyKey: MIGRATION_CONFIG.companyKey,
@@ -38,12 +56,12 @@ export function dryRun(ctx) {
       bodyMarkdown: q.body || q.shortQuestion || q.title || '',
       shortQuestion: q.shortQuestion,
       targetEmployeeKey,
-      priority: priority.ok ? priority.value : 'MEDIUM',
+      priority: pr.value,
       status: status.ok ? status.value : 'OPEN',
       source: 'AI_GENERATED',
       generatedBy: 'claude',
       answerCount: 0,
-      _legacy: { githubBlock: q.questionCode },
+      metadata,
     };
 
     if (codeDupes.check(q.questionCode, q.questionCode).duplicate) {

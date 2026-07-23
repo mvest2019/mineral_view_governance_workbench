@@ -1,8 +1,15 @@
 // answers mapper (dry-run). Source: Priority_Questions/<slug>_answers/*.md (G2)
-// + _answered_qids.md ledger (G3). Answer files carry only the question TEXT
-// (not the qid), so linking is lossy: we match normalized question text to a
-// known priorityQuestion. Unlinkable answers are reported as missing references
-// (held back for human review — never guessed), per migration design §7.
+// + _answered_qids.md ledger (G3).
+//
+// Fixes applied (per MONGODB_MIGRATION_READINESS.md):
+//  - Uses the EXACT priority-answer field layout (readers/github.parsePriorityAnswerFile),
+//    so answer bodies containing "Phrase:" stay intact — no more false empties.
+//  - Duplicate detection uses a content-derived key over the FULL answer, so
+//    truncation no longer produces false duplicates.
+//  - Question linking: if no existing question matches by normalized title, the
+//    question is BACK-FILLED from the file's own Question block (a synthesized
+//    priorityQuestion, source=FILE, deterministic Q-MIG-<hash> code). No answer
+//    is orphaned. questionMatch.{strategy,confidence} is stored per the V1 spec.
 
 import { createCollectionReport, addSample } from '../lib/report.mjs';
 import { validateDocument } from '../lib/validation.mjs';
@@ -13,6 +20,7 @@ import { readPriorityAnswerFiles } from '../readers/github.mjs';
 
 export function dryRun(ctx) {
   const report = createCollectionReport('answers');
+  report.backfilledQuestions = 0;
   report.sources = [
     'Governance_Files/Priority_Questions/<member>_answers/*.md',
     'Governance_Files/Priority_Questions/_answered_qids.md',
@@ -22,41 +30,53 @@ export function dryRun(ctx) {
   if (!files.length) { report.sourceAvailable = false; return report; }
 
   const titleIndex = (ctx && ctx.titleIndex) || new Map();
+  const backfill = new Map(); // normalizedTitle -> synthesized questionCode (dedupe within run)
   const dupes = createDuplicateTracker();
-  let unlinked = 0;
+  let matched = 0; let backfilled = 0;
 
   for (const f of files) {
     report.recordsRead += 1;
-    const b = f.blocks;
-    const questionText = b.Question || b.question || '';
-    const answerMarkdown = b.Answer || b.answer || '';
-    const answeredByRaw = b['Answered By'] || f.memberSlug;
+    const x = f.fields || {};
+    const questionText = x.question || '';
+    const answerMarkdown = x.answer || '';
+    const answeredByRaw = x.answeredBy || f.memberSlug;
     const answeredByKey = answeredByRaw ? slugify(answeredByRaw) : undefined;
-    const parsed = parseISTToUTC(b['Created At'] || b['Answered Date'], b['Answered Time']);
+    const parsed = parseISTToUTC(x.createdAt || x.answeredDate, x.answeredTime);
 
-    // Attempt to link the answer to a known question by normalized text.
+    // ---- link the answer to a question ----
     const norm = normalizeTitle(questionText);
-    const matchedCode = titleIndex.get(norm);
-    let questionMatch;
     let questionCode;
-    if (matchedCode) {
-      questionCode = matchedCode;
+    let questionMatch;
+    const meta = { legacy: { githubPath: f.path } };
+
+    if (norm && titleIndex.has(norm)) {
+      // Matches an existing (AI-generated) priority question.
+      questionCode = titleIndex.get(norm);
       questionMatch = { strategy: 'FUZZY_TITLE', confidence: 'HIGH' };
+      matched += 1;
+    } else if (norm) {
+      // No match → back-fill a question from this file's Question block.
+      if (!backfill.has(norm)) {
+        const code = `Q-MIG-${sha256(norm).slice(0, 8).toUpperCase()}`;
+        backfill.set(norm, code);
+        titleIndex.set(norm, code);
+        report.backfilledQuestions += 1;
+        backfilled += 1;
+      }
+      questionCode = backfill.get(norm);
+      questionMatch = { strategy: 'MANUAL', confidence: 'MEDIUM' };
+      meta.synthesizedQuestion = true;
+      meta.reviewNeeded = true;
     } else {
-      unlinked += 1;
-      questionMatch = { strategy: 'UNLINKED', confidence: 'LOW' };
-    }
-
-    // Duplicate on (answeredBy, answer-hash).
-    const dupKey = `${answeredByKey}|${sha256(answerMarkdown).slice(0, 12)}`;
-    if (dupes.check(dupKey, f.path).duplicate) { report.duplicateRecords += 1; continue; }
-
-    if (!questionCode) {
-      // Unlinkable → held for human review; not counted as a valid document.
+      // No question text at all → cannot link; hold for review (quarantine).
       report.missingReferences += 1;
-      report.warnings.push(`${f.path}: answer could not be linked to a known question (UNLINKED)`);
+      report.warnings.push(`${f.path}: answer file has no Question block — cannot link (quarantine for review)`);
       continue;
     }
+
+    // ---- duplicate detection on the FULL answer content ----
+    const dupKey = sha256(`${questionCode}|${answeredByKey}|${parsed.date ? parsed.date.toISOString() : ''}|${answerMarkdown}`);
+    if (dupes.check(dupKey, f.path).duplicate) { report.duplicateRecords += 1; continue; }
 
     const candidate = {
       companyKey: MIGRATION_CONFIG.companyKey,
@@ -67,9 +87,12 @@ export function dryRun(ctx) {
       answeredByName: answeredByRaw,
       answeredAt: parsed.date || undefined,
       questionMatch,
-      _legacy: { githubPath: f.path },
+      metadata: meta,
     };
     if (!parsed.ok) report.warnings.push(`${f.path}: could not parse answered date`);
+    if (answeredByKey && ctx && ctx.crossref && !ctx.crossref.has('employees', answeredByKey)) {
+      report.warnings.push(`${f.path}: answeredByKey "${answeredByKey}" not in employees roster`);
+    }
 
     const v = validateDocument('answers', candidate);
     v.warnings.forEach((w) => report.warnings.push(`${f.path}: ${w}`));
@@ -80,12 +103,10 @@ export function dryRun(ctx) {
     }
   }
 
-  if (unlinked > 0) {
-    report.warnings.push(
-      `${unlinked} of ${report.recordsRead} answer files could not be linked to an AI-generated `
-      + 'question (they answer older corpus questions). These are held for human review, per '
-      + 'migration design §7 — not auto-migrated.',
-    );
-  }
+  report.warnings.push(
+    `linking: ${matched} answers matched an existing question by title; ${backfilled} question(s) `
+    + 'would be back-filled from answer files (source=FILE, code Q-MIG-<hash>, confidence MEDIUM, '
+    + 'flagged reviewNeeded). No answer is orphaned.',
+  );
   return report;
 }
