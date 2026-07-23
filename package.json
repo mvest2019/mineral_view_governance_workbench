@@ -27,7 +27,8 @@
     "db:provision:ai-runs": "node --env-file-if-exists=.env.local scripts/provision-ai-runs.mjs",
     "db:provision:ai-exchanges": "node --env-file-if-exists=.env.local scripts/provision-ai-exchanges.mjs",
     "db:provision:attachments": "node --env-file-if-exists=.env.local scripts/provision-attachments.mjs",
-    "db:provision:audit-logs": "node --env-file-if-exists=.env.local scripts/provision-audit-logs.mjs"
+    "db:provision:audit-logs": "node --env-file-if-exists=.env.local scripts/provision-audit-logs.mjs",
+    "migrate:dry-run": "node migration/cli.mjs --dry-run"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
