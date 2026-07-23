@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "mongo:health": "node --env-file-if-exists=.env.local scripts/mongo-healthcheck.mjs",
-    "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs"
+    "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs",
+    "db:provision:task-tracker": "node --env-file-if-exists=.env.local scripts/provision-task-tracker.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
