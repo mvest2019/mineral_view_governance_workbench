@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "mongo:health": "node --env-file-if-exists=.env.local scripts/mongo-healthcheck.mjs"
+    "mongo:health": "node --env-file-if-exists=.env.local scripts/mongo-healthcheck.mjs",
+    "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
