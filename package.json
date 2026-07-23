@@ -16,7 +16,18 @@
     "db:provision:priority-questions": "node --env-file-if-exists=.env.local scripts/provision-priority-questions.mjs",
     "db:provision:answers": "node --env-file-if-exists=.env.local scripts/provision-answers.mjs",
     "db:provision:meetings": "node --env-file-if-exists=.env.local scripts/provision-meetings.mjs",
-    "db:provision:meeting-files": "node --env-file-if-exists=.env.local scripts/provision-meeting-files.mjs"
+    "db:provision:meeting-files": "node --env-file-if-exists=.env.local scripts/provision-meeting-files.mjs",
+    "db:provision:roles": "node --env-file-if-exists=.env.local scripts/provision-roles.mjs",
+    "db:provision:departments": "node --env-file-if-exists=.env.local scripts/provision-departments.mjs",
+    "db:provision:question-assignments": "node --env-file-if-exists=.env.local scripts/provision-question-assignments.mjs",
+    "db:provision:repo-questions": "node --env-file-if-exists=.env.local scripts/provision-repo-questions.mjs",
+    "db:provision:repositories": "node --env-file-if-exists=.env.local scripts/provision-repositories.mjs",
+    "db:provision:findings": "node --env-file-if-exists=.env.local scripts/provision-findings.mjs",
+    "db:provision:intakes": "node --env-file-if-exists=.env.local scripts/provision-intakes.mjs",
+    "db:provision:ai-runs": "node --env-file-if-exists=.env.local scripts/provision-ai-runs.mjs",
+    "db:provision:ai-exchanges": "node --env-file-if-exists=.env.local scripts/provision-ai-exchanges.mjs",
+    "db:provision:attachments": "node --env-file-if-exists=.env.local scripts/provision-attachments.mjs",
+    "db:provision:audit-logs": "node --env-file-if-exists=.env.local scripts/provision-audit-logs.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",

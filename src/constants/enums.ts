@@ -29,6 +29,25 @@ export const MEETING_SUMMARY_STATUS = ['NONE', 'DRAFT', 'FINAL'] as const;
 export const MEETING_FILE_KIND = ['NOTES', 'TRANSCRIPT', 'AUDIO', 'OTHER'] as const;
 // Suggested meeting types (free label — NOT enforced as an enum; default "other").
 export const MEETING_TYPES = ['standup', 'review', 'governance', 'one_on_one', 'other'] as const;
+// AI run action types (V1 spec §3.14).
+export const AI_ACTION_TYPE = [
+  'SUMMARY', 'ANALYSIS', 'GENERATE_QUESTIONS', 'PARSE_ANSWERS', 'CHAT', 'CLASSIFY', 'FOLLOW_UP',
+] as const;
+// Repository classification approval status (V1 spec §3.11).
+export const REPO_APPROVAL_STATUS = ['PENDING', 'APPROVED', 'REJECTED'] as const;
+// Finding review decision (V1 spec §3.12).
+export const FINDING_DECISION = ['OPEN', 'REVIEWED', 'ACCEPTED', 'REJECTED'] as const;
+// Preferred AI engine for an attachment's analysis (V1 spec §3.16).
+export const AI_PREFERENCE = ['CLAUDE', 'OPENAI'] as const;
+// Audit log outcome (V1 spec §3.17).
+export const AUDIT_OUTCOME = ['SUCCESS', 'DENIED', 'ERROR'] as const;
+// Repository categories (reference list from lib/config REPO_CATEGORIES — free
+// label, NOT enum-enforced since categories are config-driven and evolve).
+export const REPO_CATEGORIES = [
+  'Pricing', 'Vendor Feeds', 'Payments / Finance', 'Tax / Compliance', 'Orders / Checkout',
+  'Shipping / Fulfillment', 'Notifications / Email', 'Customer / CRM / Marketing', 'Web / Storefront',
+  'Mobile', 'Analytics / ML', 'Admin / Ops', 'Governance / Legal', 'Unknown',
+] as const;
 
 export type Priority = (typeof PRIORITY)[number];
 export type QuestionStatus = (typeof QUESTION_STATUS)[number];
@@ -47,6 +66,11 @@ export type AnswerMatchStrategy = (typeof ANSWER_MATCH_STRATEGY)[number];
 export type ActionItemStatus = (typeof ACTION_ITEM_STATUS)[number];
 export type MeetingSummaryStatus = (typeof MEETING_SUMMARY_STATUS)[number];
 export type MeetingFileKind = (typeof MEETING_FILE_KIND)[number];
+export type AiActionType = (typeof AI_ACTION_TYPE)[number];
+export type RepoApprovalStatus = (typeof REPO_APPROVAL_STATUS)[number];
+export type FindingDecision = (typeof FINDING_DECISION)[number];
+export type AiPreference = (typeof AI_PREFERENCE)[number];
+export type AuditOutcome = (typeof AUDIT_OUTCOME)[number];
 
 /** The one and only company discriminator value in V1 (single-company app). */
 export const DEFAULT_COMPANY_KEY = 'MView';

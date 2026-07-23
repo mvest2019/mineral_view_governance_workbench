@@ -38,6 +38,18 @@ export interface BaseDocument {
   metadata?: Record<string, unknown>;
 }
 
+/**
+ * A polymorphic pointer to any document in any collection — used by cross-cutting
+ * collections (attachments.target, auditLogs.target, aiRuns.subject). `id` may be
+ * an ObjectId (the usual case) or a natural-key string.
+ */
+export interface PolymorphicRef {
+  collection: string;
+  id: ObjectId | string;
+  /** Optional sub-location within the target (e.g. a field or section). */
+  field?: string;
+}
+
 /** Actor performing a write. Defaults to a system actor for jobs/migrations. */
 export const SYSTEM_ACTOR = 'system' as const;
 export const MIGRATION_ACTOR = 'migration' as const;

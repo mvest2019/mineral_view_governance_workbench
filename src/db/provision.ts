@@ -25,6 +25,28 @@ import { MEETINGS_VALIDATOR } from '@/src/db/validators/meetings.validator';
 import { MEETINGS_INDEXES } from '@/src/db/indexes/meetings.indexes';
 import { MEETING_FILES_VALIDATOR } from '@/src/db/validators/meetingFiles.validator';
 import { MEETING_FILES_INDEXES } from '@/src/db/indexes/meetingFiles.indexes';
+import { ROLES_VALIDATOR } from '@/src/db/validators/roles.validator';
+import { ROLES_INDEXES } from '@/src/db/indexes/roles.indexes';
+import { DEPARTMENTS_VALIDATOR } from '@/src/db/validators/departments.validator';
+import { DEPARTMENTS_INDEXES } from '@/src/db/indexes/departments.indexes';
+import { QUESTION_ASSIGNMENTS_VALIDATOR } from '@/src/db/validators/questionAssignments.validator';
+import { QUESTION_ASSIGNMENTS_INDEXES } from '@/src/db/indexes/questionAssignments.indexes';
+import { REPO_QUESTIONS_VALIDATOR } from '@/src/db/validators/repoQuestions.validator';
+import { REPO_QUESTIONS_INDEXES } from '@/src/db/indexes/repoQuestions.indexes';
+import { REPOSITORIES_VALIDATOR } from '@/src/db/validators/repositories.validator';
+import { REPOSITORIES_INDEXES } from '@/src/db/indexes/repositories.indexes';
+import { FINDINGS_VALIDATOR } from '@/src/db/validators/findings.validator';
+import { FINDINGS_INDEXES } from '@/src/db/indexes/findings.indexes';
+import { INTAKES_VALIDATOR } from '@/src/db/validators/intakes.validator';
+import { INTAKES_INDEXES } from '@/src/db/indexes/intakes.indexes';
+import { AI_RUNS_VALIDATOR } from '@/src/db/validators/aiRuns.validator';
+import { AI_RUNS_INDEXES } from '@/src/db/indexes/aiRuns.indexes';
+import { AI_EXCHANGES_VALIDATOR } from '@/src/db/validators/aiExchanges.validator';
+import { AI_EXCHANGES_INDEXES } from '@/src/db/indexes/aiExchanges.indexes';
+import { ATTACHMENTS_VALIDATOR } from '@/src/db/validators/attachments.validator';
+import { ATTACHMENTS_INDEXES } from '@/src/db/indexes/attachments.indexes';
+import { AUDIT_LOGS_VALIDATOR } from '@/src/db/validators/auditLogs.validator';
+import { AUDIT_LOGS_INDEXES } from '@/src/db/indexes/auditLogs.indexes';
 import { COLLECTIONS } from '@/src/constants/collections';
 
 export interface ProvisionCollectionSpec {
@@ -148,5 +170,126 @@ export async function provisionMeetingFiles(): Promise<ProvisionResult> {
     validationLevel: MEETING_FILES_VALIDATOR.validationLevel,
     validationAction: MEETING_FILES_VALIDATOR.validationAction,
     indexes: MEETING_FILES_INDEXES,
+  });
+}
+
+/** Provision the roles collection (validator + indexes). Inserts no data. */
+export async function provisionRoles(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.ROLES,
+    validator: ROLES_VALIDATOR.validator,
+    validationLevel: ROLES_VALIDATOR.validationLevel,
+    validationAction: ROLES_VALIDATOR.validationAction,
+    indexes: ROLES_INDEXES,
+  });
+}
+
+/** Provision the departments collection (validator + indexes). Inserts no data. */
+export async function provisionDepartments(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.DEPARTMENTS,
+    validator: DEPARTMENTS_VALIDATOR.validator,
+    validationLevel: DEPARTMENTS_VALIDATOR.validationLevel,
+    validationAction: DEPARTMENTS_VALIDATOR.validationAction,
+    indexes: DEPARTMENTS_INDEXES,
+  });
+}
+
+/** Provision the questionAssignments collection (validator + indexes). Inserts no data. */
+export async function provisionQuestionAssignments(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.QUESTION_ASSIGNMENTS,
+    validator: QUESTION_ASSIGNMENTS_VALIDATOR.validator,
+    validationLevel: QUESTION_ASSIGNMENTS_VALIDATOR.validationLevel,
+    validationAction: QUESTION_ASSIGNMENTS_VALIDATOR.validationAction,
+    indexes: QUESTION_ASSIGNMENTS_INDEXES,
+  });
+}
+
+/** Provision the repoQuestions collection (validator + indexes). Inserts no data. */
+export async function provisionRepoQuestions(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.REPO_QUESTIONS,
+    validator: REPO_QUESTIONS_VALIDATOR.validator,
+    validationLevel: REPO_QUESTIONS_VALIDATOR.validationLevel,
+    validationAction: REPO_QUESTIONS_VALIDATOR.validationAction,
+    indexes: REPO_QUESTIONS_INDEXES,
+  });
+}
+
+/** Provision the repositories collection (validator + indexes). Inserts no data. */
+export async function provisionRepositories(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.REPOSITORIES,
+    validator: REPOSITORIES_VALIDATOR.validator,
+    validationLevel: REPOSITORIES_VALIDATOR.validationLevel,
+    validationAction: REPOSITORIES_VALIDATOR.validationAction,
+    indexes: REPOSITORIES_INDEXES,
+  });
+}
+
+/** Provision the findings collection (validator + indexes). Inserts no data. */
+export async function provisionFindings(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.FINDINGS,
+    validator: FINDINGS_VALIDATOR.validator,
+    validationLevel: FINDINGS_VALIDATOR.validationLevel,
+    validationAction: FINDINGS_VALIDATOR.validationAction,
+    indexes: FINDINGS_INDEXES,
+  });
+}
+
+/** Provision the intakes collection (validator + indexes). Inserts no data. */
+export async function provisionIntakes(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.INTAKES,
+    validator: INTAKES_VALIDATOR.validator,
+    validationLevel: INTAKES_VALIDATOR.validationLevel,
+    validationAction: INTAKES_VALIDATOR.validationAction,
+    indexes: INTAKES_INDEXES,
+  });
+}
+
+/** Provision the aiRuns collection (validator + indexes). Inserts no data. */
+export async function provisionAiRuns(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.AI_RUNS,
+    validator: AI_RUNS_VALIDATOR.validator,
+    validationLevel: AI_RUNS_VALIDATOR.validationLevel,
+    validationAction: AI_RUNS_VALIDATOR.validationAction,
+    indexes: AI_RUNS_INDEXES,
+  });
+}
+
+/** Provision the aiExchanges collection (validator + indexes). Inserts no data. */
+export async function provisionAiExchanges(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.AI_EXCHANGES,
+    validator: AI_EXCHANGES_VALIDATOR.validator,
+    validationLevel: AI_EXCHANGES_VALIDATOR.validationLevel,
+    validationAction: AI_EXCHANGES_VALIDATOR.validationAction,
+    indexes: AI_EXCHANGES_INDEXES,
+  });
+}
+
+/** Provision the attachments collection (validator + indexes). Inserts no data. */
+export async function provisionAttachments(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.ATTACHMENTS,
+    validator: ATTACHMENTS_VALIDATOR.validator,
+    validationLevel: ATTACHMENTS_VALIDATOR.validationLevel,
+    validationAction: ATTACHMENTS_VALIDATOR.validationAction,
+    indexes: ATTACHMENTS_INDEXES,
+  });
+}
+
+/** Provision the auditLogs collection (validator + indexes). Inserts no data. */
+export async function provisionAuditLogs(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.AUDIT_LOGS,
+    validator: AUDIT_LOGS_VALIDATOR.validator,
+    validationLevel: AUDIT_LOGS_VALIDATOR.validationLevel,
+    validationAction: AUDIT_LOGS_VALIDATOR.validationAction,
+    indexes: AUDIT_LOGS_INDEXES,
   });
 }
