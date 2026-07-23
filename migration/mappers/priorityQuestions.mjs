@@ -84,6 +84,7 @@ export function dryRun(ctx) {
       report.validRecords += 1; report.estimatedDocuments += 1;
       if (ctx && ctx.crossref) ctx.crossref.register('priorityQuestions', q.questionCode);
       if (ctx && ctx.titleIndex && normalized) ctx.titleIndex.set(normalized, q.questionCode);
+      if (ctx && ctx.sink) ctx.sink('priorityQuestions', candidate, { questionCode: q.questionCode });
       addSample(report, candidate);
     } else {
       report.invalidRecords += 1; v.errors.forEach((e) => report.errors.push(`${q.questionCode}: ${e}`));

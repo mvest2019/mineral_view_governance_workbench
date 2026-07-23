@@ -64,6 +64,7 @@ export function dryRun(ctx) {
       report.validRecords += 1;
       report.estimatedDocuments += 1;
       if (ctx && ctx.crossref) ctx.crossref.register('employees', memberKey);
+      if (ctx && ctx.sink) ctx.sink('employees', candidate, { memberKey });
       addSample(report, candidate);
     } else {
       report.invalidRecords += 1;

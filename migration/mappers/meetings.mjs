@@ -61,7 +61,9 @@ export function dryRun(ctx) {
     const v = validateDocument('meetings', candidate);
     v.warnings.forEach((w) => report.warnings.push(`${f.path}: ${w}`));
     if (v.ok) {
-      report.validRecords += 1; report.estimatedDocuments += 1; addSample(report, candidate);
+      report.validRecords += 1; report.estimatedDocuments += 1;
+      if (ctx && ctx.sink) ctx.sink('meetings', candidate, { 'metadata.legacy.githubPath': f.path });
+      addSample(report, candidate);
     } else {
       report.invalidRecords += 1; v.errors.forEach((e) => report.errors.push(`${f.path}: ${e}`));
     }

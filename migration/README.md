@@ -1,12 +1,47 @@
-# Migration Framework (dry-run only)
+# Migration Framework (dry-run + execute)
 
-Production-ready **migration framework** for moving Governance Workbench data into
-`GovernanceDB`, per `docs/MONGODB_MIGRATION_DESIGN.md`.
+Production-ready **migration framework + execution layer** for moving Governance
+Workbench data into `GovernanceDB`, per `docs/MONGODB_MIGRATION_DESIGN.md`.
 
-> **This phase is dry-run only.** The framework reads sources, validates, builds
-> documents **in memory**, detects duplicates + missing references, and reports.
-> It **never connects to MongoDB** and **never writes anything**. The actual
-> migration execution (inserts) is intentionally **not implemented** yet.
+> **`--dry-run`** reads sources, validates, builds documents in memory, detects
+> duplicates + missing references, and reports. It **never connects to MongoDB**.
+>
+> **`--execute`** writes those documents into `GovernanceDB` (idempotent upserts,
+> `metadata.migration.{runId,batchId}` on every doc, `importJobs` +
+> `migrationErrors` logs, per-batch reconciliation). It connects **only** to
+> `GovernanceDB` and requires `--confirm` + `MONGODB_URI`.
+>
+> **`--rollback <runId>`** deletes every document tagged with that run's id.
+>
+> The application is **not** switched to MongoDB by this tool — it is a
+> standalone, isolated utility. GitHub + SQLite remain the source of truth.
+
+## Modes & CLI
+
+```bash
+# read-only, writes nothing
+npm run migrate:dry-run -- --all
+
+# write to GovernanceDB (needs MONGODB_URI in .env.local + explicit --confirm)
+npm run migrate:execute -- --all --confirm
+npm run migrate:execute -- --collection employees --confirm
+
+# undo a run
+npm run migrate:rollback -- run-20260723-abcd12 --confirm
+```
+
+Execution order (dependency-safe): `employees → repositories → priorityQuestions
+→ answers → taskTrackerEntries → meetings`. Answers back-fill synthesized
+`priorityQuestions` (`Q-MIG-<hash>`) so no answer is orphaned.
+
+### Execution-layer modules
+- `lib/mongoWriter.mjs` — the ONLY module that connects/writes; bound to
+  GovernanceDB; idempotent `$setOnInsert` upserts; `importJobs`/`migrationErrors`
+  logging; `rollbackRun()`. Dynamically imported only in `--execute`/`--rollback`.
+- `lib/finalize.mjs` — stamps the V1 base envelope + `metadata.migration` and
+  assigns `_id` via the crossref (pure; no I/O).
+- `executor.mjs` — runs mappers with a `sink`, finalizes, batch-upserts, logs,
+  and emits a reconciliation snapshot after every batch.
 
 ## Guarantees
 

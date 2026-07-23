@@ -62,6 +62,23 @@ export function dryRun(ctx) {
         titleIndex.set(norm, code);
         report.backfilledQuestions += 1;
         backfilled += 1;
+        // In --execute, emit the synthesized priorityQuestion so the answer's
+        // reference resolves. Idempotent on questionCode. (No-op in dry-run.)
+        if (ctx && ctx.sink) {
+          ctx.sink('priorityQuestions', {
+            companyKey: MIGRATION_CONFIG.companyKey,
+            questionCode: code,
+            normalizedTitle: norm,
+            title: questionText.split('\n')[0].slice(0, 300),
+            bodyMarkdown: questionText,
+            priority: 'MEDIUM',
+            status: 'ANSWERED',
+            source: 'FILE',
+            generatedBy: 'migration',
+            answerCount: 0,
+            metadata: { legacy: { synthesizedFrom: f.path }, reviewNeeded: true },
+          }, { questionCode: code });
+        }
       }
       questionCode = backfill.get(norm);
       questionMatch = { strategy: 'MANUAL', confidence: 'MEDIUM' };
@@ -77,6 +94,7 @@ export function dryRun(ctx) {
     // ---- duplicate detection on the FULL answer content ----
     const dupKey = sha256(`${questionCode}|${answeredByKey}|${parsed.date ? parsed.date.toISOString() : ''}|${answerMarkdown}`);
     if (dupes.check(dupKey, f.path).duplicate) { report.duplicateRecords += 1; continue; }
+    meta.legacy.dedupeKey = dupKey; // stable idempotency key for --execute upsert
 
     const candidate = {
       companyKey: MIGRATION_CONFIG.companyKey,
@@ -97,7 +115,9 @@ export function dryRun(ctx) {
     const v = validateDocument('answers', candidate);
     v.warnings.forEach((w) => report.warnings.push(`${f.path}: ${w}`));
     if (v.ok) {
-      report.validRecords += 1; report.estimatedDocuments += 1; addSample(report, candidate);
+      report.validRecords += 1; report.estimatedDocuments += 1;
+      if (ctx && ctx.sink) ctx.sink('answers', candidate, { 'metadata.legacy.dedupeKey': dupKey });
+      addSample(report, candidate);
     } else {
       report.invalidRecords += 1; v.errors.forEach((e) => report.errors.push(`${f.path}: ${e}`));
     }

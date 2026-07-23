@@ -19,16 +19,26 @@ import { dryRun as answers } from './mappers/answers.mjs';
 import { dryRun as meetings } from './mappers/meetings.mjs';
 import { dryRun as repositories } from './mappers/repositories.mjs';
 
-const MAPPERS = {
+export const MAPPERS = {
   employees, taskTrackerEntries, priorityQuestions, answers, meetings, repositories,
 };
+
+// Dependency-safe execution order (referenced natural keys created first).
+export const EXECUTION_ORDER = [
+  'employees',       // referenced by tasks/questions/answers/meetings (by key)
+  'repositories',    // standalone
+  'priorityQuestions', // answers reference questionCode
+  'answers',         // may back-fill priorityQuestions (Q-MIG-*)
+  'taskTrackerEntries',
+  'meetings',
+];
 
 /**
  * Pre-register reference keys so ref checks work even for a single --collection
  * run: employee roster (profiles + config + task authors) and question codes +
  * a normalizedTitle→code index (for answer linking).
  */
-function buildReferenceIndex(crossref, titleIndex) {
+export function buildReferenceIndex(crossref, titleIndex) {
   for (const p of readTeamMemberProfiles()) crossref.register('employees', p.memberKey);
   for (const c of readConfigEmployeeKeys()) crossref.register('employees', c.memberKey);
   for (const f of readTaskTrackerFiles()) {

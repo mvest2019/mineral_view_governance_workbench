@@ -87,6 +87,7 @@ export async function dryRun(ctx) {
     if (v.ok) {
       report.validRecords += 1; report.estimatedDocuments += 1;
       if (ctx && ctx.crossref) ctx.crossref.register('repositories', row.repo_name);
+      if (ctx && ctx.sink) ctx.sink('repositories', candidate, { name: row.repo_name });
       addSample(report, candidate);
     } else {
       report.invalidRecords += 1; v.errors.forEach((e) => report.errors.push(`${row.repo_name}: ${e}`));
