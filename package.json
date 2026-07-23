@@ -12,7 +12,9 @@
     "lint": "next lint",
     "mongo:health": "node --env-file-if-exists=.env.local scripts/mongo-healthcheck.mjs",
     "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs",
-    "db:provision:task-tracker": "node --env-file-if-exists=.env.local scripts/provision-task-tracker.mjs"
+    "db:provision:task-tracker": "node --env-file-if-exists=.env.local scripts/provision-task-tracker.mjs",
+    "db:provision:priority-questions": "node --env-file-if-exists=.env.local scripts/provision-priority-questions.mjs",
+    "db:provision:answers": "node --env-file-if-exists=.env.local scripts/provision-answers.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",

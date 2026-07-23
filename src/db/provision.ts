@@ -17,6 +17,10 @@ import { EMPLOYEES_VALIDATOR } from '@/src/db/validators/employees.validator';
 import { EMPLOYEES_INDEXES } from '@/src/db/indexes/employees.indexes';
 import { TASK_TRACKER_ENTRIES_VALIDATOR } from '@/src/db/validators/taskTrackerEntries.validator';
 import { TASK_TRACKER_ENTRIES_INDEXES } from '@/src/db/indexes/taskTrackerEntries.indexes';
+import { PRIORITY_QUESTIONS_VALIDATOR } from '@/src/db/validators/priorityQuestions.validator';
+import { PRIORITY_QUESTIONS_INDEXES } from '@/src/db/indexes/priorityQuestions.indexes';
+import { ANSWERS_VALIDATOR } from '@/src/db/validators/answers.validator';
+import { ANSWERS_INDEXES } from '@/src/db/indexes/answers.indexes';
 import { COLLECTIONS } from '@/src/constants/collections';
 
 export interface ProvisionCollectionSpec {
@@ -96,5 +100,27 @@ export async function provisionTaskTrackerEntries(): Promise<ProvisionResult> {
     validationLevel: TASK_TRACKER_ENTRIES_VALIDATOR.validationLevel,
     validationAction: TASK_TRACKER_ENTRIES_VALIDATOR.validationAction,
     indexes: TASK_TRACKER_ENTRIES_INDEXES,
+  });
+}
+
+/** Provision the priorityQuestions collection (validator + indexes). Inserts no data. */
+export async function provisionPriorityQuestions(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.PRIORITY_QUESTIONS,
+    validator: PRIORITY_QUESTIONS_VALIDATOR.validator,
+    validationLevel: PRIORITY_QUESTIONS_VALIDATOR.validationLevel,
+    validationAction: PRIORITY_QUESTIONS_VALIDATOR.validationAction,
+    indexes: PRIORITY_QUESTIONS_INDEXES,
+  });
+}
+
+/** Provision the answers collection (validator + indexes). Inserts no data. */
+export async function provisionAnswers(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.ANSWERS,
+    validator: ANSWERS_VALIDATOR.validator,
+    validationLevel: ANSWERS_VALIDATOR.validationLevel,
+    validationAction: ANSWERS_VALIDATOR.validationAction,
+    indexes: ANSWERS_INDEXES,
   });
 }
