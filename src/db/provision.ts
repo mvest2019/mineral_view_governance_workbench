@@ -21,6 +21,10 @@ import { PRIORITY_QUESTIONS_VALIDATOR } from '@/src/db/validators/priorityQuesti
 import { PRIORITY_QUESTIONS_INDEXES } from '@/src/db/indexes/priorityQuestions.indexes';
 import { ANSWERS_VALIDATOR } from '@/src/db/validators/answers.validator';
 import { ANSWERS_INDEXES } from '@/src/db/indexes/answers.indexes';
+import { MEETINGS_VALIDATOR } from '@/src/db/validators/meetings.validator';
+import { MEETINGS_INDEXES } from '@/src/db/indexes/meetings.indexes';
+import { MEETING_FILES_VALIDATOR } from '@/src/db/validators/meetingFiles.validator';
+import { MEETING_FILES_INDEXES } from '@/src/db/indexes/meetingFiles.indexes';
 import { COLLECTIONS } from '@/src/constants/collections';
 
 export interface ProvisionCollectionSpec {
@@ -122,5 +126,27 @@ export async function provisionAnswers(): Promise<ProvisionResult> {
     validationLevel: ANSWERS_VALIDATOR.validationLevel,
     validationAction: ANSWERS_VALIDATOR.validationAction,
     indexes: ANSWERS_INDEXES,
+  });
+}
+
+/** Provision the meetings collection (validator + indexes). Inserts no data. */
+export async function provisionMeetings(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.MEETINGS,
+    validator: MEETINGS_VALIDATOR.validator,
+    validationLevel: MEETINGS_VALIDATOR.validationLevel,
+    validationAction: MEETINGS_VALIDATOR.validationAction,
+    indexes: MEETINGS_INDEXES,
+  });
+}
+
+/** Provision the meetingFiles collection (validator + indexes). Inserts no data. */
+export async function provisionMeetingFiles(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.MEETING_FILES,
+    validator: MEETING_FILES_VALIDATOR.validator,
+    validationLevel: MEETING_FILES_VALIDATOR.validationLevel,
+    validationAction: MEETING_FILES_VALIDATOR.validationAction,
+    indexes: MEETING_FILES_INDEXES,
   });
 }

@@ -14,7 +14,9 @@
     "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs",
     "db:provision:task-tracker": "node --env-file-if-exists=.env.local scripts/provision-task-tracker.mjs",
     "db:provision:priority-questions": "node --env-file-if-exists=.env.local scripts/provision-priority-questions.mjs",
-    "db:provision:answers": "node --env-file-if-exists=.env.local scripts/provision-answers.mjs"
+    "db:provision:answers": "node --env-file-if-exists=.env.local scripts/provision-answers.mjs",
+    "db:provision:meetings": "node --env-file-if-exists=.env.local scripts/provision-meetings.mjs",
+    "db:provision:meeting-files": "node --env-file-if-exists=.env.local scripts/provision-meeting-files.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",

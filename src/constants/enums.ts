@@ -21,6 +21,14 @@ export const QUESTION_SOURCE = ['MANUAL', 'AI_GENERATED', 'FILE', 'MEETING'] as 
 export const QUESTION_KIND = ['PRIORITY', 'REPO'] as const;
 // How an answer was linked back to its question (V1 spec §3.6 questionMatch).
 export const ANSWER_MATCH_STRATEGY = ['QID', 'FUZZY_TITLE', 'MANUAL', 'UNLINKED'] as const;
+// Meeting embedded action-item status (V1 spec §3.9).
+export const ACTION_ITEM_STATUS = ['OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED'] as const;
+// Inline meeting AI-summary status (V1 spec §3.9 summary).
+export const MEETING_SUMMARY_STATUS = ['NONE', 'DRAFT', 'FINAL'] as const;
+// Meeting file kind (V1 spec §3.10).
+export const MEETING_FILE_KIND = ['NOTES', 'TRANSCRIPT', 'AUDIO', 'OTHER'] as const;
+// Suggested meeting types (free label — NOT enforced as an enum; default "other").
+export const MEETING_TYPES = ['standup', 'review', 'governance', 'one_on_one', 'other'] as const;
 
 export type Priority = (typeof PRIORITY)[number];
 export type QuestionStatus = (typeof QUESTION_STATUS)[number];
@@ -36,6 +44,9 @@ export type ChangeSource = (typeof CHANGE_SOURCE)[number];
 export type QuestionSource = (typeof QUESTION_SOURCE)[number];
 export type QuestionKind = (typeof QUESTION_KIND)[number];
 export type AnswerMatchStrategy = (typeof ANSWER_MATCH_STRATEGY)[number];
+export type ActionItemStatus = (typeof ACTION_ITEM_STATUS)[number];
+export type MeetingSummaryStatus = (typeof MEETING_SUMMARY_STATUS)[number];
+export type MeetingFileKind = (typeof MEETING_FILE_KIND)[number];
 
 /** The one and only company discriminator value in V1 (single-company app). */
 export const DEFAULT_COMPANY_KEY = 'MView';
