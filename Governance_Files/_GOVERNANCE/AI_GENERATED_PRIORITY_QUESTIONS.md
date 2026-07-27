@@ -3430,3 +3430,57 @@ The recommendation now is to keep `WellGeoData` and the nightly well list separa
 **1. Short Question** — Who confirms there is no live traffic to the empty `mvp*` collections before they are deleted?
 
 The earlier "safe to drop" note was corrected — the collections are still referenced in the Community app code. Needs a named verification method (access logs, traffic capture) and an owner before deletion proceeds.
+
+### Q-AI-0420 — Is the required validation window two days or three days, since the submission uses both?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is the required validation window two days or three days, since the submission uses both?
+
+Sections 1, 2 and 3 state validation covers the **last two days** of scraping, while Section 8 confirms quality for the **last three days**. One of these is the actual coverage commitment. Please confirm the official lookback window that must be validated before data is released downstream, and correct the other references.
+
+### Q-AI-0421 — When a failed scraper is rerun, what prevents the rerun from creating duplicate records?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When a failed scraper is rerun, what prevents the rerun from creating duplicate records?
+
+The submission notes failed/delayed executions were reviewed and "successful reruns" validated, and separately that duplicate checks are run. Is the scraper rerun idempotent (upsert on tracking/permit number), or does duplicate removal depend on the manual SQL duplicate check catching it afterwards?
+
+### Q-AI-0422 — Who or what validates scraped records that fall outside the rolling two-day review window?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who or what validates scraped records that fall outside the rolling two-day review window?
+
+Daily validation only inspects the most recent two days. If a scraper defect or source-site change is discovered later, is there a defined process to re-validate and backfill the older records already published downstream, or does data age out of review permanently after ~48 hours?
+
+### Q-AI-0423 — Where is the authoritative list of mandatory fields for each W-1/W-2 table documented?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where is the authoritative list of mandatory fields for each W-1/W-2 table documented?
+
+Fields such as District Code, County, Lease Number, Completion Type, Producing Interval, Open Hole, Completion Flag, and Packer Depth Type are treated as mandatory. Is that list held in a controlled spec, and who approves changes to it — or is it carried in the validator's own knowledge?
+
+### Q-AI-0424 — Where are the daily validation results stored, and does anyone independently review them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the daily validation results stored, and does anyone independently review them?
+
+The work is documented as a "daily summary," but the storage location, retention period, and reviewer are not stated. If the same person executes, validates, and signs off on the data, that is a single-person control over what gets published to users.
+
+### Q-AI-0425 — Has anyone confirmed that automated scraping of the RRC source website is permitted under its terms of use?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Has anyone confirmed that automated scraping of the RRC source website is permitted under its terms of use?
+
+Daily automated Selenium/Scrapy extraction plus manual cross-checking against the source site is a standing dependency on a third-party website. Is there a documented confirmation that this access pattern and request volume are allowed, and who owns that determination?
