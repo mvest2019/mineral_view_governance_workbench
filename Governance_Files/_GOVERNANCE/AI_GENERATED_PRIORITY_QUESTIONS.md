@@ -3322,3 +3322,57 @@ The submission identifies this as a pre-existing bug in the shared grid cell, no
 **1. Short Question** — Who approved removing the "PROFESSIONAL PLANS · OPERATORS & ADVISORS · FREE TO START" banner and shortening the feature-card copy?
 
 Deleting a banner that states the professional tier is free to start, plus trimming all six feature-card descriptions and button labels, changes customer-facing pricing and product messaging. Confirm whether marketing signed off or whether these were layout-driven decisions made during the UI pass.
+
+### Q-AI-0408 — Has the plan-update bug that overwrites duration on a user's other plans already corrupted live subscription records?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Has the plan-update bug that overwrites duration on a user's other plans already corrupted live subscription records?
+
+The submission reports that updating a user's subscription plan incorrectly modifies the **duration** value for other plans belonging to the same user. Governance needs to know whether this was reproduced only in a test environment or whether production records are affected, how many users are impacted, and who owns the data repair and backfill. Incorrect duration directly affects billing and access-expiry dates.
+
+### Q-AI-0409 — Did the duplicate subscription purchase emails reach real paying customers, and is a correction or apology needed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Did the duplicate subscription purchase emails reach real paying customers, and is a correction or apology needed?
+
+Duplicate emails after a successful purchase were logged as a defect. Clarify whether the duplicates were sent only to test accounts or to real member inboxes, how long the issue has been live, and who owns both the deduplication fix and any customer communication.
+
+### Q-AI-0410 — What is the defined behavior when an auto-renewal payment fails — retries, grace period, and when access is revoked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is the defined behavior when an auto-renewal payment fails — retries, grace period, and when access is revoked?
+
+Auto-renewal was tested for the success path, but the failure path is a business decision, not a test decision. Confirm the approved dunning/retry schedule, grace period length, the notification sent to the user, and the exact point at which paid features and claimed-lease access are withdrawn — and whether that path was covered in this regression run.
+
+### Q-AI-0411 — Does auto-renewal give users advance renewal notice and a self-serve cancellation path before they are charged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does auto-renewal give users advance renewal notice and a self-serve cancellation path before they are charged?
+
+Charging a card automatically without clear pre-purchase consent, advance notice before each renewal, and an easy cancellation route carries regulatory exposure (US auto-renewal/negative-option rules). Confirm what consent text is shown at checkout, how many days before renewal the reminder is sent, and whether a user can cancel a yearly plan without contacting support.
+
+### Q-AI-0412 — Who approves the subscription email templates and the email-communication recommendations you documented?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who approves the subscription email templates and the email-communication recommendations you documented?
+
+The task includes validating which templates fire for each subscription event and documenting recommendations for improvement. Identify the owner who signs off on final template content and wording, and where the approved event-to-template mapping is documented as the source of truth.
+
+### Q-AI-0413 — Did the mobile responsiveness testing cover the subscription purchase, renewal, and cancellation flows on a phone?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Did the mobile responsiveness testing cover the subscription purchase, renewal, and cancellation flows on a phone?
+
+The mobile task lists pricing cards, banners, navigation and layout, but not the paid checkout or renewal journey. Since the Yearly Plan and auto-renewal are launching, confirm whether end-to-end mobile payment and cancellation were tested, and whether the misaligned 1-Year Renewal Reminder popup is a launch blocker or a post-launch fix.
