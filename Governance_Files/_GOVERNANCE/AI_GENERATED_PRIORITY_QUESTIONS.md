@@ -3160,3 +3160,57 @@ Clarify whether the test ran against a sandbox/test database or against a live s
 **1. Short Question** — Should placeholder test submissions be committed as permanent governance records?
 
 This entry appears to be a workbench test rather than real work. Confirm whether test submissions should be excluded or cleaned up so the governance record stays accurate.
+
+### Q-AI-0390 — Is this MongoDB testing running against production or a staging copy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is this MongoDB testing running against production or a staging copy?
+
+The submission says only "testing mongodb" with no environment named. Prior governance records show staging databases were dropped and production MongoDB holds live application data, so the target environment must be stated explicitly.
+
+### Q-AI-0391 — What exactly is in scope — connectivity, data integrity, or an application feature backed by MongoDB?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What exactly is in scope — connectivity, data integrity, or an application feature backed by MongoDB?
+
+A one-line description gives no testable scope, no acceptance criteria, and no way to judge when the work is complete.
+
+### Q-AI-0392 — Does this testing perform any writes, updates, or deletes on MongoDB collections?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does this testing perform any writes, updates, or deletes on MongoDB collections?
+
+If the testing is not strictly read-only, we need to know which collections are touched and what the rollback/restore plan is before it runs.
+
+### Q-AI-0393 — Which MongoDB credentials and access level are you using for this testing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which MongoDB credentials and access level are you using for this testing?
+
+Clarify whether a dedicated test account is used or a shared/admin connection string, and confirm the credential is held in an environment variable rather than pasted into scripts or notes.
+
+### Q-AI-0394 — Do the records used in this MongoDB testing contain real mineral-owner PII?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the records used in this MongoDB testing contain real mineral-owner PII?
+
+If real owner records are queried or exported as evidence, we need to know where that evidence is stored and who can see it.
+
+### Q-AI-0395 — Where are the results and defects from this MongoDB testing recorded, and who signs them off?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Where are the results and defects from this MongoDB testing recorded, and who signs them off?
+
+Without a named evidence location and reviewer, the test result cannot be treated as a governance record.
