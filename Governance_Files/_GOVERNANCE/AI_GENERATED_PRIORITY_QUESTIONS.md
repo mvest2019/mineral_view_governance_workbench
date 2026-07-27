@@ -3214,3 +3214,57 @@ If real owner records are queried or exported as evidence, we need to know where
 **1. Short Question** — Where are the results and defects from this MongoDB testing recorded, and who signs them off?
 
 Without a named evidence location and reviewer, the test result cannot be treated as a governance record.
+
+### Q-AI-0396 — Is this submission a real work record or a system test entry that should be removed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Is this submission a real work record or a system test entry that should be removed?
+
+The description is only "testing Staging....." with no scope, outcome, or deliverable. If this was submitted to exercise the Governance Workbench pipeline rather than to record real work, it should be flagged and purged so it does not pollute the governance record and generate downstream questions.
+
+### Q-AI-0397 — What exactly was tested in staging, and what was the result?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — What exactly was tested in staging, and what was the result?
+
+No feature, module, test case, or pass/fail outcome is recorded. Governance cannot tell what was covered or whether anything is now considered verified.
+
+### Q-AI-0398 — Does the staging environment used here contain copies of real mineral-owner PII?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Does the staging environment used here contain copies of real mineral-owner PII?
+
+If staging is seeded from production, any ad-hoc testing touches live member data and needs the same access controls and approval as production.
+
+### Q-AI-0399 — Can staging trigger real outbound actions such as emails, payments, or writes to shared databases?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Can staging trigger real outbound actions such as emails, payments, or writes to shared databases?
+
+Prior records show the email dispatcher scheduled on the staging server and shared MongoDB/PostgreSQL instances, so untracked staging testing may have real-world side effects.
+
+### Q-AI-0400 — Where are staging test evidence and defects recorded, and were any defects found here?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Where are staging test evidence and defects recorded, and were any defects found here?
+
+Other testing work is logged in an issues sheet with severity/priority; this submission has no linked evidence or defect IDs.
+
+### Q-AI-0401 — What is the minimum detail a Task Tracker submission must contain before it is accepted?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — What is the minimum detail a Task Tracker submission must contain before it is accepted?
+
+A one-line placeholder passed validation and entered the governance record. A minimum-content rule would prevent unreviewable entries from consuming analysis and question quota.
