@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { abort, json, route } from '@/lib/http';
 import { generate_priority_questions_from_task } from '@/lib/helpers';
+import { mongoSaveGeneratedQuestions } from '@/lib/mongo_bridge';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,5 +24,8 @@ export const POST = route(async (req: NextRequest) => {
   }
 
   const result = await generate_priority_questions_from_task(company, employee, task);
+  // Dual-write the generated questions into MongoDB (best-effort, non-fatal).
+  // GitHub remains the durable store the response is built from.
+  await mongoSaveGeneratedQuestions(company, (result as { created?: unknown[] }).created as never);
   return json(result);
 });
