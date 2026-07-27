@@ -3034,3 +3034,57 @@ New banner imagery was created with GPT and pushed into CRM and MailChimp campai
 **1. Short Question** — Who reviewed and approved the Lease Report email content and banner before it was scheduled to 139 subscribers?
 
 The MailChimp Lease Report content approval owner and sign-off are not identified.
+
+### Q-AI-0376 — Is the remote Claude bridge endpoint authenticated and restricted, or is it publicly reachable?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Is the remote Claude bridge endpoint authenticated and restricted, or is it publicly reachable?
+
+The frontend now calls Claude through a remote bridge instead of a local CLI. Governance needs confirmation that the bridge URL requires authentication and is IP/VPN restricted, so an open endpoint cannot be used to run Claude against company data.
+
+### Q-AI-0377 — Does the frontend-to-Claude path send any real member or mineral-owner PII to Claude during these tests?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Does the frontend-to-Claude path send any real member or mineral-owner PII to Claude during these tests?
+
+Connectivity testing often uses whatever payload the form sends. Confirm whether test submissions carry real task/meeting content or PII, and whether that transfer is approved.
+
+### Q-AI-0378 — Should this test submission be removed from the governance record so test data isn't mistaken for real work?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Should this test submission be removed from the governance record so test data isn't mistaken for real work?
+
+This entry was created purely to check Claude connectivity, but it is now a committed Task Tracker record that also triggered Priority Questions. Decide whether test entries get deleted, tagged, or routed to a sandbox.
+
+### Q-AI-0379 — Which environment and bridge host was tested, and did the connection actually succeed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Which environment and bridge host was tested, and did the connection actually succeed?
+
+The submission does not state the outcome. Record the environment (local/staging/Vercel production), the bridge host, and the pass/fail result so the earlier Claude-bridge failures reported by other team members can be closed or reopened.
+
+### Q-AI-0380 — Is there a dedicated health-check or smoke-test path for the Claude bridge instead of using the live Task Tracker?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Is there a dedicated health-check or smoke-test path for the Claude bridge instead of using the live Task Tracker?
+
+Using the production intake form as a connectivity test pollutes governance data. Confirm whether a health endpoint exists and should be the standard check going forward.
+
+### Q-AI-0381 — Who is alerted when the Claude bridge goes down, and what happens to submissions made while it is offline?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Who is alerted when the Claude bridge goes down, and what happens to submissions made while it is offline?
+
+Prior reports show blocked Claude-invocation paths and internal errors. Define the monitoring owner and whether task submissions are queued, retried, or silently lost when the bridge is unreachable.
