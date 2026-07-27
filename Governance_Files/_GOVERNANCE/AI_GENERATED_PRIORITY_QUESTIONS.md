@@ -3484,3 +3484,57 @@ The work is documented as a "daily summary," but the storage location, retention
 **1. Short Question** — Has anyone confirmed that automated scraping of the RRC source website is permitted under its terms of use?
 
 Daily automated Selenium/Scrapy extraction plus manual cross-checking against the source site is a standing dependency on a third-party website. Is there a documented confirmation that this access pattern and request volume are allowed, and who owns that determination?
+
+### Q-AI-0426 — Is the Vercel-to-MongoDB connectivity failure caused by the firewall allowlist being cut to ~33 IPs, and who adds Vercel's egress ranges?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the Vercel-to-MongoDB connectivity failure caused by the firewall allowlist being cut to ~33 IPs, and who adds Vercel's egress ranges?
+
+The submission reports infrastructure-level connectivity problems between the deployed app and production MongoDB. Existing governance records show the MongoDB/PostgreSQL firewall allowlist was recently reduced from ~200 IPs to ~33 production/infrastructure IPs. Need confirmation whether these are the same issue, and whether allowlisting Vercel's dynamic egress IPs is acceptable or a static egress/VPC peering approach is required.
+
+### Q-AI-0427 — After removing GitHub dual-write, which store is now the system of record for governance records, and does the GitHub audit trail still exist?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — After removing GitHub dual-write, which store is now the system of record for governance records, and does the GitHub audit trail still exist?
+
+Prior work established GitHub Markdown commits under `Governance_Files/` as the durable governance record. Removing GitHub from task creation changes the audit story — clarify whether MongoDB is now authoritative, whether GitHub commits continue for audit, and who approved that change.
+
+### Q-AI-0428 — Was any Task Tracker or Meeting data lost or never persisted during the period the Meetings module was failing to save?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was any Task Tracker or Meeting data lost or never persisted during the period the Meetings module was failing to save?
+
+The submission says meeting data was not being stored in MongoDB and that the cause was still being diagnosed. Need to know the affected time window, how many submissions were dropped, and whether they can be recovered or must be re-submitted.
+
+### Q-AI-0429 — Do the new diagnostic logging and troubleshooting endpoints expose the MongoDB connection string or credentials, and are they reachable in production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the new diagnostic logging and troubleshooting endpoints expose the MongoDB connection string or credentials, and are they reachable in production?
+
+Diagnostic endpoints added to debug connectivity commonly echo environment variables, hostnames, or connection URIs. Confirm they are authenticated or removed before the migration is considered complete.
+
+### Q-AI-0430 — Which MongoDB cluster and database does the Governance Workbench write to, and is employee/meeting content isolated from production business data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which MongoDB cluster and database does the Governance Workbench write to, and is employee/meeting content isolated from production business data?
+
+Existing governance knowledge lists production MongoDB databases (Data_Allocation, GeoMapPortal, Linkage_data, etc.). Clarify whether governance records live in a separate database or cluster, and who has read access to submitted task and meeting content.
+
+### Q-AI-0431 — What is the migration and rollback plan for the remaining Governance modules, including backfill of records already stored in the old layer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What is the migration and rollback plan for the remaining Governance modules, including backfill of records already stored in the old layer?
+
+The submission ends with 'next steps' for migrating the remaining modules. Need a defined cutover sequence, whether existing Task Tracker and Priority Question records get backfilled into MongoDB, and what the rollback path is if a module fails post-cutover.
