@@ -47,6 +47,8 @@ import { ATTACHMENTS_VALIDATOR } from '@/src/db/validators/attachments.validator
 import { ATTACHMENTS_INDEXES } from '@/src/db/indexes/attachments.indexes';
 import { AUDIT_LOGS_VALIDATOR } from '@/src/db/validators/auditLogs.validator';
 import { AUDIT_LOGS_INDEXES } from '@/src/db/indexes/auditLogs.indexes';
+import { SETTINGS_VALIDATOR } from '@/src/db/validators/settings.validator';
+import { SETTINGS_INDEXES } from '@/src/db/indexes/settings.indexes';
 import { COLLECTIONS } from '@/src/constants/collections';
 
 export interface ProvisionCollectionSpec {
@@ -291,5 +293,16 @@ export async function provisionAuditLogs(): Promise<ProvisionResult> {
     validationLevel: AUDIT_LOGS_VALIDATOR.validationLevel,
     validationAction: AUDIT_LOGS_VALIDATOR.validationAction,
     indexes: AUDIT_LOGS_INDEXES,
+  });
+}
+
+/** Provision the settings collection (validator + indexes). Inserts no data. */
+export async function provisionSettings(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.SETTINGS,
+    validator: SETTINGS_VALIDATOR.validator,
+    validationLevel: SETTINGS_VALIDATOR.validationLevel,
+    validationAction: SETTINGS_VALIDATOR.validationAction,
+    indexes: SETTINGS_INDEXES,
   });
 }

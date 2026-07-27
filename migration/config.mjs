@@ -37,14 +37,26 @@ export const MIGRATION_CONFIG = {
   // Batch size for the (future) execution phase and for progress reporting.
   batchSize: Number.parseInt(process.env.MIGRATION_BATCH_SIZE || '500', 10),
 
-  // Collections the runner can dry-run in this phase (per the request).
+  // Every implemented V1 collection the migration framework can handle.
   supportedCollections: [
     'employees',
+    'roles',
+    'departments',
     'taskTrackerEntries',
     'priorityQuestions',
     'answers',
+    'questionAssignments',
+    'repoQuestions',
     'meetings',
+    'meetingFiles',
     'repositories',
+    'findings',
+    'intakes',
+    'aiRuns',
+    'aiExchanges',
+    'attachments',
+    'auditLogs',
+    'settings',
   ],
 };
 
@@ -63,4 +75,13 @@ export const ENUMS = {
   MEETING_SUMMARY_STATUS: ['NONE', 'DRAFT', 'FINAL'],
   ACTION_ITEM_STATUS: ['OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED'],
   REPO_APPROVAL_STATUS: ['PENDING', 'APPROVED', 'REJECTED'],
+  AI_ENGINE: ['CLAUDE', 'OPENAI', 'HEURISTIC'],
+  AI_STATUS: ['PENDING', 'RUNNING', 'SUCCEEDED', 'FAILED'],
+  AI_ACTION_TYPE: ['SUMMARY', 'ANALYSIS', 'GENERATE_QUESTIONS', 'PARSE_ANSWERS', 'CHAT', 'CLASSIFY', 'FOLLOW_UP'],
+  FINDING_DECISION: ['OPEN', 'REVIEWED', 'ACCEPTED', 'REJECTED'],
+  APPROVAL_STATUS: ['NOT_STARTED', 'PENDING', 'APPROVED', 'REJECTED'],
+  MEETING_FILE_KIND: ['NOTES', 'TRANSCRIPT', 'AUDIO', 'OTHER'],
+  AI_PREFERENCE: ['CLAUDE', 'OPENAI'],
+  AUDIT_CATEGORY: ['SECURITY', 'ACTIVITY'],
+  AUDIT_OUTCOME: ['SUCCESS', 'DENIED', 'ERROR'],
 };

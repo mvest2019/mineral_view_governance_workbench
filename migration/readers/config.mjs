@@ -29,17 +29,6 @@ export function readConfigEmployeeKeys() {
   return out;
 }
 
-/** Department keys referenced in config (e.g. 'DATA_SCIENCE'). Deduped. */
-export function readConfigDepartments() {
-  const t = text();
-  const set = new Set();
-  for (const m of t.matchAll(/'([A-Z][A-Z0-9_]{2,})'/g)) {
-    // Heuristic: department-looking tokens (all caps snake).
-    if (/^[A-Z0-9_]+$/.test(m[1]) && m[1].includes('_')) set.add(m[1]);
-  }
-  return [...set];
-}
-
 /**
  * Aspect-group membership from ASPECT_GROUP_RULES: repoName -> groupName.
  * Best-effort text parse of the config's `{ name: '…', repos: [ … ] }` blocks.
@@ -58,6 +47,43 @@ export function readConfigAspectGroups() {
     }
   }
   return map;
+}
+
+/**
+ * Department definitions from DEPARTMENT_ARCHITECTURE (shared + MView blocks).
+ * Best-effort text parse → [{ key, name, description }]. Deduped by key.
+ */
+export function readConfigDepartments() {
+  const t = text();
+  const start = t.indexOf('DEPARTMENT_ARCHITECTURE');
+  if (start < 0) return [];
+  const slice = t.slice(start);
+  const out = [];
+  const seen = new Set();
+  const re = /key:\s*'([A-Z][A-Z0-9_]*)'\s*,\s*name:\s*'([^']+)'\s*,\s*description:\s*'([^']*)'/g;
+  for (const m of slice.matchAll(re)) {
+    if (seen.has(m[1])) continue;
+    seen.add(m[1]);
+    out.push({ key: m[1], name: m[2], description: m[3] });
+  }
+  return out;
+}
+
+/**
+ * Settings source: local_settings.json (git-ignored runtime state). Returns
+ * [{ key, value }] pairs, or [] if the file is absent. Secrets are flagged by
+ * the mapper, not stored raw.
+ */
+export function readLocalSettings(settingsPath) {
+  const raw = readFileSafe(settingsPath);
+  if (!raw) return [];
+  try {
+    const obj = JSON.parse(raw);
+    if (!obj || typeof obj !== 'object') return [];
+    return Object.entries(obj).map(([key, value]) => ({ key, value }));
+  } catch {
+    return [];
+  }
 }
 
 /** True if lib/config.ts was readable. */

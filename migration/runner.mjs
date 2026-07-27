@@ -18,19 +18,45 @@ import { dryRun as priorityQuestions } from './mappers/priorityQuestions.mjs';
 import { dryRun as answers } from './mappers/answers.mjs';
 import { dryRun as meetings } from './mappers/meetings.mjs';
 import { dryRun as repositories } from './mappers/repositories.mjs';
+import { dryRun as roles } from './mappers/roles.mjs';
+import { dryRun as departments } from './mappers/departments.mjs';
+import { dryRun as settings } from './mappers/settings.mjs';
+import { dryRun as findings } from './mappers/findings.mjs';
+import { dryRun as repoQuestions } from './mappers/repoQuestions.mjs';
+import { dryRun as questionAssignments } from './mappers/questionAssignments.mjs';
+import { dryRun as meetingFiles } from './mappers/meetingFiles.mjs';
+import { dryRun as intakes } from './mappers/intakes.mjs';
+import { dryRun as aiRuns } from './mappers/aiRuns.mjs';
+import { dryRun as aiExchanges } from './mappers/aiExchanges.mjs';
+import { dryRun as attachments } from './mappers/attachments.mjs';
+import { dryRun as auditLogs } from './mappers/auditLogs.mjs';
 
 export const MAPPERS = {
-  employees, taskTrackerEntries, priorityQuestions, answers, meetings, repositories,
+  employees, roles, departments, taskTrackerEntries, priorityQuestions, answers,
+  questionAssignments, repoQuestions, meetings, meetingFiles, repositories, findings,
+  intakes, aiRuns, aiExchanges, attachments, auditLogs, settings,
 };
 
 // Dependency-safe execution order (referenced natural keys created first).
 export const EXECUTION_ORDER = [
-  'employees',       // referenced by tasks/questions/answers/meetings (by key)
-  'repositories',    // standalone
-  'priorityQuestions', // answers reference questionCode
-  'answers',         // may back-fill priorityQuestions (Q-MIG-*)
+  'roles',
+  'departments',
+  'employees',
+  'repositories',
+  'settings',
+  'findings',
+  'priorityQuestions',   // answers reference questionCode
+  'repoQuestions',       // references repoName
+  'answers',             // may back-fill priorityQuestions (Q-MIG-*)
+  'questionAssignments',
   'taskTrackerEntries',
   'meetings',
+  'meetingFiles',        // references meetings (via crossref)
+  'attachments',
+  'intakes',
+  'aiRuns',              // subject → intakes/attachments/employees
+  'aiExchanges',         // → intakes + aiRuns
+  'auditLogs',
 ];
 
 /**

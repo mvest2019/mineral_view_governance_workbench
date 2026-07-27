@@ -75,6 +75,65 @@ const VALIDATORS = {
       enumOk(doc.classification.approvalStatus, ENUMS.REPO_APPROVAL_STATUS, 'classification.approvalStatus', errors);
     }
   },
+  roles(doc, errors) {
+    req(doc, 'key', errors); req(doc, 'name', errors);
+    if (doc.key && !/^[A-Z][A-Z0-9_]*$/.test(doc.key)) errors.push(`key not UPPER_SNAKE: ${doc.key}`);
+  },
+  departments(doc, errors) {
+    req(doc, 'key', errors); req(doc, 'name', errors);
+    if (doc.key && !/^[A-Z][A-Z0-9_]*$/.test(doc.key)) errors.push(`key not UPPER_SNAKE: ${doc.key}`);
+  },
+  settings(doc, errors) {
+    req(doc, 'scope', errors); req(doc, 'key', errors); req(doc, 'ownerKey', errors);
+    if (doc.scope && !['APP', 'USER'].includes(doc.scope)) errors.push(`scope must be APP|USER: ${doc.scope}`);
+  },
+  findings(doc, errors) {
+    req(doc, 'findingCode', errors);
+    if (doc.findingCode && !/^F-[0-9-]+$/.test(doc.findingCode)) errors.push(`findingCode not ^F-[0-9-]+$: ${doc.findingCode}`);
+    enumOk(doc.decision, ENUMS.FINDING_DECISION, 'decision', errors);
+    if (doc.reviewerKey && !SLUG_RE.test(doc.reviewerKey)) errors.push(`reviewerKey not a slug: ${doc.reviewerKey}`);
+  },
+  repoQuestions(doc, errors) {
+    req(doc, 'questionCode', errors); req(doc, 'repoName', errors); req(doc, 'bodyMarkdown', errors);
+    enumOk(doc.priority, ENUMS.PRIORITY, 'priority', errors);
+    enumOk(doc.status, ENUMS.QUESTION_STATUS, 'status', errors);
+    enumOk(doc.source, ENUMS.QUESTION_SOURCE, 'source', errors);
+  },
+  questionAssignments(doc, errors) {
+    req(doc, 'questionCode', errors); req(doc, 'assigneeKey', errors);
+    enumOk(doc.questionKind, ENUMS.QUESTION_KIND, 'questionKind', errors);
+    if (doc.assigneeKey && !SLUG_RE.test(doc.assigneeKey)) errors.push(`assigneeKey not a slug: ${doc.assigneeKey}`);
+  },
+  meetingFiles(doc, errors) {
+    req(doc, 'meetingId', errors); req(doc, 'originalFilename', errors); req(doc, 'storageRef', errors);
+    enumOk(doc.kind, ENUMS.MEETING_FILE_KIND, 'kind', errors);
+  },
+  intakes(doc, errors) {
+    req(doc, 'stage', errors);
+    if (doc.employeeKey && !SLUG_RE.test(doc.employeeKey)) errors.push(`employeeKey not a slug: ${doc.employeeKey}`);
+    (doc.gates || []).forEach((g, i) => enumOk(g.status, ENUMS.APPROVAL_STATUS, `gates[${i}].status`, errors));
+  },
+  aiRuns(doc, errors) {
+    enumOk(doc.engine, ENUMS.AI_ENGINE, 'engine', errors);
+    enumOk(doc.actionType, ENUMS.AI_ACTION_TYPE, 'actionType', errors);
+    enumOk(doc.status, ENUMS.AI_STATUS, 'status', errors);
+    if (!doc.subject || !doc.subject.collection || doc.subject.id === undefined) errors.push('subject {collection,id} required');
+    if (!(doc.startedAt instanceof Date)) errors.push('startedAt is not a Date');
+  },
+  aiExchanges(doc, errors) {
+    req(doc, 'intakeId', errors); req(doc, 'status', errors);
+  },
+  attachments(doc, errors) {
+    if (!doc.target || !doc.target.collection || doc.target.id === undefined) errors.push('target {collection,id} required');
+    req(doc, 'originalFilename', errors); req(doc, 'storageRef', errors);
+    enumOk(doc.aiPreference, ENUMS.AI_PREFERENCE, 'aiPreference', errors);
+  },
+  auditLogs(doc, errors) {
+    enumOk(doc.category, ENUMS.AUDIT_CATEGORY, 'category', errors);
+    req(doc, 'actorKey', errors); req(doc, 'action', errors);
+    if (!(doc.at instanceof Date)) errors.push('at is not a Date');
+    enumOk(doc.outcome, ENUMS.AUDIT_OUTCOME, 'outcome', errors);
+  },
 };
 
 /** Validate a candidate document for a collection. */

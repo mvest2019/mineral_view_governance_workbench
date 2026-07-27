@@ -36,6 +36,26 @@ const EXPECTED_INDEXES = {
     'ux_repositories_company_name', 'ix_repositories_company_approvalStatus',
     'ix_repositories_company_category',
   ],
+  roles: ['ux_roles_company_key'],
+  departments: ['ux_departments_company_key'],
+  settings: ['ux_settings_company_scope_owner_key'],
+  findings: ['ux_findings_company_code', 'ix_findings_company_repo', 'ix_findings_company_decision'],
+  repoQuestions: [
+    'ux_repoQuestions_company_code', 'ix_repoQuestions_company_repo',
+    'ix_repoQuestions_company_priority_updated', 'tx_repoQuestions_company_fulltext',
+  ],
+  questionAssignments: ['ux_questionAssignments_company_code', 'ix_questionAssignments_company_assignee'],
+  meetingFiles: ['ix_meetingFiles_company_meeting'],
+  intakes: ['ix_intakes_company_stage_updated', 'ix_intakes_company_employee'],
+  aiRuns: [
+    'ix_aiRuns_company_subject_started', 'ix_aiRuns_company_engine_status', 'ix_aiRuns_company_started',
+  ],
+  aiExchanges: ['ix_aiExchanges_company_intake', 'ix_aiExchanges_company_status_updated'],
+  attachments: ['ix_attachments_company_target', 'ix_attachments_company_checksum'],
+  auditLogs: [
+    'ix_auditLogs_company_at', 'ix_auditLogs_company_target_at',
+    'ix_auditLogs_company_actor_at', 'ix_auditLogs_company_category_at',
+  ],
 };
 
 // Natural key + fields to compare, per collection. Collections WITHOUT an entry
@@ -54,6 +74,14 @@ const COMPARE = {
     key: 'name',
     fields: ['aspectGroup'],
   },
+  roles: { key: 'key', fields: ['name', 'isSystem'] },
+  departments: { key: 'key', fields: ['name'] },
+  findings: { key: 'findingCode', fields: ['decision', 'reviewerKey'] },
+  repoQuestions: { key: 'questionCode', fields: ['repoName', 'priority', 'status', 'source'] },
+  questionAssignments: { key: 'questionCode', fields: ['assigneeKey', 'questionKind'] },
+  // Collections without a single natural source key (settings composite, and the
+  // legacy-id-keyed meetingFiles/intakes/aiRuns/aiExchanges/attachments/auditLogs)
+  // get count + index + validator verification only (doc-compare skipped).
 };
 
 function normalizeForCompare(v) {
