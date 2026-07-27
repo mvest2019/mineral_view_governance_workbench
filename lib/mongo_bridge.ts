@@ -67,42 +67,13 @@ export async function mongoListEmployees(company?: string | null): Promise<strin
 }
 
 // ---------------------------------------------------------------------------
-// Phase B — Task Tracker (dual-write)
+// Task Tracker is NOT handled here anymore.
+//
+// Task Tracker persists DIRECTLY and ONLY to MongoDB from app/api/task_tracker
+// (via TaskTrackerService), where insert errors are surfaced to the caller. The
+// previous best-effort dual-write helper (mongoSaveTaskTracker) has been removed
+// because MongoDB is now the single source of truth for Task Tracker.
 // ---------------------------------------------------------------------------
-
-export interface TaskTrackerWrite {
-  company?: string | null;
-  employeeName: string;
-  markdown: string;
-  createdBy?: string;
-  entryDate?: Date;
-  githubRef?: { path?: string; sha?: string; commitUrl?: string };
-}
-
-/** Create a taskTrackerEntries document mirroring the committed markdown. */
-export async function mongoSaveTaskTracker(p: TaskTrackerWrite): Promise<void> {
-  if (!mongoEnabled()) return;
-  try {
-    const companyKey = companyKeyOf(p.company);
-    const { TaskTrackerEntryRepository } = await import('@/src/repositories/taskTrackerEntry.repository');
-    const { TaskTrackerService } = await import('@/src/services/taskTrackerEntry.service');
-    const svc = new TaskTrackerService(new TaskTrackerEntryRepository({ companyKey }));
-    const actor = slugifyName(p.createdBy || '') || 'system';
-    await svc.createEntry(
-      {
-        employeeKey: slugifyName(p.employeeName),
-        employeeName: p.employeeName,
-        entryDate: p.entryDate || new Date(),
-        title: 'Task Tracker',
-        bodyMarkdown: p.markdown,
-        githubRef: p.githubRef,
-      },
-      actor,
-    );
-  } catch (err) {
-    console.error('[mongo_bridge] mongoSaveTaskTracker failed (non-fatal):', err);
-  }
-}
 
 // ---------------------------------------------------------------------------
 // Phase C — Priority Questions (dual-write generated questions)
