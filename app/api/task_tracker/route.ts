@@ -2,10 +2,13 @@ import { NextRequest } from 'next/server';
 import { abort, json, route } from '@/lib/http';
 import { slugifyName } from '@/lib/github';
 import { mongoEnabled } from '@/lib/mongo_bridge';
+import { logMongoEnvDiagnostics } from '@/lib/env_diagnostics';
 import { TaskTrackerEntryRepository } from '@/src/repositories/taskTrackerEntry.repository';
 import { TaskTrackerService, TaskTrackerValidationError } from '@/src/services/taskTrackerEntry.service';
 
 export const dynamic = 'force-dynamic';
+// Explicit Node.js runtime (not Edge) so process.env / .env.local are available.
+export const runtime = 'nodejs';
 
 const COMPANY_DEFAULT = 'MView';
 
@@ -39,11 +42,20 @@ export const POST = route(async (req: NextRequest) => {
 
   // MongoDB is the ONLY persistence layer. If it is not configured on the server,
   // that is a real failure — surface it instead of silently doing nothing.
+  // TEMPORARY diagnostics: print exactly why MONGODB_URI may be missing here even
+  // though the standalone health script can read it. Remove once resolved.
+  const diag = logMongoEnvDiagnostics('task_tracker');
   const enabled = mongoEnabled();
   console.log(`[task_tracker] MongoDB enabled: ${enabled}`);
   if (!enabled) {
     console.error('[task_tracker] MONGODB_URI is not set on the server — cannot persist task.');
-    abort(503, 'MongoDB is not configured (MONGODB_URI is not set on the server).');
+    return json(
+      {
+        error: 'MongoDB is not configured (MONGODB_URI is not set on the server).',
+        diagnostics: diag,
+      },
+      503,
+    );
   }
 
   const companyKey = company || COMPANY_DEFAULT;
