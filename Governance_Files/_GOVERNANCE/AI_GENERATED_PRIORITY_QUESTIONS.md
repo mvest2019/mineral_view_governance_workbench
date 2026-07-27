@@ -3268,3 +3268,57 @@ Other testing work is logged in an issues sheet with severity/priority; this sub
 **1. Short Question** — What is the minimum detail a Task Tracker submission must contain before it is accepted?
 
 A one-line placeholder passed validation and entered the governance record. A minimum-content rule would prevent unreviewable entries from consuming analysis and question quota.
+
+### Q-AI-0402 — Which file or branch is the canonical base for these HTML changes, now that the work has had to be re-applied twice onto newer uploads?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which file or branch is the canonical base for these HTML changes, now that the work has had to be re-applied twice onto newer uploads?
+
+The submission describes re-applying all changes twice — once on a "clean base" and again on `v44_proposed_merged_4_1`. Passing HTML files around instead of committing to a repo/branch risks silent loss of work or reverted fixes. Governance needs a named repo, branch, and single source of truth for this prototype.
+
+### Q-AI-0403 — Who approved pointing the "Claim Leases" button to the dashboard when no redirect existed in the file?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Who approved pointing the "Claim Leases" button to the dashboard when no redirect existed in the file?
+
+The submission notes the button had no redirect wired and it was pointed to the dashboard "per your spec." Claim is the platform's core activation event — the post-claim destination is a product decision that should be confirmed against the real claim flow, not inferred from a prototype gap.
+
+### Q-AI-0404 — Do these direct edits replace the original design, contradicting the earlier rule that enhancements stay an optional, switchable UI layer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Do these direct edits replace the original design, contradicting the earlier rule that enhancements stay an optional, switchable UI layer?
+
+Earlier work established that every enhancement exists as an optional layer (Original / Option 1 / 2 / 3) so the original prototype stays fully recoverable. Banner removal, button recoloring, copy trimming, and the wizard rewrite appear to be direct replacements. Clarify whether that principle has been retired and who decided.
+
+### Q-AI-0405 — Was the 3-step wizard verified against the live search and claim APIs with a real account, or only by rendering the pages?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Was the 3-step wizard verified against the live search and claim APIs with a real account, or only by rendering the pages?
+
+The submission says verification was done "by rendering the pages." A step controller that hides and shows sections can still break real search results, selection state, or validation at runtime. Confirm whether an end-to-end functional test was run against a real environment and account, and where the evidence is recorded.
+
+### Q-AI-0406 — Does the ~600px whitespace bug on the Pricing page also exist on the live site, and is it logged as a defect?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Does the ~600px whitespace bug on the Pricing page also exist on the live site, and is it logged as a defect?
+
+The submission identifies this as a pre-existing bug in the shared grid cell, not one introduced by these edits. If the same markup ships on the live Pricing page, the fix needs to be tracked and applied there rather than only in the prototype file.
+
+### Q-AI-0407 — Who approved removing the "PROFESSIONAL PLANS · OPERATORS & ADVISORS · FREE TO START" banner and shortening the feature-card copy?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Who approved removing the "PROFESSIONAL PLANS · OPERATORS & ADVISORS · FREE TO START" banner and shortening the feature-card copy?
+
+Deleting a banner that states the professional tier is free to start, plus trimming all six feature-card descriptions and button labels, changes customer-facing pricing and product messaging. Confirm whether marketing signed off or whether these were layout-driven decisions made during the UI pass.
