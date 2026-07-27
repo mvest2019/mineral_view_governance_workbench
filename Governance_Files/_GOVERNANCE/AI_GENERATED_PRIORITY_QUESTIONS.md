@@ -3376,3 +3376,57 @@ The task includes validating which templates fire for each subscription event an
 **1. Short Question** — Did the mobile responsiveness testing cover the subscription purchase, renewal, and cancellation flows on a phone?
 
 The mobile task lists pricing cards, banners, navigation and layout, but not the paid checkout or renewal journey. Since the Yearly Plan and auto-renewal are launching, confirm whether end-to-end mobile payment and cancellation were tested, and whether the misaligned 1-Year Renewal Reminder popup is a launch blocker or a post-launch fix.
+
+### Q-AI-0414 — Who is fixing the live Linkage download bug where the code reads `_2025` but the data is `_2026`?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who is fixing the live Linkage download bug where the code reads `_2025` but the data is `_2026`?
+
+The submission states the Linkage download currently returns nothing in production because of a hard-coded `_2025` collection suffix. This is a live user-facing outage, but the fix is described as deferred to the `well_linkage` merge cutover, which is "not yet executed." Needs: a logged defect, an owner, and a decision on whether to hotfix now rather than wait for the merge.
+
+### Q-AI-0415 — Since pipelines delete and rebuild collections on each run, who owns changing the pipeline code so indexes, validators, and type fixes survive?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Since pipelines delete and rebuild collections on each run, who owns changing the pipeline code so indexes, validators, and type fixes survive?
+
+The cross-cutting finding blocks Issues #4, #6, and #7 — any manually added index, validator, or type conversion is wiped on the next reload. The submission does not name who owns the pipeline codebase, whether that work is scheduled, or whether users see empty results during the rebuild window (as observed with `Mineral_Owners_Data_2025` at 0 rows).
+
+### Q-AI-0416 — Who approves and executes the write operations on production, given all analysis was done with a read-only user?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approves and executes the write operations on production, given all analysis was done with a read-only user?
+
+Every resolution (259-collection merge, index creation, index drops, type conversion, field renames) requires write access that was deliberately not used. Needs a named executor, a change-control/approval gate, a backup point, and a rollback plan before any of it runs on prod.
+
+### Q-AI-0417 — Is the wrong-database-handle bug at `PrivateGrps.js:48` logged as a defect, and what is its user-facing impact?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the wrong-database-handle bug at `PrivateGrps.js:48` logged as a defect, and what is its user-facing impact?
+
+Identified as the only real remaining fix under Issue #8, but no severity, ticket, or owner is recorded — and the submission does not say what breaks for users while it is unfixed.
+
+### Q-AI-0418 — Who signs off on reversing the previously approved plan to merge the two well stores into one?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who signs off on reversing the previously approved plan to merge the two well stores into one?
+
+The recommendation now is to keep `WellGeoData` and the nightly well list separate, explicitly reversing an earlier approved plan. The 185,453 map-only wells and the finding that `id` is a lease key (not a well key) are the stated evidence — that reversal needs an accepting decision-maker on record, not just an analyst recommendation.
+
+### Q-AI-0419 — Who confirms there is no live traffic to the empty `mvp*` collections before they are deleted?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who confirms there is no live traffic to the empty `mvp*` collections before they are deleted?
+
+The earlier "safe to drop" note was corrected — the collections are still referenced in the Community app code. Needs a named verification method (access logs, traffic capture) and an owner before deletion proceeds.
