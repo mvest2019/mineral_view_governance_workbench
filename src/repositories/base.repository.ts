@@ -75,7 +75,9 @@ export abstract class BaseRepository<TDoc extends BaseDocument & Document> {
     const base = newBaseDocument({ actor, companyKey: this.companyKey });
     const doc = { ...base, ...(fields as object) } as unknown as TDoc;
     const col = await this.collection();
+    console.log(`[TRACE][repo] Repository save started — insertOne into "${this.collectionName}"`); // TEMP TRACE
     const res = await col.insertOne(doc as OptionalUnlessRequiredId<TDoc>);
+    console.log(`[TRACE][repo] Document inserted into "${this.collectionName}"; insertedId =`, String(res.insertedId)); // TEMP TRACE
     return { ...doc, _id: res.insertedId } as TDoc;
   }
 

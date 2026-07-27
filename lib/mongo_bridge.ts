@@ -81,14 +81,19 @@ export interface TaskTrackerWrite {
 
 /** Create a taskTrackerEntries document mirroring the committed markdown. */
 export async function mongoSaveTaskTracker(p: TaskTrackerWrite): Promise<void> {
-  if (!mongoEnabled()) return;
+  console.log('[TRACE][bridge] mongoSaveTaskTracker called; mongoEnabled =', mongoEnabled()); // TEMP TRACE
+  if (!mongoEnabled()) {
+    console.log('[TRACE][bridge] EARLY RETURN — MONGODB_URI not set; no Mongo write attempted'); // TEMP TRACE
+    return;
+  }
   try {
     const companyKey = companyKeyOf(p.company);
     const { TaskTrackerEntryRepository } = await import('@/src/repositories/taskTrackerEntry.repository');
     const { TaskTrackerService } = await import('@/src/services/taskTrackerEntry.service');
     const svc = new TaskTrackerService(new TaskTrackerEntryRepository({ companyKey }));
     const actor = slugifyName(p.createdBy || '') || 'system';
-    await svc.createEntry(
+    console.log('[TRACE][bridge] calling svc.createEntry', { companyKey, actor, employeeKey: slugifyName(p.employeeName) }); // TEMP TRACE
+    const saved = await svc.createEntry(
       {
         employeeKey: slugifyName(p.employeeName),
         employeeName: p.employeeName,
@@ -99,7 +104,14 @@ export async function mongoSaveTaskTracker(p: TaskTrackerWrite): Promise<void> {
       },
       actor,
     );
+    console.log('[TRACE][bridge] svc.createEntry SUCCEEDED; _id =', String((saved as { _id?: unknown })._id)); // TEMP TRACE
   } catch (err) {
+    // TEMP TRACE — expose the SWALLOWED error in full (this is the seam that
+    // silently drops the Mongo write; normally only the summary line is logged).
+    const e = err as { name?: string; code?: number; message?: string; errInfo?: unknown };
+    console.error('[TRACE][bridge] svc.createEntry THREW — this is where the save stops:'); // TEMP TRACE
+    console.error('[TRACE][bridge]   name=', e?.name, 'code=', e?.code, 'message=', e?.message); // TEMP TRACE
+    console.error('[TRACE][bridge]   errInfo=', JSON.stringify(e?.errInfo, null, 2)); // TEMP TRACE
     console.error('[mongo_bridge] mongoSaveTaskTracker failed (non-fatal):', err);
   }
 }

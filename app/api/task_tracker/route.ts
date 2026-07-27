@@ -21,6 +21,7 @@ function employeeDisplayName(raw: string): string {
 }
 
 export const POST = route(async (req: NextRequest) => {
+  console.log('[TRACE][route] POST /api/task_tracker reached'); // TEMP TRACE
   const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
   const company = String(body.company || '').trim();
   const employeeRaw = String(body.employee || '').trim();
@@ -84,7 +85,9 @@ export const POST = route(async (req: NextRequest) => {
 
   // Dual-write: MongoDB first (best-effort, non-fatal), then GitHub markdown
   // (authoritative for the response). A Mongo failure never blocks the save.
+  console.log('[TRACE][route] about to call mongoSaveTaskTracker', { company, employeeName, createdBy }); // TEMP TRACE
   await mongoSaveTaskTracker({ company, employeeName, markdown, createdBy });
+  console.log('[TRACE][route] returned from mongoSaveTaskTracker (non-fatal, always resolves)'); // TEMP TRACE
 
   const baseName = `${stamp.datePart}_${stamp.timePart}_${slug}_task`;
   try {
