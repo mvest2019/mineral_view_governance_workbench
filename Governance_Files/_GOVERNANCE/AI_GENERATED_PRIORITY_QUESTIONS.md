@@ -3088,3 +3088,48 @@ Using the production intake form as a connectivity test pollutes governance data
 **1. Short Question** — Who is alerted when the Claude bridge goes down, and what happens to submissions made while it is offline?
 
 Prior reports show blocked Claude-invocation paths and internal errors. Define the monitoring owner and whether task submissions are queued, retried, or silently lost when the bridge is unreachable.
+
+### Q-AI-0382 — Who gave scientific sign-off on the oil-formation claims, including the dinosaur myth-busting statement, before this reel is published?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who gave scientific sign-off on the oil-formation claims, including the dinosaur myth-busting statement, before this reel is published?
+
+The report states every claim was made "factually accurate" through self-directed research, but names no geologist, SME, or reviewer. A public-facing myth-correction video carries credibility risk for Mineral View if any claim is wrong or oversimplified.
+
+### Q-AI-0383 — Are the AI-generated geological cross-sections and reservoir visuals labeled so viewers do not mistake them for real footage or actual subsurface data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Are the AI-generated geological cross-sections and reservoir visuals labeled so viewers do not mistake them for real footage or actual subsurface data?
+
+The reel uses AI-generated depictions of ancient oceans, sediment layers, and underground oil reservoirs presented in a documentary style. Without labeling, viewers may read illustrative imagery as real imaging or Mineral View data.
+
+### Q-AI-0384 — Who approved "How Was Oil Really Formed?" as a topic, and is it part of an approved content calendar?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who approved "How Was Oil Really Formed?" as a topic, and is it part of an approved content calendar?
+
+Prior submissions show topics selected day-to-day (rig counts, World Cup, jewelry). There is no record of who commissions each topic or how the mix is planned against Mineral View's business goals.
+
+### Q-AI-0385 — Is LinkedIn an approved publishing channel for this content, and who owns the Mineral View LinkedIn account?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is LinkedIn an approved publishing channel for this content, and who owns the Mineral View LinkedIn account?
+
+LinkedIn is listed as a target platform here for the first time; earlier reels targeted Instagram, YouTube, and Facebook only. LinkedIn is a business-audience channel with different tone and compliance expectations.
+
+### Q-AI-0386 — What is the correction or takedown process if a published reel is later found to contain an inaccurate claim?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — What is the correction or takedown process if a published reel is later found to contain an inaccurate claim?
+
+A citation error was already found and fixed in published glossary content. Video is harder to correct after distribution, so a defined process for retraction, re-export, or on-post correction is needed.
