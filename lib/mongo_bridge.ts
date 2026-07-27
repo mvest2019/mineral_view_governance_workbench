@@ -192,88 +192,11 @@ export async function mongoSaveAnswer(p: AnswerWrite): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// Phase E — Meetings (dual-write meeting + meeting file)
+// Meetings are NOT handled here anymore.
+//
+// Meetings persist DIRECTLY and ONLY to MongoDB from app/api/meetings
+// (meetings + meetingFiles via MeetingService / MeetingFileService), where
+// insert errors are surfaced to the caller. The previous best-effort dual-write
+// helper (mongoSaveMeeting) has been removed because MongoDB is now the single
+// source of truth for Meetings.
 // ---------------------------------------------------------------------------
-
-export interface MeetingAttendeeInput {
-  team_member_key?: string;
-  external_name?: string;
-}
-
-export interface MeetingWrite {
-  company?: string | null;
-  title: string;
-  meetingDate?: string;
-  uploadedBy?: string;
-  summary?: string;
-  claudeSummary?: string;
-  additionalDetails?: string;
-  uploadedFile?: string;
-  attendees?: MeetingAttendeeInput[];
-  githubRef?: { path?: string; sha?: string };
-}
-
-/** Create a meetings document (embedded attendees) and a meetingFiles record. */
-export async function mongoSaveMeeting(p: MeetingWrite): Promise<void> {
-  if (!mongoEnabled()) return;
-  try {
-    const companyKey = companyKeyOf(p.company);
-    const { MeetingRepository } = await import('@/src/repositories/meeting.repository');
-    const { MeetingFileRepository } = await import('@/src/repositories/meetingFile.repository');
-    const { MeetingService } = await import('@/src/services/meeting.service');
-    const { MeetingFileService } = await import('@/src/services/meetingFile.service');
-
-    const meetingRepo = new MeetingRepository({ companyKey });
-    const meetingSvc = new MeetingService(meetingRepo);
-    const actor = slugifyName(p.uploadedBy || '') || 'system';
-
-    const attendees = (p.attendees || []).map((a) => {
-      const key = a.team_member_key ? slugifyName(a.team_member_key) : '';
-      return key
-        ? { employeeKey: key, attended: true, followUpDone: false }
-        : { externalName: String(a.external_name || '').trim(), attended: true, followUpDone: false };
-    }).filter((a) => a.employeeKey || a.externalName);
-
-    const summaryText = (p.claudeSummary || p.summary || '').trim();
-    const meetingAt = p.meetingDate && !Number.isNaN(Date.parse(p.meetingDate))
-      ? new Date(p.meetingDate)
-      : new Date();
-
-    const meeting = await meetingSvc.createMeeting(
-      {
-        title: p.title,
-        meetingAt,
-        meetingType: 'other',
-        organizerKey: p.uploadedBy ? slugifyName(p.uploadedBy) : undefined,
-        note: p.additionalDetails || undefined,
-        attendees,
-        summary: summaryText ? { text: summaryText, status: 'FINAL', engine: 'CLAUDE' } : undefined,
-      },
-      actor,
-    );
-
-    // Register the uploaded file's metadata (bytes remain in GitHub/source; only
-    // a reference is stored — no object store in this phase).
-    if (p.uploadedFile && meeting._id) {
-      try {
-        const fileSvc = new MeetingFileService(
-          new MeetingFileRepository({ companyKey }),
-          meetingRepo,
-        );
-        await fileSvc.registerFile(
-          {
-            meetingId: meeting._id,
-            originalFilename: p.uploadedFile,
-            storageRef: p.githubRef ? { provider: 'github', key: p.githubRef.path } : {},
-            kind: 'NOTES',
-          },
-          actor,
-        );
-      } catch (err) {
-        console.error('[mongo_bridge] register meeting file failed (non-fatal):', err);
-      }
-    }
-  } catch (err) {
-    console.error('[mongo_bridge] mongoSaveMeeting failed (non-fatal):', err);
-  }
-}
