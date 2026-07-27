@@ -3538,3 +3538,57 @@ Existing governance knowledge lists production MongoDB databases (Data_Allocatio
 **1. Short Question** — What is the migration and rollback plan for the remaining Governance modules, including backfill of records already stored in the old layer?
 
 The submission ends with 'next steps' for migrating the remaining modules. Need a defined cutover sequence, whether existing Task Tracker and Priority Question records get backfilled into MongoDB, and what the rollback path is if a module fails post-cutover.
+
+### Q-AI-0432 — Who owns fixing the district-code format mismatch, and which format is canonical?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns fixing the district-code format mismatch, and which format is canonical?
+
+The 2025 ownership collection stores district codes without leading zeros while claim records use zero-padded codes. The findings were shared with Nikhil, but the submission does not say whether a defect is logged, whether the fix normalizes the ownership data or the claim data, and what the target date is. Full dossier generation is blocked on this.
+
+### Q-AI-0433 — Were any dossiers already generated or shared while ownership sections were empty and values fell back to unverified calculations?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Were any dossiers already generated or shared while ownership sections were empty and values fell back to unverified calculations?
+
+The submission states the mismatch caused empty ownership sections and unverified fallback values. If any dossier produced during smoke testing or earlier runs reached a member, Ryan, or the Drive folder, incorrect ownership figures may already be in circulation and need recall or reissue.
+
+### Q-AI-0434 — Is running the dossier pipeline against real member PII on a local development machine approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Is running the dossier pipeline against real member PII on a local development machine approved?
+
+The pipeline was configured on a local dev environment with connectivity to production MongoDB and PostgreSQL, and a real claimed member was used for the smoke test. Named owner records (e.g. the Kalyn Stephens case) are involved. Clarify where generated outputs are stored locally, whether they are deleted after testing, and who approved local processing of mineral-owner PII.
+
+### Q-AI-0435 — What is the go/no-go checklist and sign-off for running the full claimed-user dossier batch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — What is the go/no-go checklist and sign-off for running the full claimed-user dossier batch?
+
+Three prerequisites are listed (district-code fix, compound index, remaining county load) plus a re-validation on the previously tested member. Confirm who signs off that all four are met, how many claimed users are in the batch, and what output quality check runs before dossiers are distributed.
+
+### Q-AI-0436 — Which version of `assemble_member.py` is now canonical after it was restored from handoff documentation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which version of `assemble_member.py` is now canonical after it was restored from handoff documentation?
+
+The pipeline was originally built by Krishna on branch `feat/dossier-data-generator`, with a parallel `build-dossier.mjs` script flagged for reconciliation. Restoring the script from handoff docs and adding `--owners-2025` locally risks a third divergent copy. Confirm whether the `--owners-2025` change is committed and reviewed, and who owns the pipeline going forward.
+
+### Q-AI-0437 — Which counties are still missing from the refreshed 2025 ownership collection, and who owns completing that load?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which counties are still missing from the refreshed 2025 ownership collection, and who owns completing that load?
+
+County coverage is described as increased but incomplete. A list of missing counties, an owner, and an ETA are needed, along with confirmation of how dossiers for members in uncovered counties will be handled if the batch runs before the load finishes.
