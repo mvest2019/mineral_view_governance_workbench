@@ -14,18 +14,45 @@ import { createCrossRef } from './lib/crossref.mjs';
 // Expected index names per collection (from src/db/indexes/*).
 const EXPECTED_INDEXES = {
   employees: [
-    'ux_employees_company_memberKey',
-    'ix_employees_company_departmentKeys',
-    'ix_employees_company_status',
-    'tx_employees_company_fulltext',
+    'ux_employees_company_memberKey', 'ix_employees_company_departmentKeys',
+    'ix_employees_company_status', 'tx_employees_company_fulltext',
+  ],
+  taskTrackerEntries: [
+    'ix_tasktracker_company_employee_date', 'ix_tasktracker_company_date',
+    'tx_tasktracker_company_fulltext',
+  ],
+  priorityQuestions: [
+    'ux_priorityQuestions_company_code', 'ix_priorityQuestions_company_normalizedTitle',
+    'ix_priorityQuestions_company_target_status', 'ix_priorityQuestions_company_priority_updated',
+    'tx_priorityQuestions_company_fulltext',
+  ],
+  answers: [
+    'ix_answers_company_question_answeredAt', 'ix_answers_company_author_answeredAt',
+  ],
+  meetings: [
+    'ix_meetings_company_meetingAt', 'ix_meetings_company_attendee', 'tx_meetings_company_fulltext',
+  ],
+  repositories: [
+    'ux_repositories_company_name', 'ix_repositories_company_approvalStatus',
+    'ix_repositories_company_category',
   ],
 };
 
-// Natural key + fields to compare, per collection.
+// Natural key + fields to compare, per collection. Collections WITHOUT an entry
+// here get count + index + validator checks (document field-compare is skipped
+// with a note — they have no single natural key in the source).
 const COMPARE = {
   employees: {
     key: 'memberKey',
     fields: ['fullName', 'title', 'status', 'departmentKeys', 'roleKeys', 'aliases'],
+  },
+  priorityQuestions: {
+    key: 'questionCode',
+    fields: ['title', 'priority', 'status', 'source', 'targetEmployeeKey'],
+  },
+  repositories: {
+    key: 'name',
+    fields: ['aspectGroup'],
   },
 };
 
@@ -50,8 +77,7 @@ async function collectSource(collection) {
  * (read-capable) mongoWriter. Returns a reconciliation report object.
  */
 export async function verifyCollection(collection, options, writer) {
-  const cmp = COMPARE[collection];
-  if (!cmp) throw new Error(`No verification profile for collection "${collection}".`);
+  const cmp = COMPARE[collection]; // may be undefined → doc-compare skipped
 
   const { docs: source } = await collectSource(collection);
   const runFilter = options.runId ? { 'metadata.migration.runId': options.runId } : {};
@@ -73,29 +99,46 @@ export async function verifyCollection(collection, options, writer) {
   const validationLevel = info && info.options ? info.options.validationLevel : undefined;
   const validationAction = info && info.options ? info.options.validationAction : undefined;
 
-  // 4) source-vs-DB field comparison (by natural key)
-  const dbDocs = await writer.find(collection, runFilter);
-  const dbByKey = new Map(dbDocs.map((d) => [d[cmp.key], d]));
-  const srcByKey = new Map(source.map((d) => [d[cmp.key], d]));
-
-  const missingInDb = [];
-  const extraInDb = [];
-  const mismatches = [];
-  for (const [key, sdoc] of srcByKey) {
-    const ddoc = dbByKey.get(key);
-    if (!ddoc) { missingInDb.push(key); continue; }
-    for (const f of cmp.fields) {
-      if (normalizeForCompare(sdoc[f]) !== normalizeForCompare(ddoc[f])) {
-        mismatches.push({ key, field: f, source: sdoc[f], db: ddoc[f] });
+  // 4) source-vs-DB field comparison (by natural key) — only when a COMPARE
+  //    profile with a single natural key exists; otherwise skipped gracefully.
+  let documentComparison;
+  if (cmp && cmp.key) {
+    const dbDocs = await writer.find(collection, runFilter);
+    const dbByKey = new Map(dbDocs.map((d) => [d[cmp.key], d]));
+    const srcByKey = new Map(source.map((d) => [d[cmp.key], d]));
+    const missingInDb = [];
+    const extraInDb = [];
+    const mismatches = [];
+    for (const [key, sdoc] of srcByKey) {
+      const ddoc = dbByKey.get(key);
+      if (!ddoc) { missingInDb.push(key); continue; }
+      for (const f of (cmp.fields || [])) {
+        if (normalizeForCompare(sdoc[f]) !== normalizeForCompare(ddoc[f])) {
+          mismatches.push({ key, field: f, source: sdoc[f], db: ddoc[f] });
+        }
       }
     }
+    for (const key of dbByKey.keys()) if (!srcByKey.has(key)) extraInDb.push(key);
+    documentComparison = {
+      skipped: false,
+      compared: srcByKey.size,
+      missingInDb: missingInDb.length,
+      extraInDb: extraInDb.length, // e.g. back-filled Q-MIG questions — informational
+      mismatches: mismatches.length,
+      details: { missingInDb, extraInDb, mismatches: mismatches.slice(0, 25) },
+      ok: missingInDb.length === 0 && mismatches.length === 0,
+    };
+  } else {
+    documentComparison = {
+      skipped: true,
+      note: 'No single natural key for this collection — count/index/validator checked only.',
+      ok: true,
+    };
   }
-  for (const key of dbByKey.keys()) if (!srcByKey.has(key)) extraInDb.push(key);
 
   const ok = missingIndexes.length === 0
     && hasJsonSchema
-    && missingInDb.length === 0
-    && mismatches.length === 0
+    && documentComparison.ok
     && dbForRun === source.length;
 
   return {
@@ -106,14 +149,7 @@ export async function verifyCollection(collection, options, writer) {
     counts: { sourceValid: source.length, dbTotal, dbForRun, match: dbForRun === source.length },
     indexes: { expected, present: indexNames, missing: missingIndexes, ok: missingIndexes.length === 0 },
     validator: { hasJsonSchema, validationLevel, validationAction, ok: hasJsonSchema },
-    documentComparison: {
-      compared: srcByKey.size,
-      missingInDb: missingInDb.length,
-      extraInDb: extraInDb.length,
-      mismatches: mismatches.length,
-      details: { missingInDb, extraInDb, mismatches: mismatches.slice(0, 25) },
-      ok: missingInDb.length === 0 && mismatches.length === 0,
-    },
+    documentComparison,
     verdict: ok ? 'VERIFIED' : 'DISCREPANCIES_FOUND',
   };
 }
@@ -129,9 +165,14 @@ export function renderVerify(report) {
   L.push(`  2) INDEXES    ${report.indexes.ok ? 'all present ✔' : `MISSING: ${report.indexes.missing.join(', ')} ✖`}`);
   L.push(`                present: ${report.indexes.present.join(', ')}`);
   L.push(`  3) VALIDATOR  ${report.validator.ok ? `$jsonSchema present ✔ (${report.validator.validationLevel}/${report.validator.validationAction})` : 'NO $jsonSchema ✖'}`);
-  L.push(`  4) DOCUMENTS  compared ${report.documentComparison.compared} · missingInDb ${report.documentComparison.missingInDb} · extraInDb ${report.documentComparison.extraInDb} · mismatches ${report.documentComparison.mismatches} → ${report.documentComparison.ok ? 'MATCH ✔' : 'DISCREPANCY ✖'}`);
-  for (const m of report.documentComparison.details.mismatches.slice(0, 5)) {
-    L.push(`      ✖ ${m.key}.${m.field}: source=${JSON.stringify(m.source)} db=${JSON.stringify(m.db)}`);
+  const dc = report.documentComparison;
+  if (dc.skipped) {
+    L.push('  4) DOCUMENTS  skipped (no single natural key) — count/index/validator only');
+  } else {
+    L.push(`  4) DOCUMENTS  compared ${dc.compared} · missingInDb ${dc.missingInDb} · extraInDb ${dc.extraInDb} · mismatches ${dc.mismatches} → ${dc.ok ? 'MATCH ✔' : 'DISCREPANCY ✖'}`);
+    for (const m of dc.details.mismatches.slice(0, 5)) {
+      L.push(`      ✖ ${m.key}.${m.field}: source=${JSON.stringify(m.source)} db=${JSON.stringify(m.db)}`);
+    }
   }
   L.push('──────────────────────────────────────────────────────────────');
   L.push(`  VERDICT: ${report.verdict}`);
