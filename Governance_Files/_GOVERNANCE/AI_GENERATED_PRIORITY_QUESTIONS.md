@@ -3133,3 +3133,30 @@ LinkedIn is listed as a target platform here for the first time; earlier reels t
 **1. Short Question** — What is the correction or takedown process if a published reel is later found to contain an inaccurate claim?
 
 A citation error was already found and fixed in published glossary content. Video is harder to correct after distribution, so a defined process for retraction, re-export, or on-post correction is needed.
+
+### Q-AI-0387 — What database work does this "Test Database" entry actually cover?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What database work does this "Test Database" entry actually cover?
+
+The submission contains only the words "Test Database" with no scope, environment, or outcome. Without detail it cannot be reviewed for data, PII, or change-control risk.
+
+### Q-AI-0388 — Was any real or production database touched during this test?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Was any real or production database touched during this test?
+
+Clarify whether the test ran against a sandbox/test database or against a live store holding mineral-owner data.
+
+### Q-AI-0389 — Should placeholder test submissions be committed as permanent governance records?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Should placeholder test submissions be committed as permanent governance records?
+
+This entry appears to be a workbench test rather than real work. Confirm whether test submissions should be excluded or cleaned up so the governance record stays accurate.
