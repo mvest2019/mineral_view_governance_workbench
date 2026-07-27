@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "mongo:health": "node --env-file-if-exists=.env.local scripts/mongo-healthcheck.mjs",
+    "verify:tasktracker": "node --env-file-if-exists=.env.local scripts/verify-tasktracker-insert.mjs",
     "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs",
     "db:provision:task-tracker": "node --env-file-if-exists=.env.local scripts/provision-task-tracker.mjs",
     "db:provision:priority-questions": "node --env-file-if-exists=.env.local scripts/provision-priority-questions.mjs",

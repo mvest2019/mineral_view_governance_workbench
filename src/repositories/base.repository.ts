@@ -28,6 +28,7 @@ import {
   auditedUpdate,
   newBaseDocument,
   softDeletePatch,
+  stripUndefined,
   type BaseDocument,
 } from '@/src/models/base';
 
@@ -73,11 +74,10 @@ export abstract class BaseRepository<TDoc extends BaseDocument & Document> {
     actor?: string,
   ): Promise<TDoc> {
     const base = newBaseDocument({ actor, companyKey: this.companyKey });
-    const doc = { ...base, ...(fields as object) } as unknown as TDoc;
+    // Omit any optional field left `undefined` so it is never stored as null.
+    const doc = stripUndefined({ ...base, ...(fields as object) }) as unknown as TDoc;
     const col = await this.collection();
-    console.log(`[TRACE][repo] Repository save started — insertOne into "${this.collectionName}"`); // TEMP TRACE
     const res = await col.insertOne(doc as OptionalUnlessRequiredId<TDoc>);
-    console.log(`[TRACE][repo] Document inserted into "${this.collectionName}"; insertedId =`, String(res.insertedId)); // TEMP TRACE
     return { ...doc, _id: res.insertedId } as TDoc;
   }
 
@@ -110,7 +110,7 @@ export abstract class BaseRepository<TDoc extends BaseDocument & Document> {
     const audit = auditedUpdate({ actor });
     const col = await this.collection();
     const update = {
-      $set: { ...(set as object), ...audit.set },
+      $set: stripUndefined({ ...(set as object), ...audit.set }),
       $inc: audit.inc,
     } as unknown as UpdateFilter<TDoc>;
     return col.findOneAndUpdate(

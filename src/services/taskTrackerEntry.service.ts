@@ -59,11 +59,8 @@ export class TaskTrackerService {
     actor: string,
   ): Promise<TaskTrackerEntryDoc> {
     const result = validateCreateTaskTrackerEntryInput(input);
-    console.log('[TRACE][service] edge validation ok =', result.ok, 'errors =', result.errors); // TEMP TRACE
     if (!result.ok) throw new TaskTrackerValidationError(result.errors);
-    const fields = toTaskTrackerEntryFields(input);
-    console.log('[TRACE][service] mapped fields (note githubRef):', JSON.stringify({ ...fields, bodyMarkdown: '<omitted>' })); // TEMP TRACE
-    return this.repo.create(fields, actor);
+    return this.repo.create(toTaskTrackerEntryFields(input), actor);
   }
 
   /** Fetch a single entry by id. */

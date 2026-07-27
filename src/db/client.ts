@@ -33,6 +33,12 @@ function buildClient(): Promise<MongoClient> {
     // Retryable writes/reads are safe defaults for a replica set (Atlas).
     retryWrites: true,
     retryReads: true,
+    // Omit `undefined` fields at serialization time (at every depth) instead of
+    // storing them as BSON null. The driver's own default is `false`, which turns
+    // an optional field left `undefined` (e.g. a missing githubRef) into a null
+    // that fails a strict `$jsonSchema` validator expecting `bsonType: 'object'`.
+    // Setting this true makes optional fields simply absent — the correct shape.
+    ignoreUndefined: true,
     appName: 'governance-workbench',
   };
   const client = new MongoClient(cfg.uri, options);

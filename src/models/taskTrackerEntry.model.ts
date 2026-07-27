@@ -125,14 +125,19 @@ export function validateCreateTaskTrackerEntryInput(
 export function toTaskTrackerEntryFields(
   input: CreateTaskTrackerEntryInput,
 ): Omit<TaskTrackerEntryDoc, keyof BaseDocument | '_id'> {
-  return {
+  // Build with the required fields only, then attach optional fields solely when
+  // present. An optional field is OMITTED (never `undefined`/null) when absent,
+  // so a document without a githubRef/employeeName does not violate the strict
+  // $jsonSchema validator (e.g. githubRef expects bsonType 'object', not null).
+  const fields: Omit<TaskTrackerEntryDoc, keyof BaseDocument | '_id'> = {
     employeeKey: input.employeeKey,
-    employeeName: input.employeeName,
     entryDate: input.entryDate,
     title: input.title ?? 'Task Tracker',
-    bodyMarkdown: input.bodyMarkdown,
     sections: input.sections ?? [],
     status: input.status ?? 'SUBMITTED',
-    githubRef: input.githubRef,
   };
+  if (input.employeeName !== undefined) fields.employeeName = input.employeeName;
+  if (input.bodyMarkdown !== undefined) fields.bodyMarkdown = input.bodyMarkdown;
+  if (input.githubRef !== undefined) fields.githubRef = input.githubRef;
+  return fields;
 }

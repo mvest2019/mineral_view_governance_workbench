@@ -113,3 +113,34 @@ export function softDeletePatch(opts?: {
 
 /** Standard filter fragment that excludes soft-deleted documents. */
 export const NOT_DELETED = { isDeleted: false } as const;
+
+/**
+ * Recursively remove keys whose value is `undefined` so optional fields are
+ * OMITTED from a document instead of being serialized as BSON `null`.
+ *
+ * This is the in-memory counterpart to the client's `ignoreUndefined: true`
+ * option: the client guarantees the stored BSON never contains a null-from-
+ * undefined, and this keeps the object returned to callers equally clean.
+ *
+ * Intentionally preserves `null` (an explicit, schema-allowed value such as
+ * `deletedAt`/`acceptedAt`), and treats Dates, ObjectIds, and any other class
+ * instance as opaque leaves — only plain objects and arrays are traversed.
+ */
+export function stripUndefined<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((v) => stripUndefined(v)) as unknown as T;
+  }
+  if (
+    value !== null
+    && typeof value === 'object'
+    && Object.getPrototypeOf(value) === Object.prototype
+  ) {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (v === undefined) continue;
+      out[k] = stripUndefined(v);
+    }
+    return out as unknown as T;
+  }
+  return value;
+}
