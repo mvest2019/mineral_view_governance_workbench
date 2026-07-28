@@ -100,11 +100,17 @@ export const POST = route(async (req: NextRequest) => {
       console.error('[task_tracker] MongoDB insert FAILED — edge validation:', err.errors);
       return json({ error: err.message, errors: err.errors }, 400);
     }
-    const e = err as { name?: string; code?: number; message?: string; errInfo?: unknown };
+    const e = err as { name?: string; code?: number; message?: string; errInfo?: unknown; stack?: string; reason?: unknown };
     console.error(
       `[task_tracker] MongoDB insert FAILED — name=${e?.name} code=${e?.code} message=${e?.message}`,
       e?.errInfo ? `errInfo=${JSON.stringify(e.errInfo)}` : '',
     );
+    // TEMPORARY connectivity diagnostics — full driver error, topology + stack.
+    // (Server selection errors carry topology in `reason`, not errInfo.) Remove
+    // once the connectivity issue is resolved. Use GET /api/health/mongo/connectivity
+    // for the full parsed-URI + TCP + directConnection probe.
+    if (e?.reason) console.error('[task_tracker] driver topology reason:', JSON.stringify(e.reason));
+    if (e?.stack) console.error('[task_tracker] stack:', e.stack);
     return json(
       {
         error: e?.message || 'MongoDB insert failed',
