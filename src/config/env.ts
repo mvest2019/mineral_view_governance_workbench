@@ -37,9 +37,15 @@ function intFromEnv(name: string, fallback: number): number {
   return Number.isFinite(n) && n >= 0 ? n : fallback;
 }
 
-/** Whether the MongoDB layer has been configured (a URI is present). */
+/**
+ * Whether the MongoDB layer has been configured: either a direct connection
+ * string (MONGODB_URI) or the HTTPS bridge (MONGO_BRIDGE_URL — see
+ * src/db/bridge.ts, which routes all operations through the remote bridge so
+ * the deployment never connects to MongoDB itself).
+ */
 export function isMongoConfigured(): boolean {
-  return Boolean((process.env.MONGODB_URI || '').trim());
+  return Boolean((process.env.MONGODB_URI || '').trim())
+    || Boolean((process.env.MONGO_BRIDGE_URL || '').trim());
 }
 
 /**

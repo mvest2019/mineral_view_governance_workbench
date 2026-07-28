@@ -36,7 +36,10 @@ export const GET = route(async (req: NextRequest) => {
   t['2_isMongoConfigured'] = isMongoConfigured();
   let dbName: string | null = null;
   try {
-    dbName = getMongoEnvConfig().dbName;
+    const { isMongoBridgeConfigured, pingMongoBridge } = await import('@/src/db/bridge');
+    dbName = isMongoBridgeConfigured()
+      ? `${(await pingMongoBridge()).dbName} (via mongo bridge)`
+      : getMongoEnvConfig().dbName;
   } catch (e) {
     t['env_error'] = e instanceof Error ? e.message : String(e);
   }

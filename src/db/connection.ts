@@ -12,9 +12,25 @@
 import type { Db, Collection, Document } from 'mongodb';
 import { getMongoClient } from '@/src/db/client';
 import { getMongoEnvConfig } from '@/src/config/env';
+import { getBridgeDb, isMongoBridgeConfigured } from '@/src/db/bridge';
 
-/** Return the connected GovernanceDB database handle. */
+/**
+ * Return the GovernanceDB database handle.
+ *
+ * Two modes, selected by environment (additive — nothing changes when the
+ * bridge is not configured):
+ *   - MONGO_BRIDGE_URL set: return the HTTPS bridge shim. The app opens NO
+ *     MongoDB connection; every operation runs on the Windows server through
+ *     the remote-claude-bridge, and the target database is fixed there.
+ *   - otherwise: connect directly via the shared MongoClient, exactly as
+ *     before.
+ */
 export async function getDb(): Promise<Db> {
+  if (isMongoBridgeConfigured()) {
+    // The shim implements the Db/Collection subset the app uses; repositories
+    // and services work unchanged against it.
+    return getBridgeDb() as unknown as Db;
+  }
   const client = await getMongoClient();
   const { dbName } = getMongoEnvConfig();
   return client.db(dbName);

@@ -1,0 +1,13 @@
+{
+  "name": "remote-claude-bridge",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Remote Claude CLI execution bridge + MongoDB data bridge (runs on the Windows server, exposed through one HTTPS tunnel).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.21.0"
+  }
+}

@@ -7,15 +7,26 @@
  * Vercel forwards every Claude CLI invocation here over HTTPS instead of
  * spawning the CLI locally.
  *
- * Endpoints (both require `Authorization: Bearer <CLAUDE_BRIDGE_TOKEN>`):
+ * Endpoints (all require `Authorization: Bearer <CLAUDE_BRIDGE_TOKEN>`):
  *   GET  /health  -> { ok, claude_command, active, queued }
  *   POST /run     -> body { args: string[], input?: string|null,
  *                           cwd?: string|null, timeout_ms?: number }
  *                    reply { ok, status, signal, stdout, stderr,
  *                            timed_out, error_message?, error_code? }
  *
- * The reply mirrors child_process.spawnSync's result so the web app can keep
- * its existing error/timeout handling byte-for-byte.
+ * MongoDB data endpoints (additive; enabled only when
+ * CLAUDE_BRIDGE_MONGODB_URI is set — the Claude endpoints above are
+ * completely unaffected either way):
+ *   GET  /mongo/health -> { ok, configured, dbName, pingMs }
+ *   POST /mongo/op     -> EJSON body { op, collection?, ... }
+ *                         reply { ok: true, result } | { ok: false,
+ *                         error_message, error_code? }
+ * All MongoDB connections happen HERE, on this machine. The deployed app
+ * never receives the connection string and can only run the whitelisted
+ * operations below against the single configured database.
+ *
+ * The /run reply mirrors child_process.spawnSync's result so the web app can
+ * keep its existing error/timeout handling byte-for-byte.
  *
  * Configuration (environment variables; see .env.example):
  *   CLAUDE_BRIDGE_TOKEN            shared secret (required)
@@ -32,6 +43,12 @@
  *   CLAUDE_BRIDGE_MAX_BODY_BYTES   request body cap (default 33554432)
  *   CLAUDE_BRIDGE_TLS_CERT_FILE /  serve HTTPS directly with this cert/key
  *   CLAUDE_BRIDGE_TLS_KEY_FILE     (otherwise plain HTTP behind an HTTPS tunnel)
+ *   CLAUDE_BRIDGE_MONGODB_URI      MongoDB connection string (enables /mongo/*;
+ *                                  never leaves this machine)
+ *   CLAUDE_BRIDGE_MONGODB_DB       database served by /mongo/op (default
+ *                                  GovernanceDB; requests cannot override it)
+ *   CLAUDE_BRIDGE_MONGODB_MAX_DOCS max documents per find/aggregate (default 5000)
+ *   CLAUDE_BRIDGE_MONGODB_SELECT_TIMEOUT_MS  server selection timeout (default 10000)
  */
 'use strict';
 
@@ -355,6 +372,281 @@ function runClaude(args, input, cwd, timeoutMs) {
 }
 
 // ----------------------------------------------------------------------------
+// MongoDB data bridge (additive; active only when CLAUDE_BRIDGE_MONGODB_URI is
+// set). The connection string never leaves this machine: the deployed app
+// sends whitelisted operations over the same authenticated HTTPS tunnel used
+// for Claude, and this bridge executes them against ONE configured database.
+// ----------------------------------------------------------------------------
+
+const MONGO_URI = String(process.env.CLAUDE_BRIDGE_MONGODB_URI || '').trim();
+const MONGO_DB = String(process.env.CLAUDE_BRIDGE_MONGODB_DB || 'GovernanceDB').trim();
+const MONGO_MAX_DOCS = Math.max(1, parseInt(process.env.CLAUDE_BRIDGE_MONGODB_MAX_DOCS || '5000', 10) || 5000);
+const MONGO_SELECT_TIMEOUT_MS = parseInt(process.env.CLAUDE_BRIDGE_MONGODB_SELECT_TIMEOUT_MS || '10000', 10) || 10000;
+
+// The driver is loaded only when the Mongo bridge is enabled, so existing
+// installations without the `mongodb` package keep starting exactly as before.
+let mongoDriver = null; // { MongoClient, EJSON }
+let mongoDriverError = null;
+if (MONGO_URI) {
+  try {
+    const mongodb = require('mongodb');
+    mongoDriver = { MongoClient: mongodb.MongoClient, EJSON: mongodb.BSON.EJSON };
+  } catch (err) {
+    mongoDriverError =
+      `the "mongodb" package is not installed next to the bridge (${err.message}). ` +
+      'Run `npm install` in the remote-claude-bridge folder (see package.json).';
+    console.error(`[claude-bridge] mongo: ${mongoDriverError}`);
+  }
+}
+
+let mongoClientPromise = null;
+
+function getMongoDb() {
+  if (!mongoClientPromise) {
+    const client = new mongoDriver.MongoClient(MONGO_URI, {
+      serverSelectionTimeoutMS: MONGO_SELECT_TIMEOUT_MS,
+      retryWrites: true,
+      retryReads: true,
+      ignoreUndefined: true,
+      appName: 'claude-bridge-mongo',
+    });
+    mongoClientPromise = client.connect().catch((err) => {
+      // Do not cache a failed connection — allow the next request to retry.
+      mongoClientPromise = null;
+      throw err;
+    });
+  }
+  return mongoClientPromise.then((client) => client.db(MONGO_DB));
+}
+
+/** Client errors (bad op/params) that should map to HTTP 400, not 500. */
+class MongoOpError extends Error {}
+
+function requireDoc(value, name) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new MongoOpError(`\`${name}\` must be an object`);
+  }
+  return value;
+}
+
+function requireArr(value, name) {
+  if (!Array.isArray(value)) throw new MongoOpError(`\`${name}\` must be an array`);
+  return value;
+}
+
+/** Copy only the whitelisted option keys (drops anything else a caller sends). */
+function pickOptions(src, keys) {
+  const out = {};
+  if (!src || typeof src !== 'object') return out;
+  for (const key of keys) {
+    if (src[key] !== undefined) out[key] = src[key];
+  }
+  return out;
+}
+
+// db.command() is restricted to commands the app actually needs: connectivity
+// checks and validator updates. Everything else (dropDatabase, shutdown,
+// renameCollection, ...) is refused regardless of authentication.
+const MONGO_COMMAND_WHITELIST = new Set(['ping', 'collMod', 'dbStats']);
+
+const MONGO_OPS = new Set([
+  'ping', 'insertOne', 'insertMany', 'findOne', 'find', 'findOneAndUpdate',
+  'updateOne', 'updateMany', 'deleteOne', 'deleteMany', 'countDocuments',
+  'estimatedDocumentCount', 'distinct', 'aggregate', 'listCollections',
+  'createCollection', 'createIndexes', 'command',
+]);
+
+async function execMongoOp(body) {
+  const op = typeof body.op === 'string' ? body.op : '';
+  // Validate the op BEFORE touching MongoDB so a bad request is a 400 even
+  // when the database is unreachable.
+  if (!MONGO_OPS.has(op)) throw new MongoOpError(`unknown op "${op}"`);
+  const db = await getMongoDb();
+  // Requests may NOT choose a database: `body.db` is deliberately ignored so
+  // only CLAUDE_BRIDGE_MONGODB_DB is ever reachable through this endpoint.
+  const coll = () => {
+    const name = typeof body.collection === 'string' ? body.collection.trim() : '';
+    if (!name) throw new MongoOpError(`\`collection\` is required for op "${op}"`);
+    return db.collection(name);
+  };
+
+  switch (op) {
+    case 'ping':
+      await db.command({ ping: 1 });
+      return { ok: 1, dbName: MONGO_DB };
+
+    case 'insertOne':
+      return coll().insertOne(requireDoc(body.document, 'document'));
+
+    case 'insertMany':
+      return coll().insertMany(requireArr(body.documents, 'documents'), pickOptions(body.options, ['ordered']));
+
+    case 'findOne':
+      return coll().findOne(body.filter || {}, pickOptions(body.options, ['projection', 'sort']));
+
+    case 'find': {
+      const options = body.options && typeof body.options === 'object' ? body.options : {};
+      const requested = Number(options.limit);
+      const limit = requested > 0 ? Math.min(requested, MONGO_MAX_DOCS) : MONGO_MAX_DOCS;
+      return coll()
+        .find(body.filter || {}, pickOptions(options, ['projection', 'sort', 'skip']))
+        .limit(limit)
+        .toArray();
+    }
+
+    case 'findOneAndUpdate':
+      return coll().findOneAndUpdate(
+        requireDoc(body.filter, 'filter'),
+        requireDoc(body.update, 'update'),
+        pickOptions(body.options, ['projection', 'sort', 'upsert', 'returnDocument', 'arrayFilters']),
+      );
+
+    case 'updateOne':
+      return coll().updateOne(
+        requireDoc(body.filter, 'filter'),
+        requireDoc(body.update, 'update'),
+        pickOptions(body.options, ['upsert', 'arrayFilters']),
+      );
+
+    case 'updateMany':
+      return coll().updateMany(
+        requireDoc(body.filter, 'filter'),
+        requireDoc(body.update, 'update'),
+        pickOptions(body.options, ['upsert', 'arrayFilters']),
+      );
+
+    case 'deleteOne':
+      return coll().deleteOne(requireDoc(body.filter, 'filter'));
+
+    case 'deleteMany':
+      return coll().deleteMany(requireDoc(body.filter, 'filter'));
+
+    case 'countDocuments':
+      return coll().countDocuments(body.filter || {}, pickOptions(body.options, ['limit', 'skip']));
+
+    case 'estimatedDocumentCount':
+      return coll().estimatedDocumentCount();
+
+    case 'distinct': {
+      if (typeof body.key !== 'string' || !body.key) throw new MongoOpError('`key` must be a non-empty string');
+      return coll().distinct(body.key, body.filter || {});
+    }
+
+    case 'aggregate': {
+      const pipeline = requireArr(body.pipeline, 'pipeline');
+      for (const stage of pipeline) {
+        if (stage && typeof stage === 'object' && ('$out' in stage || '$merge' in stage)) {
+          throw new MongoOpError('aggregate stages $out and $merge are not allowed through the bridge');
+        }
+      }
+      const cursor = coll().aggregate(pipeline);
+      const docs = [];
+      for await (const doc of cursor) {
+        docs.push(doc);
+        if (docs.length > MONGO_MAX_DOCS) {
+          await cursor.close();
+          throw new MongoOpError(`aggregate returned more than ${MONGO_MAX_DOCS} documents; add a $limit stage`);
+        }
+      }
+      return docs;
+    }
+
+    case 'listCollections':
+      return db.listCollections(body.filter || {}, pickOptions(body.options, ['nameOnly'])).toArray();
+
+    case 'createCollection': {
+      const name = typeof body.name === 'string' ? body.name.trim() : '';
+      if (!name) throw new MongoOpError('`name` is required for createCollection');
+      await db.createCollection(name, pickOptions(body.options, ['validator', 'validationLevel', 'validationAction']));
+      return { ok: 1, collection: name };
+    }
+
+    case 'createIndexes':
+      return coll().createIndexes(requireArr(body.indexes, 'indexes'));
+
+    case 'command': {
+      const command = requireDoc(body.command, 'command');
+      const commandName = Object.keys(command)[0] || '';
+      if (!MONGO_COMMAND_WHITELIST.has(commandName)) {
+        throw new MongoOpError(`command "${commandName}" is not allowed through the bridge`);
+      }
+      return db.command(command);
+    }
+
+    default:
+      throw new MongoOpError(`unknown op "${op}"`);
+  }
+}
+
+function sendEjson(res, statusCode, payload) {
+  const body = mongoDriver.EJSON.stringify(payload, undefined, undefined, { relaxed: true });
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Length': Buffer.byteLength(body),
+  });
+  res.end(body);
+}
+
+/** 503 (with the reason) when the Mongo bridge is not usable; true when it is. */
+function mongoReady(res) {
+  if (!MONGO_URI) {
+    sendJson(res, 503, { ok: false, error_message: 'MongoDB bridge is not configured (set CLAUDE_BRIDGE_MONGODB_URI on the bridge).' });
+    return false;
+  }
+  if (!mongoDriver) {
+    sendJson(res, 503, { ok: false, error_message: `MongoDB bridge is unavailable: ${mongoDriverError}` });
+    return false;
+  }
+  return true;
+}
+
+async function handleMongoHealth(req, res) {
+  if (!mongoReady(res)) return;
+  const startedAt = Date.now();
+  try {
+    const db = await getMongoDb();
+    await db.command({ ping: 1 });
+    sendJson(res, 200, { ok: true, configured: true, dbName: MONGO_DB, pingMs: Date.now() - startedAt });
+  } catch (err) {
+    sendJson(res, 200, { ok: false, configured: true, dbName: MONGO_DB, error_message: String(err.message || err) });
+  }
+}
+
+async function handleMongoOp(req, res) {
+  if (!mongoReady(res)) return;
+  let body;
+  try {
+    // EJSON (relaxed) so ObjectId and Date values survive the HTTPS round-trip.
+    body = mongoDriver.EJSON.parse((await readBody(req)) || '{}', { relaxed: true });
+  } catch (err) {
+    sendJson(res, 400, { ok: false, error_message: `invalid EJSON body: ${err.message}` });
+    return;
+  }
+  if (!body || typeof body !== 'object') {
+    sendJson(res, 400, { ok: false, error_message: 'body must be an EJSON object' });
+    return;
+  }
+
+  const op = typeof body.op === 'string' ? body.op : '(missing)';
+  const collName = typeof body.collection === 'string' ? body.collection : '-';
+  const startedAt = Date.now();
+  try {
+    const result = await execMongoOp(body);
+    // Log op/collection/timing only — never filters or documents.
+    console.log(`[claude-bridge] mongo op=${op} coll=${collName} ok ${Date.now() - startedAt}ms`);
+    sendEjson(res, 200, { ok: true, result });
+  } catch (err) {
+    const status = err instanceof MongoOpError ? 400 : 500;
+    console.error(`[claude-bridge] mongo op=${op} coll=${collName} FAILED ${Date.now() - startedAt}ms: ${err.message}`);
+    sendEjson(res, status, {
+      ok: false,
+      error_message: String(err.message || err),
+      error_code: err.code !== undefined ? err.code : undefined,
+    });
+  }
+}
+
+// ----------------------------------------------------------------------------
 // HTTP plumbing
 // ----------------------------------------------------------------------------
 
@@ -456,6 +748,24 @@ const requestListener = (req, res) => {
     });
     return;
   }
+  if (req.method === 'GET' && url === '/mongo/health') {
+    handleMongoHealth(req, res).catch((err) => {
+      console.error('[claude-bridge] unhandled mongo error:', err);
+      if (!res.headersSent) {
+        sendJson(res, 500, { ok: false, error_message: String(err.message || err) });
+      }
+    });
+    return;
+  }
+  if (req.method === 'POST' && url === '/mongo/op') {
+    handleMongoOp(req, res).catch((err) => {
+      console.error('[claude-bridge] unhandled mongo error:', err);
+      if (!res.headersSent) {
+        sendJson(res, 500, { ok: false, error_message: String(err.message || err) });
+      }
+    });
+    return;
+  }
   sendJson(res, 404, { ok: false, error_message: 'not found' });
 };
 
@@ -482,6 +792,13 @@ server.listen(PORT, HOST, () => {
   console.log(`[claude-bridge] claude command: ${CLAUDE_COMMAND.join(' ')}`);
   console.log(`[claude-bridge] default cwd: ${DEFAULT_CWD}`);
   console.log(`[claude-bridge] max concurrency: ${MAX_CONCURRENCY <= 0 ? 'unlimited' : MAX_CONCURRENCY}`);
+  if (MONGO_URI && mongoDriver) {
+    console.log(`[claude-bridge] mongo bridge: ENABLED (db=${MONGO_DB}, max docs=${MONGO_MAX_DOCS})`);
+  } else if (MONGO_URI) {
+    console.log('[claude-bridge] mongo bridge: CONFIGURED but unavailable (mongodb package missing) — /mongo/* will return 503');
+  } else {
+    console.log('[claude-bridge] mongo bridge: disabled (CLAUDE_BRIDGE_MONGODB_URI not set)');
+  }
   if (PATH_MAP.length) {
     for (const { from, to } of PATH_MAP) {
       console.log(`[claude-bridge] path map: ${from} => ${to}`);

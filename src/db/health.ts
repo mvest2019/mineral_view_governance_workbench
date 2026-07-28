@@ -9,6 +9,7 @@
 import { getMongoClient } from '@/src/db/client';
 import { getDb } from '@/src/db/connection';
 import { getMongoEnvConfig, isMongoConfigured } from '@/src/config/env';
+import { isMongoBridgeConfigured, pingMongoBridge } from '@/src/db/bridge';
 
 export interface MongoHealth {
   ok: boolean;
@@ -36,6 +37,33 @@ export async function checkMongoHealth(): Promise<MongoHealth> {
       collections: [],
       error: 'MONGODB_URI is not set.',
     };
+  }
+
+  // Bridge mode: MongoDB is reached over HTTPS via the remote bridge, so there
+  // is no local MongoClient to await and no local URI to read. Ping through
+  // the bridge (which reports the remote database name) and list collections
+  // through the same shim the application uses.
+  if (isMongoBridgeConfigured()) {
+    const startedAt = Date.now();
+    let bridgeDbName: string | null = null;
+    try {
+      bridgeDbName = (await pingMongoBridge()).dbName;
+      const pingMs = Date.now() - startedAt;
+      const db = await getDb();
+      const collections = (await db.listCollections({}, { nameOnly: true }).toArray())
+        .map((c) => c.name)
+        .sort();
+      return { ok: true, configured: true, dbName: bridgeDbName, pingMs, collections };
+    } catch (err) {
+      return {
+        ok: false,
+        configured: true,
+        dbName: bridgeDbName,
+        pingMs: null,
+        collections: [],
+        error: err instanceof Error ? err.message : String(err),
+      };
+    }
   }
 
   const { dbName } = getMongoEnvConfig();

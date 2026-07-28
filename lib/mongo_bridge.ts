@@ -22,9 +22,14 @@ import { slugifyName } from '@/lib/github';
 
 const COMPANY_DEFAULT = 'MView';
 
-/** True only when a MongoDB connection string is configured. */
+/**
+ * True when MongoDB persistence is available: either a direct connection
+ * string (MONGODB_URI) or the HTTPS mongo bridge (MONGO_BRIDGE_URL, routed
+ * through the remote-claude-bridge on the Windows server).
+ */
 export function mongoEnabled(): boolean {
-  return Boolean((process.env.MONGODB_URI || '').trim());
+  return Boolean((process.env.MONGODB_URI || '').trim())
+    || Boolean((process.env.MONGO_BRIDGE_URL || '').trim());
 }
 
 function companyKeyOf(company?: string | null): string {
