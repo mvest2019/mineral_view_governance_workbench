@@ -19,17 +19,17 @@
 // where data is additionally saved/loaded.
 
 import { slugifyName } from '@/lib/github';
+import { httpBridgeEnabled } from '@/src/db/http_bridge';
 
 const COMPANY_DEFAULT = 'MView';
 
 /**
- * True when MongoDB persistence is available: either a direct connection
- * string (MONGODB_URI) or the HTTPS mongo bridge (MONGO_BRIDGE_URL, routed
- * through the remote-claude-bridge on the Windows server).
+ * True when MongoDB access is available — either a direct connection string
+ * (MONGODB_URI) or the HTTP bridge (MONGODB_BRIDGE_URL). In bridge mode Vercel
+ * never connects to MongoDB directly, so MONGODB_URI is not required.
  */
 export function mongoEnabled(): boolean {
-  return Boolean((process.env.MONGODB_URI || '').trim())
-    || Boolean((process.env.MONGO_BRIDGE_URL || '').trim());
+  return Boolean((process.env.MONGODB_URI || '').trim()) || httpBridgeEnabled();
 }
 
 function companyKeyOf(company?: string | null): string {

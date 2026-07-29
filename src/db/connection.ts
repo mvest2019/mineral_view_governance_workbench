@@ -12,7 +12,7 @@
 import type { Db, Collection, Document } from 'mongodb';
 import { getMongoClient } from '@/src/db/client';
 import { getMongoEnvConfig } from '@/src/config/env';
-import { getBridgeDb, isMongoBridgeConfigured } from '@/src/db/bridge';
+import { httpBridgeEnabled, bridgeGetCollection, bridgeGetDb } from '@/src/db/http_bridge';
 
 /**
  * Return the GovernanceDB database handle.
@@ -26,11 +26,10 @@ import { getBridgeDb, isMongoBridgeConfigured } from '@/src/db/bridge';
  *     before.
  */
 export async function getDb(): Promise<Db> {
-  if (isMongoBridgeConfigured()) {
-    // The shim implements the Db/Collection subset the app uses; repositories
-    // and services work unchanged against it.
-    return getBridgeDb() as unknown as Db;
-  }
+  // When the HTTP bridge is configured, all MongoDB access is forwarded to the
+  // remote-claude-bridge (only that server connects to MongoDB). The app never
+  // opens a direct connection. Off by default → unchanged direct-driver behavior.
+  if (httpBridgeEnabled()) return bridgeGetDb();
   const client = await getMongoClient();
   const { dbName } = getMongoEnvConfig();
   return client.db(dbName);
@@ -47,6 +46,9 @@ export async function getDb(): Promise<Db> {
 export async function getCollection<TSchema extends Document = Document>(
   name: string,
 ): Promise<Collection<TSchema>> {
+  // HTTP bridge mode: forward operations to the remote-claude-bridge instead of
+  // opening a direct connection. Off by default → unchanged direct-driver path.
+  if (httpBridgeEnabled()) return bridgeGetCollection<TSchema>(name);
   const db = await getDb();
   return db.collection<TSchema>(name);
 }
