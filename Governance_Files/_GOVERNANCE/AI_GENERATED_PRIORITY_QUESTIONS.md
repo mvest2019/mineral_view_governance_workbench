@@ -163,3 +163,57 @@ The guide targets "Wealth Preservation Investors" and covers spreads, storage, a
 **1. Short Question** — Which inventory system supplied the 5.64 g / 17.5 in specs and rose-tone plating classification, and who owns that source of truth?
 
 Specs were "cross-referenced against exact physical inventory sheets." Name the sheet or system and its owner, so the plating-vs-solid-gold correction is traceable and the same source is used for future SKUs.
+
+### Q-AI-0019 — Can the 4 provisional dossiers be shared with members before ownership and title verification, and who approves that?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Can the 4 provisional dossiers be shared with members before ownership and title verification, and who approves that?
+
+Seven dossiers were generated but only three are marked final-quality. Without a stated gate, provisional ownership figures could reach members as if verified.
+
+### Q-AI-0020 — Who performs the independent verification of the validation package before dossier ownership values are treated as production output?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who performs the independent verification of the validation package before dossier ownership values are treated as production output?
+
+The submission says a validation package was created "for independent verification" but names no verifier, no acceptance criteria, and no completion date.
+
+### Q-AI-0021 — Is the multi-owner interest-number matching a logged defect with a fix owner, or is manual review the permanent process?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Is the multi-owner interest-number matching a logged defect with a fix owner, or is manual review the permanent process?
+
+Matching ownership by interest number rather than owner name means large multi-owner leases can display the wrong owner names. Manual review does not scale past a handful of dossiers.
+
+### Q-AI-0022 — Which dossier pipeline is canonical, given a separate generator and a parallel script are already in play?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which dossier pipeline is canonical, given a separate generator and a parallel script are already in play?
+
+Governance knowledge records `assemble_member.py` plus a parallel `build-dossier.mjs` awaiting reconciliation. It is unclear whether this 2025-data pipeline is one of those, a third, and who owns merging them.
+
+### Q-AI-0023 — Where are the seven generated .md dossiers stored, and who can access them given they contain member ownership data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where are the seven generated .md dossiers stored, and who can access them given they contain member ownership data?
+
+Dossiers combine identified members with lease and ownership records. The storage location, access list, and whether they are kept out of git need to be stated explicitly for this batch.
+
+### Q-AI-0024 — Are the district-code and numeric owner-number breakages caused by the database refresh itself, and who owns preventing recurrence?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the district-code and numeric owner-number breakages caused by the database refresh itself, and who owns preventing recurrence?
+
+Two format/type incompatibilities in a row appeared after database updates. If refreshes keep changing field types, the fix belongs upstream rather than repeatedly in the pipeline.
