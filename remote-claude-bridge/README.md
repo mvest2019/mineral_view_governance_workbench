@@ -236,3 +236,67 @@ the Windows server.
   chats, `claude_timeout` setting for intake runs); the bridge enforces it and
   reports `ETIMEDOUT`, which the app surfaces exactly as before (HTTP 504
   where applicable).
+
+---
+
+## MongoDB bridge (additive — `POST /mongo`)
+
+The same bridge, tunnel, token, and logging now also expose MongoDB so the
+Vercel app can run database operations **here** instead of connecting to MongoDB
+itself. Only this server ever opens a MongoDB connection; Vercel talks HTTPS to
+`/mongo` over the existing ngrok tunnel. The Claude endpoints are unchanged.
+
+### One-time setup on this server
+
+1. Install the driver (adds `mongodb` from `package.json`):
+   ```bat
+   cd C:\claude-bridge
+   npm install
+   ```
+2. Add to `.env` the REAL production connection string (kept ONLY here):
+   ```
+   MONGO_BRIDGE_URI=mongodb://admin:<URL-ENCODED-PASSWORD>@108.181.152.168:27017/?authSource=admin&directConnection=true
+   MONGO_BRIDGE_DB=GovernanceDB
+   ```
+   (This host must be able to reach the production MongoDB. `directConnection=true`
+   avoids replica-set member rediscovery.)
+3. Restart the bridge (`start-claude-bridge.bat`). Startup and `/run` are
+   unaffected; MongoDB connects lazily on the first `/mongo` request.
+
+### Endpoint
+
+`POST /mongo` — `Authorization: Bearer <CLAUDE_BRIDGE_TOKEN>` (same token as `/run`).
+Body and reply are **EJSON** (canonical) so `ObjectId`/`Date` round-trip exactly.
+
+```jsonc
+// request
+{ "target": "collection", "db": "GovernanceDB", "collection": "taskTrackerEntries",
+  "method": "insertOne", "args": [ { /* document */ } ] }
+// cursor form (find/aggregate/listIndexes)
+{ "target": "collection", "collection": "taskTrackerEntries", "method": "find",
+  "args": [ { /* filter */ } ], "cursorOps": [ {"name":"sort","args":[{"entryDate":-1}]}, {"name":"limit","args":[50]} ] }
+// reply
+{ "ok": true, "result": /* EJSON-encoded driver result */ }
+{ "ok": false, "error": "…", "errorMeta": { "name": "MongoServerError", "code": 121, "errInfo": { } } }
+```
+
+The app never builds these by hand — its data layer (`src/db/connection.ts`)
+returns a Collection/Db shim that forwards the exact driver calls the
+repositories already make. Repositories, services, models, and validators are
+unchanged.
+
+### Vercel environment variables (Production)
+
+Point the app at the bridge (same ngrok HTTPS host as Claude) and stop using a
+direct `MONGODB_URI`:
+
+```
+MONGODB_BRIDGE_URL = https://<your-ngrok-host>          (or …/mongo — both work)
+MONGODB_BRIDGE_TOKEN = <same value as REMOTE_CLAUDE_TOKEN>   (optional; falls back to REMOTE_CLAUDE_TOKEN)
+MONGODB_DB_NAME = GovernanceDB
+```
+
+Remove/ignore `MONGODB_URI` on Vercel — in bridge mode the app never connects to
+MongoDB directly. Redeploy. Then a Task Tracker save inserts into
+`GovernanceDB.taskTrackerEntries` via `POST /mongo`, and the production database
+stays private (only this server reaches it).

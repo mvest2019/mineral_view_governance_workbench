@@ -431,12 +431,132 @@ async function handleRun(req, res) {
   }
 }
 
+// ----------------------------------------------------------------------------
+// MongoDB bridge (additive) — authenticated Data-API-style endpoint so the
+// Vercel app can run MongoDB operations HERE without connecting to MongoDB
+// itself. Only this server ever opens a MongoDB connection. The mongodb driver
+// is loaded lazily, so the Claude endpoints keep working even if it is not
+// installed. EJSON is used on the wire so ObjectId/Date round-trip losslessly.
+//   POST /mongo  body (EJSON): { target, db, collection?, method, args, cursorOps? }
+//                reply (EJSON): { ok, result } | { ok:false, error, errorMeta }
+// ----------------------------------------------------------------------------
+const MONGO_BRIDGE_URI = String(process.env.MONGO_BRIDGE_URI || '').trim();
+const MONGO_BRIDGE_DB = String(process.env.MONGO_BRIDGE_DB || 'GovernanceDB').trim();
+const MONGO_CURSOR_METHODS = new Set(['find', 'aggregate', 'listIndexes', 'listSearchIndexes']);
+
+let _mongoLib = null;
+let _EJSON = null;
+let _mongoClientPromise = null;
+
+function mongoLib() {
+  if (!_mongoLib) {
+    _mongoLib = require('mongodb'); // lazy: Claude works even if this isn't installed
+    _EJSON = _mongoLib.EJSON || require('bson').EJSON;
+  }
+  return _mongoLib;
+}
+
+function mongoClient() {
+  if (!_mongoClientPromise) {
+    if (!MONGO_BRIDGE_URI) throw new Error('MONGO_BRIDGE_URI is not set on the bridge');
+    const { MongoClient } = mongoLib();
+    const client = new MongoClient(MONGO_BRIDGE_URI, {
+      serverSelectionTimeoutMS: 10000,
+      appName: 'remote-claude-bridge-mongo',
+    });
+    _mongoClientPromise = client.connect().catch((err) => {
+      _mongoClientPromise = null; // allow reconnect on the next request
+      throw err;
+    });
+  }
+  return _mongoClientPromise;
+}
+
+function sendEjson(res, statusCode, payload) {
+  mongoLib();
+  const body = _EJSON.stringify(payload, { relaxed: false });
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Length': Buffer.byteLength(body),
+  });
+  res.end(body);
+}
+
+async function handleMongo(req, res) {
+  let cmd;
+  try {
+    mongoLib();
+    cmd = _EJSON.parse((await readBody(req)) || '{}');
+  } catch (err) {
+    sendJson(res, 400, { ok: false, error: `invalid EJSON body: ${err.message}` });
+    return;
+  }
+
+  const target = String(cmd.target || 'collection');
+  const method = String(cmd.method || '');
+  const args = Array.isArray(cmd.args) ? cmd.args : [];
+  const dbName = String(cmd.db || MONGO_BRIDGE_DB);
+  const collName = cmd.collection ? String(cmd.collection) : null;
+  if (!method) { sendJson(res, 400, { ok: false, error: 'method is required' }); return; }
+
+  const started = Date.now();
+  try {
+    const client = await mongoClient();
+    const db = client.db(dbName);
+    let base;
+    if (target === 'collection') {
+      if (!collName) throw new Error('collection is required for target=collection');
+      base = db.collection(collName);
+    } else if (target === 'admin') {
+      base = db.admin();
+    } else {
+      base = db;
+    }
+    if (typeof base[method] !== 'function') throw new Error(`unsupported operation: ${target}.${method}`);
+
+    let result = base[method](...args);
+    if (Array.isArray(cmd.cursorOps)) {
+      for (const op of cmd.cursorOps) result = result[op.name](...(op.args || []));
+      result = await result.toArray();
+    } else if (MONGO_CURSOR_METHODS.has(method) && result && typeof result.toArray === 'function') {
+      result = await result.toArray();
+    } else {
+      result = await result;
+    }
+
+    const elapsed = Date.now() - started;
+    console.log(`[claude-bridge] mongo ${target}.${method} db=${dbName} coll=${collName || '-'} ${elapsed}ms`);
+    sendEjson(res, 200, { ok: true, result });
+  } catch (err) {
+    console.error(`[claude-bridge] mongo ${target}.${method} FAILED:`, err && err.message ? err.message : err);
+    // 200 + ok:false carries the real Mongo error (name/code/errInfo) so the app
+    // can surface it exactly as before. Non-Mongo/parse errors used 4xx above.
+    sendJson(res, 200, {
+      ok: false,
+      error: String(err && err.message ? err.message : err),
+      errorMeta: {
+        name: err && err.name ? err.name : null,
+        code: err && err.code != null ? err.code : null,
+        codeName: err && err.codeName ? err.codeName : null,
+        errInfo: err && err.errInfo ? err.errInfo : null,
+      },
+    });
+  }
+}
+
 const requestListener = (req, res) => {
   if (!authorized(req)) {
     sendJson(res, 401, { ok: false, error_message: 'unauthorized' });
     return;
   }
   const url = (req.url || '').split('?')[0];
+  if (req.method === 'POST' && url === '/mongo') {
+    handleMongo(req, res).catch((err) => {
+      console.error('[claude-bridge] mongo unhandled error:', err);
+      if (!res.headersSent) sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    });
+    return;
+  }
   if (req.method === 'GET' && url === '/health') {
     sendJson(res, 200, {
       ok: true,
