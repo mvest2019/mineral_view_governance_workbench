@@ -55,3 +55,57 @@ The submission says the methodology was reconciled and canonical figures confirm
 **1. Short Question** — Do the historical tracking gaps invalidate any claim-to-payment conversion numbers already reported to Ryan or leadership?
 
 The investigation separated historical tracking gaps from the current defect, which implies past conversion reporting may have been unmeasurable or wrong. Confirm whether any prior reported figures need retraction or a stated caveat.
+
+### Q-AI-0007 — Where are the live production Postgres/Mongo credentials stored now that the setup was "saved to memory," and who approved that access?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Where are the live production Postgres/Mongo credentials stored now that the setup was "saved to memory," and who approved that access?
+
+The submission notes connecting to live read-only Postgres + Mongo and a private GitHub repo, with the setup saved to memory. Governance needs to know where those connection strings/credentials now persist (local config, AI tool memory, notes), whether they are in environment variables rather than plaintext, and who granted a marketing role production access.
+
+### Q-AI-0008 — Does the owner classification and high-earner/monthly-income analysis output contain identifiable owner data, and where is it stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Does the owner classification and high-earner/monthly-income analysis output contain identifiable owner data, and where is it stored?
+
+Classifying 915,093 owners into individual / trust / family-LLC / institution and producing high-earner counts is derived from production mineral-owner records. Confirm whether any output file holds names, addresses, or per-owner income estimates, and whether those files are held anywhere other than approved PII storage.
+
+### Q-AI-0009 — Who approves the TAM/SAM/SOM, the ~111,700 paying target, and the $3.2–6.4M/yr figure before they are used for planning or spend?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves the TAM/SAM/SOM, the ~111,700 paying target, and the $3.2–6.4M/yr figure before they are used for planning or spend?
+
+These are new revenue-planning numbers built from live data by marketing. Confirm the approver (Ryan? Nikhil?) and whether the sizing method and assumptions have been independently checked before they drive budget, targets, or external communication.
+
+### Q-AI-0010 — The funnel shows ~0% paid conversion — who owns fixing that leak, and does it gate any further traffic or ad spend?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — The funnel shows ~0% paid conversion — who owns fixing that leak, and does it gate any further traffic or ad spend?
+
+The submission identifies paid conversion + retention as the real leak. A decision is needed on whether spend proposals proceed before the paid step converts, and who owns the product/pricing fix rather than the marketing funnel work.
+
+### Q-AI-0011 — Do the derived income estimates (annual value ÷ 48) risk reading as valuation or investment advice if used in marketing or targeting?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the derived income estimates (annual value ÷ 48) risk reading as valuation or investment advice if used in marketing or targeting?
+
+A rough monthly-income view per owner is a financial figure. Confirm whether it stays internal for sizing only, and if any of it reaches owner-facing pages or campaigns, whether it needs the estimate / no-investment-advice guardrail already applied elsewhere on the site.
+
+### Q-AI-0012 — The three deliverables sit in a local Downloads folder — where is the canonical shared location and who signs off on the doc?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — The three deliverables sit in a local Downloads folder — where is the canonical shared location and who signs off on the doc?
+
+`Funnel1-Strategy-Market-Size-and-Baseline.md` and the two XLSX files are on one machine. Confirm the shared storage location, version control, and the accepting reviewer before this becomes the basis for keyword, spend, and instrumentation work.
