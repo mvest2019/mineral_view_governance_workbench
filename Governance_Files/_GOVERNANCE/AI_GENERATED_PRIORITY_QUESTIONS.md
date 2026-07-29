@@ -109,3 +109,57 @@ A rough monthly-income view per owner is a financial figure. Confirm whether it 
 **1. Short Question** — The three deliverables sit in a local Downloads folder — where is the canonical shared location and who signs off on the doc?
 
 `Funnel1-Strategy-Market-Size-and-Baseline.md` and the two XLSX files are on one machine. Confirm the shared storage location, version control, and the accepting reviewer before this becomes the basis for keyword, spend, and instrumentation work.
+
+### Q-AI-0013 — Is BOLD Precious Metals an approved client engagement, and who authorized Mineral View content time for it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Is BOLD Precious Metals an approved client engagement, and who authorized Mineral View content time for it?
+
+Both deliverables today (Rand Refinery gold bars category page, rose-tone crystal necklace product copy) are for BOLD Precious Metals, a bullion and jewelry e-commerce brand with no stated connection to oil, gas, or mineral rights. Governance needs the contract/engagement reference and the approver before more MView content capacity is allocated.
+
+### Q-AI-0014 — Does LBMA Good Delivery status actually apply to the 1-gram through 1-kg retail bars, or only to large wholesale bars?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Does LBMA Good Delivery status actually apply to the 1-gram through 1-kg retail bars, or only to large wholesale bars?
+
+The submission states "all Rand Refinery gold bars hold international Good Delivery status" and are accepted on COMEX, TOCOM and LME. LBMA Good Delivery is a refiner accreditation tied to specific large-bar specifications, not a blanket status for fractional retail bars. This claim needs verification before publish — an incorrect authenticity/liquidity claim is a customer-trust and consumer-protection risk.
+
+### Q-AI-0015 — Where are the citations and source records for the "fact-verified" refinery, assay, and hallmark claims?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Where are the citations and source records for the "fact-verified" refinery, assay, and hallmark claims?
+
+The submission asserts verification against "official Rand Refinery catalog standards" but names no documents, URLs, or dates. Given a prior published page carried an incorrect citation, the evidence trail needs to be recorded and reviewable, not asserted.
+
+### Q-AI-0016 — Was the inaccurate draft copy you corrected ever published live, and does it need a correction or takedown?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Shubham_Kamble
+**1. Short Question** — Was the inaccurate draft copy you corrected ever published live, and does it need a correction or takedown?
+
+The audit removed "erroneous metal purity and weight claims" and "inaccurate claims regarding solid karat weights" from the necklace copy. If that text was live on the storefront, customers may have purchased against wrong material and purity representations — that is a returns/consumer-disclosure exposure, not just an editing fix.
+
+### Q-AI-0017 — Who approved the wording of the bullion guide's disclaimer, and does it cover the buy/sell spread and wealth-preservation framing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Who approved the wording of the bullion guide's disclaimer, and does it cover the buy/sell spread and wealth-preservation framing?
+
+The guide targets "Wealth Preservation Investors" and covers spreads, storage, and spot-price monitoring under only a "standard contextual reminder." Confirm the exact disclaimer text and who signed off that it keeps the page on the informational side of the no-investment-advice line.
+
+### Q-AI-0018 — Which inventory system supplied the 5.64 g / 17.5 in specs and rose-tone plating classification, and who owns that source of truth?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Shubham_Kamble
+**1. Short Question** — Which inventory system supplied the 5.64 g / 17.5 in specs and rose-tone plating classification, and who owns that source of truth?
+
+Specs were "cross-referenced against exact physical inventory sheets." Name the sheet or system and its owner, so the plating-vs-solid-gold correction is traceable and the same source is used for future SKUs.
