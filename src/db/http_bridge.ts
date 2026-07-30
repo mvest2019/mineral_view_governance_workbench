@@ -58,11 +58,18 @@ interface BridgePayload {
 
 async function sendBridge(payload: BridgePayload): Promise<unknown> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), bridgeTimeoutMs());
+  const url = bridgeUrl();
+  const timeout = bridgeTimeoutMs();
+  const timer = setTimeout(() => controller.abort(), timeout);
   const token = bridgeToken();
+  let host = '(unparseable)';
+  try { host = new URL(url).host; } catch { /* ignore */ } // masked host only; token is in the header, never the URL
+  const op = `${payload.target}.${payload.method}${payload.collection ? `(${payload.collection})` : ''}`;
+  const started = Date.now();
+  console.log(`[TRACE][http_bridge] fetch → https://${host}/mongo op=${op} hasToken=${Boolean(token)} timeout=${timeout}ms`); // TEMP TRACE
   let res: Response;
   try {
-    res = await fetch(bridgeUrl(), {
+    res = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,19 +79,24 @@ async function sendBridge(payload: BridgePayload): Promise<unknown> {
       signal: controller.signal,
       cache: 'no-store',
     });
+    console.log(`[TRACE][http_bridge] fetch RESOLVED op=${op} status=${res.status} elapsedMs=${Date.now() - started}`); // TEMP TRACE
   } catch (err) {
+    console.error(`[TRACE][http_bridge] fetch REJECTED op=${op} elapsedMs=${Date.now() - started}: ${(err as Error).message}`); // TEMP TRACE
     throw new Error(`MongoDB bridge request failed: ${(err as Error).message}`);
   } finally {
     clearTimeout(timer);
   }
 
+  console.log(`[TRACE][http_bridge] before res.text() op=${op}`); // TEMP TRACE
   const text = await res.text();
+  console.log(`[TRACE][http_bridge] after res.text() op=${op} bytes=${text.length}; before EJSON.parse`); // TEMP TRACE
   let parsed: { ok?: boolean; result?: unknown; error?: string; errorMeta?: Record<string, unknown> };
   try {
     parsed = EJSON.parse(text) as typeof parsed;
   } catch {
     throw new Error(`MongoDB bridge returned non-EJSON (HTTP ${res.status}): ${text.slice(0, 200)}`);
   }
+  console.log(`[TRACE][http_bridge] after EJSON.parse op=${op} ok=${parsed?.ok}`); // TEMP TRACE
   if (!res.ok || !parsed || parsed.ok !== true) {
     const err = new Error(parsed?.error || `MongoDB bridge error (HTTP ${res.status})`);
     // Re-attach the driver error metadata (name/code/errInfo) so existing route

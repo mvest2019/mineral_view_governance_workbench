@@ -1250,9 +1250,8 @@ async function renderDashboard() {
 // card, and button styles. Self-contained — no existing view is affected.
 // ============================================================================
 
-// Temporary fallback list, used only if the employee source returns nothing.
-// Replace once a richer employee source is wired in.
-const TASK_TRACKER_FALLBACK_EMPLOYEES = ['Ryan', 'John', 'Aboli', 'Pragati', 'Pooja'];
+// Employees come from MongoDB only (via /api/employees). There is deliberately
+// NO hardcoded fallback list — if MongoDB is unavailable the UI shows an error.
 
 function taskTrackerEmployeeLabel(raw) {
   return String(raw || '').replace(/_+/g, ' ').trim();
@@ -1265,12 +1264,19 @@ async function renderTaskTracker() {
   try {
     employees = await fetchJSON(`/api/employees?company=${CURRENT_COMPANY}`);
   } catch (error) {
-    employees = [];
+    if (viewRequestIsStale(_r)) return;
+    // MongoDB (or the bridge) is unavailable — show an error, never dummy data.
+    main.innerHTML = `
+      <h2>Task Tracker</h2>
+      <div class="alert alert-danger">
+        <div class="fw-semibold mb-1">Unable to load employees from MongoDB</div>
+        <div class="small mb-2">The employee list could not be loaded. Please retry once the MongoDB connection is available.</div>
+        <button class="btn btn-sm btn-outline-secondary" type="button" onclick="renderTaskTracker()">Retry</button>
+      </div>`;
+    return;
   }
   if (viewRequestIsStale(_r)) return;
-  if (!Array.isArray(employees) || !employees.length) {
-    employees = TASK_TRACKER_FALLBACK_EMPLOYEES;
-  }
+  if (!Array.isArray(employees)) employees = [];
   // Task Tracker only: hide Ryan Cochran and Sachin Shinde from the dropdown.
   const TASK_TRACKER_EXCLUDED = ['ryancochran', 'sachinshinde'];
   employees = employees.filter(
@@ -4232,15 +4238,36 @@ async function renderMeetings() {
   }
   if (viewRequestIsStale(_r)) return;
   LAST_TEAM_MEMBERS = teamMembers || [];
+
+  // Attendee picker uses MongoDB employees ONLY (no roster/config/hardcoded
+  // fallback). If MongoDB is unavailable, show an error instead of dummy names.
+  let mongoEmployees;
+  try {
+    mongoEmployees = await withTimeout(fetchJSON(`/api/employees?company=${CURRENT_COMPANY}`), 12000, 'Employees request');
+  } catch (error) {
+    if (viewRequestIsStale(_r)) return;
+    main.innerHTML = `
+      <h2>Meetings</h2>
+      <div class="alert alert-danger">
+        <div class="fw-semibold mb-1">Unable to load employees from MongoDB</div>
+        <div class="small mb-2">The attendee list could not be loaded. Please retry once the MongoDB connection is available.</div>
+        <button class="btn btn-sm btn-outline-secondary" type="button" onclick="renderMeetings()">Retry</button>
+      </div>`;
+    return;
+  }
+  if (viewRequestIsStale(_r)) return;
+
   const meetings = (meetingsPayload && meetingsPayload.rows) || [];
   CURRENT_MEETINGS_CACHE = meetings;
   const selectedMeeting = meetings.find((meeting) => meeting.id === CURRENT_MEETING_ID) || meetings[0] || null;
   if (selectedMeeting) CURRENT_MEETING_ID = selectedMeeting.id;
-  const rosterAttendees = rosterAttendeeList();
-  const attendeeSource = rosterAttendees || (teamMembers || []).map((member) => ({
-    key: member.key,
-    display_name: member.display_name,
-    role: member.detail?.role || '',
+  // Roles are display-only enrichment pulled from team_members when present.
+  const _roleByKey = {};
+  (teamMembers || []).forEach((m) => { _roleByKey[m.key] = (m.detail && m.detail.role) || m.role || ''; });
+  const attendeeSource = (Array.isArray(mongoEmployees) ? mongoEmployees : []).map((key) => ({
+    key,
+    display_name: prettyName(key),
+    role: _roleByKey[key] || '',
   }));
   const attendeeChecklist = attendeeSource.map((member) => `
     <label class="meeting-attendee-option">
