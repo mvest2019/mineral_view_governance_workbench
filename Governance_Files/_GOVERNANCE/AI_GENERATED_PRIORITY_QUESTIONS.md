@@ -433,3 +433,57 @@ Organic ranking damage typically surfaces over weeks, not 72 hours. The safety n
 **1. Short Question** — Where is the marketing "Website Visitors Stats" workbook of subscriber first-visit pages stored, and who can access it?
 
 This workbook links individual subscribers to their first-visit pages, which is per-person behavioural data. Its storage location, access list, and whether its use for SEO analysis is covered by our privacy policy should be confirmed.
+
+### Q-AI-0049 — Were any dossiers with the false owner names already delivered to members before the fix?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Rohit_Pandey
+**1. Short Question** — Were any dossiers with the false owner names already delivered to members before the fix?
+
+The submission says previously completed dossiers contained false owner matches that were only corrected in this regeneration run. If any of those were already shared with members or Ryan, we need to know which ones, whether corrected versions were re-issued, and whether the recipients were notified that ownership details changed.
+
+### Q-AI-0050 — Who is investigating the missing work log file and unrelated files in the shared dossier folder?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who is investigating the missing work log file and unrelated files in the shared dossier folder?
+
+A missing log file plus unexplained files from another contributor in a folder holding member PII is an access-control and data-integrity concern. Needs a named owner, confirmation that no dossier files were deleted or overwritten, and a check of who has write access to that folder.
+
+### Q-AI-0051 — Who reviewed and approved the two dossier pipeline code changes before they went into production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who reviewed and approved the two dossier pipeline code changes before they went into production?
+
+The ownership-matching logic and duplicate-row messaging changes were described as "approved" and integrated into the production workflow. Clarify who approved them, whether they were code-reviewed and committed to the repo (the generator previously sat on branch `feat/dossier-data-generator` under Krishna), and whether there is a rollback path.
+
+### Q-AI-0052 — What makes the 1 held dossier invalid, and who decides whether it is released?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — What makes the 1 held dossier invalid, and who decides whether it is released?
+
+18 of 19 were finalized and 1 was held as an "invalid or incorrect case." Governance needs the specific defect, whether it indicates a systemic pipeline issue affecting the other 18, and who signs off before it is released or discarded.
+
+### Q-AI-0053 — Now that dossiers trust the member's verified claim as the ownership source, who verifies that claim is correct?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Now that dossiers trust the member's verified claim as the ownership source, who verifies that claim is correct?
+
+The pipeline no longer infers ownership from interest percentages and instead takes the owner recorded in the member's claim. That makes claim accuracy the single point of failure — clarify what evidence and human review stand behind a "verified" claim before it flows into a published dossier.
+
+### Q-AI-0054 — How does a dossier report ownership for leases with no 2025 County Appraisal District data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — How does a dossier report ownership for leases with no 2025 County Appraisal District data?
+
+Coverage was said to improve only "where updated 2025 county information was available." Confirm what the dossier shows for the remaining leases — stale data, blank, or an explicit gap disclosure — and whether the as-of date is stated on the report.
