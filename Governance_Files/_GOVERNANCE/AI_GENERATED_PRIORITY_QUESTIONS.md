@@ -217,3 +217,57 @@ Dossiers combine identified members with lease and ownership records. The storag
 **1. Short Question** — Are the district-code and numeric owner-number breakages caused by the database refresh itself, and who owns preventing recurrence?
 
 Two format/type incompatibilities in a row appeared after database updates. If refreshes keep changing field types, the fix belongs upstream rather than repeatedly in the pipeline.
+
+### Q-AI-0025 — Does this reel make any factual claims about the oil industry, and who verified them before export?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does this reel make any factual claims about the oil industry, and who verified them before export?
+
+The report says ChatGPT was used for script support and content planning, but names no human fact-check step. Text overlays and captions were added and the video is already exported "ready for publishing." Governance needs to know which claims appear on screen and who signed off on their accuracy.
+
+### Q-AI-0026 — Do the AI-generated "realistic" oil field visuals depict any identifiable operator, site, or well, and are they marked as illustrative?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Do the AI-generated "realistic" oil field visuals depict any identifiable operator, site, or well, and are they marked as illustrative?
+
+Photorealistic AI visuals of oil fields risk being read by viewers as real footage of a real operator's assets or as Mineral View data. Clarify whether any visual resembles an identifiable company, location, or lease, and whether an "AI-generated / illustrative" label is applied.
+
+### Q-AI-0027 — Is the reel's voiceover a real recorded person or an AI-generated voice, and is consent or licence on file?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is the reel's voiceover a real recorded person or an AI-generated voice, and is consent or licence on file?
+
+The report states all scenes were synchronized to a voiceover but does not say whose voice it is. If it is a synthetic or cloned voice, we need the tool's commercial-use terms; if it is a person, we need their consent for brand publication.
+
+### Q-AI-0028 — Is there an approved list of AI tools cleared for commercial output, given this report names them only generically?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is there an approved list of AI tools cleared for commercial output, given this report names them only generically?
+
+The submission lists an unnamed "AI Image Generation Tool" and "AI Video Generation Tool." Unnamed tools cannot be licence-checked or audited later. Ask whether a cleared-tool list exists and that each tool used be recorded by name and plan tier.
+
+### Q-AI-0029 — Does the reel include Mineral View branding and a call-to-action, and which page does it point to?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel include Mineral View branding and a call-to-action, and which page does it point to?
+
+Unlike prior reels, this one is described purely as oil-industry content with no mention of platform footage, branding, or a CTA. Confirm the product tie-in and destination link before publishing.
+
+### Q-AI-0030 — Is "The World of Oil" part of an approved content plan, and who approved the topic and its publish date?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is "The World of Oil" part of an approved content plan, and who approved the topic and its publish date?
+
+The topic appears new relative to the existing YouTube explainer and World Cup reel tracks. Clarify whether this is a one-off or the start of a series, and who approved the concept and scheduling.
