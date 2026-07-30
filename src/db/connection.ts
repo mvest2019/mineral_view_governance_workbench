@@ -38,7 +38,9 @@ export async function getCollection<TSchema extends Document = Document>(
 ): Promise<Collection<TSchema>> {
   // HTTP bridge mode: forward operations to the remote-claude-bridge instead of
   // opening a direct connection. Off by default → unchanged direct-driver path.
-  if (httpBridgeEnabled()) return bridgeGetCollection<TSchema>(name);
+  const bridge = httpBridgeEnabled();
+  console.log(`[TRACE][connection] getCollection('${name}') httpBridgeEnabled=${bridge} path=${bridge ? 'HTTP_BRIDGE' : 'DIRECT_DRIVER'}`); // TEMP TRACE
+  if (bridge) return bridgeGetCollection<TSchema>(name);
   const db = await getDb();
   return db.collection<TSchema>(name);
 }

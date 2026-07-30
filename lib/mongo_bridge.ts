@@ -46,11 +46,14 @@ function companyKeyOf(company?: string | null): string {
  * `null` to signal the caller should fall back to the existing source.
  */
 export async function mongoListEmployees(company?: string | null): Promise<string[] | null> {
+  console.log(`[TRACE][mongo_bridge] mongoListEmployees mongoEnabled=${mongoEnabled()}`); // TEMP TRACE
   if (!mongoEnabled()) return null;
   try {
     const { EmployeeRepository } = await import('@/src/repositories/employee.repository');
     const repo = new EmployeeRepository({ companyKey: companyKeyOf(company) });
+    console.log("[TRACE][mongo_bridge] before repo.listByStatus('ACTIVE')"); // TEMP TRACE
     const docs = await repo.listByStatus('ACTIVE');
+    console.log(`[TRACE][mongo_bridge] after repo.listByStatus('ACTIVE') count=${docs.length}`); // TEMP TRACE
     if (!docs.length) return null; // nothing migrated yet → fall back
 
     const appKey = (d: { aliases?: string[]; fullName?: string; memberKey: string }): string => {
@@ -66,6 +69,7 @@ export async function mongoListEmployees(company?: string | null): Promise<strin
     else list.unshift('Ryan_Cochran');
     return list;
   } catch (err) {
+    console.error('[TRACE][mongo_bridge] mongoListEmployees CATCH → returning null (fallback):', err instanceof Error ? err.message : err); // TEMP TRACE
     console.error('[mongo_bridge] mongoListEmployees failed (falling back):', err);
     return null;
   }
