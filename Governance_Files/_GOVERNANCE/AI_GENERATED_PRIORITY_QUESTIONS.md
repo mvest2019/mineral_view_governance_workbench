@@ -325,3 +325,57 @@ Search, filter, sort, and Map↔Table transitions were all reworked. No test evi
 **1. Short Question** — Was the mobile-optimized Data Coverage checked for map tile and API request load on cellular devices?
 
 Mobile optimization of a data-heavy map can increase tile and API call volume, affecting performance and hosting cost. Confirm whether load behavior was measured, not just layout.
+
+### Q-AI-0037 — When a source website change breaks extraction, is the data collected during the broken window re-scraped and corrected?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When a source website change breaks extraction, is the data collected during the broken window re-scraped and corrected?
+
+The submission notes assessing "the impact of source website changes" and validating scraper adjustments afterward. What is unclear is the remediation of data already collected while the scraper was silently mis-extracting: is there a defined re-scrape/backfill for the affected date range, and were users or downstream consumers exposed to incomplete W-1/W-2 records in the meantime?
+
+### Q-AI-0038 — Are the new source systems being reviewed for scraper expansion cleared for terms-of-service, rate limits, and legal use?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the new source systems being reviewed for scraper expansion cleared for terms-of-service, rate limits, and legal use?
+
+"Analyzed data acquisition requirements and reviewed source systems to support ongoing scraper enhancements" implies new or expanded scraping targets. Governance needs to know who approves a new source before scraping begins, and whether its terms of use, robots/rate-limit constraints, and any licensing or attribution obligations have been checked.
+
+### Q-AI-0039 — When duplicate records are found, are they deleted or merged in production, and who approves that?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When duplicate records are found, are they deleted or merged in production, and who approves that?
+
+Duplicate detection is listed as a routine QA check, but the disposition is not stated. Are duplicates removed from production tables, merged, or only flagged? Deleting or merging production records needs a named approver, a before/after record count, and a rollback path.
+
+### Q-AI-0040 — When our permit status disagrees with the source, is the record re-scraped or manually edited, and who authorizes manual edits?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — When our permit status disagrees with the source, is the record re-scraped or manually edited, and who authorizes manual edits?
+
+Cross-checking permit statuses against source information will surface mismatches. Clarify the correction path: re-run the scraper for that record, or hand-edit the stored value. If manual edits to production data are permitted, who authorizes them and where are they logged?
+
+### Q-AI-0041 — Are these daily null/duplicate/integrity checks automated as recurring monitors, or re-run manually each day?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are these daily null/duplicate/integrity checks automated as recurring monitors, or re-run manually each day?
+
+The same set of validation checks appears to be executed by hand every day. If they are manual SQL, there is no guarantee of consistent coverage and no alert when someone is unavailable. Is there a plan to convert them into scheduled data-quality monitors with automated alerting?
+
+### Q-AI-0042 — Who performs and signs off on this validation when you are unavailable, and does anyone independently review the results?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who performs and signs off on this validation when you are unavailable, and does anyone independently review the results?
+
+Daily data validation appears to rest on a single person, and the validator also appears to be the one confirming the data is good. Identify the backup owner and whether any second party reviews the validation outcome before the data is treated as verified.
