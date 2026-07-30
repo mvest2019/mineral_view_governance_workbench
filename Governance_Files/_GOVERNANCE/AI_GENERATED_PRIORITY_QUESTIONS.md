@@ -271,3 +271,57 @@ Unlike prior reels, this one is described purely as oil-industry content with no
 **1. Short Question** — Is "The World of Oil" part of an approved content plan, and who approved the topic and its publish date?
 
 The topic appears new relative to the existing YouTube explainer and World Cup reel tracks. Clarify whether this is a one-off or the start of a series, and who approved the concept and scheduling.
+
+### Q-AI-0031 — Was this Map Explorer and Data Coverage work done on the live production portal or on a prototype build?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Was this Map Explorer and Data Coverage work done on the live production portal or on a prototype build?
+
+The summary describes changes to Map Explorer and Data Coverage but does not name a branch, environment, or URL. Earlier work by the same owner was on a "4th view" of the Map/Well Explorer prototype. Governance needs to know whether these refinements are already visible to users or still awaiting approval.
+
+### Q-AI-0032 — Does the Data Coverage Mineral Owners drill-down display real owner names, and is it behind login or a paid tier?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the Data Coverage Mineral Owners drill-down display real owner names, and is it behind login or a paid tier?
+
+The submission describes a drill-down between counties, owners, leases, and wells. If real mineral-owner records are shown, access controls and PII handling need confirming for this specific module.
+
+### Q-AI-0033 — Exactly which UI elements and "redundant content" were removed from Map Explorer and Data Coverage, and who approved removing them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Exactly which UI elements and "redundant content" were removed from Map Explorer and Data Coverage, and who approved removing them?
+
+"Removed unnecessary UI elements and redundant content" is not itemized. Removals can delete user-facing signals or entry points, so the list and the approver should be recorded.
+
+### Q-AI-0034 — Which data source feeds the Production trend charts on these pages, and do the displayed figures carry the estimate / no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Which data source feeds the Production trend charts on these pages, and do the displayed figures carry the estimate / no-advice disclaimer?
+
+Chart readability was improved, but the underlying source (PostgreSQL, MongoDB, or mock data) and disclaimer status are unstated.
+
+### Q-AI-0035 — Was regression testing done on map search, filtering, and sorting after these changes, and who reviewed the code before merge?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Was regression testing done on map search, filtering, and sorting after these changes, and who reviewed the code before merge?
+
+Search, filter, sort, and Map↔Table transitions were all reworked. No test evidence or reviewer is named for a change set touching core data-exploration behavior.
+
+### Q-AI-0036 — Was the mobile-optimized Data Coverage checked for map tile and API request load on cellular devices?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the mobile-optimized Data Coverage checked for map tile and API request load on cellular devices?
+
+Mobile optimization of a data-heavy map can increase tile and API call volume, affecting performance and hosting cost. Confirm whether load behavior was measured, not just layout.
