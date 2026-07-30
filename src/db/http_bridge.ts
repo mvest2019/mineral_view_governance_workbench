@@ -23,15 +23,8 @@ const DEFAULT_DB = 'GovernanceDB';
 // Methods on a Collection/Db that return a cursor (chained then .toArray()).
 const CURSOR_METHODS = new Set(['find', 'aggregate', 'listIndexes', 'listSearchIndexes']);
 
-// The canonical variable is MONGODB_BRIDGE_URL. `MONGO_BRIDGE_URL` (no "DB") is
-// accepted as an alias to guard against the easy naming slip that otherwise
-// silently disables bridge mode and falls back to the direct driver.
-function rawBridgeUrl(): string {
-  return (process.env.MONGODB_BRIDGE_URL || process.env.MONGO_BRIDGE_URL || '').trim();
-}
-
 export function httpBridgeEnabled(): boolean {
-  return Boolean(rawBridgeUrl());
+  return Boolean((process.env.MONGODB_BRIDGE_URL || '').trim());
 }
 
 export function httpBridgeDbName(): string {
@@ -39,18 +32,13 @@ export function httpBridgeDbName(): string {
 }
 
 function bridgeUrl(): string {
-  const base = rawBridgeUrl().replace(/\/+$/, '');
+  const base = (process.env.MONGODB_BRIDGE_URL || '').trim().replace(/\/+$/, '');
   return base.endsWith('/mongo') ? base : `${base}/mongo`;
 }
 
 function bridgeToken(): string {
   // Reuse the Claude bridge token by default; allow a dedicated one if desired.
-  return (
-    process.env.MONGODB_BRIDGE_TOKEN
-    || process.env.MONGO_BRIDGE_TOKEN
-    || process.env.REMOTE_CLAUDE_TOKEN
-    || ''
-  ).trim();
+  return (process.env.MONGODB_BRIDGE_TOKEN || process.env.REMOTE_CLAUDE_TOKEN || '').trim();
 }
 
 function bridgeTimeoutMs(): number {

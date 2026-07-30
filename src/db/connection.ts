@@ -16,8 +16,7 @@ import { httpBridgeEnabled, bridgeGetCollection, bridgeGetDb } from '@/src/db/ht
 
 /** Return the connected GovernanceDB database handle. */
 export async function getDb(): Promise<Db> {
-  // When the HTTP bridge is configured (env var MONGODB_BRIDGE_URL — alias
-  // MONGO_BRIDGE_URL — is set), all MongoDB access is forwarded to the
+  // When the HTTP bridge is configured, all MongoDB access is forwarded to the
   // remote-claude-bridge (only that server connects to MongoDB). The app never
   // opens a direct connection. Off by default → unchanged direct-driver behavior.
   if (httpBridgeEnabled()) return bridgeGetDb();
