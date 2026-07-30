@@ -379,3 +379,57 @@ The same set of validation checks appears to be executed by hand every day. If t
 **1. Short Question** — Who performs and signs off on this validation when you are unavailable, and does anyone independently review the results?
 
 Daily data validation appears to rest on a single person, and the validator also appears to be the one confirming the data is good. Identify the backup owner and whether any second party reviews the validation outcome before the data is treated as verified.
+
+### Q-AI-0043 — Is deindexing the 159 owner pages approved, and do those pages expose mineral-owner names publicly today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Is deindexing the 159 owner pages approved, and do those pages expose mineral-owner names publicly today?
+
+The audit fixed an "owner-pages 159/deindex reconcile" item, but the submission does not say who approved deindexing, whether those pages carry owner identity data, or what happens to any registrations they currently drive.
+
+### Q-AI-0044 — Which sections are marked 404 in the 1C.2 plan, and who approved permanently losing their rankings and backlinks?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Which sections are marked 404 in the 1C.2 plan, and who approved permanently losing their rankings and backlinks?
+
+1C.2 assigns KEEP / 301 / 404 per section. A 404 is an irreversible traffic and link-equity decision, so the specific list and its approver need to be recorded before the freeze.
+
+### Q-AI-0045 — Who is authorized to trigger the Phase 5 rollback, and how long after cutover does rollback stay possible?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who is authorized to trigger the Phase 5 rollback, and how long after cutover does rollback stay possible?
+
+The runbook includes a rollback phase and a 72h watch, but not the named decision-maker, the escalation path outside working hours, or the point after which rollback is no longer viable.
+
+### Q-AI-0046 — What is the deadline for Ryan's final URLs, and does the 1C.3 placeholder block the go/no-go gate?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — What is the deadline for Ryan's final URLs, and does the 1C.3 placeholder block the go/no-go gate?
+
+1C.3 feature and landing-page mapping is dev-owned and still a placeholder. Whether an incomplete mapping is a hard blocker at the go/no-go gate needs to be stated explicitly.
+
+### Q-AI-0047 — Who monitors the 1D 🟢/⚠️/🔴 thresholds daily, and for how long after the 72-hour window closes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who monitors the 1D 🟢/⚠️/🔴 thresholds daily, and for how long after the 72-hour window closes?
+
+Organic ranking damage typically surfaces over weeks, not 72 hours. The safety net needs a named owner, a reporting cadence, and a defined end date.
+
+### Q-AI-0048 — Where is the marketing "Website Visitors Stats" workbook of subscriber first-visit pages stored, and who can access it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Where is the marketing "Website Visitors Stats" workbook of subscriber first-visit pages stored, and who can access it?
+
+This workbook links individual subscribers to their first-visit pages, which is per-person behavioural data. Its storage location, access list, and whether its use for SEO analysis is covered by our privacy policy should be confirmed.
