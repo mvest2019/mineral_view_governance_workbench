@@ -487,3 +487,57 @@ The pipeline no longer infers ownership from interest percentages and instead ta
 **1. Short Question** — How does a dossier report ownership for leases with no 2025 County Appraisal District data?
 
 Coverage was said to improve only "where updated 2025 county information was available." Confirm what the dossier shows for the remaining leases — stale data, blank, or an explicit gap disclosure — and whether the as-of date is stated on the report.
+
+### Q-AI-0055 — Who has authority to release a dossier, and which of the five review classifications are cleared to ship?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who has authority to release a dossier, and which of the five review classifications are cleared to ship?
+
+31 dossiers were classified into Final, Relationship confirmation required, Title verification required, Ready to ship with caveats, and Hold. The submission does not say who signs off on release or which categories may go to customers.
+
+### Q-AI-0056 — Who adjudicates the conflicting lease claim where multiple users claim the same property, and is either claim suspended meanwhile?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who adjudicates the conflicting lease claim where multiple users claim the same property, and is either claim suspended meanwhile?
+
+A conflicting claim was documented but no owner, process, or interim handling of the users' platform access to that lease is stated.
+
+### Q-AI-0057 — For the invalid high-value claims found, are those claims being corrected or removed in the live platform, and are the users notified?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — For the invalid high-value claims found, are those claims being corrected or removed in the live platform, and are the users notified?
+
+Dossiers were held from release, but it is unclear whether the underlying bad claims remain active in the product and continue to drive MVEstimate values shown to those users.
+
+### Q-AI-0058 — Where are the 31 generated dossiers stored, and who can access them given they contain owner PII and valuations?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where are the 31 generated dossiers stored, and who can access them given they contain owner PII and valuations?
+
+Prior dossier work stored outputs in a Drive folder kept out of git. Confirm this batch follows the same rule and who the access list is.
+
+### Q-AI-0059 — Which dossier generator is now canonical, given two parallel scripts were previously flagged for reconciliation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which dossier generator is now canonical, given two parallel scripts were previously flagged for reconciliation?
+
+Earlier governance records note `assemble_member.py` and a second `build-dossier.mjs` with different features. Clarify which one your enhancement was applied to and whether the other is retired.
+
+### Q-AI-0060 — Who owns title verification for entity, institutional, and foundation claims, and what evidence closes those cases?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns title verification for entity, institutional, and foundation claims, and what evidence closes those cases?
+
+These were flagged as requiring verification before being treated as valid customer ownership, but no responsible party or acceptance criteria is named.
