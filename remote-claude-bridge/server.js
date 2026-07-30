@@ -499,7 +499,14 @@ async function handleMongo(req, res) {
   const collName = cmd.collection ? String(cmd.collection) : null;
   if (!method) { sendJson(res, 400, { ok: false, error: 'method is required' }); return; }
 
+  // Run the operation. Compute the outcome FIRST, then send the response
+  // OUTSIDE this try/catch, so a serialization/partial-send problem can never be
+  // mistaken for an operation failure (which would report a successful insert as
+  // failed) or trigger a double-send ("headers already sent").
   const started = Date.now();
+  let succeeded = false;
+  let result;
+  let opError = null;
   try {
     const client = await mongoClient();
     const db = client.db(dbName);
@@ -514,33 +521,46 @@ async function handleMongo(req, res) {
     }
     if (typeof base[method] !== 'function') throw new Error(`unsupported operation: ${target}.${method}`);
 
-    let result = base[method](...args);
+    let r = base[method](...args);
     if (Array.isArray(cmd.cursorOps)) {
-      for (const op of cmd.cursorOps) result = result[op.name](...(op.args || []));
-      result = await result.toArray();
-    } else if (MONGO_CURSOR_METHODS.has(method) && result && typeof result.toArray === 'function') {
-      result = await result.toArray();
+      for (const op of cmd.cursorOps) r = r[op.name](...(op.args || []));
+      r = await r.toArray();
+    } else if (MONGO_CURSOR_METHODS.has(method) && r && typeof r.toArray === 'function') {
+      r = await r.toArray();
     } else {
-      result = await result;
+      r = await r;
     }
-
-    const elapsed = Date.now() - started;
-    console.log(`[claude-bridge] mongo ${target}.${method} db=${dbName} coll=${collName || '-'} ${elapsed}ms`);
-    sendEjson(res, 200, { ok: true, result });
+    result = r;
+    succeeded = true;
   } catch (err) {
-    console.error(`[claude-bridge] mongo ${target}.${method} FAILED:`, err && err.message ? err.message : err);
-    // 200 + ok:false carries the real Mongo error (name/code/errInfo) so the app
-    // can surface it exactly as before. Non-Mongo/parse errors used 4xx above.
-    sendJson(res, 200, {
-      ok: false,
-      error: String(err && err.message ? err.message : err),
-      errorMeta: {
-        name: err && err.name ? err.name : null,
-        code: err && err.code != null ? err.code : null,
-        codeName: err && err.codeName ? err.codeName : null,
-        errInfo: err && err.errInfo ? err.errInfo : null,
-      },
-    });
+    opError = err;
+  }
+
+  const elapsed = Date.now() - started;
+  try {
+    if (succeeded) {
+      console.log(`[claude-bridge] mongo ${target}.${method} db=${dbName} coll=${collName || '-'} ${elapsed}ms OK`);
+      sendEjson(res, 200, { ok: true, result });
+    } else {
+      console.error(`[claude-bridge] mongo ${target}.${method} FAILED:`, opError && opError.message ? opError.message : opError);
+      // 200 + ok:false carries the real Mongo error (name/code/errInfo) so the
+      // app can surface it exactly as before.
+      sendJson(res, 200, {
+        ok: false,
+        error: String(opError && opError.message ? opError.message : opError),
+        errorMeta: {
+          name: opError && opError.name ? opError.name : null,
+          code: opError && opError.code != null ? opError.code : null,
+          codeName: opError && opError.codeName ? opError.codeName : null,
+          errInfo: opError && opError.errInfo ? opError.errInfo : null,
+        },
+      });
+    }
+  } catch (sendErr) {
+    console.error('[claude-bridge] mongo response send failed:', sendErr && sendErr.message ? sendErr.message : sendErr);
+    if (!res.headersSent) {
+      try { sendJson(res, 500, { ok: false, error: `bridge response send failed: ${String(sendErr && sendErr.message ? sendErr.message : sendErr)}` }); } catch (_) { /* ignore */ }
+    }
   }
 }
 
