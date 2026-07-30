@@ -36,43 +36,59 @@ function companyKeyOf(company?: string | null): string {
   return (company && String(company).trim()) || COMPANY_DEFAULT;
 }
 
+// Mongo-only reads must fail fast (→ HTTP error) rather than pend for the full
+// driver/bridge timeout when MongoDB is misconfigured or slow.
+const MONGO_READ_TIMEOUT_MS = Number(process.env.MONGO_READ_TIMEOUT_MS) || 4000;
+
+function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+    p.then(
+      (v) => { clearTimeout(timer); resolve(v); },
+      (e) => { clearTimeout(timer); reject(e); },
+    );
+  });
+}
+
 // ---------------------------------------------------------------------------
-// Phase A — Employees (read Mongo-first, fallback to config)
+// Phase A — Employees (MongoDB ONLY — no fallback)
 // ---------------------------------------------------------------------------
 
 /**
- * Return the employee key list from MongoDB, preserving the exact shape and
- * ordering of lib/helpers.list_employees (Ryan_Cochran first, then sorted), or
- * `null` to signal the caller should fall back to the existing source.
+ * Return the ACTIVE employee key list from MongoDB (same string shape as the
+ * legacy source; Ryan_Cochran first when present). MongoDB is the ONLY source —
+ * there is NO fallback. Throws when MongoDB/the bridge is unavailable so the
+ * caller returns an HTTP error instead of dummy data.
  */
-export async function mongoListEmployees(company?: string | null): Promise<string[] | null> {
-  console.log(`[TRACE][mongo_bridge] mongoListEmployees mongoEnabled=${mongoEnabled()}`); // TEMP TRACE
-  if (!mongoEnabled()) return null;
-  try {
-    const { EmployeeRepository } = await import('@/src/repositories/employee.repository');
-    const repo = new EmployeeRepository({ companyKey: companyKeyOf(company) });
-    console.log("[TRACE][mongo_bridge] before repo.listByStatus('ACTIVE')"); // TEMP TRACE
-    const docs = await repo.listByStatus('ACTIVE');
-    console.log(`[TRACE][mongo_bridge] after repo.listByStatus('ACTIVE') count=${docs.length}`); // TEMP TRACE
-    if (!docs.length) return null; // nothing migrated yet → fall back
-
-    const appKey = (d: { aliases?: string[]; fullName?: string; memberKey: string }): string => {
-      const alias = (d.aliases || []).find((a) => /^[A-Za-z]+(_[A-Za-z]+)+$/.test(a));
-      if (alias) return alias;
-      if (d.fullName && d.fullName.trim()) return d.fullName.trim().split(/\s+/).join('_');
-      return d.memberKey;
-    };
-
-    let list = [...new Set(docs.map(appKey))].sort();
-    if (!list.length) return ['Ryan_Cochran'];
-    if (list.includes('Ryan_Cochran')) list = ['Ryan_Cochran', ...list.filter((e) => e !== 'Ryan_Cochran')];
-    else list.unshift('Ryan_Cochran');
-    return list;
-  } catch (err) {
-    console.error('[TRACE][mongo_bridge] mongoListEmployees CATCH → returning null (fallback):', err instanceof Error ? err.message : err); // TEMP TRACE
-    console.error('[mongo_bridge] mongoListEmployees failed (falling back):', err);
-    return null;
+export async function mongoListEmployeesStrict(company?: string | null): Promise<string[]> {
+  console.log(`[TRACE][mongo_bridge] mongoListEmployeesStrict mongoEnabled=${mongoEnabled()}`); // TEMP TRACE
+  if (!mongoEnabled()) {
+    throw new Error('MongoDB is not configured (set MONGODB_BRIDGE_URL or MONGODB_URI).');
   }
+  const { EmployeeRepository } = await import('@/src/repositories/employee.repository');
+  const repo = new EmployeeRepository({ companyKey: companyKeyOf(company) });
+  console.log(`[TRACE][mongo_bridge] before repo.listByStatus('ACTIVE') (timeout=${MONGO_READ_TIMEOUT_MS}ms)`); // TEMP TRACE
+  let docs;
+  try {
+    docs = await withTimeout(repo.listByStatus('ACTIVE'), MONGO_READ_TIMEOUT_MS, 'mongoListEmployees');
+    console.log(`[TRACE][mongo_bridge] after repo.listByStatus('ACTIVE') count=${docs.length}`); // TEMP TRACE
+  } catch (err) {
+    console.error('[TRACE][mongo_bridge] listByStatus THREW/timed out:', err instanceof Error ? err.message : err); // TEMP TRACE
+    throw err;
+  }
+
+  const appKey = (d: { aliases?: string[]; fullName?: string; memberKey: string }): string => {
+    const alias = (d.aliases || []).find((a) => /^[A-Za-z]+(_[A-Za-z]+)+$/.test(a));
+    if (alias) return alias;
+    if (d.fullName && d.fullName.trim()) return d.fullName.trim().split(/\s+/).join('_');
+    return d.memberKey;
+  };
+
+  // MongoDB is the ONLY source — no hardcoded names are injected. Ryan_Cochran is
+  // moved to the front only WHEN he is actually an active employee in MongoDB.
+  let list = [...new Set(docs.map(appKey))].sort();
+  if (list.includes('Ryan_Cochran')) list = ['Ryan_Cochran', ...list.filter((e) => e !== 'Ryan_Cochran')];
+  return list; // may be empty when MongoDB has no active employees (a valid result)
 }
 
 // ---------------------------------------------------------------------------
