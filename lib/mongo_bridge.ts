@@ -36,6 +36,21 @@ function companyKeyOf(company?: string | null): string {
   return (company && String(company).trim()) || COMPANY_DEFAULT;
 }
 
+// Best-effort Mongo-first reads must never hang the UI. If MongoDB is misconfigured
+// or slow (e.g. bridge disabled → direct driver blocks for serverSelectionTimeoutMS,
+// or a slow tunnel), fail fast and let the caller fall back to its existing source.
+const MONGO_READ_TIMEOUT_MS = Number(process.env.MONGO_READ_TIMEOUT_MS) || 4000;
+
+function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+    p.then(
+      (v) => { clearTimeout(timer); resolve(v); },
+      (e) => { clearTimeout(timer); reject(e); },
+    );
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Phase A — Employees (read Mongo-first, fallback to config)
 // ---------------------------------------------------------------------------
@@ -50,7 +65,9 @@ export async function mongoListEmployees(company?: string | null): Promise<strin
   try {
     const { EmployeeRepository } = await import('@/src/repositories/employee.repository');
     const repo = new EmployeeRepository({ companyKey: companyKeyOf(company) });
-    const docs = await repo.listByStatus('ACTIVE');
+    // Bounded so a misconfigured/slow MongoDB can't make /api/employees pend for
+    // the full driver/bridge timeout — fall back to the config source instead.
+    const docs = await withTimeout(repo.listByStatus('ACTIVE'), MONGO_READ_TIMEOUT_MS, 'mongoListEmployees');
     if (!docs.length) return null; // nothing migrated yet → fall back
 
     const appKey = (d: { aliases?: string[]; fullName?: string; memberKey: string }): string => {
