@@ -35,7 +35,11 @@ import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 
 const DEFAULT_DB = 'GovernanceDB';
-const URI_KEYS = ['MONGO_BRIDGE_URI', 'MONGODB_URI'];
+// The bridge .env may name the URI under any of these (the CLAUDE_BRIDGE_ prefix
+// matches the bridge's own convention). All are recognized so the tool tests the
+// exact string the bridge uses regardless of which name was chosen.
+const URI_KEYS = ['CLAUDE_BRIDGE_MONGODB_URI', 'MONGO_BRIDGE_URI', 'MONGODB_URI'];
+const DB_KEYS = ['CLAUDE_BRIDGE_MONGODB_DB', 'MONGO_BRIDGE_DB', 'MONGODB_DB_NAME'];
 const step = (n, msg) => console.log(`\n[STEP ${n}] ${msg}`);
 const ok = (msg) => console.log(`  ✔ ${msg}`);
 const bad = (msg) => console.log(`  ✖ ${msg}`);
@@ -82,7 +86,10 @@ function resolveFromEnvFiles() {
     report.push({ file, exists: true, keys: Object.keys(kv) });
     if (!found) {
       const key = URI_KEYS.find((k) => kv[k] && kv[k].trim());
-      if (key) found = { uri: kv[key].trim(), dbName: (kv.MONGO_BRIDGE_DB || kv.MONGODB_DB_NAME || '').trim(), source: `${key} (parsed from ${file})` };
+      if (key) {
+        const dbKey = DB_KEYS.find((k) => kv[k] && kv[k].trim());
+        found = { uri: kv[key].trim(), dbName: dbKey ? kv[dbKey].trim() : '', source: `${key} (parsed from ${file})` };
+      }
     }
   }
   return { ...found, report };
@@ -138,11 +145,11 @@ function classify(err, tcpAllFailed, dnsFailed) {
 }
 
 async function main() {
-  let uri = (process.env.MONGO_BRIDGE_URI || process.env.MONGODB_URI || argUri()).trim();
-  let dbName = (process.env.MONGO_BRIDGE_DB || process.env.MONGODB_DB_NAME || '').trim();
-  let source = process.env.MONGO_BRIDGE_URI ? 'MONGO_BRIDGE_URI (process env)'
-    : process.env.MONGODB_URI ? 'MONGODB_URI (process env)'
-    : (argUri() ? '--uri (argument)' : '(none)');
+  const envUriKey = URI_KEYS.find((k) => (process.env[k] || '').trim());
+  const envDbKey = DB_KEYS.find((k) => (process.env[k] || '').trim());
+  let uri = (envUriKey ? process.env[envUriKey] : argUri()).trim();
+  let dbName = (envDbKey ? process.env[envDbKey] : '').trim();
+  let source = envUriKey ? `${envUriKey} (process env)` : (argUri() ? '--uri (argument)' : '(none)');
 
   // Fallback: read the .env directly so the tool works regardless of how (or
   // whether) node --env-file loaded it.

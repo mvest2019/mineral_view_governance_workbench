@@ -442,8 +442,12 @@ async function handleRun(req, res) {
 //   POST /mongo        alias of /mongo/op (older app clients)
 //   GET  /mongo/health reply (JSON): { ok, mongoOk, pingMs, db, error? } (bounded ping)
 // ----------------------------------------------------------------------------
-const MONGO_BRIDGE_URI = String(process.env.MONGO_BRIDGE_URI || '').trim();
-const MONGO_BRIDGE_DB = String(process.env.MONGO_BRIDGE_DB || 'GovernanceDB').trim();
+// Accept the CLAUDE_BRIDGE_-prefixed names (matching the bridge's other env
+// vars and the existing production .env) as the primary source, with the older
+// MONGO_BRIDGE_* names kept as a fallback so either .env works. A name mismatch
+// here means "MONGO_BRIDGE_URI is not set" and fails every /mongo op silently.
+const MONGO_BRIDGE_URI = String(process.env.CLAUDE_BRIDGE_MONGODB_URI || process.env.MONGO_BRIDGE_URI || '').trim();
+const MONGO_BRIDGE_DB = String(process.env.CLAUDE_BRIDGE_MONGODB_DB || process.env.MONGO_BRIDGE_DB || 'GovernanceDB').trim();
 const MONGO_CURSOR_METHODS = new Set(['find', 'aggregate', 'listIndexes', 'listSearchIndexes']);
 
 let _mongoLib = null;
