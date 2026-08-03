@@ -144,6 +144,26 @@ async function main() {
     if (verdict.includes('OK —')) ok(line.trim()); else if (verdict.includes('NOT FOUND') || verdict.includes('NO RESPONSE') || verdict.includes('UNAUTHORIZED')) bad(line.trim()); else console.log(line);
   }
 
+  // Replicate the EXACT employees read the app does: find + sort via /mongo/op.
+  // This is the path that times out in production (the health ping does NOT use
+  // it), so it is the one that must be proven.
+  console.log('\n[EMPLOYEES FIND] the exact query /api/employees runs, through /mongo/op:');
+  const findBody = JSON.stringify({
+    db: dbName, target: 'collection', collection: 'employees', method: 'find',
+    args: [{ status: 'ACTIVE', companyKey: 'MView', isDeleted: false }],
+    cursorOps: [{ name: 'sort', args: [{ fullName: 1 }] }],
+  });
+  const fr = await request({ scheme, host, port, method: 'POST', route: '/mongo/op', token, body: findBody });
+  let findOk = false;
+  if (fr.status === 200) {
+    let cnt = '?';
+    try { const p = JSON.parse(fr.body); if (Array.isArray(p.result)) { cnt = p.result.length; findOk = true; } else if (p.ok === false) cnt = `ok:false ${p.error || ''}`; } catch { cnt = '(unparseable body)'; }
+    if (findOk) ok(`find employees → ${cnt} documents (${fr.ms}ms)`);
+    else bad(`find employees → 200 but ${cnt} (${fr.ms}ms)`);
+  } else {
+    bad(`find employees → ${fr.status === null ? `NO RESPONSE (${fr.error})` : `HTTP ${fr.status}: ${String(fr.body).slice(0, 150)}`} (${fr.ms}ms)`);
+  }
+
   console.log('\n[VERDICT]');
   const anyConn = Object.values(results).some((r) => r.status !== null);
   const opOk = ['/mongo/op', '/mongo'].some((rt) => { const r = results[rt]; if (!r || r.status !== 200) return false; try { const p = JSON.parse(r.body); return (p.mongoOk ?? p.ok) === true; } catch { return false; } });
@@ -154,12 +174,19 @@ async function main() {
     console.log('    → The bridge is NOT running, or CLAUDE_BRIDGE_PORT/HOST/TLS differ from this .env.');
     console.log('      Start it (start-claude-bridge.bat) and re-run.');
     process.exitCode = 1;
+  } else if (findOk) {
+    console.log('  ✔ The EXACT employees find works through the bridge on this machine (see doc count above).');
+    console.log('    → The bridge + DB + find path are all healthy locally. Since /api/employees still times');
+    console.log('      out from Vercel, the break is ONLY between Vercel and this bridge for POST /mongo/op:');
+    console.log('      watch the ngrok request log while reloading Task Tracker — if POST /mongo/op does NOT');
+    console.log('      appear, the app is not reaching the bridge (stale MONGODB_BRIDGE_URL / tunnel); if it');
+    console.log('      appears with a slow/!=200 result, note the status. Also check the Vercel function logs');
+    console.log('      for the [TRACE][http_bridge] fetch lines to see exactly where it stalls.');
   } else if (opOk || healthOk) {
-    console.log('  ✔ The RUNNING bridge talks to MongoDB successfully over HTTP on this machine.');
-    console.log('    → The bridge + database are healthy. The break is BETWEEN Vercel and this bridge:');
-    console.log('      the ngrok tunnel is down / the public URL changed, MONGODB_BRIDGE_URL on Vercel is');
-    console.log('      stale or wrong, the app posts to a route this bridge does not serve, or the token');
-    console.log('      differs. Check /api/health/mongo/deep on prod (bridgeHost, mongoOk, pingMs).');
+    console.log('  ⚠ The bridge PING works, but the employees FIND did not return docs (see above).');
+    console.log('    → The health path (/mongo/health ping) is fine, but the actual find via /mongo/op failed');
+    console.log('      or hung on the bridge. That matches production: mongoOk:true but /api/employees times');
+    console.log('      out. Paste the [EMPLOYEES FIND] line above so we can fix the bridge find handler.');
     if (!results['/mongo/op'] || results['/mongo/op'].status === 404) {
       console.log('    ⚠ NOTE: /mongo/op returned 404 — this bridge only serves the legacy /mongo. The Vercel');
       console.log('      client must post to /mongo (or deploy the latest server.js that serves both).');
