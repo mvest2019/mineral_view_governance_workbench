@@ -973,3 +973,57 @@ The redirect map is blocked on Ryan's prototype URLs being locked, and the opera
 **1. Short Question** — Where is the pre-migration traffic baseline recorded, and who responds when a monitoring alarm fires?
 
 Alarm thresholds are seeded from real baseline traffic, but the safety net only works if the baseline is stored somewhere auditable and someone is accountable for acting on an alert within a defined window.
+
+### Q-AI-0109 — Where are the delivered .md dossiers stored, and who is approved to access them given they contain mineral-owner PII and valuations?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where are the delivered .md dossiers stored, and who is approved to access them given they contain mineral-owner PII and valuations?
+
+Multiple batches of claimed-user dossiers were generated and delivered in Markdown. The storage location, access list, and sharing channel are not stated, and these files combine identity, ownership, and valuation data for real members.
+
+### Q-AI-0110 — Have already-delivered dossiers been re-checked for the same corrupted ownership data found in the over-claim case?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Have already-delivered dossiers been re-checked for the same corrupted ownership data found in the over-claim case?
+
+One flagged account produced impossible ownership percentages and unrealistic valuations. If that corruption class exists in the source data, earlier batches delivered from the same pipeline may carry it too — was a back-check done, and does any delivered dossier need retraction?
+
+### Q-AI-0111 — Who fixes the corrupted ownership records at source, and has the affected user been told their claims are excluded?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who fixes the corrupted ownership records at source, and has the affected user been told their claims are excluded?
+
+The account was confirmed legitimate but its ownership claims were classified as an invalid over-claim and excluded. Ownership of the upstream data fix and any member-facing communication is unassigned.
+
+### Q-AI-0112 — Do the delivered dossiers carry the estimate / no-investment-advice disclaimer, and who reviews each one before it reaches a customer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Do the delivered dossiers carry the estimate / no-investment-advice disclaimer, and who reviews each one before it reaches a customer?
+
+Dossiers include valuation figures and are described as being for customer use. The disclaimer requirement and the named human sign-off before delivery are not documented.
+
+### Q-AI-0113 — Who has authority to approve regenerating a HOLD account, and where is the HOLD list maintained?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who has authority to approve regenerating a HOLD account, and where is the HOLD list maintained?
+
+HOLD accounts are excluded 'unless specific approval was provided,' but the approver, the record of that approval, and the authoritative HOLD list location are not specified.
+
+### Q-AI-0114 — Were outdated dossier files backed up before deletion, and what caused the second entity-owner batch to be interrupted?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Were outdated dossier files backed up before deletion, and what caused the second entity-owner batch to be interrupted?
+
+Old dossier files were removed before regeneration and test/staff records were deleted from both output and source sets, with no stated backup. The second entity batch also failed mid-run — the cause and the completion date for the pending members are unrecorded.
