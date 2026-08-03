@@ -811,3 +811,57 @@ These tables are left without primary keys pending an external confirmation. Nee
 **1. Short Question** — Which two dated snapshot tables were intentionally skipped for primary keys, and who approved leaving them without one?
 
 "Intentionally skipped" needs to be recorded as an accepted exception with the table names and the approver, otherwise it will be re-flagged at the next audit.
+
+### Q-AI-0091 — Who owns the Trendelier brand, and is it a Mineral View property or a separate client?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who owns the Trendelier brand, and is it a Mineral View property or a separate client?
+
+The submission covers social media work for "Trendelier," which does not appear anywhere in existing governance knowledge. Confirm whether this is a Mineral View sub-brand, a client engagement, or unrelated work, and who approved allocating time to it.
+
+### Q-AI-0092 — Who approved the social media post before it was published, and on which account did it go live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who approved the social media post before it was published, and on which account did it go live?
+
+The post is already published. Identify the reviewer/approver and the exact account, so published brand content has a traceable sign-off.
+
+### Q-AI-0093 — How is access to the LinkedIn, Facebook, and Instagram accounts held, and is it under company-owned credentials?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — How is access to the LinkedIn, Facebook, and Instagram accounts held, and is it under company-owned credentials?
+
+Profile edits, logo changes, and page connections require admin-level access. Confirm whether access is via a company-owned Business Manager/Page role or a personal account, and that credentials are in the approved password store.
+
+### Q-AI-0094 — Are the new cover photos and logos the approved brand assets, and where are the source files stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Are the new cover photos and logos the approved brand assets, and where are the source files stored?
+
+Assets were changed across multiple accounts. Confirm they came from the approved brand kit (not re-created or AI-generated), that usage rights are clear, and give the storage location for the sources.
+
+### Q-AI-0095 — What exactly changed in the LinkedIn and Facebook profile and content updates?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What exactly changed in the LinkedIn and Facebook profile and content updates?
+
+"Profile and content-related updates" is unspecified. List the fields changed (bio, about, website URL, contact details, pinned content) so claims made on public profiles can be checked for accuracy and disclaimer compliance.
+
+### Q-AI-0096 — Does the Instagram–Facebook connection grant any third-party app or tool access to the page data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the Instagram–Facebook connection grant any third-party app or tool access to the page data?
+
+Linking pages often involves granting permissions to scheduling or analytics tools. Confirm which apps now hold page permissions and whether that access was reviewed.
