@@ -106,6 +106,10 @@ async function sendBridge(payload: BridgePayload): Promise<unknown> {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // ngrok's free tier can return an HTML interstitial instead of
+          // forwarding; this header tells it to skip that and pass the request
+          // straight through so the bridge's EJSON reply comes back intact.
+          'ngrok-skip-browser-warning': 'true',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body,
@@ -179,7 +183,10 @@ export async function bridgePing(timeoutMs = 8000): Promise<BridgePingResult> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   const started = Date.now();
-  const authHeader: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+  const authHeader: Record<string, string> = {
+    'ngrok-skip-browser-warning': 'true',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
   console.log(`[TRACE][http_bridge] bridgePing GET → https://${host}/mongo/health timeout=${timeoutMs}ms hasToken=${Boolean(token)}`); // TEMP TRACE
   try {
     let res = await fetch(healthUrl, { method: 'GET', headers: { ...authHeader }, signal: controller.signal, cache: 'no-store' });
