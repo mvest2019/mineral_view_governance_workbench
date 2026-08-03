@@ -22,6 +22,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
 import https from 'node:https';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const info = (m) => console.log(`  • ${m}`);
@@ -114,6 +115,16 @@ async function main() {
   info(`.env: ${file || '(none found)'}`);
   info(`target: ${scheme}://${host}:${port}   db=${dbName}`);
   info(`token: ${token ? 'present' : 'MISSING (requests will 401)'}`);
+
+  // Token fingerprint — compare sha12 against the deep health endpoint's
+  // config.tokenFingerprint.sha12 on Vercel. Same sha12 = identical tokens; a
+  // 401 with matching sha12 means something else, a 401 with different sha12
+  // means the Vercel token value must be changed to match this one.
+  const rawTok = kv.CLAUDE_BRIDGE_TOKEN || '';
+  const trimTok = rawTok.trim();
+  const sha12 = trimTok ? crypto.createHash('sha256').update(trimTok).digest('hex').slice(0, 12) : null;
+  console.log('  CLAUDE_BRIDGE_TOKEN fingerprint (compare to Vercel /api/health/mongo/deep → config.tokenFingerprint):');
+  console.log(`      sha12=${sha12}  trimmedLen=${trimTok.length}  rawLen=${rawTok.length}  surroundingQuotes=${/^["'].*["']$/.test(trimTok)}  whitespace=${rawTok.length !== trimTok.length}`);
 
   const pingBody = JSON.stringify({ db: dbName, target: 'admin', method: 'command', args: [{ ping: 1 }] });
 

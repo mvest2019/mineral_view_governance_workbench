@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { json, route } from '@/lib/http';
 import { mongoHealthStatus } from '@/lib/mongo_required';
 
@@ -16,6 +17,25 @@ export const runtime = 'nodejs';
 function maskHost(u: string): string | null {
   if (!u) return null;
   try { return new URL(u).host; } catch { return '(unparseable)'; }
+}
+
+// A non-reversible fingerprint of the bearer token the app sends to the bridge.
+// The sha12 is a SHA-256 prefix — it cannot reveal the token, but it lets you
+// compare it byte-for-byte against the bridge's CLAUDE_BRIDGE_TOKEN fingerprint
+// (printed by diagnose-bridge-http.mjs). Same sha12 = identical tokens.
+function tokenFingerprint() {
+  const vars = ['MONGODB_BRIDGE_TOKEN', 'MONGO_BRIDGE_TOKEN', 'REMOTE_CLAUDE_TOKEN'];
+  const source = vars.find((v) => (process.env[v] || '').trim()) || '(none)';
+  const raw = source === '(none)' ? '' : String(process.env[source]);
+  const trimmed = raw.trim();
+  return {
+    source,
+    rawLen: raw.length,
+    trimmedLen: trimmed.length,
+    hasSurroundingQuotes: /^["'].*["']$/.test(trimmed),
+    hasWhitespace: raw.length !== trimmed.length,
+    sha12: trimmed ? crypto.createHash('sha256').update(trimmed).digest('hex').slice(0, 12) : null,
+  };
 }
 
 export const GET = route(async () => {
@@ -44,6 +64,7 @@ export const GET = route(async () => {
     hasBridgeToken: Boolean(
       (process.env.MONGODB_BRIDGE_TOKEN || process.env.MONGO_BRIDGE_TOKEN || process.env.REMOTE_CLAUDE_TOKEN || '').trim(),
     ),
+    tokenFingerprint: tokenFingerprint(),
   };
 
   // Bounded reachability probe (same path Employees/Task Tracker use). Its
