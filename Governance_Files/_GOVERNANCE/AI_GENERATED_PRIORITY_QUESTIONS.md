@@ -541,3 +541,57 @@ Earlier governance records note `assemble_member.py` and a second `build-dossier
 **1. Short Question** — Who owns title verification for entity, institutional, and foundation claims, and what evidence closes those cases?
 
 These were flagged as requiring verification before being treated as valid customer ownership, but no responsible party or acceptance criteria is named.
+
+### Q-AI-0061 — Were any Task Tracker or Meeting submissions lost while insertOne was returning 404, and have they been backfilled?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Were any Task Tracker or Meeting submissions lost while insertOne was returning 404, and have they been backfilled?
+
+The save operation was failing before the bridge fix. Governance records submitted during that window may never have been persisted. Need confirmation of the failure window, a count of affected submissions, and whether they were re-submitted or recovered from the GitHub Markdown files.
+
+### Q-AI-0062 — Is MongoDB GovernanceDB now the system of record for governance files, or does GitHub Markdown remain authoritative?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is MongoDB GovernanceDB now the system of record for governance files, or does GitHub Markdown remain authoritative?
+
+Earlier work established automatic GitHub commits of Task Tracker, Meeting, and Priority Question answer files. It is unclear whether Mongo is a dual-write copy, a cache, or the new source of truth — and what happens when the two diverge (e.g. a Mongo write succeeds but the commit fails).
+
+### Q-AI-0063 — Does the MongoDB bridge require authentication, or can any caller POST arbitrary operations to /mongo/op?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does the MongoDB bridge require authentication, or can any caller POST arbitrary operations to /mongo/op?
+
+The bridge exposes database operations such as `insertOne` over HTTP. If the endpoint is unauthenticated and reachable from the internet (e.g. called from Vercel), it is an open write path into the database. Need to confirm auth, allowed operations/collections, and network exposure.
+
+### Q-AI-0064 — Where does GovernanceDB live, and does it sit on the same cluster as production mineral-owner data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Where does GovernanceDB live, and does it sit on the same cluster as production mineral-owner data?
+
+The IP allowlist was recently reduced to ~33 infrastructure IPs with developers moved to VPN. Adding a new database and an HTTP bridge could reopen that exposure. Need to know the host/cluster, which credentials the bridge uses, and whether its access was approved under the hardened policy.
+
+### Q-AI-0065 — Who can read GovernanceDB, given it stores employee task submissions and meeting content?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who can read GovernanceDB, given it stores employee task submissions and meeting content?
+
+Governance records contain per-employee work detail, defect reports, and meeting discussion. Need a defined read-access list, whether the bridge user is scoped to GovernanceDB only, and whether access is logged.
+
+### Q-AI-0066 — Is the bridge running on a personal developer machine, and what happens to governance saves when it is offline?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the bridge running on a personal developer machine, and what happens to governance saves when it is offline?
+
+Prior notes describe a 'machine-hosted Claude service'. If the Mongo bridge is hosted the same way, governance persistence depends on one machine being up. Need the hosting plan, an owner, and the defined failure behaviour (queue, retry, or visible error) when the bridge is unreachable.
