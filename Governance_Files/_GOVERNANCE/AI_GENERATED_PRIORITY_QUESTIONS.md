@@ -703,3 +703,57 @@ If the tracking endpoint accepts unauthenticated writes, the resulting engagemen
 **1. Short Question** — Which reports or dashboards consume this tracking data, and were their owners told about the gaps found?
 
 Engagement and activation figures reported to the team may be derived from this data. Confirm the downstream consumers and whether any identified missing/duplicate-record issues invalidate figures already circulated.
+
+### Q-AI-0079 — When a website change breaks a scraper, is the missed data backfilled, and how do we confirm a day has no gaps?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When a website change breaks a scraper, is the missed data backfilled, and how do we confirm a day has no gaps?
+
+The submission notes website changes affecting data collection and exceptions requiring follow-up, but not whether records missed during a broken run are recovered. Governance needs a stated gap-detection and backfill rule so a day can be declared complete rather than merely "no errors seen".
+
+### Q-AI-0080 — Do our scrapers comply with the source websites' terms of use and rate limits, and who signs off on that?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Do our scrapers comply with the source websites' terms of use and rate limits, and who signs off on that?
+
+Daily automated extraction from public regulator and operator sites carries legal and access-blocking risk. No existing governance record covers scraping permission, rate limiting, or a named approver for the source sites we pull from.
+
+### Q-AI-0081 — If bad data is found after it has already reached users or reports, what is the correction and notification process?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — If bad data is found after it has already reached users or reports, what is the correction and notification process?
+
+Validation happens after ingestion, so nulls, duplicates, or wrong permit statuses can be live before they are caught. We need a defined path: withdraw or flag the affected records, and decide whether downstream consumers are told.
+
+### Q-AI-0082 — Are the recurring nulls and duplicates being fixed at the pipeline source, or repaired manually every day?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the recurring nulls and duplicates being fixed at the pipeline source, or repaired manually every day?
+
+The same classes of issue (nulls, duplicates, formatting, mismatched field mappings) appear in each daily report. Governance needs to know whether constraints, validators, or extraction fixes are being made so the defect stops recurring, and who owns that work.
+
+### Q-AI-0083 — Is this daily validation defined as a written, approved checklist, or does it depend on one person's judgment?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is this daily validation defined as a written, approved checklist, or does it depend on one person's judgment?
+
+The checks described are broad and person-driven. If they are not documented and approved, coverage varies day to day and there is no backup when the owner is unavailable.
+
+### Q-AI-0084 — Where are the proposed scraping and validation workflow improvements logged, and who decides which get built?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the proposed scraping and validation workflow improvements logged, and who decides which get built?
+
+The submission mentions evaluating opportunities to improve scraping and validation workflows, but not where those proposals are recorded or who prioritizes them into engineering work.
