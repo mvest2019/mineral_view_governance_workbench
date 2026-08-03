@@ -595,3 +595,57 @@ Governance records contain per-employee work detail, defect reports, and meeting
 **1. Short Question** — Is the bridge running on a personal developer machine, and what happens to governance saves when it is offline?
 
 Prior notes describe a 'machine-hosted Claude service'. If the Mongo bridge is hosted the same way, governance persistence depends on one machine being up. Need the hosting plan, an owner, and the defined failure behaviour (queue, retry, or visible error) when the bridge is unreachable.
+
+### Q-AI-0067 — Which valuation methodology and data source back the "what your minerals are worth" figures in this reel?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Which valuation methodology and data source back the "what your minerals are worth" figures in this reel?
+
+The reel's entire premise is a valuation claim, but the report names only ChatGPT and Google Research as sources. Governance already records valuation-pipeline problems (text-stored valuation fields totalling zero, depleted leases stored as `NaN`). Any number, multiple, or per-acre figure shown on screen needs a named, verified source before export.
+
+### Q-AI-0068 — Does telling viewers what their minerals are "really worth" require legal review so it does not read as an appraisal or an offer to buy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does telling viewers what their minerals are "really worth" require legal review so it does not read as an appraisal or an offer to buy?
+
+Valuation-themed content is closer to the no-advice line than educational explainers. Confirm whether legal has cleared the framing, and whether the reel must state that figures are estimates and not an offer, appraisal, or investment advice.
+
+### Q-AI-0069 — Is MVEstimate stable enough to feature, given the known $0/NaN defect and the $26,340 vs $26,369 discrepancy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is MVEstimate stable enough to feature, given the known $0/NaN defect and the $26,340 vs $26,369 discrepancy?
+
+If this reel showcases or implies MVEstimate output, the open data-integrity defects mean viewers may land on a feature that returns $0 or an inconsistent figure. Needs a decision on whether to feature it now or hold until those defects are closed.
+
+### Q-AI-0070 — Was the ChatGPT-drafted script reviewed by a subject-matter owner before editing proceeded to 50%?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Was the ChatGPT-drafted script reviewed by a subject-matter owner before editing proceeded to 50%?
+
+The script was written and refined with ChatGPT and then committed to motion graphics. Confirm whether a human subject-matter reviewer signed off on the claims first, so a factual correction does not force a re-edit of finished animation.
+
+### Q-AI-0071 — What is the origin and licence of the visuals and reference materials collected for this reel?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — What is the origin and licence of the visuals and reference materials collected for this reel?
+
+The report says visuals were "collected" without naming sources. Record where each asset came from and whether it is cleared for commercial brand use before final export.
+
+### Q-AI-0072 — If the reel's call-to-action promises a value estimate, does the free tier actually deliver it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — If the reel's call-to-action promises a value estimate, does the free tier actually deliver it?
+
+Governance already flags tier/feature gating as unsettled. Confirm which subscription tier the promised valuation sits behind so the CTA does not send viewers to a paywall they were not told about.
