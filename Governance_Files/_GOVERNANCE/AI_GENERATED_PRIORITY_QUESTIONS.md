@@ -919,3 +919,57 @@ The post is already published. Confirm the approver, the account it went out on,
 **1. Short Question** — What client query did the email answer, and was any owner or platform data included in it?
 
 The submission records that an email was sent to "the client" with "the necessary information" but names neither the client, the request, nor the content. Confirm the recipient, what information was disclosed, and whether it was reviewed before sending.
+
+### Q-AI-0103 — Who approved the no-rollback migration posture, and what happens if traffic drops after cutover?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approved the no-rollback migration posture, and what happens if traffic drops after cutover?
+
+The runbook is built on a fix-forward posture with no rollback path for the primary marketing site. Governance needs the named approver, the traffic-loss threshold that triggers escalation, and who is on call during and after cutover.
+
+### Q-AI-0104 — Who owns fixing the broken `mineralviewinfo.com` redirects, and by when?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who owns fixing the broken `mineralviewinfo.com` redirects, and by when?
+
+The retired domain currently sends every URL to a broken page, which is losing link authority and referral traffic every day it stays live. It is parked out of this doc — it needs an assigned owner and a due date.
+
+### Q-AI-0105 — Do we have real data coverage for the new non-Texas states before their county pages are published?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do we have real data coverage for the new non-Texas states before their county pages are published?
+
+The URL architecture treats new states as data, but publishing county/operator pages for states with little or no underlying data risks thin or empty indexed pages. What is the minimum data-coverage bar a state must meet before its pages go live?
+
+### Q-AI-0106 — Do the deliverables shared with Ryan contain individual mineral-owner records, and was that sharing approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the deliverables shared with Ryan contain individual mineral-owner records, and was that sharing approved?
+
+`MineralView_VIP-Individuals_for-Gautami_v5` and `Owner-1M-Recut-for-Ryan` appear to be owner-level files shared on 2026-08-03. Confirm whether they hold PII, which account/email they were shared to, and who approved the access.
+
+### Q-AI-0107 — When must Ryan lock the prototype URLs so the feature-page redirect map can be finalized before launch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — When must Ryan lock the prototype URLs so the feature-page redirect map can be finalized before launch?
+
+The redirect map is blocked on Ryan's prototype URLs being locked, and the operator SEO-hub vs feature-hub overlap is still unresolved. Both sit on the critical path to a no-rollback cutover — record the dependency, the owner, and the date.
+
+### Q-AI-0108 — Where is the pre-migration traffic baseline recorded, and who responds when a monitoring alarm fires?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Where is the pre-migration traffic baseline recorded, and who responds when a monitoring alarm fires?
+
+Alarm thresholds are seeded from real baseline traffic, but the safety net only works if the baseline is stored somewhere auditable and someone is accountable for acting on an alert within a defined window.
