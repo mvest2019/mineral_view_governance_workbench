@@ -734,8 +734,12 @@ async function handleRun(req, res) {
 //   POST /mongo        alias of /mongo/op (older app clients)
 //   GET  /mongo/health reply (JSON): { ok, mongoOk, pingMs, db, error? } (bounded ping)
 // ----------------------------------------------------------------------------
-const MONGO_BRIDGE_URI = String(process.env.MONGO_BRIDGE_URI || '').trim();
-const MONGO_BRIDGE_DB = String(process.env.MONGO_BRIDGE_DB || 'GovernanceDB').trim();
+// Accept the CLAUDE_BRIDGE_-prefixed names (matching the bridge's other env
+// vars and the existing production .env) as the primary source, with the older
+// MONGO_BRIDGE_* names kept as a fallback so either .env works. A name mismatch
+// here means "MONGO_BRIDGE_URI is not set" and fails every /mongo op silently.
+const MONGO_BRIDGE_URI = String(process.env.CLAUDE_BRIDGE_MONGODB_URI || process.env.MONGO_BRIDGE_URI || '').trim();
+const MONGO_BRIDGE_DB = String(process.env.CLAUDE_BRIDGE_MONGODB_DB || process.env.MONGO_BRIDGE_DB || 'GovernanceDB').trim();
 const MONGO_CURSOR_METHODS = new Set(['find', 'aggregate', 'listIndexes', 'listSearchIndexes']);
 
 let _mongoLib = null;
@@ -973,4 +977,28 @@ server.listen(PORT, HOST, () => {
   if (scheme === 'http') {
     console.log('[claude-bridge] WARNING: serving plain HTTP. Front this with an HTTPS tunnel/reverse proxy before exposing it.');
   }
+  // Warm the MongoDB connection at startup and keep it alive so no /mongo/op
+  // request ever pays the cold connect cost (TLS + SRV + up to 10s server
+  // selection). That cold cost is what makes the FIRST op after startup/idle
+  // slow enough to exceed the app's 4s read timeout — the exact "works after a
+  // while / works on a warm bridge but not a fresh one" symptom. If MongoDB is
+  // unreachable from THIS machine, it now fails loudly here at startup instead
+  // of silently timing out every app request.
+  warmMongo('startup');
+  const mongoKeepAlive = setInterval(() => { warmMongo('keepalive'); }, 60_000);
+  mongoKeepAlive.unref();
 });
+
+// Eagerly establish (and re-verify) the MongoDB connection. Additive: does
+// nothing unless MONGO_BRIDGE_URI is set, so the Claude-only bridge is untouched.
+async function warmMongo(reason) {
+  if (!MONGO_BRIDGE_URI) return;
+  const started = Date.now();
+  try {
+    const client = await mongoClient();
+    await client.db(MONGO_BRIDGE_DB).command({ ping: 1 });
+    console.log(`[claude-bridge] mongo warm (${reason}) OK ${Date.now() - started}ms db=${MONGO_BRIDGE_DB}`);
+  } catch (err) {
+    console.error(`[claude-bridge] mongo warm (${reason}) FAILED ${Date.now() - started}ms:`, err && err.message ? err.message : err);
+  }
+}
