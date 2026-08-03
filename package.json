@@ -32,6 +32,7 @@
     "db:provision:settings": "node --env-file-if-exists=.env.local scripts/provision-settings.mjs",
     "migrate:dry-run": "node migration/cli.mjs --dry-run",
     "migrate:execute": "node --env-file-if-exists=.env.local migration/cli.mjs --execute",
+    "migrate:employees": "node --env-file-if-exists=.env.local migration/cli.mjs --execute --collection employees --confirm",
     "migrate:rollback": "node --env-file-if-exists=.env.local migration/cli.mjs --rollback",
     "migrate:verify": "node --env-file-if-exists=.env.local migration/cli.mjs --verify",
     "migrate:cutover": "node --env-file-if-exists=.env.local migration/cli.mjs --execute --all --confirm && node --env-file-if-exists=.env.local migration/cli.mjs --verify --all"
