@@ -107,6 +107,58 @@ async function sendBridge(payload: BridgePayload): Promise<unknown> {
   return parsed.result;
 }
 
+export interface BridgePingResult {
+  host: string;
+  reachable: boolean; // did the HTTP request to the bridge RESOLVE at all?
+  ok: boolean;        // did the MongoDB ping succeed (bridge → MongoDB)?
+  status: number | null;
+  elapsedMs: number;
+  error?: string;
+}
+
+/**
+ * Bounded health probe of the bridge: POST an admin ping to /mongo with its OWN
+ * short timeout so /api/health/mongo returns promptly (never waits the full 20s
+ * bridge timeout, which would exceed Vercel's function limit). Distinguishes
+ * "bridge/tunnel unreachable" (fetch never resolves) from "bridge reached but
+ * MongoDB ping failed" (bridge responds ok:false).
+ */
+export async function bridgePing(timeoutMs = 8000): Promise<BridgePingResult> {
+  const url = bridgeUrl();
+  let host = '(unparseable)';
+  try { host = new URL(url).host; } catch { /* ignore */ }
+  const token = bridgeToken();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const started = Date.now();
+  console.log(`[TRACE][http_bridge] bridgePing → https://${host}/mongo timeout=${timeoutMs}ms hasToken=${Boolean(token)}`); // TEMP TRACE
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      body: EJSON.stringify({ db: httpBridgeDbName(), target: 'admin', method: 'command', args: [{ ping: 1 }] } as unknown as Document, { relaxed: false }),
+      signal: controller.signal,
+      cache: 'no-store',
+    });
+    const text = await res.text();
+    const elapsedMs = Date.now() - started;
+    console.log(`[TRACE][http_bridge] bridgePing RESOLVED status=${res.status} elapsedMs=${elapsedMs}`); // TEMP TRACE
+    type ParsedPing = { ok?: boolean; error?: string } | null;
+    let parsed: ParsedPing = null;
+    try { parsed = EJSON.parse(text) as ParsedPing; } catch { /* non-EJSON body */ }
+    if (!res.ok) return { host, reachable: true, ok: false, status: res.status, elapsedMs, error: parsed?.error || `bridge/tunnel HTTP ${res.status}: ${text.slice(0, 120)}` };
+    if (!parsed || parsed.ok !== true) return { host, reachable: true, ok: false, status: res.status, elapsedMs, error: parsed?.error || `bridge returned ok:false: ${text.slice(0, 120)}` };
+    return { host, reachable: true, ok: true, status: res.status, elapsedMs };
+  } catch (err) {
+    const elapsedMs = Date.now() - started;
+    const aborted = (err as Error).name === 'AbortError';
+    console.error(`[TRACE][http_bridge] bridgePing REJECTED elapsedMs=${elapsedMs}: ${(err as Error).message}`); // TEMP TRACE
+    return { host, reachable: false, ok: false, status: null, elapsedMs, error: aborted ? `bridge did not respond within ${timeoutMs}ms` : (err as Error).message };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function makeCursor(base: Omit<BridgePayload, 'cursorOps'>): unknown {
   const ops: CursorOp[] = [];
   const cursor = {
