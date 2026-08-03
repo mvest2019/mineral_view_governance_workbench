@@ -757,3 +757,57 @@ The checks described are broad and person-driven. If they are not documented and
 **1. Short Question** — Where are the proposed scraping and validation workflow improvements logged, and who decides which get built?
 
 The submission mentions evaluating opportunities to improve scraping and validation workflows, but not where those proposals are recorded or who prioritizes them into engineering work.
+
+### Q-AI-0085 — Is the missing 2024 owner-roll year collection permanently lost, or just not restored yet, and who owns recovering it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the missing 2024 owner-roll year collection permanently lost, or just not restored yet, and who owns recovering it?
+
+Restore shows 2020–2023 and 2025 present but 2024 missing. Governance needs to know whether this is a gap in the backup source (data loss) or an incomplete restore, who is chasing it, and whether the repoint is blocked until 2024 exists.
+
+### Q-AI-0086 — Did adding primary keys to `send_message`, `mineral_review`, or `usersearchhistory` require deleting duplicate rows from production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Did adding primary keys to `send_message`, `mineral_review`, or `usersearchhistory` require deleting duplicate rows from production?
+
+Surrogate and natural keys usually cannot be added over duplicate data. If rows were de-duplicated or removed to allow the PK, we need the row counts, a backup reference, and who approved the deletion.
+
+### Q-AI-0087 — Which field name is canonical — `Appraised_Value` or `Apprised_Value` — and does the app or the data get changed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which field name is canonical — `Appraised_Value` or `Apprised_Value` — and does the app or the data get changed?
+
+The restored year collections use `Appraised_Value` while the app reads `Apprised_Value`. This is a decision, not a task: fixing the data, fixing the app, or aliasing. Needs a named decision-maker before the repoint work is scoped.
+
+### Q-AI-0088 — What code, ETL jobs, reports, or saved queries referenced the old archive year table names, and were they all updated with the rename?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What code, ETL jobs, reports, or saved queries referenced the old archive year table names, and were they all updated with the rename?
+
+Renaming 2018–2024 archive tables to `archive_*` silently breaks any consumer holding the old name. Confirm the consumer search that was done and whether the scraper or reporting layer was checked.
+
+### Q-AI-0089 — Who on the scraping team must confirm the 4 gated ETL-loaded tables, and by what date does that gate close?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who on the scraping team must confirm the 4 gated ETL-loaded tables, and by what date does that gate close?
+
+These tables are left without primary keys pending an external confirmation. Needs a named person and a deadline so the item does not sit open indefinitely.
+
+### Q-AI-0090 — Which two dated snapshot tables were intentionally skipped for primary keys, and who approved leaving them without one?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which two dated snapshot tables were intentionally skipped for primary keys, and who approved leaving them without one?
+
+"Intentionally skipped" needs to be recorded as an accepted exception with the table names and the approver, otherwise it will be re-flagged at the next audit.
