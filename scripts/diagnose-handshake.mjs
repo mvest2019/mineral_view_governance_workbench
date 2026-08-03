@@ -29,9 +29,13 @@
  */
 import net from 'node:net';
 import dns from 'node:dns/promises';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 
 const DEFAULT_DB = 'GovernanceDB';
+const URI_KEYS = ['MONGO_BRIDGE_URI', 'MONGODB_URI'];
 const step = (n, msg) => console.log(`\n[STEP ${n}] ${msg}`);
 const ok = (msg) => console.log(`  ✔ ${msg}`);
 const bad = (msg) => console.log(`  ✖ ${msg}`);
@@ -40,6 +44,48 @@ const info = (msg) => console.log(`  • ${msg}`);
 function argUri() {
   const i = process.argv.indexOf('--uri');
   return i >= 0 && process.argv[i + 1] ? process.argv[i + 1].trim() : '';
+}
+
+// Minimal .env parser (KEY=VALUE, strips quotes + inline nothing). Used as a
+// fallback so the tool works even if `node --env-file` didn't load the file.
+function parseEnvFile(file) {
+  const out = {};
+  let text = '';
+  try { text = fs.readFileSync(file, 'utf8'); } catch { return out; }
+  for (const raw of text.split(/\r?\n/)) {
+    const line = raw.replace(/^﻿/, '').trim();
+    if (!line || line.startsWith('#')) continue;
+    const eq = line.indexOf('=');
+    if (eq < 0) continue;
+    const key = line.slice(0, eq).trim();
+    let val = line.slice(eq + 1).trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
+    out[key] = val;
+  }
+  return out;
+}
+
+// Look for a .env in the usual places and pull the URI out of it directly.
+function resolveFromEnvFiles() {
+  const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+  const candidates = [
+    path.join(process.cwd(), '.env'),
+    path.join(scriptDir, '.env'),
+    path.join(scriptDir, '..', 'remote-claude-bridge', '.env'),
+    path.join(scriptDir, 'remote-claude-bridge', '.env'),
+  ].filter((v, i, a) => a.indexOf(v) === i);
+  const report = [];
+  let found = null;
+  for (const file of candidates) {
+    if (!fs.existsSync(file)) { report.push({ file, exists: false }); continue; }
+    const kv = parseEnvFile(file);
+    report.push({ file, exists: true, keys: Object.keys(kv) });
+    if (!found) {
+      const key = URI_KEYS.find((k) => kv[k] && kv[k].trim());
+      if (key) found = { uri: kv[key].trim(), dbName: (kv.MONGO_BRIDGE_DB || kv.MONGODB_DB_NAME || '').trim(), source: `${key} (parsed from ${file})` };
+    }
+  }
+  return { ...found, report };
 }
 
 function maskUri(uri) {
@@ -92,17 +138,39 @@ function classify(err, tcpAllFailed, dnsFailed) {
 }
 
 async function main() {
-  const uri = (process.env.MONGO_BRIDGE_URI || process.env.MONGODB_URI || argUri()).trim();
-  const dbName = (process.env.MONGO_BRIDGE_DB || process.env.MONGODB_DB_NAME || '').trim() || DEFAULT_DB;
-  const source = process.env.MONGO_BRIDGE_URI ? 'MONGO_BRIDGE_URI' : process.env.MONGODB_URI ? 'MONGODB_URI' : (argUri() ? '--uri' : '(none)');
+  let uri = (process.env.MONGO_BRIDGE_URI || process.env.MONGODB_URI || argUri()).trim();
+  let dbName = (process.env.MONGO_BRIDGE_DB || process.env.MONGODB_DB_NAME || '').trim();
+  let source = process.env.MONGO_BRIDGE_URI ? 'MONGO_BRIDGE_URI (process env)'
+    : process.env.MONGODB_URI ? 'MONGODB_URI (process env)'
+    : (argUri() ? '--uri (argument)' : '(none)');
+
+  // Fallback: read the .env directly so the tool works regardless of how (or
+  // whether) node --env-file loaded it.
+  let scan = [];
+  if (!uri) {
+    const r = resolveFromEnvFiles();
+    scan = r.report || [];
+    if (r.uri) { uri = r.uri; source = r.source; if (!dbName) dbName = r.dbName; }
+  }
+  if (!dbName) dbName = DEFAULT_DB;
 
   console.log('=============================================================');
   console.log(' MongoDB handshake diagnostic (read-only)');
   console.log('=============================================================');
   info(`connection string source: ${source}`);
   info(`target database: ${dbName}`);
+  if (scan.length) {
+    console.log('  .env scan (key NAMES only — no values shown):');
+    for (const e of scan) {
+      console.log(`    - ${e.file}\n        ${e.exists ? `exists; keys: [${(e.keys || []).join(', ') || '(none)'}]` : 'not found'}`);
+    }
+  }
   if (!uri) {
-    bad('No connection string found. Set MONGO_BRIDGE_URI (the value the bridge uses) and retry.');
+    bad('No connection string found in the environment or any .env above.');
+    console.log('  → If the .env above exists but its keys do NOT include MONGO_BRIDGE_URI (or MONGODB_URI),');
+    console.log('    THAT is the root cause: the bridge has no MongoDB connection string, so every /mongo op fails.');
+    console.log('    Add to remote-claude-bridge\\.env:  MONGO_BRIDGE_URI=<your Atlas connection string>');
+    console.log('  → Or pass it directly:  node diagnose-handshake.mjs --uri "mongodb+srv://user:pass@host/"');
     process.exit(1);
   }
 
