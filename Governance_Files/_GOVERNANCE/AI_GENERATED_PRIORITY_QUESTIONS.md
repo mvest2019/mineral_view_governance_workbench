@@ -865,3 +865,57 @@ Assets were changed across multiple accounts. Confirm they came from the approve
 **1. Short Question** — Does the Instagram–Facebook connection grant any third-party app or tool access to the page data?
 
 Linking pages often involves granting permissions to scheduling or analytics tools. Confirm which apps now hold page permissions and whether that access was reviewed.
+
+### Q-AI-0097 — Has Legal actually reviewed the VIP owner dataset, or is the no-outreach restriction currently self-imposed?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Has Legal actually reviewed the VIP owner dataset, or is the no-outreach restriction currently self-imposed?
+
+The submission says outreach is blocked until "required legal and internal approvals" arrive, but does not say whether Legal has been formally engaged, what they were asked, or what approval would look like. Needed: who in Legal owns this, what was submitted to them, and the criteria that would unblock outreach.
+
+### Q-AI-0098 — What source query and classification rules produced the 6,807 / 1,627 / 12,278 split, and who confirms them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What source query and classification rules produced the 6,807 / 1,627 / 12,278 split, and who confirms them?
+
+The segmentation was "validated" but the report also lists source-query confirmation and classification provenance as still-open items. Clarify which database and query generated the workbook, who owns the individual-vs-entity classification logic, and who signs off that the counts are correct.
+
+### Q-AI-0099 — Who dispositions the 1,627 Review records, by what criteria, and by what date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who dispositions the 1,627 Review records, by what criteria, and by what date?
+
+The Review bucket is ~19% of the non-excluded population. Without an owner, decision rule, and deadline, these records sit in limbo and may silently be treated as either clean or excluded downstream.
+
+### Q-AI-0100 — Where is the VIP Individuals workbook stored, and who currently has access to that owner PII?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Where is the VIP Individuals workbook stored, and who currently has access to that owner PII?
+
+A 20,000+ row owner-level workbook was shared and circulated for audit. Confirm the storage location, access list, whether it left approved company systems (email, personal drives, AI tools), and its retention/deletion plan.
+
+### Q-AI-0101 — Who approved the LinkedIn post before it was published, and does it make any valuation or advice-adjacent claim?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approved the LinkedIn post before it was published, and does it make any valuation or advice-adjacent claim?
+
+The post is already published. Confirm the approver, the account it went out on, and whether it repeats platform statistics or owner/valuation figures that would need the estimate / no-investment-advice guardrail.
+
+### Q-AI-0102 — What client query did the email answer, and was any owner or platform data included in it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What client query did the email answer, and was any owner or platform data included in it?
+
+The submission records that an email was sent to "the client" with "the necessary information" but names neither the client, the request, nor the content. Confirm the recipient, what information was disclosed, and whether it was reviewed before sending.
