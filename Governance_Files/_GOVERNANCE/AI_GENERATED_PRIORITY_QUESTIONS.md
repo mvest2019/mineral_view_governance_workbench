@@ -649,3 +649,57 @@ The report says visuals were "collected" without naming sources. Record where ea
 **1. Short Question** — If the reel's call-to-action promises a value estimate, does the free tier actually deliver it?
 
 Governance already flags tier/feature gating as unsettled. Confirm which subscription tier the promised valuation sits behind so the CTA does not send viewers to a paywall they were not told about.
+
+### Q-AI-0073 — Was this tracking validation run against production, and did the test navigation create real user-behavior records?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was this tracking validation run against production, and did the test navigation create real user-behavior records?
+
+The submission covers login/logout, multi-tab, and refresh scenarios but does not name the environment. If testing ran on production, tester sessions may now be stored as genuine user-behavior records and could distort activation and engagement reporting. Need confirmation of the environment, the accounts used, and whether any test records must be purged or flagged.
+
+### Q-AI-0074 — Do the stored Previous/Current Page URLs capture owner names, lease IDs, or other PII in the path or query string?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the stored Previous/Current Page URLs capture owner names, lease IDs, or other PII in the path or query string?
+
+Mineral View URLs include lease, well, and owner-scoped routes. If full URLs with identifiers or search terms are persisted, the behavior collection becomes a PII store. Confirm what is captured verbatim and whether any masking or truncation is applied before storage.
+
+### Q-AI-0075 — Is this page-level user behavior tracking disclosed in the privacy policy, and what is its retention period?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is this page-level user behavior tracking disclosed in the privacy policy, and what is its retention period?
+
+Per-user page-to-page tracking tied to login state needs a disclosure, an opt-out position, and a defined retention/deletion policy. Confirm whether legal has reviewed this tracking specifically and who owns the retention decision.
+
+### Q-AI-0076 — What is the official inactivity timeout and the pass/fail rule for activeSeconds, and who approved it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is the official inactivity timeout and the pass/fail rule for activeSeconds, and who approved it?
+
+"Extended user inactivity" was tested, but without a documented idle threshold and an acceptable variance for activeSeconds there is no objective basis for calling a session correctly measured. Need the spec and its owner.
+
+### Q-AI-0077 — Is the User Behavior API authenticated and rate-limited, or can it be called directly to inject false tracking records?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the User Behavior API authenticated and rate-limited, or can it be called directly to inject false tracking records?
+
+If the tracking endpoint accepts unauthenticated writes, the resulting engagement data cannot be trusted for reporting. Confirm whether auth, origin checks, and rate limiting were tested as part of this validation.
+
+### Q-AI-0078 — Which reports or dashboards consume this tracking data, and were their owners told about the gaps found?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which reports or dashboards consume this tracking data, and were their owners told about the gaps found?
+
+Engagement and activation figures reported to the team may be derived from this data. Confirm the downstream consumers and whether any identified missing/duplicate-record issues invalidate figures already circulated.
