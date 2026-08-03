@@ -239,6 +239,13 @@ function bridgeCollection(dbName: string, collName: string): unknown {
   return new Proxy({}, {
     get(_t, prop) {
       if (typeof prop !== 'string') return undefined;
+      // The Proxy must NOT look "thenable". getCollection()/getDb() are async and
+      // return this Proxy; when an async function returns a value the Promise
+      // machinery probes `.then` — if we returned a function here, JS would treat
+      // the collection as a Promise and forward a bogus `collection.then` op to
+      // the bridge, hanging the await (→ read timeout). A real Collection has no
+      // then/catch/finally.
+      if (prop === 'then' || prop === 'catch' || prop === 'finally') return undefined;
       if (prop === 'collectionName') return collName;
       if (prop === 'dbName') return dbName;
       if (CURSOR_METHODS.has(prop)) {
@@ -253,6 +260,9 @@ function bridgeDb(dbName: string): unknown {
   return new Proxy({}, {
     get(_t, prop) {
       if (typeof prop !== 'string') return undefined;
+      // Not thenable — see the note in bridgeCollection. Prevents a bogus
+      // `db.then` op when this Proxy is returned from an async function.
+      if (prop === 'then' || prop === 'catch' || prop === 'finally') return undefined;
       if (prop === 'databaseName') return dbName;
       if (prop === 'collection') return (name: string) => bridgeCollection(dbName, name);
       if (prop === 'admin') return () => ({
