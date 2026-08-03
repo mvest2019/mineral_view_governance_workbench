@@ -23,22 +23,52 @@ const DEFAULT_DB = 'GovernanceDB';
 // Methods on a Collection/Db that return a cursor (chained then .toArray()).
 const CURSOR_METHODS = new Set(['find', 'aggregate', 'listIndexes', 'listSearchIndexes']);
 
+// Canonical variable is MONGODB_BRIDGE_URL. `MONGO_BRIDGE_URL` (no "DB") is
+// accepted as an alias so a common naming slip can't silently disable bridge
+// mode and fall back to the direct driver. The resolved name is logged once.
+function rawBridgeUrl(): string {
+  const canonical = (process.env.MONGODB_BRIDGE_URL || '').trim();
+  if (canonical) return canonical;
+  const alias = (process.env.MONGO_BRIDGE_URL || '').trim();
+  if (alias) {
+    console.warn('[http_bridge] Using MONGO_BRIDGE_URL (alias). The canonical name is MONGODB_BRIDGE_URL — please rename it.');
+    return alias;
+  }
+  return '';
+}
+
 export function httpBridgeEnabled(): boolean {
-  return Boolean((process.env.MONGODB_BRIDGE_URL || '').trim());
+  return Boolean(rawBridgeUrl());
 }
 
 export function httpBridgeDbName(): string {
   return (process.env.MONGODB_DB_NAME || '').trim() || DEFAULT_DB;
 }
 
-function bridgeUrl(): string {
-  const base = (process.env.MONGODB_BRIDGE_URL || '').trim().replace(/\/+$/, '');
-  return base.endsWith('/mongo') ? base : `${base}/mongo`;
+// Normalize the configured bridge URL to the ROOT that the /mongo* routes hang
+// off. The env var may be the tunnel root (https://x.ngrok.app) or may already
+// include a /mongo, /mongo/op or /mongo/health suffix — strip any known suffix
+// so we can append the exact route we need. The running bridge exposes
+// `POST /mongo/op` (operations) and `GET /mongo/health` (ping); older repo
+// bridges exposed a single `POST /mongo`. We target the new routes and fall
+// back to /mongo on a 404 so any deploy ordering works.
+function mongoBaseUrl(): string {
+  let base = rawBridgeUrl().replace(/\/+$/, '');
+  base = base.replace(/\/mongo(\/(op|health))?$/, '');
+  return base;
 }
+function bridgeOpUrl(): string { return `${mongoBaseUrl()}/mongo/op`; }
+function bridgeHealthUrl(): string { return `${mongoBaseUrl()}/mongo/health`; }
+function bridgeLegacyUrl(): string { return `${mongoBaseUrl()}/mongo`; }
 
 function bridgeToken(): string {
-  // Reuse the Claude bridge token by default; allow a dedicated one if desired.
-  return (process.env.MONGODB_BRIDGE_TOKEN || process.env.REMOTE_CLAUDE_TOKEN || '').trim();
+  // Reuse the Claude bridge token by default; allow a dedicated one (either name).
+  return (
+    process.env.MONGODB_BRIDGE_TOKEN
+    || process.env.MONGO_BRIDGE_TOKEN
+    || process.env.REMOTE_CLAUDE_TOKEN
+    || ''
+  ).trim();
 }
 
 function bridgeTimeoutMs(): number {
@@ -57,34 +87,50 @@ interface BridgePayload {
 }
 
 async function sendBridge(payload: BridgePayload): Promise<unknown> {
-  const controller = new AbortController();
-  const url = bridgeUrl();
   const timeout = bridgeTimeoutMs();
-  const timer = setTimeout(() => controller.abort(), timeout);
   const token = bridgeToken();
-  let host = '(unparseable)';
-  try { host = new URL(url).host; } catch { /* ignore */ } // masked host only; token is in the header, never the URL
   const op = `${payload.target}.${payload.method}${payload.collection ? `(${payload.collection})` : ''}`;
-  const started = Date.now();
-  console.log(`[TRACE][http_bridge] fetch → https://${host}/mongo op=${op} hasToken=${Boolean(token)} timeout=${timeout}ms`); // TEMP TRACE
+  const body = EJSON.stringify(payload as unknown as Document, { relaxed: false });
+
+  // One bounded POST attempt against a specific route.
+  const attempt = async (url: string): Promise<Response> => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
+    let host = '(unparseable)';
+    let route = '/mongo';
+    try { const u = new URL(url); host = u.host; route = u.pathname; } catch { /* masked host only; token is in the header, never the URL */ }
+    const started = Date.now();
+    console.log(`[TRACE][http_bridge] fetch → https://${host}${route} op=${op} hasToken=${Boolean(token)} timeout=${timeout}ms`); // TEMP TRACE
+    try {
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body,
+        signal: controller.signal,
+        cache: 'no-store',
+      });
+      console.log(`[TRACE][http_bridge] fetch RESOLVED op=${op} route=${route} status=${r.status} elapsedMs=${Date.now() - started}`); // TEMP TRACE
+      return r;
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+
   let res: Response;
   try {
-    res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-      body: EJSON.stringify(payload as unknown as Document, { relaxed: false }),
-      signal: controller.signal,
-      cache: 'no-store',
-    });
-    console.log(`[TRACE][http_bridge] fetch RESOLVED op=${op} status=${res.status} elapsedMs=${Date.now() - started}`); // TEMP TRACE
+    res = await attempt(bridgeOpUrl());
+    // Backward-compat: a bridge that predates /mongo/op only serves /mongo. Only
+    // a 404 (route missing) triggers the retry — real op errors are 200 ok:false.
+    if (res.status === 404) {
+      console.warn(`[http_bridge] /mongo/op returned 404; retrying legacy /mongo for op=${op}`);
+      res = await attempt(bridgeLegacyUrl());
+    }
   } catch (err) {
-    console.error(`[TRACE][http_bridge] fetch REJECTED op=${op} elapsedMs=${Date.now() - started}: ${(err as Error).message}`); // TEMP TRACE
+    console.error(`[TRACE][http_bridge] fetch REJECTED op=${op}: ${(err as Error).message}`); // TEMP TRACE
     throw new Error(`MongoDB bridge request failed: ${(err as Error).message}`);
-  } finally {
-    clearTimeout(timer);
   }
 
   console.log(`[TRACE][http_bridge] before res.text() op=${op}`); // TEMP TRACE
@@ -117,37 +163,48 @@ export interface BridgePingResult {
 }
 
 /**
- * Bounded health probe of the bridge: POST an admin ping to /mongo with its OWN
- * short timeout so /api/health/mongo returns promptly (never waits the full 20s
- * bridge timeout, which would exceed Vercel's function limit). Distinguishes
+ * Bounded health probe of the bridge with its OWN short timeout so
+ * /api/health/mongo returns promptly (never waits the full 20s bridge timeout,
+ * which would exceed Vercel's function limit). Primary path is `GET /mongo/health`
+ * (the route the running bridge exposes); if that route is missing (404) it
+ * falls back to the legacy `POST /mongo` admin ping. Distinguishes
  * "bridge/tunnel unreachable" (fetch never resolves) from "bridge reached but
- * MongoDB ping failed" (bridge responds ok:false).
+ * MongoDB ping failed" (health reports mongoOk:false / ok:false).
  */
 export async function bridgePing(timeoutMs = 8000): Promise<BridgePingResult> {
-  const url = bridgeUrl();
+  const healthUrl = bridgeHealthUrl();
   let host = '(unparseable)';
-  try { host = new URL(url).host; } catch { /* ignore */ }
+  try { host = new URL(healthUrl).host; } catch { /* ignore */ }
   const token = bridgeToken();
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   const started = Date.now();
-  console.log(`[TRACE][http_bridge] bridgePing → https://${host}/mongo timeout=${timeoutMs}ms hasToken=${Boolean(token)}`); // TEMP TRACE
+  const authHeader: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+  console.log(`[TRACE][http_bridge] bridgePing GET → https://${host}/mongo/health timeout=${timeoutMs}ms hasToken=${Boolean(token)}`); // TEMP TRACE
   try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-      body: EJSON.stringify({ db: httpBridgeDbName(), target: 'admin', method: 'command', args: [{ ping: 1 }] } as unknown as Document, { relaxed: false }),
-      signal: controller.signal,
-      cache: 'no-store',
-    });
+    let res = await fetch(healthUrl, { method: 'GET', headers: { ...authHeader }, signal: controller.signal, cache: 'no-store' });
+    // Backward-compat: a bridge without /mongo/health -> ping via legacy POST /mongo.
+    if (res.status === 404) {
+      console.warn('[http_bridge] GET /mongo/health returned 404; falling back to legacy POST /mongo ping'); // TEMP TRACE
+      res = await fetch(bridgeLegacyUrl(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...authHeader },
+        body: EJSON.stringify({ db: httpBridgeDbName(), target: 'admin', method: 'command', args: [{ ping: 1 }] } as unknown as Document, { relaxed: false }),
+        signal: controller.signal,
+        cache: 'no-store',
+      });
+    }
     const text = await res.text();
     const elapsedMs = Date.now() - started;
     console.log(`[TRACE][http_bridge] bridgePing RESOLVED status=${res.status} elapsedMs=${elapsedMs}`); // TEMP TRACE
-    type ParsedPing = { ok?: boolean; error?: string } | null;
+    type ParsedPing = { ok?: boolean; mongoOk?: boolean; error?: string } | null;
     let parsed: ParsedPing = null;
     try { parsed = EJSON.parse(text) as ParsedPing; } catch { /* non-EJSON body */ }
     if (!res.ok) return { host, reachable: true, ok: false, status: res.status, elapsedMs, error: parsed?.error || `bridge/tunnel HTTP ${res.status}: ${text.slice(0, 120)}` };
-    if (!parsed || parsed.ok !== true) return { host, reachable: true, ok: false, status: res.status, elapsedMs, error: parsed?.error || `bridge returned ok:false: ${text.slice(0, 120)}` };
+    // A health route reports Mongo reachability via mongoOk; the legacy admin
+    // ping reports ok. Only an explicit false means "reached but Mongo down".
+    const mongoFlag = parsed?.mongoOk ?? parsed?.ok;
+    if (mongoFlag === false) return { host, reachable: true, ok: false, status: res.status, elapsedMs, error: parsed?.error || `bridge reachable but MongoDB ping failed: ${text.slice(0, 120)}` };
     return { host, reachable: true, ok: true, status: res.status, elapsedMs };
   } catch (err) {
     const elapsedMs = Date.now() - started;

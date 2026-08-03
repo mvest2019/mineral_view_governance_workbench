@@ -729,8 +729,10 @@ async function handleRun(req, res) {
 // itself. Only this server ever opens a MongoDB connection. The mongodb driver
 // is loaded lazily, so the Claude endpoints keep working even if it is not
 // installed. EJSON is used on the wire so ObjectId/Date round-trip losslessly.
-//   POST /mongo  body (EJSON): { target, db, collection?, method, args, cursorOps? }
-//                reply (EJSON): { ok, result } | { ok:false, error, errorMeta }
+//   POST /mongo/op     body (EJSON): { target, db, collection?, method, args, cursorOps? }
+//                      reply (EJSON): { ok, result } | { ok:false, error, errorMeta }
+//   POST /mongo        alias of /mongo/op (older app clients)
+//   GET  /mongo/health reply (JSON): { ok, mongoOk, pingMs, db, error? } (bounded ping)
 // ----------------------------------------------------------------------------
 const MONGO_BRIDGE_URI = String(process.env.MONGO_BRIDGE_URI || '').trim();
 const MONGO_BRIDGE_DB = String(process.env.MONGO_BRIDGE_DB || 'GovernanceDB').trim();
@@ -856,13 +858,37 @@ async function handleMongo(req, res) {
   }
 }
 
+// GET /mongo/health — bounded MongoDB ping so the Vercel app's /api/health/mongo
+// returns promptly. Reports mongoOk separately from the HTTP status so the app
+// can distinguish "bridge reachable" from "MongoDB reachable".
+async function handleMongoHealth(req, res) {
+  const started = Date.now();
+  try {
+    const client = await mongoClient();
+    await client.db(MONGO_BRIDGE_DB).command({ ping: 1 });
+    sendJson(res, 200, { ok: true, mongoOk: true, pingMs: Date.now() - started, db: MONGO_BRIDGE_DB });
+  } catch (err) {
+    console.error('[claude-bridge] mongo health ping FAILED:', err && err.message ? err.message : err);
+    // 200 + mongoOk:false: the bridge is up, MongoDB is not. HTTP 200 keeps the
+    // app's "bridge reachable" signal true while mongoOk carries the real state.
+    sendJson(res, 200, { ok: false, mongoOk: false, pingMs: Date.now() - started, db: MONGO_BRIDGE_DB, error: String(err && err.message ? err.message : err) });
+  }
+}
+
 const requestListener = (req, res) => {
   if (!authorized(req)) {
     sendJson(res, 401, { ok: false, error_message: 'unauthorized' });
     return;
   }
   const url = (req.url || '').split('?')[0];
-  if (req.method === 'POST' && url === '/mongo') {
+  if (req.method === 'GET' && url === '/mongo/health') {
+    handleMongoHealth(req, res).catch((err) => {
+      console.error('[claude-bridge] mongo health unhandled error:', err);
+      if (!res.headersSent) sendJson(res, 500, { ok: false, mongoOk: false, error: String(err.message || err) });
+    });
+    return;
+  }
+  if (req.method === 'POST' && (url === '/mongo/op' || url === '/mongo')) {
     handleMongo(req, res).catch((err) => {
       console.error('[claude-bridge] mongo unhandled error:', err);
       if (!res.headersSent) sendJson(res, 500, { ok: false, error: String(err.message || err) });
