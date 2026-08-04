@@ -1459,3 +1459,57 @@ Prior prototype reviews in this project surfaced publicly reachable Vercel build
 **1. Short Question** — Does publicly ranking or comparing operator performance need legal review before it stays public?
 
 "Compare operators" and "compare performance" publish judgements about named companies from our own derived metrics. Confirm whether the methodology is disclosed, whether it carries the educational-only / no-advice disclaimer, and who cleared publishing operator rankings.
+
+### Q-AI-0163 — Are prospect dossiers built on users who never claimed leases disclosed to those users and cleared by legal?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are prospect dossiers built on users who never claimed leases disclosed to those users and cleared by legal?
+
+The pipeline combines browsing behavior with public-record name matching to infer that a user may own minerals. Confirm this profiling is covered by the privacy policy and consented, and that a legal/privacy reviewer signed off before more dossiers are generated.
+
+### Q-AI-0164 — Will the "You May Own This" inferred-ownership preview ever be shown to the user, or is it internal-only?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Will the "You May Own This" inferred-ownership preview ever be shown to the user, or is it internal-only?
+
+Inferred ownership presented to a user reads as a claim about their property rights. Confirm the audience, and if user-facing, what disclaimer separates inferred from verified ownership and who approved that wording.
+
+### Q-AI-0165 — Where are the generated prospect dossiers stored, and who can access them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where are the generated prospect dossiers stored, and who can access them?
+
+These files combine behavioral tracking, subscription data, county appraisal values, and matched owner names — richer PII than the member dossiers already kept off git on Drive. Confirm the storage location, access list, and retention period.
+
+### Q-AI-0166 — Are the dossiers already generated from the older ownership index invalid, and will they be regenerated after the refresh?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the dossiers already generated from the older ownership index invalid, and will they be regenerated after the refresh?
+
+Owner-name matching uses an older ownership index while the new valuation and production sections use 2025 data, so a dossier can mix mismatched vintages. Confirm whether existing outputs are usable and who owns the refresh and its date.
+
+### Q-AI-0167 — Who reviews the namesake-flagged cases, and what stops a wrong name match from reaching a user?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who reviews the namesake-flagged cases, and what stops a wrong name match from reaching a user?
+
+Namesake protection routes ambiguous matches to manual review. Name the reviewer, the queue, and the accuracy bar a match must clear before ownership, appraisal, or production data is attached to a person.
+
+### Q-AI-0168 — Are county appraisal values and RRC production data licensed for redistribution inside our dossiers?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are county appraisal values and RRC production data licensed for redistribution inside our dossiers?
+
+Public availability is not the same as redistribution rights. Confirm the terms of use for the county appraisal roll and the Texas Railroad Commission 2025 data before these sections ship in a customer- or sales-facing document.
