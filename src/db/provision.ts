@@ -15,6 +15,8 @@ import type { Document, IndexDescription } from 'mongodb';
 import { getDb } from '@/src/db/connection';
 import { EMPLOYEES_VALIDATOR } from '@/src/db/validators/employees.validator';
 import { EMPLOYEES_INDEXES } from '@/src/db/indexes/employees.indexes';
+import { TEAM_MEMBERS_VALIDATOR } from '@/src/db/validators/team_members.validator';
+import { TEAM_MEMBERS_INDEXES } from '@/src/db/indexes/team_members.indexes';
 import { TASK_TRACKER_ENTRIES_VALIDATOR } from '@/src/db/validators/taskTrackerEntries.validator';
 import { TASK_TRACKER_ENTRIES_INDEXES } from '@/src/db/indexes/taskTrackerEntries.indexes';
 import { PRIORITY_QUESTIONS_VALIDATOR } from '@/src/db/validators/priorityQuestions.validator';
@@ -117,6 +119,17 @@ export async function provisionEmployees(): Promise<ProvisionResult> {
     validationLevel: EMPLOYEES_VALIDATOR.validationLevel,
     validationAction: EMPLOYEES_VALIDATOR.validationAction,
     indexes: EMPLOYEES_INDEXES,
+  });
+}
+
+/** Provision the team_members collection (validator + indexes). Inserts no data. */
+export async function provisionTeamMembers(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.TEAM_MEMBERS,
+    validator: TEAM_MEMBERS_VALIDATOR.validator,
+    validationLevel: TEAM_MEMBERS_VALIDATOR.validationLevel,
+    validationAction: TEAM_MEMBERS_VALIDATOR.validationAction,
+    indexes: TEAM_MEMBERS_INDEXES,
   });
 }
 
