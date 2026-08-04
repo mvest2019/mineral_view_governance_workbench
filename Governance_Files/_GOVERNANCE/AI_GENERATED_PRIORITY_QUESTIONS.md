@@ -1351,3 +1351,57 @@ Testing in production writes synthetic navigation and time-spent rows into the s
 **1. Short Question** — Can a user opt out of behavior tracking, and was that opt-out path tested?
 
 Separate from privacy-policy disclosure: confirm whether an opt-out, cookie-consent, or Do Not Track mechanism exists, whether tracking correctly stops when it is exercised, and whether that scenario was part of this test round.
+
+### Q-AI-0151 — Are these Map Explorer and Data Coverage redesigns merged into the live application or only a prototype, and who approves the go-live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Are these Map Explorer and Data Coverage redesigns merged into the live application or only a prototype, and who approves the go-live?
+
+The submission describes shipped UI changes across Map Explorer, Table, Insights, and Data Coverage, but does not state the branch, environment, or release gate. Governance needs to know whether real users are already seeing this and who signed off.
+
+### Q-AI-0152 — What exactly was removed as "unnecessary content" and "redundant UI elements", and who approved removing it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — What exactly was removed as "unnecessary content" and "redundant UI elements", and who approved removing it?
+
+Items 3 and 8 describe deleting content from the Table view and across the application. A list of removed fields, columns, labels, and controls is needed to confirm no user-facing data or signal was dropped without approval.
+
+### Q-AI-0153 — Does the new click-a-well-opens-Insights flow break back-button behavior, deep links, or any existing map-only workflow?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the new click-a-well-opens-Insights flow break back-button behavior, deep links, or any existing map-only workflow?
+
+Auto-navigating from Map to Insights changes a core user flow. Confirm whether users can still inspect a well on the map without leaving it, and whether saved or shared URLs still resolve correctly.
+
+### Q-AI-0154 — Does this Map UI redesign replace the earlier 4th-view Well Explorer design, and is that swap approved?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does this Map UI redesign replace the earlier 4th-view Well Explorer design, and is that swap approved?
+
+Earlier work defined a specific Well Explorer layout (54px icon rail, 290px panel, Search/Filters/Style/View/Saved/Paths). Clarify whether this redesign supersedes, extends, or conflicts with that delivered design.
+
+### Q-AI-0155 — Do the new Table filters and Data Coverage layouts expose any data that was previously gated by subscription tier?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the new Table filters and Data Coverage layouts expose any data that was previously gated by subscription tier?
+
+Adding filtering and reworking the Mineral Owners, Production, and Wells sections can widen what a free or lower-tier user can see. Confirm tier gating was preserved.
+
+### Q-AI-0156 — Has QA retested Map Explorer and Data Coverage after these changes, or is your own responsive check the only verification?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Has QA retested Map Explorer and Data Coverage after these changes, or is your own responsive check the only verification?
+
+The work claims full responsiveness across desktop, tablet, and mobile. Identify who validated it independently, on what devices or emulators, and where any defects were logged.
