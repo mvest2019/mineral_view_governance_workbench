@@ -14,12 +14,17 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { EJSON, Int32 } from 'bson';
 
 const REPO_ROOT = process.cwd();
 const CONFIG_TS = path.join(REPO_ROOT, 'lib', 'config.ts');
 const MD_DIR = path.join(REPO_ROOT, 'Governance_Files', '_GOVERNANCE', 'team_members');
 const OUT = path.join(REPO_ROOT, 'team_members.json');
 const COMPANY = 'MView';
+// Fixed migration stamp so the generated file is deterministic (re-generating
+// yields the same bytes). Compass/mongoimport reads these as real BSON dates.
+const MIGRATION_AT = new Date('2026-08-04T00:00:00.000Z');
+const ACTOR = 'migration:team-members';
 
 // --- extract TEAM_MEMBER_PROFILES from config.ts (balanced-brace + eval) ------
 function extractObjectLiteral(src, fromIndex) {
@@ -215,13 +220,37 @@ function main() {
     void norm;
   }
 
-  // strip undefined keys for a clean file
-  const clean = docs.map((d) => Object.fromEntries(Object.entries(d).filter(([, v]) => v !== undefined)));
-  fs.writeFileSync(OUT, JSON.stringify(clean, null, 2) + '\n', 'utf8');
+  // Finalize each document: drop undefined keys, coerce int/date BSON types, and
+  // stamp the full audit envelope so the file passes the collection's
+  // $jsonSchema validator and imports directly (no seed script required).
+  const final = docs.map((d) => {
+    const base = Object.fromEntries(Object.entries(d).filter(([, v]) => v !== undefined));
+    return {
+      ...base,
+      sections: (d.sections || []).map((s) => ({
+        number: s.number == null ? null : new Int32(s.number),
+        title: s.title,
+        markdown: s.markdown,
+      })),
+      // audit envelope (required by the validator)
+      createdAt: MIGRATION_AT,
+      createdBy: ACTOR,
+      updatedAt: MIGRATION_AT,
+      updatedBy: ACTOR,
+      isDeleted: false,
+      version: new Int32(1),
+    };
+  });
 
-  const withMd = clean.filter((d) => d.hasProfileDoc).length;
-  console.log(`✔ Wrote ${clean.length} team member document(s) to ${path.relative(REPO_ROOT, OUT)}`);
-  console.log(`  ${withMd} enriched from Markdown, ${clean.length - withMd} config-only (no .md file).`);
+  // Canonical Extended JSON: version/section numbers become {"$numberInt"} and
+  // dates become {"$date"}, so Compass stores them as int/date — exactly what
+  // the validator requires. (Same format as employees.json.)
+  fs.writeFileSync(OUT, EJSON.stringify(final, null, 2, { relaxed: false }) + '\n', 'utf8');
+
+  const withMd = final.filter((d) => d.hasProfileDoc).length;
+  console.log(`✔ Wrote ${final.length} import-ready team member document(s) to ${path.relative(REPO_ROOT, OUT)}`);
+  console.log(`  ${withMd} enriched from Markdown, ${final.length - withMd} config-only (no .md file).`);
+  console.log('  Format: canonical Extended JSON with full audit envelope — import directly in MongoDB Compass.');
   console.log(`  Markdown files parsed: ${mdFiles.length}. Company: ${COMPANY}.`);
 }
 

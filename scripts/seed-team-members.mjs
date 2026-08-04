@@ -12,6 +12,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient, Int32 } from 'mongodb';
+import { EJSON } from 'bson';
 
 const DEFAULT_DB_NAME = 'GovernanceDB';
 const COLLECTION = 'team_members';
@@ -45,7 +46,8 @@ async function main() {
     console.error(`✖ ${JSON_FILE} not found. Run \`npm run generate:team-members\` first.`);
     process.exit(1);
   }
-  const docs = JSON.parse(fs.readFileSync(JSON_FILE, 'utf8'));
+  // team_members.json is canonical Extended JSON (dates + ints as $date/$numberInt).
+  const docs = EJSON.parse(fs.readFileSync(JSON_FILE, 'utf8'), { relaxed: false });
   if (!Array.isArray(docs) || !docs.length) {
     console.error('✖ team_members.json is empty.');
     process.exit(1);
