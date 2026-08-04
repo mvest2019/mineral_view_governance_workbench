@@ -9,6 +9,7 @@
 
 export const COLLECTIONS = {
   EMPLOYEES: 'employees',
+  TEAM_MEMBERS: 'team_members',
   ROLES: 'roles',
   DEPARTMENTS: 'departments',
   TASK_TRACKER_ENTRIES: 'taskTrackerEntries',
