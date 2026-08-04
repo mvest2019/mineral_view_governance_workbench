@@ -1027,3 +1027,57 @@ HOLD accounts are excluded 'unless specific approval was provided,' but the appr
 **1. Short Question** — Were outdated dossier files backed up before deletion, and what caused the second entity-owner batch to be interrupted?
 
 Old dossier files were removed before regeneration and test/staff records were deleted from both output and source sets, with no stated backup. The second entity batch also failed mid-run — the cause and the completion date for the pending members are unrecorded.
+
+### Q-AI-0115 — Who renamed the centroid fields in production, and why did engineering only find out after the code broke?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who renamed the centroid fields in production, and why did engineering only find out after the code broke?
+
+Prod already had `well_centroid` / `lease_centroid` while the API code still read `well_centriod` / `lease_centriod`. A production schema rename that silently breaks live code indicates a missing change-control gate. Who executed the rename, when, and what approval/notification step should have caught it before it reached prod?
+
+### Q-AI-0116 — Who owns the `yestarday_*` → `yesterday_*` promotion, and how do we guarantee the code deploys before it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who owns the `yestarday_*` → `yesterday_*` promotion, and how do we guarantee the code deploys before it?
+
+`MVestimateCalculations_Test` already has the corrected `yesterday_*`, so the rename is staged for live. The dual-read in `dashboard.js` only protects us if it is deployed first. Who schedules the promotion, who is notified, and is there a written sequencing agreement between the DB and API sides?
+
+### Q-AI-0117 — Are the dual-read fixes committed, merged to the correct development branch, and deployed to production yet?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Are the dual-read fixes committed, merged to the correct development branch, and deployed to production yet?
+
+The summary says the portal fixes still need to "move onto the correct development branch." Which branch is canonical for `MViewPortalAPINew` vs `MViewPortalAPI`, are the Presentation and Map changes on the right branches too, and is any of this live in production or still local?
+
+### Q-AI-0118 — How long were lease/well reports and maps serving missing or wrong lat/long, and were customers affected?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — How long were lease/well reports and maps serving missing or wrong lat/long, and were customers affected?
+
+Between the prod rename and this fix, the centroid reads returned nothing in Portal, Presentation (including PDF output), and the Map service. What is the estimated breakage window, was any incorrect or blank location data shown to paying users or embedded in generated PDFs, and does anything need correcting or re-issuing?
+
+### Q-AI-0119 — What testing backs "all files checked and working" across the three repos and the rebuilt map `dist`?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What testing backs "all files checked and working" across the three repos and the rebuilt map `dist`?
+
+Five source files plus a rebuilt `MviewMapAPI` `dist` changed across three projects. Was this syntax-check only, or were the affected endpoints actually exercised against real data? Also, is the committed `dist` reproducible from source in CI, or is it a hand-built artifact that can drift from `map.service.ts`?
+
+### Q-AI-0120 — Who owns closing the still-open `Arps/Aprs` fork and the spaces in `Data_to_web` field names, and by when?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who owns closing the still-open `Arps/Aprs` fork and the spaces in `Data_to_web` field names, and by when?
+
+Both remain unfixed in production, with ~2% of `Data_raw_final` docs using the typo variant. Is any current code silently missing that 2%? Assign an owner and a target date, or record an explicit decision to leave them as-is.
