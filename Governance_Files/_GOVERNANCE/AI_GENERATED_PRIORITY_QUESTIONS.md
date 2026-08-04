@@ -1081,3 +1081,57 @@ Five source files plus a rebuilt `MviewMapAPI` `dist` changed across three proje
 **1. Short Question** — Who owns closing the still-open `Arps/Aprs` fork and the spaces in `Data_to_web` field names, and by when?
 
 Both remain unfixed in production, with ~2% of `Data_raw_final` docs using the typo variant. Is any current code silently missing that 2%? Assign an owner and a target date, or record an explicit decision to leave them as-is.
+
+### Q-AI-0121 — Did today's validation actually find any exceptions or failures, and where is that record stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did today's validation actually find any exceptions or failures, and where is that record stored?
+
+The submission describes monitoring, reconciliation, and "reviewed exceptions when identified" but never states the outcome — whether the scrapers ran clean or issues were found. Governance needs the result, not just the activity, plus the location of the daily findings log and who reviews it.
+
+### Q-AI-0122 — When a scraper fails or runs late, how are users told the W-1/W-2 data they see is stale?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When a scraper fails or runs late, how are users told the W-1/W-2 data they see is stale?
+
+Daily monitoring detects failures internally, but there is no stated freshness SLA or user-facing indicator. If a day's permit or completion data is missing, mineral owners may be viewing incomplete records without knowing it.
+
+### Q-AI-0123 — Are new data-acquisition sources reviewed for terms-of-service and legal permission before scraping is built?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are new data-acquisition sources reviewed for terms-of-service and legal permission before scraping is built?
+
+"Analyzed data acquisition requirements and reviewed source systems for potential enhancements" implies new scraping targets. Scraping a new site carries ToS, rate-limit, and legal exposure that should be cleared before engineering work starts.
+
+### Q-AI-0124 — When the same missing values or duplicates recur, who owns fixing the scraper root cause instead of repeatedly patching the data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When the same missing values or duplicates recur, who owns fixing the scraper root cause instead of repeatedly patching the data?
+
+Validation plus backfill is a repeating daily loop. Without a defined owner and threshold for escalating a recurring defect to the scraping team, data-quality issues get patched indefinitely rather than fixed at source.
+
+### Q-AI-0125 — Are corrected or backfilled records flagged so downstream consumers can distinguish them from originally scraped values?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are corrected or backfilled records flagged so downstream consumers can distinguish them from originally scraped values?
+
+Reconciliation and remediation change stored records after ingestion. Without a correction timestamp or audit flag, reports and valuations built on this data cannot tell original from amended values, and a bad backfill would be hard to trace.
+
+### Q-AI-0126 — Is this daily validation written up as a runbook someone else can execute, or does it depend on one person's knowledge?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is this daily validation written up as a runbook someone else can execute, or does it depend on one person's knowledge?
+
+The checks span PostgreSQL, SQL Server, MongoDB, and multiple W-1/W-2 table families. A documented checklist with defined checks and thresholds is needed for coverage during absence and for consistent results between reviewers.
