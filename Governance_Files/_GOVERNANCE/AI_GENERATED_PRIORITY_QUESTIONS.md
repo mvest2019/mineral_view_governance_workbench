@@ -1297,3 +1297,57 @@ Two data-quality issues (monetary values stored as text totaling to zero, and de
 **1. Short Question** — Which AI/OCR service processes the RRC survey PDFs, and is sending those documents to it approved?
 
 The extraction workflow is described as AI-assisted with OCR, but the specific tool or vendor is unnamed. Governance needs the tool identified, confirmation it is on an approved list for commercial use, and confirmation that bulk retrieval of RRC documents is permitted under the source's terms.
+
+### Q-AI-0145 — Was this tracking change already live for real users before this validation, and who approved that release?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was this tracking change already live for real users before this validation, and who approved that release?
+
+The submission says testing was done "in the production build," which implies the change reached real users before QA sign-off. Clarify the release gate: was there a staging validation first, who approved the production deploy, and what is the rollback plan if a tracking defect is found post-release?
+
+### Q-AI-0146 — Does tracking also capture logged-out or anonymous visitors, and how are those events tied to a person?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does tracking also capture logged-out or anonymous visitors, and how are those events tied to a person?
+
+Needed to know whether behavior records exist for non-authenticated visitors and, if so, what identifier (user ID, session ID, device fingerprint, IP) links them. This determines whether the dataset is personal data and which consent/privacy rules apply.
+
+### Q-AI-0147 — What is the approved list of "applicable pages," and which pages are deliberately excluded from tracking?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is the approved list of "applicable pages," and which pages are deliberately excluded from tracking?
+
+"All applicable pages" was verified, but there is no documented coverage matrix. Confirm the authoritative page list, who owns it, and whether sensitive screens (payment, subscription, account settings, claim flows) are in or out of scope.
+
+### Q-AI-0148 — What evidence supports the "no regressions" conclusion — which regression suite or checklist was executed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What evidence supports the "no regressions" conclusion — which regression suite or checklist was executed?
+
+The claim of no regressions is asserted without a named suite, scope, or result set. Identify the regression scope run (navigation, reports, subscription flows), the pass/fail record, and where the executed test cases and results are stored.
+
+### Q-AI-0149 — How are the behavior records created by your production testing flagged or removed so they do not skew analytics?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — How are the behavior records created by your production testing flagged or removed so they do not skew analytics?
+
+Testing in production writes synthetic navigation and time-spent rows into the same store used for reporting. Confirm whether test accounts are tagged/filtered, who performs the cleanup, and whether any already-published metrics include this test traffic.
+
+### Q-AI-0150 — Can a user opt out of behavior tracking, and was that opt-out path tested?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Can a user opt out of behavior tracking, and was that opt-out path tested?
+
+Separate from privacy-policy disclosure: confirm whether an opt-out, cookie-consent, or Do Not Track mechanism exists, whether tracking correctly stops when it is exercised, and whether that scenario was part of this test round.
