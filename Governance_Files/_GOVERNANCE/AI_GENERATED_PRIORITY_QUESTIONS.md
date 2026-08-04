@@ -1189,3 +1189,57 @@ Verifying integrations usually means granting OAuth access to schedulers, analyt
 **1. Short Question** — Where is the content-opportunity research and the testing/validation evidence stored?
 
 Both the campaign research and the "testing and validation" of recent updates are reported as completed but with no deliverable named. Provide the file, sheet, or doc link so the findings are reusable and the validation is auditable.
+
+### Q-AI-0133 — Is the tier gating enforced in the backend API, or only hidden in the UI?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the tier gating enforced in the backend API, or only hidden in the UI?
+
+The submission describes locked states and access control on the Operator Listing page. If gating is client-side only, locked operator data may still be returned by the API and visible in the page source or network response to Free users — a paid-content leak.
+
+### Q-AI-0134 — Can a Free user still reach a locked operator via direct URL, search, or export?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Can a Free user still reach a locked operator via direct URL, search, or export?
+
+Locked cards on the listing page do not by themselves block deep links to an operator detail route, search/filter result payloads, or any download/export path. Needs an explicit statement of which routes and actions are gated.
+
+### Q-AI-0135 — Where is the approved per-tier feature matrix for the Operator pages documented, and who signed off on it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Where is the approved per-tier feature matrix for the Operator pages documented, and who signed off on it?
+
+The submission says different experiences were defined for Free, Pro, and Premium/Enterprise, but does not reference an approved spec stating exactly what each tier sees (row limits, fields, detail access). Without a signed-off matrix the gating rules exist only in code.
+
+### Q-AI-0136 — Which environment and build is the Operator Landing Page in, and does it show real operator data or sample data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which environment and build is the Operator Landing Page in, and does it show real operator data or sample data?
+
+Several parallel prototype/redesign tracks are in flight (Vercel prototypes, portal redesign). Needs the specific branch/URL, and confirmation of whether the page renders live operator records or mock content.
+
+### Q-AI-0137 — Do the upgrade prompts use current approved plan names and pricing, and who approved that copy?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the upgrade prompts use current approved plan names and pricing, and who approved that copy?
+
+Upgrade CTAs are a commercial commitment shown to users. The submission groups "Premium/Enterprise" as one tier, so the plan naming and any price shown in the prompts should be verified against the live subscription plan records before release.
+
+### Q-AI-0138 — Does this Operator Landing Page replace an existing live page, and who approves the cutover?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does this Operator Landing Page replace an existing live page, and who approves the cutover?
+
+Clarify whether this is a new route, a replacement for an existing operator page, and what the go-live gate is given the other in-flight redesign tracks.
