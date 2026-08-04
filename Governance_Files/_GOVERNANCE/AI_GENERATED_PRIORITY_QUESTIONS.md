@@ -1405,3 +1405,57 @@ Adding filtering and reworking the Mineral Owners, Production, and Wells section
 **1. Short Question** — Has QA retested Map Explorer and Data Coverage after these changes, or is your own responsive check the only verification?
 
 The work claims full responsiveness across desktop, tablet, and mobile. Identify who validated it independently, on what devices or emulators, and where any defects were logged.
+
+### Q-AI-0157 — Do the public coverage pages for owners and leases display named mineral owners, and is that PII exposure approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the public coverage pages for owners and leases display named mineral owners, and is that PII exposure approved?
+
+The submission states owners, leases, wells and operators are interlinked in the public data-coverage section. If owner names or holdings render on publicly indexable pages, that is a privacy decision that needs explicit approval before the architecture is locked.
+
+### Q-AI-0158 — Who has final sign-off on this operator + coverage architecture, and by what date must it be decided?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who has final sign-off on this operator + coverage architecture, and by what date must it be decided?
+
+Everything is listed as deferred to "the live prototype review" with no named decision-maker, no attendee list, and no date. Name the approver (you, Ryan, or engineering) and the gate date so this does not stay open indefinitely.
+
+### Q-AI-0159 — Which measurement source will prove a page is a real organic-traffic contributor before anything is gated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Which measurement source will prove a page is a real organic-traffic contributor before anything is gated?
+
+The keep-public-vs-gate decision is supposed to be evidence-backed. Specify the system of record (GA, Search Console, Ahrefs), the date window, and the minimum threshold that qualifies a page as a traffic contributor — otherwise the "proof" is opinion.
+
+### Q-AI-0160 — Which states are next after Texas, and do we hold licensed rights to publish their operator and production data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Which states are next after Texas, and do we hold licensed rights to publish their operator and production data?
+
+The architecture is being shaped around "data-only" state expansion, but no state list, source, or data-licence position is given. Non-Texas regulators have different reuse terms than the RRC.
+
+### Q-AI-0161 — Are the working local prototypes reachable by anyone outside the team, and do they run on real production data?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Are the working local prototypes reachable by anyone outside the team, and do they run on real production data?
+
+Prior prototype reviews in this project surfaced publicly reachable Vercel builds and real member records. Confirm where these prototypes are hosted, who can reach them, and whether the operator/owner/lease records shown are real or mock.
+
+### Q-AI-0162 — Does publicly ranking or comparing operator performance need legal review before it stays public?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Does publicly ranking or comparing operator performance need legal review before it stays public?
+
+"Compare operators" and "compare performance" publish judgements about named companies from our own derived metrics. Confirm whether the methodology is disclosed, whether it carries the educational-only / no-advice disclaimer, and who cleared publishing operator rankings.
