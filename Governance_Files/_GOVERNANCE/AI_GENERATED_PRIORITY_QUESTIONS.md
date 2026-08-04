@@ -1135,3 +1135,57 @@ Reconciliation and remediation change stored records after ingestion. Without a 
 **1. Short Question** — Is this daily validation written up as a runbook someone else can execute, or does it depend on one person's knowledge?
 
 The checks span PostgreSQL, SQL Server, MongoDB, and multiple W-1/W-2 table families. A documented checklist with defined checks and thresholds is needed for coverage during absence and for consistent results between reviewers.
+
+### Q-AI-0127 — Is "Trendelier" a Mineral View brand, a separate product, or an external client?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Is "Trendelier" a Mineral View brand, a separate product, or an external client?
+
+The submission is filed under Mineral View governance but names "Trendelier" with no stated connection to oil, gas, or mineral rights. Confirm what Trendelier is, whether this work is a Mineral View deliverable, and who authorized spending time on it.
+
+### Q-AI-0128 — Which social accounts and platforms were changed, and who holds the credentials?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which social accounts and platforms were changed, and who holds the credentials?
+
+"Social media account management" and "account configuration" are described without naming a single platform or handle. List the exact accounts touched, and state who has login access and whether it is under company control (shared password manager) rather than a personal account.
+
+### Q-AI-0129 — Who approved the branding and profile information updates before they went live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who approved the branding and profile information updates before they went live?
+
+Changing platform branding, bio, and profile info is a public-facing brand change. Identify the approver, what was changed from and to, and whether the previous state was captured so it can be reverted.
+
+### Q-AI-0130 — What content was published, and did anyone review it before it went out?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What content was published, and did anyone review it before it went out?
+
+The report says content was "published and reviewed" — clarify whether review happened before or after publishing, who the reviewer was, and provide links to the published posts.
+
+### Q-AI-0131 — Which third-party tools were connected during the "platform integrations" work, and what permissions do they now hold?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Which third-party tools were connected during the "platform integrations" work, and what permissions do they now hold?
+
+Verifying integrations usually means granting OAuth access to schedulers, analytics, or automation tools. Name each connected tool, the scopes granted, and whether the connection was approved and is documented.
+
+### Q-AI-0132 — Where is the content-opportunity research and the testing/validation evidence stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Where is the content-opportunity research and the testing/validation evidence stored?
+
+Both the campaign research and the "testing and validation" of recent updates are reported as completed but with no deliverable named. Provide the file, sheet, or doc link so the findings are reusable and the validation is auditable.
