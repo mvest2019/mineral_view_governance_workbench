@@ -1243,3 +1243,57 @@ Upgrade CTAs are a commercial commitment shown to users. The submission groups "
 **1. Short Question** — Does this Operator Landing Page replace an existing live page, and who approves the cutover?
 
 Clarify whether this is a new route, a replacement for an existing operator page, and what the go-live gate is given the other in-flight redesign tracks.
+
+### Q-AI-0139 — Was the monthly data refresh written directly to production, and was a backup taken and approved before overwriting historical records?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Was the monthly data refresh written directly to production, and was a backup taken and approved before overwriting historical records?
+
+The report describes processing, validating and preparing monthly production, disposition and Operator Directory data "for production deployment," but does not state whether the writes were applied to live production, whether a pre-change backup/snapshot exists, or who approved the deployment. Prior governance work established that analysis access was read-only and that production write authority is an open item.
+
+### Q-AI-0140 — For the renamed and retyped MongoDB fields, is there a documented old→new field mapping and a rollback plan?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — For the renamed and retyped MongoDB fields, is there a documented old→new field mapping and a rollback plan?
+
+Field renames and data-type conversions across multiple collections are breaking changes. Governance needs the list of affected collections, the exact field mapping, whether the changes were rehearsed on a non-production copy first, and how they can be reversed if a downstream consumer breaks.
+
+### Q-AI-0141 — What accuracy threshold and human-review gate must the AI-assisted Directional Survey extraction pass before its output is used downstream?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What accuracy threshold and human-review gate must the AI-assisted Directional Survey extraction pass before its output is used downstream?
+
+Extracted engineering survey values (depths, coordinates, measurements) are being validated informally. Governance needs a defined pass/fail accuracy criterion, a sample size, and a named reviewer before extracted values feed any platform data or user-facing report.
+
+### Q-AI-0142 — Where is the pre-launch task list recorded, what is the target launch date, and which items are hard blockers versus post-launch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Where is the pre-launch task list recorded, what is the target launch date, and which items are hard blockers versus post-launch?
+
+Tasks were categorized, prioritized, assigned and given timelines, but the artifact location, the agreed launch date, and the blocker/non-blocker split are not stated. Without that, launch readiness cannot be verified and assignees cannot be held to the plan.
+
+### Q-AI-0143 — Did the type standardization also resolve the reported text-stored valuation fields and the MVEstimate NaN/$0 defect?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Did the type standardization also resolve the reported text-stored valuation fields and the MVEstimate NaN/$0 defect?
+
+Two data-quality issues (monetary values stored as text totaling to zero, and depleted leases stored as NaN producing MVEstimate = $0) were previously reported to you for remediation. Confirm whether today's numeric/date type conversions fixed them, or whether they remain open.
+
+### Q-AI-0144 — Which AI/OCR service processes the RRC survey PDFs, and is sending those documents to it approved?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Which AI/OCR service processes the RRC survey PDFs, and is sending those documents to it approved?
+
+The extraction workflow is described as AI-assisted with OCR, but the specific tool or vendor is unnamed. Governance needs the tool identified, confirmation it is on an approved list for commercial use, and confirmation that bulk retrieval of RRC documents is permitted under the source's terms.
