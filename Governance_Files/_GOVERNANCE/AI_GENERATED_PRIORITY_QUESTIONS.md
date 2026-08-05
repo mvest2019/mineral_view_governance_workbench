@@ -1513,3 +1513,57 @@ Namesake protection routes ambiguous matches to manual review. Name the reviewer
 **1. Short Question** — Are county appraisal values and RRC production data licensed for redistribution inside our dossiers?
 
 Public availability is not the same as redistribution rights. Confirm the terms of use for the county appraisal roll and the Texas Railroad Commission 2025 data before these sections ship in a customer- or sales-facing document.
+
+### Q-AI-0169 — Which build or release change triggered this regression run, and is there a documented regression suite for tracking?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which build or release change triggered this regression run, and is there a documented regression suite for tracking?
+
+The task says tracking was verified "after the latest changes," but the specific change, branch, or release is not identified, and no reusable test-case set is referenced. Without this, the run cannot be reproduced or tied to a release gate.
+
+### Q-AI-0170 — Did this run confirm the previously reported tracking gaps are fixed, or are any still open?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Did this run confirm the previously reported tracking gaps are fixed, or are any still open?
+
+Earlier tracking validation surfaced gaps. This report states tracking "continues to work correctly" but does not say whether the open defects were retested and closed, or whether any remain unresolved.
+
+### Q-AI-0171 — Does the tracking honour a cookie-consent or opt-out choice, and was that path tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the tracking honour a cookie-consent or opt-out choice, and was that path tested?
+
+The scope covers page URL, start time, and time spent for navigating users. It is unclear whether a user who declines consent (or sends Do-Not-Track) is excluded from collection, and whether that exclusion was part of the regression scope.
+
+### Q-AI-0172 — Was tracking validated for logged-out visitors as well as logged-in users, and how are the two records linked?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was tracking validated for logged-out visitors as well as logged-in users, and how are the two records linked?
+
+"Across the Mineral View website" may include the public marketing pages. Whether anonymous sessions are tracked, and whether they are later stitched to an identified user, is a governance decision, not just a test detail.
+
+### Q-AI-0173 — Who signs off that this regression passed, and does it gate the release?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who signs off that this regression passed, and does it gate the release?
+
+The report concludes tracking works correctly, but no reviewer or acceptance authority is named, and it is not stated whether a failing tracking regression blocks deployment.
+
+### Q-AI-0174 — Is the user-behavior collection indexed and bounded, and was write volume checked against production performance?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the user-behavior collection indexed and bounded, and was write volume checked against production performance?
+
+Confirming data "is stored correctly in the database without impacting existing website functionality" covers the app side, but not whether the per-page-view write volume, indexing, and collection growth were assessed against production database load.
