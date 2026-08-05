@@ -1675,3 +1675,57 @@ Missing, duplicate, invalid, and inconsistent records are found daily and "docum
 **1. Short Question** — Do the backfill and update scripts write directly to production, and are those runs approved and reversible?
 
 Prior validation work included running backfill/update scripts to populate null or empty values. Confirm which environment they target, who approves each run, whether a before/after record set is captured, and whether the change can be rolled back if the backfill logic is wrong.
+
+### Q-AI-0187 — How were the source-vs-port gaps (119 KB vs 35 KB, 43 KB of copy, 7 shared functions) measured if the rebuild repo is not on your machine?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — How were the source-vs-port gaps (119 KB vs 35 KB, 43 KB of copy, 7 shared functions) measured if the rebuild repo is not on your machine?
+
+The submission states `D:\mineralview` is empty and the repo cannot be found locally, yet the analysis cites exact file sizes, dataset counts, and function counts. Clarify which copy of the code these figures came from (old checkout, ZIP, deployed site, another machine) so the three solution documents are not built on stale or assumed content.
+
+### Q-AI-0188 — Who owns granting the rebuild repo clone URL/GitHub access, and what is the date by which that blocker closes?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who owns granting the rebuild repo clone URL/GitHub access, and what is the date by which that blocker closes?
+
+Blocker 1 is marked 🔴 and was escalated "via Ryan / org admin" with no named owner or ETA. All three tasks plus queued F14 are stalled behind it.
+
+### Q-AI-0189 — Do the 3 embedded play datasets and the 2 `/kyo` JSON files contain real owner, lease, or production data, and are they safe to ship in a public crawlable page?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the 3 embedded play datasets and the 2 `/kyo` JSON files contain real owner, lease, or production data, and are they safe to ship in a public crawlable page?
+
+F4 describes "3 real embedded datasets" and F5 a "public crawlable preview." Confirm whether these are production records or synthetic samples, since embedded data in a statically rendered public route is exposed to anyone and indexable.
+
+### Q-AI-0190 — Will the "remove, don't hide" gating be enforced server-side, or only by removing elements from the DOM?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Will the "remove, don't hide" gating be enforced server-side, or only by removing elements from the DOM?
+
+The console test proves the markup is absent, but gated search/filter/sort/download must also be unreachable via the underlying API. Confirm the gating layer and who verifies it.
+
+### Q-AI-0191 — Who owns the F30 shared module, and is it the single source for the functions F4, F5, and F14 will consume?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who owns the F30 shared module, and is it the single source for the functions F4, F5, and F14 will consume?
+
+Three downstream tasks depend on the same 7 extracted functions. Confirm one named owner and one module path so F4/F5/F14 do not each fork their own copy.
+
+### Q-AI-0192 — Where are the three solution documents stored, and who reviews and approves them before coding begins?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Where are the three solution documents stored, and who reviews and approves them before coding begins?
+
+`F30_...md`, `F4_...md`, and `F5_...md` are described as "saved" with no location or reviewer. Since they are the full roadmap for the phase and were written without repo access, name the storage location and the approver.
