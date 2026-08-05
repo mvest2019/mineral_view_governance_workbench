@@ -1729,3 +1729,57 @@ Three downstream tasks depend on the same 7 extracted functions. Confirm one nam
 **1. Short Question** — Where are the three solution documents stored, and who reviews and approves them before coding begins?
 
 `F30_...md`, `F4_...md`, and `F5_...md` are described as "saved" with no location or reviewer. Since they are the full roadmap for the phase and were written without repo access, name the storage location and the approver.
+
+### Q-AI-0193 — Who approved the Story page content, and were its company history, milestone, and statistic claims fact-checked before migration?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approved the Story page content, and were its company history, milestone, and statistic claims fact-checked before migration?
+
+The migration preserved the prototype's content verbatim, so any unverified claim in `story.html` is now carried into the production Next.js site. Governance needs a named content approver and confirmation that any figures, dates, or origin-story claims were verified.
+
+### Q-AI-0194 — Does an `/about-us` URL exist on the live site today, and what happens to it now that only `/story` was created?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does an `/about-us` URL exist on the live site today, and what happens to it now that only `/story` was created?
+
+The submission explicitly states no `/about-us` route was created. If that URL is live or externally linked, this decision produces a 404 or orphaned page. Confirm whether a redirect from `/about-us` to `/story` is required and who owns it.
+
+### Q-AI-0195 — Has the project validation and final build actually passed, and who signs off before `/story` is deployed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Has the project validation and final build actually passed, and who signs off before `/story` is deployed?
+
+The submission says the page was "prepared for" validation and build verification, meaning neither is confirmed complete. Governance needs the actual build/validation result and the named approver gating deployment.
+
+### Q-AI-0196 — Which prototype hash links could not be converted to Next.js routes, and where do they point now?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which prototype hash links could not be converted to Next.js routes, and where do they point now?
+
+Conversion was done "where applicable," implying some links were left as hash anchors. Any leftover hash link pointing to a section that no longer exists is a broken user-facing link on the marketing site.
+
+### Q-AI-0197 — Is `/story` added to the site navigation, sitemap, and given page metadata, or is it currently an unlinked route?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is `/story` added to the site navigation, sitemap, and given page metadata, or is it currently an unlinked route?
+
+Content parity with the prototype does not cover discoverability. Confirm whether the route is in the header/footer nav and sitemap, and whether it has a title, description, and canonical tag for SEO.
+
+### Q-AI-0198 — What does "F1" refer to in this task, and which release or milestone does the Story page ship in?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What does "F1" refer to in this task, and which release or milestone does the Story page ship in?
+
+"F1 Story page" is undefined in the governance record, making it unclear which feature set, sprint, or marketing-site track this work belongs to and how it sequences against the other in-flight redesign efforts.
