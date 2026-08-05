@@ -1567,3 +1567,57 @@ The report concludes tracking works correctly, but no reviewer or acceptance aut
 **1. Short Question** — Is the user-behavior collection indexed and bounded, and was write volume checked against production performance?
 
 Confirming data "is stored correctly in the database without impacting existing website functionality" covers the app side, but not whether the per-page-view write volume, indexing, and collection growth were assessed against production database load.
+
+### Q-AI-0175 — Which scheduled job wrote the `county: 0` junk row into production, and has it been stopped?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which scheduled job wrote the `county: 0` junk row into production, and has it been stopped?
+
+The bad document was upserted into `ProdMvestPortal.TexasProduction` (~08:00 UTC) by an unidentified job. The `$match` guard only hides bad rows from the sitemap — the unknown writer can still corrupt production data elsewhere. Governance needs the job identified and owned.
+
+### Q-AI-0176 — Was production audited for accounts fraudulently marked "verified" while the IDOR was live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was production audited for accounts fraudulently marked "verified" while the IDOR was live?
+
+`update-email-verified` / `mark-member-verified` accepted `member_id`/`email_id` from the body with no auth. The fix prevents future abuse, but no check is reported on whether the vulnerability was already exploited, how long it was exposed, or whether existing verified flags need revalidation.
+
+### Q-AI-0177 — The centroid fields were already renamed in production — is the dual-read code actually deployed there yet?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — The centroid fields were already renamed in production — is the dual-read code actually deployed there yet?
+
+The rename landed in prod but dual-read was only pushed to dev branches (Portal, Presentation, Map). If production is still running pre-dual-read code, `well_centriod`/`lease_centriod` reads are already returning nothing. Need confirmation of what production is currently running.
+
+### Q-AI-0178 — Who approved deleting the bad document from the production collection, and was it backed up first?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved deleting the bad document from the production collection, and was it backed up first?
+
+A document was deleted directly from `ProdMvestPortal.TexasProduction` to restore the endpoint. Governance needs the approver, whether a copy was retained for root-cause analysis, and whether the delete was logged.
+
+### Q-AI-0179 — Verified that nothing still writes or reads `yestarday_*` before the fallback was removed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Verified that nothing still writes or reads `yestarday_*` before the fallback was removed?
+
+The dual-read was added and then removed, leaving pure `yesterday_*`. If any scheduled job, script, or unmigrated service still writes the old misspelled fields, MVestimate values will silently go blank. Confirm the full list of writers/readers that was checked.
+
+### Q-AI-0180 — What is the plan and date to unblock the pending pushes, PRs, and deploys across these three fixes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What is the plan and date to unblock the pending pushes, PRs, and deploys across these three fixes?
+
+`fix/mvestimate-yestarday-cleanup` (b26696e2) is blocked on a credential dialog, and `feature/sitemap-issue-fix` (9747a19) is pending push/PR/deploy. Security and data fixes sitting unpushed on a local machine are a single-point-of-failure risk.
