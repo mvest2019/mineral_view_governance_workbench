@@ -1621,3 +1621,57 @@ The dual-read was added and then removed, leaving pure `yesterday_*`. If any sch
 **1. Short Question** — What is the plan and date to unblock the pending pushes, PRs, and deploys across these three fixes?
 
 `fix/mvestimate-yestarday-cleanup` (b26696e2) is blocked on a credential dialog, and `feature/sitemap-issue-fix` (9747a19) is pending push/PR/deploy. Security and data fixes sitting unpushed on a local machine are a single-point-of-failure risk.
+
+### Q-AI-0181 — Why does the run log need to be "restored" — was it lost or disabled, and when?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Why does the run log need to be "restored" — was it lost or disabled, and when?
+
+The task is titled "Restore the run log and add a staleness alarm," which implies the existing run log stopped working or was removed. The submission analyzes `scrapy_data.scraper_process_log` but never states what broke it. Given the recent staging-database and infrastructure cleanup work, we need the root cause and date before rebuilding on top of it.
+
+### Q-AI-0182 — If New Completion and Well Status Change are not in the log table, where is their freshness tracked today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — If New Completion and Well Status Change are not in the log table, where is their freshness tracked today?
+
+The submission confirms these two feeds are absent from `scrapy_data.scraper_process_log` and that the search for the real source is still "initiated." Governance needs a named authoritative table/system and an owner who confirms it, or an explicit statement that these feeds have no freshness tracking at all.
+
+### Q-AI-0183 — Are the New Completion and Well Status Change feeds currently stale, and has anyone checked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the New Completion and Well Status Change feeds currently stale, and has anyone checked?
+
+Untracked feeds may already be behind without anyone noticing. Before the alarm is built, we need a one-time check of the actual last-updated date for both feeds and a statement of whether users have been served out-of-date completion or well status data.
+
+### Q-AI-0184 — What staleness threshold defines a "stale" feed, and who receives the alarm?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — What staleness threshold defines a "stale" feed, and who receives the alarm?
+
+The staleness alarm has no stated per-feed threshold (hours/days), no alert channel, and no on-call recipient. An alarm nobody owns is not monitoring. Confirm the approved threshold per feed (W1, W2, New Completion, Well Status Change, Product Pricing, Well Location) and the escalation path.
+
+### Q-AI-0185 — Where are the daily data-quality findings logged as trackable defects with owners and due dates?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the daily data-quality findings logged as trackable defects with owners and due dates?
+
+Missing, duplicate, invalid, and inconsistent records are found daily and "documented," but the submission does not say they become tickets. Without a defect record and an assigned fixer, the same issues are re-found each day and never closed.
+
+### Q-AI-0186 — Do the backfill and update scripts write directly to production, and are those runs approved and reversible?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Do the backfill and update scripts write directly to production, and are those runs approved and reversible?
+
+Prior validation work included running backfill/update scripts to populate null or empty values. Confirm which environment they target, who approves each run, whether a before/after record set is captured, and whether the change can be rolled back if the backfill logic is wrong.
