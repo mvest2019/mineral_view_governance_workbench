@@ -1837,3 +1837,57 @@ They were 'flagged for future review' with no owner or deadline. Each page is ei
 **1. Short Question** — Who owns creating the missing `build_route_ledger.py` upstream script that is blocking the G1 validation?
 
 G1 is reported as otherwise complete, but the route-ledger validation cannot run until this script exists. Without a named owner and date, G1 stays permanently partially closed.
+
+### Q-AI-0205 — Has Counsel actually approved outbound email, calling, and direct mail to the ≥$1M list, or is all contact still blocked until they sign off?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Has Counsel actually approved outbound email, calling, and direct mail to the ≥$1M list, or is all contact still blocked until they sign off?
+
+The submission prepares a permitted-use matrix for Ryan and Counsel but does not record a decision. Until Counsel signs off, it is unclear whether Sales may contact any account, and an unapproved outbound send against scraped/public ownership data is hard to reverse.
+
+### Q-AI-0206 — Where is the ~3,922-account high-value list stored today, and who already has access to it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Where is the ~3,922-account high-value list stored today, and who already has access to it?
+
+The file is described as restricted and pre-release, but no storage location, access list, or handling controls are named. If it already sits in a shared drive or CRM, the release gate has effectively been bypassed.
+
+### Q-AI-0207 — What exactly are the R14 and R15 blockers, who owns clearing them, and by when?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What exactly are the R14 and R15 blockers, who owns clearing them, and by when?
+
+R14 and R15 are referenced as the central blockers on the GS1 release but are never defined in the submission, so no one outside this work can act on them or judge the delay.
+
+### Q-AI-0208 — Which data source produced the 3,922 accounts and the 94.3% basin-value figure, and has a data owner validated it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Which data source produced the 3,922 accounts and the 94.3% basin-value figure, and has a data owner validated it?
+
+The submission lists data-owner validation as an outstanding dependency while simultaneously documenting these numbers as the account universe. If the underlying valuation or ownership data is the same store with known text-typed value and NaN issues, the 94.3% figure may not hold.
+
+### Q-AI-0209 — Who approves the GS2 six-stage lead definitions as the canonical company metrics, or are they still your proposal?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approves the GS2 six-stage lead definitions as the canonical company metrics, or are they still your proposal?
+
+Relevant / qualified / high-intent / registered / product-qualified / sales-qualified will drive reporting once Krishna implements them. Without a named approver these definitions can diverge from the existing analytics methodology and reporting already in use.
+
+### Q-AI-0210 — Who has authority to approve noindex, redirect, merge, or removal of live news pages once the 43-versus-47 discrepancy is resolved?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who has authority to approve noindex, redirect, merge, or removal of live news pages once the 43-versus-47 discrepancy is resolved?
+
+These actions are irreversible for organic traffic and are being handed to Rohit as recommendations. The submission requires Search Console evidence first but names no approver for the final action.
