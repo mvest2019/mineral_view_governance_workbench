@@ -10,6 +10,7 @@
 export const COLLECTIONS = {
   EMPLOYEES: 'employees',
   TEAM_MEMBERS: 'team_members',
+  SOURCE_MATERIALS: 'sourceMaterials',
   ROLES: 'roles',
   DEPARTMENTS: 'departments',
   TASK_TRACKER_ENTRIES: 'taskTrackerEntries',

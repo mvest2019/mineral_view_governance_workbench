@@ -17,6 +17,8 @@ import { EMPLOYEES_VALIDATOR } from '@/src/db/validators/employees.validator';
 import { EMPLOYEES_INDEXES } from '@/src/db/indexes/employees.indexes';
 import { TEAM_MEMBERS_VALIDATOR } from '@/src/db/validators/team_members.validator';
 import { TEAM_MEMBERS_INDEXES } from '@/src/db/indexes/team_members.indexes';
+import { SOURCE_MATERIALS_VALIDATOR } from '@/src/db/validators/sourceMaterials.validator';
+import { SOURCE_MATERIALS_INDEXES } from '@/src/db/indexes/sourceMaterials.indexes';
 import { TASK_TRACKER_ENTRIES_VALIDATOR } from '@/src/db/validators/taskTrackerEntries.validator';
 import { TASK_TRACKER_ENTRIES_INDEXES } from '@/src/db/indexes/taskTrackerEntries.indexes';
 import { PRIORITY_QUESTIONS_VALIDATOR } from '@/src/db/validators/priorityQuestions.validator';
@@ -130,6 +132,17 @@ export async function provisionTeamMembers(): Promise<ProvisionResult> {
     validationLevel: TEAM_MEMBERS_VALIDATOR.validationLevel,
     validationAction: TEAM_MEMBERS_VALIDATOR.validationAction,
     indexes: TEAM_MEMBERS_INDEXES,
+  });
+}
+
+/** Provision the sourceMaterials collection (validator + indexes). Inserts no data. */
+export async function provisionSourceMaterials(): Promise<ProvisionResult> {
+  return provisionCollection({
+    name: COLLECTIONS.SOURCE_MATERIALS,
+    validator: SOURCE_MATERIALS_VALIDATOR.validator,
+    validationLevel: SOURCE_MATERIALS_VALIDATOR.validationLevel,
+    validationAction: SOURCE_MATERIALS_VALIDATOR.validationAction,
+    indexes: SOURCE_MATERIALS_INDEXES,
   });
 }
 
