@@ -1282,7 +1282,7 @@ async function renderSourceMaterial() {
   main.innerHTML = `
     <h2>Source Material</h2>
     <div class="small text-muted mb-3">Upload a Markdown (<code>.md</code>) file for a team member. Stored in MongoDB (<code>sourceMaterials</code>) for later use in governance workflows.</div>
-    <div class="dash-card" style="max-width:720px;">
+    <div class="dash-card">
       <div class="mb-3">
         <label class="form-label fw-semibold" for="smEmployee">Employee</label>
         <select class="form-select" id="smEmployee">
@@ -1317,11 +1317,9 @@ async function renderSourceMaterial() {
         <button class="btn btn-primary" id="smSubmitBtn" type="button" disabled onclick="submitSourceMaterial()">Submit</button>
         <span class="small text-muted" id="smStatus"></span>
       </div>
-      <div id="smRecent"></div>
     </div>
   `;
   initSourceMaterial();
-  loadSourceMaterialRecent();
 }
 
 function initSourceMaterial() {
@@ -1441,52 +1439,11 @@ async function submitSourceMaterial() {
     if (emp) emp.value = '';
     sourceMaterialRemoveFile();
     if (status) status.textContent = '';
-    loadSourceMaterialRecent();
   } catch (error) {
     if (status) status.textContent = '';
     showToast(`Upload failed: ${error.message}`, 'error');
     sourceMaterialUpdateSubmit();
   }
-}
-
-async function loadSourceMaterialRecent() {
-  const box = document.getElementById('smRecent');
-  if (!box) return;
-  let items = [];
-  try {
-    items = await fetchJSON(`/api/source_materials?company=${CURRENT_COMPANY}`);
-  } catch {
-    box.innerHTML = '';
-    return;
-  }
-  if (!Array.isArray(items) || !items.length) {
-    box.innerHTML = '<hr class="my-3" /><div class="fw-semibold mb-1">Recent uploads</div><div class="small text-muted">No source material uploaded yet.</div>';
-    return;
-  }
-  const rows = items.slice(0, 20).map((it) => `
-    <tr>
-      <td class="text-truncate" style="max-width:260px;">📄 ${escapeHtml(it.fileName || '')}</td>
-      <td>${escapeHtml(it.employeeName || it.employeeKey || '')}</td>
-      <td class="small text-muted text-nowrap">${escapeHtml(sourceMaterialFmtBytes(it.contentBytes || 0))}</td>
-      <td class="small text-muted text-nowrap">${escapeHtml(sourceMaterialFmtDate(it.uploadedAt))}</td>
-    </tr>`).join('');
-  box.innerHTML = `
-    <hr class="my-3" />
-    <div class="fw-semibold mb-2">Recent uploads</div>
-    <div style="overflow-x:auto;">
-      <table class="table table-sm mb-0" style="width:100%;">
-        <thead><tr><th>File</th><th>Employee</th><th>Size</th><th>Uploaded</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-}
-
-function sourceMaterialFmtDate(iso) {
-  if (!iso) return '';
-  try {
-    const d = new Date(iso);
-    return d.toLocaleString();
-  } catch { return String(iso); }
 }
 
 // ============================================================================
