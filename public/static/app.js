@@ -1317,8 +1317,8 @@ async function renderSourceMaterial() {
         <button class="btn btn-primary" id="smSubmitBtn" type="button" disabled onclick="submitSourceMaterial()">Submit</button>
         <span class="small text-muted" id="smStatus"></span>
       </div>
+      <div id="smRecent"></div>
     </div>
-    <div id="smRecent" class="mt-4"></div>
   `;
   initSourceMaterial();
   loadSourceMaterialRecent();
@@ -1460,20 +1460,21 @@ async function loadSourceMaterialRecent() {
     return;
   }
   if (!Array.isArray(items) || !items.length) {
-    box.innerHTML = '<div class="small text-muted">No source material uploaded yet.</div>';
+    box.innerHTML = '<hr class="my-3" /><div class="fw-semibold mb-1">Recent uploads</div><div class="small text-muted">No source material uploaded yet.</div>';
     return;
   }
   const rows = items.slice(0, 20).map((it) => `
     <tr>
-      <td class="text-truncate" style="max-width:280px;">📄 ${escapeHtml(it.fileName || '')}</td>
+      <td class="text-truncate" style="max-width:260px;">📄 ${escapeHtml(it.fileName || '')}</td>
       <td>${escapeHtml(it.employeeName || it.employeeKey || '')}</td>
-      <td class="small text-muted">${escapeHtml(sourceMaterialFmtBytes(it.contentBytes || 0))}</td>
-      <td class="small text-muted">${escapeHtml(sourceMaterialFmtDate(it.uploadedAt))}</td>
+      <td class="small text-muted text-nowrap">${escapeHtml(sourceMaterialFmtBytes(it.contentBytes || 0))}</td>
+      <td class="small text-muted text-nowrap">${escapeHtml(sourceMaterialFmtDate(it.uploadedAt))}</td>
     </tr>`).join('');
   box.innerHTML = `
+    <hr class="my-3" />
     <div class="fw-semibold mb-2">Recent uploads</div>
-    <div class="dash-card" style="max-width:720px;padding:0;overflow:hidden;">
-      <table class="table table-sm mb-0">
+    <div style="overflow-x:auto;">
+      <table class="table table-sm mb-0" style="width:100%;">
         <thead><tr><th>File</th><th>Employee</th><th>Size</th><th>Uploaded</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
