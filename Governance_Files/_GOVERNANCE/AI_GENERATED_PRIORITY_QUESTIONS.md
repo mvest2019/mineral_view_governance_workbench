@@ -1783,3 +1783,57 @@ Content parity with the prototype does not cover discoverability. Confirm whethe
 **1. Short Question** — What does "F1" refer to in this task, and which release or milestone does the Story page ship in?
 
 "F1 Story page" is undefined in the governance record, making it unclear which feature set, sprint, or marketing-site track this work belongs to and how it sequences against the other in-flight redesign efforts.
+
+### Q-AI-0199 — Who owns fixing the two broken sitemap generators (Production and Community), and are they currently publishing bad URLs to Google?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns fixing the two broken sitemap generators (Production and Community), and are they currently publishing bad URLs to Google?
+
+The audit flagged two broken generators and said it was 'coordinated with the development team', but no owner, ticket, or fix date is recorded. Until fixed, the generators may keep regenerating the same invalid output over any manual cleanup.
+
+### Q-AI-0200 — Do the null-county and offshore-as-county sitemap entries correspond to live, crawlable pages, and who removes them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Do the null-county and offshore-as-county sitemap entries correspond to live, crawlable pages, and who removes them?
+
+Invalid entries in a sitemap usually mean the underlying route also renders. If offshore areas are being presented to users and search engines as Texas counties, that is a public-facing data-accuracy issue, not just an SEO one.
+
+### Q-AI-0201 — Who gives final approval to apply `noindex, follow` to news pages, and what data identifies the click-generating pages to preserve?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who gives final approval to apply `noindex, follow` to news pages, and what data identifies the click-generating pages to preserve?
+
+The task says the noindex step waits on Task G3 and 'final review and approval', but names no approver and no threshold (impressions/clicks/CTR) for deciding which pages are kept indexed.
+
+### Q-AI-0202 — Has the cleaned `public/newsupdates.xml` been deployed live, and where is the pre-change backup stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Has the cleaned `public/newsupdates.xml` been deployed live, and where is the pre-change backup stored?
+
+Removing URLs from a live sitemap affects crawling immediately. Needed: whether the change is merged/deployed or still local, and the backup location so it can be reverted.
+
+### Q-AI-0203 — Who decides whether the 97 accessible-but-unlisted pages get added to the sitemap or set to noindex, and by when?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who decides whether the 97 accessible-but-unlisted pages get added to the sitemap or set to noindex, and by when?
+
+They were 'flagged for future review' with no owner or deadline. Each page is either a missed indexing opportunity or a page that should not be public — that distinction needs a decision.
+
+### Q-AI-0204 — Who owns creating the missing `build_route_ledger.py` upstream script that is blocking the G1 validation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns creating the missing `build_route_ledger.py` upstream script that is blocking the G1 validation?
+
+G1 is reported as otherwise complete, but the route-ledger validation cannot run until this script exists. Without a named owner and date, G1 stays permanently partially closed.
