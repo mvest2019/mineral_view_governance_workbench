@@ -18,6 +18,7 @@
     "db:seed:team-members": "node --env-file-if-exists=.env.local --env-file-if-exists=remote-claude-bridge/.env scripts/seed-team-members.mjs",
     "verify:tasktracker": "node --env-file-if-exists=.env.local scripts/verify-tasktracker-insert.mjs",
     "db:provision:employees": "node --env-file-if-exists=.env.local scripts/provision-employees.mjs",
+    "db:provision:source-materials": "node --env-file-if-exists=.env.local --env-file-if-exists=remote-claude-bridge/.env scripts/provision-source-materials.mjs",
     "db:provision:task-tracker": "node --env-file-if-exists=.env.local scripts/provision-task-tracker.mjs",
     "db:provision:priority-questions": "node --env-file-if-exists=.env.local scripts/provision-priority-questions.mjs",
     "db:provision:answers": "node --env-file-if-exists=.env.local scripts/provision-answers.mjs",

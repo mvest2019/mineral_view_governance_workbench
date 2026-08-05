@@ -115,6 +115,7 @@ const NAV_LAYOUTS = {
       items: [
         { type: 'view', key: 'dashboard', label: 'Dashboard', countKey: 'dashboard' },
         { type: 'view', key: 'tasktracker', label: 'Task Tracker' },
+        { type: 'view', key: 'sourcematerial', label: 'Source Material' },
         { type: 'view', key: 'board', label: 'Workflow Board', countKey: 'board' },
       ],
     },
@@ -369,6 +370,7 @@ async function showView(view) {
     if (viewRequestIsStale(reqId)) return; // navigated away during the prefix
     if (view === 'dashboard') return renderDashboard();
     if (view === 'tasktracker') return renderTaskTracker();
+    if (view === 'sourcematerial') return renderSourceMaterial();
     if (view === 'board') return renderBoard();
     if (view === 'team') return renderTeamMembers();
     if (view === 'departments') return renderDepartments();
@@ -1241,6 +1243,207 @@ async function renderDashboard() {
     <h3 class="mt-3">Recent intakes</h3>
     ${intakes.slice(0, 10).map(renderIntakeRow).join('') || '<div class="text-muted">No intakes yet.</div>'}
   `;
+}
+
+// ============================================================================
+// Source Material
+// Uploads a Markdown (.md) file for a selected employee and stores its full
+// content in GovernanceDB.sourceMaterials (via /api/source_materials). Fully
+// self-contained — reuses the existing employee source, toast, card, and button
+// styles, and affects no other view, API, or collection.
+// ============================================================================
+
+const SOURCE_MATERIAL_STATE = { file: null };
+
+async function renderSourceMaterial() {
+  const _r = VIEW_REQUEST;
+  const main = document.getElementById('mainView');
+  SOURCE_MATERIAL_STATE.file = null;
+  let employees = [];
+  try {
+    employees = await fetchJSON(`/api/employees?company=${CURRENT_COMPANY}`);
+  } catch (error) {
+    if (viewRequestIsStale(_r)) return;
+    main.innerHTML = `
+      <h2>Source Material</h2>
+      <div class="alert alert-danger">
+        <div class="fw-semibold mb-1">Unable to load employees from MongoDB</div>
+        <div class="small mb-2">The employee list could not be loaded. Please retry once the MongoDB connection is available.</div>
+        <button class="btn btn-sm btn-outline-secondary" type="button" onclick="renderSourceMaterial()">Retry</button>
+      </div>`;
+    return;
+  }
+  if (viewRequestIsStale(_r)) return;
+  if (!Array.isArray(employees)) employees = [];
+  const options = employees
+    .map((emp) => `<option value="${escapeHtml(emp)}">${escapeHtml(taskTrackerEmployeeLabel(emp))}</option>`)
+    .join('');
+
+  main.innerHTML = `
+    <h2>Source Material</h2>
+    <div class="small text-muted mb-3">Upload a Markdown (<code>.md</code>) file for a team member. Stored in MongoDB (<code>sourceMaterials</code>) for later use in governance workflows.</div>
+    <div class="dash-card">
+      <div class="mb-3">
+        <label class="form-label fw-semibold" for="smEmployee">Employee</label>
+        <select class="form-select" id="smEmployee">
+          <option value="">Select Employee</option>
+          ${options}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Markdown file</label>
+        <div id="smDrop" tabindex="0"
+             style="border:2px dashed var(--gw-border,#c9d2e0);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:var(--gw-surface-2,#f7f9fc);">
+          <div style="font-size:32px;line-height:1;margin-bottom:8px;">📄</div>
+          <div class="fw-semibold mb-1">Drag &amp; drop your <code>.md</code> file here</div>
+          <div class="small text-muted mb-2">or</div>
+          <button class="btn btn-outline-secondary btn-sm" type="button" onclick="sourceMaterialChooseFile()">Choose File</button>
+          <div class="small text-muted mt-2">Only Markdown (<code>.md</code>) files are accepted.</div>
+          <input type="file" id="smFile" accept=".md,text/markdown,text/x-markdown" style="display:none;" />
+        </div>
+        <div id="smSelected" class="mt-2" style="display:none;">
+          <div class="d-flex align-items-center justify-content-between gap-2 p-2"
+               style="border:1px solid var(--gw-border,#c9d2e0);border-radius:10px;background:#fff;">
+            <div class="text-truncate">
+              <span style="margin-right:6px;">📎</span>
+              <span class="fw-semibold" id="smSelectedName"></span>
+              <span class="small text-muted" id="smSelectedSize"></span>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" type="button" onclick="sourceMaterialRemoveFile()" title="Remove file">&times;</button>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-primary" id="smSubmitBtn" type="button" disabled onclick="submitSourceMaterial()">Submit</button>
+        <span class="small text-muted" id="smStatus"></span>
+      </div>
+    </div>
+  `;
+  initSourceMaterial();
+}
+
+function initSourceMaterial() {
+  const emp = document.getElementById('smEmployee');
+  const drop = document.getElementById('smDrop');
+  const input = document.getElementById('smFile');
+  if (!emp || !drop || !input) return;
+  emp.addEventListener('change', sourceMaterialUpdateSubmit);
+  input.addEventListener('change', () => {
+    if (input.files && input.files[0]) sourceMaterialSetFile(input.files[0]);
+  });
+  drop.addEventListener('click', (e) => {
+    // Let the "Choose File" button handle its own click.
+    if (e.target && e.target.closest('button')) return;
+    sourceMaterialChooseFile();
+  });
+  drop.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sourceMaterialChooseFile(); }
+  });
+  ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => {
+    e.preventDefault(); e.stopPropagation();
+    drop.style.borderColor = 'var(--gw-primary,#2f6df6)';
+    drop.style.background = 'rgba(47,109,246,.06)';
+  }));
+  ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => {
+    e.preventDefault(); e.stopPropagation();
+    drop.style.borderColor = 'var(--gw-border,#c9d2e0)';
+    drop.style.background = 'var(--gw-surface-2,#f7f9fc)';
+  }));
+  drop.addEventListener('drop', (e) => {
+    const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) sourceMaterialSetFile(file);
+  });
+  sourceMaterialUpdateSubmit();
+}
+
+function sourceMaterialChooseFile() {
+  const input = document.getElementById('smFile');
+  if (input) input.click();
+}
+
+function sourceMaterialIsMarkdown(file) {
+  return /\.md$/i.test(file.name || '');
+}
+
+function sourceMaterialSetFile(file) {
+  if (!sourceMaterialIsMarkdown(file)) {
+    showToast('Only Markdown (.md) files are allowed.', 'error');
+    return;
+  }
+  SOURCE_MATERIAL_STATE.file = file;
+  const box = document.getElementById('smSelected');
+  const name = document.getElementById('smSelectedName');
+  const size = document.getElementById('smSelectedSize');
+  if (name) name.textContent = file.name;
+  if (size) size.textContent = ` · ${sourceMaterialFmtBytes(file.size)}`;
+  if (box) box.style.display = '';
+  sourceMaterialUpdateSubmit();
+}
+
+function sourceMaterialRemoveFile() {
+  SOURCE_MATERIAL_STATE.file = null;
+  const input = document.getElementById('smFile');
+  const box = document.getElementById('smSelected');
+  if (input) input.value = '';
+  if (box) box.style.display = 'none';
+  sourceMaterialUpdateSubmit();
+}
+
+function sourceMaterialUpdateSubmit() {
+  const emp = document.getElementById('smEmployee');
+  const btn = document.getElementById('smSubmitBtn');
+  if (!emp || !btn) return;
+  btn.disabled = !(emp.value && SOURCE_MATERIAL_STATE.file);
+}
+
+function sourceMaterialFmtBytes(n) {
+  if (!n && n !== 0) return '';
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function readFileText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = () => reject(new Error('Could not read the file.'));
+    reader.readAsText(file);
+  });
+}
+
+async function submitSourceMaterial() {
+  const emp = document.getElementById('smEmployee');
+  const btn = document.getElementById('smSubmitBtn');
+  const status = document.getElementById('smStatus');
+  const file = SOURCE_MATERIAL_STATE.file;
+  const employee = emp ? emp.value : '';
+  if (!employee) { showToast('Please select an employee.', 'error'); return; }
+  if (!file) { showToast('Please choose a Markdown (.md) file.', 'error'); return; }
+  if (!sourceMaterialIsMarkdown(file)) { showToast('Only Markdown (.md) files are allowed.', 'error'); return; }
+
+  if (btn) btn.disabled = true;
+  if (status) status.textContent = 'Uploading...';
+  try {
+    const content = await readFileText(file);
+    if (!content) throw new Error('The file is empty or could not be read.');
+    const response = await fetch('/api/source_materials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ company: CURRENT_COMPANY, employee, fileName: file.name, content }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || 'Upload failed');
+    showToast(`Uploaded "${payload.fileName || file.name}" successfully.`, 'success');
+    // Reset to the initial state.
+    if (emp) emp.value = '';
+    sourceMaterialRemoveFile();
+    if (status) status.textContent = '';
+  } catch (error) {
+    if (status) status.textContent = '';
+    showToast(`Upload failed: ${error.message}`, 'error');
+    sourceMaterialUpdateSubmit();
+  }
 }
 
 // ============================================================================
