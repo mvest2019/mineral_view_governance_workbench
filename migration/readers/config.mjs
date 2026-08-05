@@ -1,0 +1,92 @@
+// Config reader. Extracts config-derived source data (employee roster keys,
+// department keys) from lib/config.ts by reading it as TEXT and regex-scanning.
+// Read-only; never imports or executes the TS. Best-effort — used to cross-check
+// and enrich the markdown-derived roster.
+
+import { MIGRATION_CONFIG } from '../config.mjs';
+import { readFileSafe, slugify } from '../lib/utils.mjs';
+
+let _text = null;
+function text() {
+  if (_text == null) _text = readFileSafe(MIGRATION_CONFIG.paths.configTs) || '';
+  return _text;
+}
+
+/**
+ * Employee profile keys from TEAM_MEMBER_PROFILES.MView — the object keys look
+ * like `Ryan_Cochran: {`. Returns [{ profileKey, memberKey }].
+ */
+export function readConfigEmployeeKeys() {
+  const t = text();
+  const start = t.indexOf('TEAM_MEMBER_PROFILES');
+  if (start < 0) return [];
+  const slice = t.slice(start);
+  const out = [];
+  const re = /^\s{4,}([A-Z][A-Za-z]+_[A-Za-z_]+):\s*\{/gm;
+  for (const m of slice.matchAll(re)) {
+    out.push({ profileKey: m[1], memberKey: slugify(m[1]) });
+  }
+  return out;
+}
+
+/**
+ * Aspect-group membership from ASPECT_GROUP_RULES: repoName -> groupName.
+ * Best-effort text parse of the config's `{ name: '…', repos: [ … ] }` blocks.
+ */
+export function readConfigAspectGroups() {
+  const t = text();
+  const start = t.indexOf('ASPECT_GROUP_RULES');
+  if (start < 0) return new Map();
+  const slice = t.slice(start);
+  const map = new Map();
+  const blockRe = /name:\s*'([^']+)'[\s\S]*?repos:\s*\[([^\]]*)\]/g;
+  for (const m of slice.matchAll(blockRe)) {
+    const group = m[1];
+    for (const r of m[2].matchAll(/'([^']+)'/g)) {
+      if (!map.has(r[1])) map.set(r[1], group);
+    }
+  }
+  return map;
+}
+
+/**
+ * Department definitions from DEPARTMENT_ARCHITECTURE (shared + MView blocks).
+ * Best-effort text parse → [{ key, name, description }]. Deduped by key.
+ */
+export function readConfigDepartments() {
+  const t = text();
+  const start = t.indexOf('DEPARTMENT_ARCHITECTURE');
+  if (start < 0) return [];
+  const slice = t.slice(start);
+  const out = [];
+  const seen = new Set();
+  const re = /key:\s*'([A-Z][A-Z0-9_]*)'\s*,\s*name:\s*'([^']+)'\s*,\s*description:\s*'([^']*)'/g;
+  for (const m of slice.matchAll(re)) {
+    if (seen.has(m[1])) continue;
+    seen.add(m[1]);
+    out.push({ key: m[1], name: m[2], description: m[3] });
+  }
+  return out;
+}
+
+/**
+ * Settings source: local_settings.json (git-ignored runtime state). Returns
+ * [{ key, value }] pairs, or [] if the file is absent. Secrets are flagged by
+ * the mapper, not stored raw.
+ */
+export function readLocalSettings(settingsPath) {
+  const raw = readFileSafe(settingsPath);
+  if (!raw) return [];
+  try {
+    const obj = JSON.parse(raw);
+    if (!obj || typeof obj !== 'object') return [];
+    return Object.entries(obj).map(([key, value]) => ({ key, value }));
+  } catch {
+    return [];
+  }
+}
+
+/** True if lib/config.ts was readable. */
+export function configAvailable() {
+  return text().length > 0;
+}

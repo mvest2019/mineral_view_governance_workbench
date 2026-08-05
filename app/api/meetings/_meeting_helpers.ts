@@ -203,6 +203,47 @@ export function heuristic_meeting_summary(
   return { summary, questions };
 }
 
+// MongoDB-native meeting summary — no SQLite, no GitHub. Reuses the pure AI
+// helpers (prompt build, run, parse) with the heuristic fallback, and returns a
+// summary + a MEETING_SUMMARY_STATUS + an AI_ENGINE enum value ready to embed in
+// a meetings document. Governance context is read from LOCAL files best-effort
+// (never GitHub) and is optional.
+export async function generate_meeting_summary_mongo(
+  company: string,
+  title: string,
+  meeting_date: string,
+  attendee_labels: string[],
+  notes_text: string,
+): Promise<{ summary: string; status: 'NONE' | 'DRAFT' | 'FINAL'; engine: 'CLAUDE' | 'OPENAI' | 'HEURISTIC' }> {
+  let gov_text = '';
+  try {
+    gov_text = governance_context(company, 8000);
+  } catch {
+    gov_text = '';
+  }
+  const prompt = build_meeting_ai_prompt(title, meeting_date, attendee_labels, notes_text, gov_text);
+
+  let summary = '';
+  let engine: 'CLAUDE' | 'OPENAI' | 'HEURISTIC' = 'HEURISTIC';
+  try {
+    const [text, engineFromAi] = await run_meeting_ai(prompt);
+    if (engineFromAi === 'Claude Code') engine = 'CLAUDE';
+    else if (engineFromAi === 'OpenAI') engine = 'OPENAI';
+    const data = text ? parse_meeting_ai_json(text) : null;
+    if (data) summary = String(data.summary || '').trim();
+  } catch {
+    // fall through to the heuristic summary
+  }
+
+  if (!summary) {
+    const fb = heuristic_meeting_summary(title, attendee_labels, notes_text);
+    summary = fb.summary;
+    engine = 'HEURISTIC';
+  }
+
+  return { summary, status: summary ? 'FINAL' : 'NONE', engine };
+}
+
 // generate_meeting_intelligence (governance_ui.py:5507) - awaits run_meeting_ai (external calls).
 export async function generate_meeting_intelligence(
   db: DB,

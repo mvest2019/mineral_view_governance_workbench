@@ -1,13 +1,12 @@
 import { NextRequest } from 'next/server';
 import { json, route } from '@/lib/http';
 import { getDb } from '@/lib/db';
-import { TEAM_MEMBER_PROFILES } from '@/lib/config';
+import { getTeamMemberProfiles, type TeamMemberProfile } from '@/lib/team_members_mongo';
 import {
   list_employees,
   get_team_member_department_tags_map,
   list_meetings_for_company,
   build_questions_payload,
-  get_team_member_profile,
   pretty_member_name,
   role_group,
   list_team_member_files,
@@ -28,17 +27,22 @@ export const GET = route(async (req: NextRequest) => {
   const recent_meetings = list_meetings_for_company(db, company, null, 30);
   const question_data = build_questions_payload(company);
   const by_member: Record<string, any> = {};
-  const _profiles = TEAM_MEMBER_PROFILES[company] || {};
-  let _order_keys = Object.keys(_profiles);
-  if (_order_keys.includes('Ryan_Cochran')) {
-    _order_keys = ['Ryan_Cochran', ..._order_keys.filter((k) => k !== 'Ryan_Cochran')];
-  }
+  // Team-member PROFILES + roster ordering now come from MongoDB (team_members),
+  // not the TEAM_MEMBER_PROFILES config / Governance_Files Markdown. Backward-safe:
+  // getTeamMemberProfiles() falls back to the config if MongoDB is unavailable.
+  const tm = await getTeamMemberProfiles(company);
+  const get_profile = (key: string): TeamMemberProfile =>
+    tm.profiles[key] || { role: '', purpose: '', departments: [], repos: [], operating_sources: [] };
+  const _order_keys = tm.orderKeys;
   const _roster_order: Record<string, number> = {};
   _order_keys.forEach((k, i) => {
     _roster_order[k] = i;
   });
-  for (const member of list_employees(company)) {
-    const _role = (String(get_team_member_profile(company, member).role || '')).trim();
+  // Roster membership is the union of the MongoDB roster and any keys the legacy
+  // helper knows about, so no member is dropped by the migration.
+  const _roster = Array.from(new Set<string>([..._order_keys, ...list_employees(company)]));
+  for (const member of _roster) {
+    const _role = (String(get_profile(member).role || '')).trim();
     by_member[member] = {
       key: member,
       display_name: pretty_member_name(member),
@@ -132,7 +136,7 @@ export const GET = route(async (req: NextRequest) => {
   const priority_order: Record<string, number> = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3, UNKNOWN: 4 };
   for (const member_key of Object.keys(by_member)) {
     const member = by_member[member_key];
-    const profile = get_team_member_profile(company, member_key);
+    const profile = get_profile(member_key);
     const merged_set = new Set<string>(profile.departments || []);
     for (const row of tag_map[member_key] || []) {
       merged_set.add(row.department_key);
