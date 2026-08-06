@@ -2377,3 +2377,57 @@ The 311 keep / 361 noindex split was generated from the legacy PostgreSQL 2024 d
 **1. Short Question** — Why are the county-tier spreadsheet and summary stored in a personal Downloads folder instead of a shared, versioned location?
 
 Both G5 deliverables were "Delivered to the Downloads folder." Governance artifacts that drive indexing decisions need a durable, reviewable location so the dev team and reviewers can access the same version.
+
+### Q-AI-0265 — Were the backfilled Completion and Permit values flagged as derived rather than source-of-record?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Were the backfilled Completion and Permit values flagged as derived rather than source-of-record?
+
+Section 7 describes filling missing Completion/Permit fields through cross-dataset matching. If inferred values are written into the same fields as RRC-sourced values with no provenance flag, users and downstream reports cannot tell verified data from matched data, and an incorrect association becomes indistinguishable from fact. Need: the provenance/confidence field used, the match-confidence threshold, and who approved writing these values to production.
+
+### Q-AI-0266 — Which environment did the Texas Mineral data update run against, and was a rollback point taken before ingest?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Which environment did the Texas Mineral data update run against, and was a rollback point taken before ingest?
+
+The report says the dataset is "fully prepared for production use" but does not state whether the sync was applied directly to production, who approved it, or whether a backup/snapshot existed to roll back to if the update introduced bad records.
+
+### Q-AI-0267 — Does the 2024 Texas Mineral Owner dataset contain owner PII, and where is it stored with what access controls?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Does the 2024 Texas Mineral Owner dataset contain owner PII, and where is it stored with what access controls?
+
+Ownership records, addresses, and ownership percentages for a full state-wide year are high-sensitivity. Need the storage location (Drive, server, database), who currently has access, and whether it is excluded from source control.
+
+### Q-AI-0268 — What is the measured extraction accuracy from the Karnes County verification, and what threshold gates automated use?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the measured extraction accuracy from the Karnes County verification, and what threshold gates automated use?
+
+The verification is described qualitatively with no error rate. Governance needs a number, the sample size reviewed, and the accuracy bar the extraction engine must clear before survey output is used without manual review.
+
+### Q-AI-0269 — Are Directional Survey PDFs sent to an external AI service, and is that permitted for operator documents?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Are Directional Survey PDFs sent to an external AI service, and is that permitted for operator documents?
+
+The "AI-assisted extraction pipeline" does not name the tool or vendor. Need which service processes the documents, whether the source PDFs carry any confidentiality or licensing restriction, and whether uploading them to a third party was approved.
+
+### Q-AI-0270 — Who approves the new end-to-end data architecture, and where does the document live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Who approves the new end-to-end data architecture, and where does the document live?
+
+The report states it "will serve as the primary reference for future development." Need the approver, the storage location, and confirmation of whether it changes current pipeline behavior (naming conventions, collection organization, rebuild-on-run pipelines) or only documents it.
