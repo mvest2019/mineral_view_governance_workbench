@@ -2323,3 +2323,57 @@ The "Crawled – currently not indexed" baseline is only useful if it is capture
 **1. Short Question** — Who owns the approval and the implementation dependencies you flagged, and by what date must they close?
 
 The submission notes required approvals and implementation dependencies but names no owner or deadline. Identify the approver, the dev owner who ships the redirect and robots/meta changes, and whether this blocks the marketing-site relaunch.
+
+### Q-AI-0259 — Who approved applying `noindex, follow` to the 38 news pages, and what is the rollback plan if that decision is reversed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approved applying `noindex, follow` to the 38 news pages, and what is the rollback plan if that decision is reversed?
+
+G4 is marked "Completed & Verified" and the directives are already live via meta robots tags. Deindexing 38 live URLs is a hard-to-reverse SEO action; the submission records the analysis (1 U.S. click over 16 months) but not the approver or a documented rollback path.
+
+### Q-AI-0260 — Who owns the 13 "Pending Decision (TBD)" URLs, and what is the deadline before the redirect cutover?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns the 13 "Pending Decision (TBD)" URLs, and what is the deadline before the redirect cutover?
+
+The G6 map covers 1,128 URLs but 13 remain undecided. If the migration ships with these unresolved, those URLs either 404 or land on an unintended target. Need a named decision owner and a date that closes before dev implements the 684 301s.
+
+### Q-AI-0261 — Is the provisional G5 tier mapping blocked from being consumed by G12 until the 2025 dataset is complete?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Is the provisional G5 tier mapping blocked from being consumed by G12 until the 2025 dataset is complete?
+
+The Tier Mapping was explicitly "Produced ... required for Task G12" while also flagged provisional and not production-ready. Without an explicit hold, downstream G12 work may build on tiers you have already said need revalidation.
+
+### Q-AI-0262 — Who owns loading the missing 2025 valuation data for the 123 partial and 4 missing counties, and by what date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns loading the missing 2025 valuation data for the 123 partial and 4 missing counties, and by what date?
+
+Your final recommendation is to delay the G5 re-run until the dev team finishes loading valuation data. That makes the whole G5/G12 track dependent on unowned, undated work. Winkler, Burleson, Bowie, and Colorado are missing entirely.
+
+### Q-AI-0263 — Who approves the recommendation to `noindex` 361 county pages before it is implemented?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approves the recommendation to `noindex` 361 county pages before it is implemented?
+
+The 311 keep / 361 noindex split was generated from the legacy PostgreSQL 2024 dataset and you have already shown the 2025 data would shift ~63 counties. Applying it as-is risks deindexing valid pages, including Tier 1 counties.
+
+### Q-AI-0264 — Why are the county-tier spreadsheet and summary stored in a personal Downloads folder instead of a shared, versioned location?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Why are the county-tier spreadsheet and summary stored in a personal Downloads folder instead of a shared, versioned location?
+
+Both G5 deliverables were "Delivered to the Downloads folder." Governance artifacts that drive indexing decisions need a durable, reviewable location so the dev team and reviewers can access the same version.
