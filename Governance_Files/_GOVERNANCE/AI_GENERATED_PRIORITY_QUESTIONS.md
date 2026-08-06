@@ -1945,3 +1945,57 @@ Upsert-by-filename prevents duplicates on re-import but leaves orphaned records 
 **1. Short Question** — Is this import a one-off, or will it run on a schedule — and who approved promoting it to production?
 
 The submission covers staging only. Clarify the trigger (manual, CI on commit, cron), who owns running it, and what gate must be passed before the same script points at production.
+
+### Q-AI-0217 — Which scrapers broke due to source website changes, and was any data silently missed during that window?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which scrapers broke due to source website changes, and was any data silently missed during that window?
+
+The submission notes "source website changes affecting data collection" but names no scraper, date range, or backfill. If a scraper ran successfully while returning incomplete data, the process log would still show success. Need the affected scrapers, the gap window, and confirmation that missing records were backfilled.
+
+### Q-AI-0218 — Who approves the backfill and discrepancy-fix scripts that write corrections into production data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who approves the backfill and discrepancy-fix scripts that write corrections into production data?
+
+"Resolved identified discrepancies" and reprocessing of incomplete records implies write operations against production tables. Need the approver, the review step before execution, and whether an audit trail of changed rows is retained.
+
+### Q-AI-0219 — What is the documented pass/fail threshold for declaring a daily scraping cycle valid?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — What is the documented pass/fail threshold for declaring a daily scraping cycle valid?
+
+The report says validation was performed but states no acceptance criteria — e.g. allowable null rate on mandatory fields, duplicate tolerance, or record-count variance versus the prior day. Without a threshold, "validated" is not auditable and cannot be handed to anyone else.
+
+### Q-AI-0220 — Which database environments were reconciled, and is production being compared against a stale copy?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which database environments were reconciled, and is production being compared against a stale copy?
+
+"Validation across multiple database environments" is unnamed. Given the recent staging database cleanup, confirm which environments are still in scope, which is authoritative, and whether any reconciliation target no longer exists.
+
+### Q-AI-0221 — Are these daily data-quality checks automated with alerting, or re-run manually by one person each day?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are these daily data-quality checks automated with alerting, or re-run manually by one person each day?
+
+The same validation set appears to be executed by hand daily. Decision needed on converting the SQL checks into scheduled jobs with alerts, otherwise data quality depends on one person's availability and nothing catches failures on days off.
+
+### Q-AI-0222 — Where are the daily validation findings and open defects recorded, and who receives them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the daily validation findings and open defects recorded, and who receives them?
+
+The submission references maintained records and daily summaries but gives no location or recipient. Need the tracker/sheet location, whether unresolved discrepancies are logged as defects with owners, and who is accountable for closing them.
