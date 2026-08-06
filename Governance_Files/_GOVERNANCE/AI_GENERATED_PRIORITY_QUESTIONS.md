@@ -2269,3 +2269,57 @@ N8 was re-scoped and the original table dropped on the basis that the Mongo `Act
 **1. Short Question** — Does `member_value_history` storing per-user viewed valuations need a privacy, retention, and no-advice review before it is built?
 
 The new store records the values each member saw and their engagement. That is per-member behavioural data tied to valuation figures — it needs a stated retention period, a disclosure decision, and confirmation that surfacing "what changed since your last visit" carries the estimate / no-investment-advice guardrail.
+
+### Q-AI-0253 — What is the final approved redirect destination for `/mineral-rights-value-calculator`, and is it a 301?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What is the final approved redirect destination for `/mineral-rights-value-calculator`, and is it a 301?
+
+The submission says the correct destination is still being defined. Governance needs the chosen URL, the status code (301 vs 302), and confirmation that the target is a real indexable page — not a hash-fragment or non-indexable destination.
+
+### Q-AI-0254 — Is the calculator page being retired entirely, and who approved removing that tool from the site?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Is the calculator page being retired entirely, and who approved removing that tool from the site?
+
+Redirecting a high-ranking page implies the underlying calculator is going away. Confirm whether the tool still exists somewhere, and who signed off on removing a page that currently earns clicks.
+
+### Q-AI-0255 — Which exact URLs are proposed for `noindex`, and who approves that list before it is applied?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which exact URLs are proposed for `noindex`, and who approves that list before it is applied?
+
+The crawl-budget work implies a de-indexing set. Governance needs the explicit URL list, the click/impression threshold used to protect a page, and the named approver.
+
+### Q-AI-0256 — What is the rollback trigger and plan if organic traffic or rankings drop after the redirect goes live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What is the rollback trigger and plan if organic traffic or rankings drop after the redirect goes live?
+
+Define the metric, the monitoring window, and who can call a revert, so a ranking loss is caught rather than discovered months later.
+
+### Q-AI-0257 — Where is the pre-launch Search Console baseline stored, and what date range does it cover?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Where is the pre-launch Search Console baseline stored, and what date range does it cover?
+
+The "Crawled – currently not indexed" baseline is only useful if it is captured, dated, and stored somewhere the team can compare against later. Confirm the location, the export date, and the comparison cadence.
+
+### Q-AI-0258 — Who owns the approval and the implementation dependencies you flagged, and by what date must they close?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Who owns the approval and the implementation dependencies you flagged, and by what date must they close?
+
+The submission notes required approvals and implementation dependencies but names no owner or deadline. Identify the approver, the dev owner who ships the redirect and robots/meta changes, and whether this blocks the marketing-site relaunch.
