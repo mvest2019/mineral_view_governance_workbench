@@ -2215,3 +2215,57 @@ The analysis states 70 of 71 KB must be extracted. Confirm whether the remaining
 **1. Short Question** — Who confirms that your county rule and offshore handling match Prasad's F42 before both are built?
 
 F13 depends on `isRealCounty()` from content/county-authority and on offshore areas never rendering under a county heading, explicitly aligned with another person's task. Cross-owner alignment needs a named reviewer and a check point, or the two implementations can diverge.
+
+### Q-AI-0247 — Was the email-verification IDOR ever exploited in production, and has an audit of existing `email_verified` accounts been run?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the email-verification IDOR ever exploited in production, and has an audit of existing `email_verified` accounts been run?
+
+The submission states the endpoint allowed unauthenticated `email_verified` promotion. Fixing it forward does not undo promotions that may already have happened. Governance needs to know whether logs were checked, how far back they reach, and whether any accounts were verified without a legitimate code — and whether this is a disclosable security incident.
+
+### Q-AI-0248 — The IDOR fix is committed but not pushed — is the vulnerability still live in production, and what is the deploy date?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — The IDOR fix is committed but not pushed — is the vulnerability still live in production, and what is the deploy date?
+
+N1-2 is marked ✅ Done but verified only on staging with the branch `fix/n1-email-verification-auth` "pending push". Until it merges and deploys, production is still exposed. Who reviews and merges it, and what is the target production release?
+
+### Q-AI-0249 — How are passwords stored today, and who approved putting the P0 launch-gate password encryption on hold?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — How are passwords stored today, and who approved putting the P0 launch-gate password encryption on hold?
+
+N1-1 is labelled P0 and a launch gate, yet is ▢ On hold with only a design decided (bcrypt via pgcrypto). Governance needs the current at-rest state of the credential store, the interim risk, who authorised the hold, and whether N1 still blocks launch.
+
+### Q-AI-0250 — Where are the N1-3 unauthenticated-write findings logged, and does any of them allow a live privilege or data change today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Where are the N1-3 unauthenticated-write findings logged, and does any of them allow a live privilege or data change today?
+
+N1-3 is Not Started with "findings logged for later". If the audit already surfaced other unauthenticated writes, they need to be triaged now rather than deferred — at minimum recorded as tracked defects with a severity and an owner.
+
+### Q-AI-0251 — Who approved dropping the `change_event` table as redundant, and was any data in it lost?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved dropping the `change_event` table as redundant, and was any data in it lost?
+
+N8 was re-scoped and the original table dropped on the basis that the Mongo `Activity` collection already covers filing events. Governance needs the sign-off for that reversal and confirmation that no historical rows were deleted without a backup.
+
+### Q-AI-0252 — Does `member_value_history` storing per-user viewed valuations need a privacy, retention, and no-advice review before it is built?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does `member_value_history` storing per-user viewed valuations need a privacy, retention, and no-advice review before it is built?
+
+The new store records the values each member saw and their engagement. That is per-member behavioural data tied to valuation figures — it needs a stated retention period, a disclosure decision, and confirmation that surfacing "what changed since your last visit" carries the estimate / no-investment-advice guardrail.
