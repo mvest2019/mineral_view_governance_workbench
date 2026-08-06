@@ -2107,3 +2107,57 @@ The contact form collects personal details from prospective mineral owners. Conf
 **1. Short Question** — Who reviews and accepts these four pages against the prototype, and how were the accessibility and responsiveness claims verified?
 
 The submission states project guidelines for accessibility and responsiveness were applied, but not what was tested, at which breakpoints, or who signs off that each page matches the approved spec before it faces users.
+
+### Q-AI-0235 — Who approved giving Ryan VPN-level access to the production MongoDB and PostgreSQL databases, and is that access read-only?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Who approved giving Ryan VPN-level access to the production MongoDB and PostgreSQL databases, and is that access read-only?
+
+The submission states VPN access was provisioned so Ryan can connect to Mongo and PostgreSQL, but does not record who authorized it, which environment (production vs staging) it reaches, or whether the database credentials behind the tunnel are read-only or read/write. Production data includes mineral-owner PII.
+
+### Q-AI-0236 — How were the two VPN keys and config files delivered to Ryan, and what is the revocation process when access is no longer needed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — How were the two VPN keys and config files delivered to Ryan, and what is the revocation process when access is no longer needed?
+
+Two client keys plus config files were generated and shared. Governance needs the transfer channel (email/chat/Drive), whether the private keys are individually attributable to one person, and the documented revoke/rotate procedure and trigger.
+
+### Q-AI-0237 — Would the proposed relaxed matching windows and alternative date-priority rules change wells that are already correctly allocated today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Would the proposed relaxed matching windows and alternative date-priority rules change wells that are already correctly allocated today?
+
+Loosening allocation join logic can silently re-map currently-matched wells and shift production, MVestimate, and royalty figures shown to owners. Needs a stated blast radius, a before/after comparison, and a named approver for any allocation-logic change.
+
+### Q-AI-0238 — How many wells and leases are currently unmatched, and are users shown allocation-based numbers without any indication of that coverage gap?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — How many wells and leases are currently unmatched, and are users shown allocation-based numbers without any indication of that coverage gap?
+
+The research identifies uncovered records but the submission gives no count or percentage. If owners see production/valuation figures derived from incomplete allocation, the gap needs quantifying and a decision on whether it must be disclosed.
+
+### Q-AI-0239 — Do the proposed document intelligence and royalty statement analysis features send owner documents to third-party AI services, and is that approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Do the proposed document intelligence and royalty statement analysis features send owner documents to third-party AI services, and is that approved?
+
+Royalty statements and uploaded documents contain owner names, interest decimals, and payment amounts. The roadmap should name which AI vendor would process them, under what data-retention terms, and who signs off before this is committed to a phase plan.
+
+### Q-AI-0240 — Where is the Activity Center specification and multi-file roadmap stored, and who approves it before it becomes a development backlog?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pranav_Nandeshwar
+**1. Short Question** — Where is the Activity Center specification and multi-file roadmap stored, and who approves it before it becomes a development backlog?
+
+The deliverable includes prioritization, monetization, and phased implementation plans that overlap existing tier/pricing decisions and the parallel portal redesign tracks. Governance needs the storage location, the accepting stakeholder, and confirmation that any licensed external data sources (satellite, weather, corporate filings) carry approved cost commitments before being committed to a phase.
