@@ -1891,3 +1891,57 @@ Relevant / qualified / high-intent / registered / product-qualified / sales-qual
 **1. Short Question** — Who has authority to approve noindex, redirect, merge, or removal of live news pages once the 43-versus-47 discrepancy is resolved?
 
 These actions are irreversible for organic traffic and are being handed to Rohit as recommendations. The submission requires Search Console evidence first but names no approver for the final action.
+
+### Q-AI-0211 — Is the collection name "Governance-workbentch" a typo, and should it be renamed before more data is written?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Is the collection name "Governance-workbentch" a typo, and should it be renamed before more data is written?
+
+The submission names the target collection **Governance-workbentch**. If this is a misspelling of "Governance-workbench", it needs to be corrected now, before other services or scripts hard-code the wrong name.
+
+### Q-AI-0212 — Do the imported governance markdown files contain owner PII, credentials, or connection strings now copied into MongoDB?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Do the imported governance markdown files contain owner PII, credentials, or connection strings now copied into MongoDB?
+
+Governance documents in this repo include task trackers referencing member names, Drive links, database names, and infrastructure details. Importing "all" .md files wholesale may move sensitive content into a database with a different access model than the repo.
+
+### Q-AI-0213 — Which MongoDB credentials did the import script use, and is GovernanceDB on the same cluster as production data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Which MongoDB credentials did the import script use, and is GovernanceDB on the same cluster as production data?
+
+Needed to confirm the import used a scoped write user and did not run against a cluster holding production mineral-owner data.
+
+### Q-AI-0214 — After this import, is Git or MongoDB the system of record for governance documents?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — After this import, is Git or MongoDB the system of record for governance documents?
+
+Two copies of the same governance content now exist. Without a declared source of truth, edits in one place will silently diverge from the other.
+
+### Q-AI-0215 — What happens to a MongoDB document when its governance .md file is renamed or deleted in the repo?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — What happens to a MongoDB document when its governance .md file is renamed or deleted in the repo?
+
+Upsert-by-filename prevents duplicates on re-import but leaves orphaned records behind after renames or deletions, so the collection will drift from the repo over time.
+
+### Q-AI-0216 — Is this import a one-off, or will it run on a schedule — and who approved promoting it to production?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — Is this import a one-off, or will it run on a schedule — and who approved promoting it to production?
+
+The submission covers staging only. Clarify the trigger (manual, CI on commit, cron), who owns running it, and what gate must be passed before the same script points at production.
