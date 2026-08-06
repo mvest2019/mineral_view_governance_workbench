@@ -2053,3 +2053,57 @@ Users who received a link before the cutover may hold tokens the new validation 
 **1. Short Question** — Where is the test evidence stored, and who signs off that these Staging results clear the change for production?
 
 The submission reports a clean pass with no defect IDs, test case IDs, or artifact link. Identify the test case set executed, where results/screenshots live, and who holds go/no-go authority for the production release.
+
+### Q-AI-0229 — Who owns unblocking Resources, Q&A, Claim Flow, and Professional Signup, and what is the target date for each dependency?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who owns unblocking Resources, Q&A, Claim Flow, and Professional Signup, and what is the target date for each dependency?
+
+The submission documents four blocked tasks with backend and design prerequisites but no named owner or date. Claim Flow in particular is the platform's core activation step, so an open-ended block is a delivery risk.
+
+### Q-AI-0230 — Which repository, branch, and environment did these four pages ship to, and are they publicly reachable yet?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which repository, branch, and environment did these four pages ship to, and are they publicly reachable yet?
+
+Needed to know whether Story/Owners/Pricing/Contact are live on mineralview.com, on a prototype deployment, or unmerged in a branch — this determines whether public-facing review gates have already been passed.
+
+### Q-AI-0231 — Do the prices now shown on `/pricing` match what the billing system actually charges today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the prices now shown on `/pricing` match what the billing system actually charges today?
+
+"Updated pricing according to the approved plan structure" is a page-side change. If the displayed amounts differ from the live plan records users are charged against, that is a customer-facing billing discrepancy, not just a copy issue.
+
+### Q-AI-0232 — Do navigation links or the sitemap point to the blocked Resources, Q&A, Claim, and Professional Signup pages, sending visitors to the new 404?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do navigation links or the sitemap point to the blocked Resources, Q&A, Claim, and Professional Signup pages, sending visitors to the new 404?
+
+With the 404 handler now implemented and four pages deliberately unbuilt, any nav entry, footer link, or sitemap URL for them becomes a visible dead end for real visitors.
+
+### Q-AI-0233 — Where do `/contact` form submissions go, and does the form have spam protection and a stated privacy notice?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Where do `/contact` form submissions go, and does the form have spam protection and a stated privacy notice?
+
+The contact form collects personal details from prospective mineral owners. Confirm the destination (inbox, CRM, database), whether submissions are stored, bot/spam controls, and whether a privacy notice is shown at the point of collection.
+
+### Q-AI-0234 — Who reviews and accepts these four pages against the prototype, and how were the accessibility and responsiveness claims verified?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who reviews and accepts these four pages against the prototype, and how were the accessibility and responsiveness claims verified?
+
+The submission states project guidelines for accessibility and responsiveness were applied, but not what was tested, at which breakpoints, or who signs off that each page matches the approved spec before it faces users.
