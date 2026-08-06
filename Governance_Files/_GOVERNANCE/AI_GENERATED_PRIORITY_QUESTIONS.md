@@ -2161,3 +2161,57 @@ Royalty statements and uploaded documents contain owner names, interest decimals
 **1. Short Question** — Where is the Activity Center specification and multi-file roadmap stored, and who approves it before it becomes a development backlog?
 
 The deliverable includes prioritization, monetization, and phased implementation plans that overlap existing tier/pricing decisions and the parallel portal redesign tracks. Governance needs the storage location, the accepting stakeholder, and confirmation that any licensed external data sources (satellite, weather, corporate filings) carry approved cost commitments before being committed to a phase.
+
+### Q-AI-0241 — If the datasets move to public/data/ and are fetched at runtime, can anyone bypass the free-account gate by fetching the JSON files directly?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — If the datasets move to public/data/ and are fetched at runtime, can anyone bypass the free-account gate by fetching the JSON files directly?
+
+F14/F15/F13 extract 11 embedded datasets to `public/data/` for runtime fetch, while the comparison tools are gated behind a free account because results are rows. Anything under `public/` is served unauthenticated and is directly addressable, so the gate may only be a UI-level control. Need a decision on whether that is acceptable, or whether these datasets must be served through an authenticated API route instead.
+
+### Q-AI-0242 — Where does the operator comparison data come from, what is its as-of date, and who refreshes the static files when it changes?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Where does the operator comparison data come from, what is its as-of date, and who refreshes the static files when it changes?
+
+Extracting datasets to static files freezes them at extraction time. Governance needs the source of record, a visible as-of date, and a named owner/refresh cadence, otherwise the routes will quietly serve stale operator production and statistics.
+
+### Q-AI-0243 — Are F14, F15, and F13 actually built and verified, or are these solution documents only?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Are F14, F15, and F13 actually built and verified, or are these solution documents only?
+
+The report says 6 of 13 tasks now have complete solution documents, and includes verification and done-check steps as part of the plan. Clarify current state (planned vs implemented vs deployed) and who signs off on each solution document before implementation starts.
+
+### Q-AI-0244 — What accounts for the 1 KB of the 71 KB not being extracted, and does the row-count parity contract cover it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — What accounts for the 1 KB of the 71 KB not being extracted, and does the row-count parity contract cover it?
+
+The analysis states 70 of 71 KB must be extracted. Confirm whether the remaining KB is intentionally left embedded, and whether the parity contract verifies every row against the original source or only the extracted subset.
+
+### Q-AI-0245 — Since /operators/counties is not linked from anywhere, is it still publicly reachable and search-indexable, and who approves linking it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Since /operators/counties is not linked from anywhere, is it still publicly reachable and search-indexable, and who approves linking it?
+
+"NOT LINKED" removes the need for a migration shim but does not make the route private. Confirm intended visibility, robots/sitemap treatment, and who decides when it becomes a linked, supported page.
+
+### Q-AI-0246 — Who confirms that your county rule and offshore handling match Prasad's F42 before both are built?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who confirms that your county rule and offshore handling match Prasad's F42 before both are built?
+
+F13 depends on `isRealCounty()` from content/county-authority and on offshore areas never rendering under a county heading, explicitly aligned with another person's task. Cross-owner alignment needs a named reviewer and a check point, or the two implementations can diverge.
