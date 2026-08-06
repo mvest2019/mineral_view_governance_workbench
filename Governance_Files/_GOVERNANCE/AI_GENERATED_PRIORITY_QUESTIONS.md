@@ -1999,3 +1999,57 @@ The same validation set appears to be executed by hand daily. Decision needed on
 **1. Short Question** — Where are the daily validation findings and open defects recorded, and who receives them?
 
 The submission references maintained records and daily summaries but gives no location or recipient. Need the tracker/sheet location, whether unresolved discrepancies are logged as defects with owners, and who is accountable for closing them.
+
+### Q-AI-0223 — Where is the approved spec that defines token lifetime, single-use, and replay rules this testing was validated against?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Where is the approved spec that defines token lifetime, single-use, and replay rules this testing was validated against?
+
+The submission says expiration, replay protection, and tampered-token handling behaved "as expected," but no source of truth for the expected values (expiry window, one-time-use rule, reuse response code) is named. Without a documented spec, "as expected" is untestable and unauditable.
+
+### Q-AI-0224 — Were rate limiting and brute-force protection on the verify and resend-verification endpoints tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Were rate limiting and brute-force protection on the verify and resend-verification endpoints tested?
+
+Token guessing and unlimited resend are the two most common attacks on an email verification flow, and neither appears in the listed scope (link generation, validation, expiry, tampering, replay, unauthorized access).
+
+### Q-AI-0225 — Did this testing send verification emails to real member addresses, or only to controlled test accounts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Did this testing send verification emails to real member addresses, or only to controlled test accounts?
+
+The task confirms database updates were verified. Clarify whether real user records were re-verified or re-triggered on Staging, whether Staging holds a copy of production member data, and how any test records are cleaned up.
+
+### Q-AI-0226 — Was it checked that verification tokens never leak into logs, error responses, referrer headers, or analytics URLs?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was it checked that verification tokens never leak into logs, error responses, referrer headers, or analytics URLs?
+
+A token in a URL can leak via server logs, third-party analytics on the landing page, or the Referer header. This is a security validation task, so token confidentiality in transit and at rest should be an explicit check, not assumed.
+
+### Q-AI-0227 — What happens to verification links already issued under the old scheme when this change reaches production?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What happens to verification links already issued under the old scheme when this change reaches production?
+
+Users who received a link before the cutover may hold tokens the new validation rejects. Confirm whether old tokens are honoured, invalidated, or require a resend, and whether that path was tested.
+
+### Q-AI-0228 — Where is the test evidence stored, and who signs off that these Staging results clear the change for production?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Where is the test evidence stored, and who signs off that these Staging results clear the change for production?
+
+The submission reports a clean pass with no defect IDs, test case IDs, or artifact link. Identify the test case set executed, where results/screenshots live, and who holds go/no-go authority for the production release.
