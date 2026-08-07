@@ -2539,3 +2539,57 @@ An identified-but-unverified pricing surface left open through cutover means wro
 **1. Short Question** — Who accepts Story, 404, Owners, Pricing, and Contact as "completed and verified," and where is that evidence recorded?
 
 Five pages were declared done by the same person who did the work. Governance needs the named approver and the location of the verification record before these pages ship.
+
+### Q-AI-0283 — When PostgreSQL, SQL Server, and MongoDB disagree during reconciliation, which system is the authoritative source of truth?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree during reconciliation, which system is the authoritative source of truth?
+
+The submission reports cross-database reconciliation across three environments but does not state a tie-breaking rule. Without a declared system of record, "confirmed consistent" is not a verifiable result and corrections could be applied in the wrong direction.
+
+### Q-AI-0284 — Did this validation write or correct any records in production, and who approved and logged those changes?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did this validation write or correct any records in production, and who approved and logged those changes?
+
+The report describes investigating discrepancies and verifying "successful inserts, updates, and synchronization" but does not say whether corrective writes were executed, by which account, or with what rollback path and audit trail.
+
+### Q-AI-0285 — Which discrepancies, missing records, and duplicates found today are still open, and where are they tracked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which discrepancies, missing records, and duplicates found today are still open, and where are they tracked?
+
+The submission states issues were identified and investigated but reports no counts, record IDs, or resolution status. Governance needs the open-defect list and its tracking location, not a narrative summary.
+
+### Q-AI-0286 — Did any scraper run actually fail or run late today, and what is the escalation path and SLA when one does?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did any scraper run actually fail or run late today, and what is the escalation path and SLA when one does?
+
+"Identifying and investigating any failures or delays" leaves it unclear whether failures occurred. Needed: today's pass/fail counts, who is alerted on failure, and the deadline by which a missed run must be re-run.
+
+### Q-AI-0287 — Who reviews and approves scraper modifications before they run against production sources?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who reviews and approves scraper modifications before they run against production sources?
+
+The submission says scraper extraction logic was evaluated and modifications were tested. Clarify whether these changes went through code review and a staging test, and who signs off before they collect production data.
+
+### Q-AI-0288 — Where are the daily validation query outputs and status reports stored, and do they contain owner PII?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the daily validation query outputs and status reports stored, and do they contain owner PII?
+
+Permit and W-2 completion extracts can include operator and owner-identifying details. Confirm the storage location for validation evidence and daily status updates, who can access it, and whether any PII is included.
