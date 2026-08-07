@@ -2593,3 +2593,57 @@ The submission says scraper extraction logic was evaluated and modifications wer
 **1. Short Question** — Where are the daily validation query outputs and status reports stored, and do they contain owner PII?
 
 Permit and W-2 completion extracts can include operator and owner-identifying details. Confirm the storage location for validation evidence and daily status updates, who can access it, and whether any PII is included.
+
+### Q-AI-0289 — Did the reset-password error leak real user PII to browsers in production, or only staging?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Did the reset-password error leak real user PII to browsers in production, or only staging?
+
+The submission says a raw Mongo error plus user PII was being returned to the browser on the reset-password flow (fixed on `fix/reset-password-error-handling`, staging). Governance needs to know whether the same code path was live in production, how long it was exposed, whether any real member data was returned to non-owners, and whether this is a reportable security incident rather than a routine bug fix.
+
+### Q-AI-0290 — Who approved consolidating the 259 per-county collections into `TEXAS_WELLS`, and why wasn't the app team told before it broke?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved consolidating the 259 per-county collections into `TEXAS_WELLS`, and why wasn't the app team told before it broke?
+
+The consolidation was discovered, not communicated — the application code was still reading per-county collections. Need the decision owner, the date it was applied to production, and what change-notification process should have covered it.
+
+### Q-AI-0291 — Was the Well Info / Linkage download returning empty results for real users in production, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the Well Info / Linkage download returning empty results for real users in production, and for how long?
+
+The `permit_number` string-vs-`Number()` bug and the collection cutover both produced empty results. Need the production impact window, whether any customer-facing downloads silently returned nothing, and whether affected users need to be told.
+
+### Q-AI-0292 — Who approved making the `SystemGeneratedEmails` audit write non-fatal, and how will now-silent audit failures be detected?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved making the `SystemGeneratedEmails` audit write non-fatal, and how will now-silent audit failures be detected?
+
+Swallowing the failure keeps password resets working, but it means email/audit records can be lost with no visible signal. Need sign-off on that trade-off plus a logging/alerting or reconciliation plan so the gap is not invisible.
+
+### Q-AI-0293 — What is the approved reset-token policy for superseded tokens, and does the user see a clear message instead of "could not reset"?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What is the approved reset-token policy for superseded tokens, and does the user see a clear message instead of "could not reset"?
+
+The "could not reset" failure was diagnosed as a newer request overwriting an earlier token. Need the documented rules for token lifetime, single-use, and supersession, and confirmation that the UI explains the real cause rather than showing a generic failure.
+
+### Q-AI-0294 — Who reviews and merges `fix/linkage-consolidation-cutover` and `fix/reset-password-error-handling` to production, and by when?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who reviews and merges `fix/linkage-consolidation-cutover` and `fix/reset-password-error-handling` to production, and by when?
+
+Both fixes are on feature branches (one off `new-dev`, the reset-password one still unpushed). Need the named reviewer, the merge/deploy path to production, and a target date — a security fix sitting only on a local commit is itself a risk.
