@@ -2701,3 +2701,57 @@ F11 holds the monthly-refresh promise pending Nikhil's cadence confirmation, but
 **1. Short Question** — Who gives final sign-off on the F28 `data` split and the redirect map, and by what date?
 
 F28 depends on team plus Rohit/Gautami sign-off before the 271 KB source is decomposed into `/data`. No date or single approver is named, and the redirect step is what prevents orphaned URLs and SEO loss.
+
+### Q-AI-0301 — Which exact URLs are on the noindex list, and who gave final approval to de-index them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which exact URLs are on the noindex list, and who gave final approval to de-index them?
+
+The submission says `noindex` directives will be applied after impression analysis, but the approved URL list and the approver are not recorded. De-indexing is hard to reverse quickly, so the list and sign-off should be documented before execution.
+
+### Q-AI-0302 — What impression or click threshold decides that a URL is safe to noindex?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What impression or click threshold decides that a URL is safe to noindex?
+
+"URLs with existing search performance" were validated, but no numeric rule is stated. Without a documented threshold and lookback window, the keep/drop decision is not auditable or repeatable.
+
+### Q-AI-0303 — Where does /mineral-rights-value-calculator redirect to, and is the destination a close content match rather than the homepage?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Where does /mineral-rights-value-calculator redirect to, and is the destination a close content match rather than the homepage?
+
+The redirect is described as approved and SEO-preserving, but the destination URL is not named. A redirect to a non-equivalent page is treated as a soft 404 by Google and loses the link equity the strategy is meant to preserve.
+
+### Q-AI-0304 — What is the rollback trigger and plan if organic traffic drops after the noindex rollout?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — What is the rollback trigger and plan if organic traffic drops after the noindex rollout?
+
+A baseline was set for post-launch monitoring, but no threshold for "this went wrong" and no reversal procedure are documented. Recovery from de-indexing can take weeks, so the trigger and owner should be defined before go-live.
+
+### Q-AI-0305 — Who implements the redirect and noindex changes in production, and on what date?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Who implements the redirect and noindex changes in production, and on what date?
+
+The submission covers validation, documentation, and coordination of approval checkpoints, but names no engineering owner or execution date for the actual production change.
+
+### Q-AI-0306 — Does this crawl-budget plan account for the in-flight marketing site redesign that may change these same URLs?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Does this crawl-budget plan account for the in-flight marketing site redesign that may change these same URLs?
+
+A replacement marketing prototype is being prepared in parallel. If that launch alters the URL structure, redirects and noindex rules applied now could be overwritten or conflict, and the monitoring baseline would no longer be comparable.
