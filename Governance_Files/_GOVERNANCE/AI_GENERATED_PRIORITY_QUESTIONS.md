@@ -2809,3 +2809,57 @@ Bot detection, payload validation, and the rate limiter all return 204 with no c
 **1. Short Question** — Does storing the raw `useragent` (and any IP used for cleanup) require privacy review, and what is its retention period?
 
 The optional `useragent` column adds a new device-fingerprinting field to a table that already holds behavior data, and the cleanup work relies on IP addresses. Confirm whether this is covered by the current privacy policy, who approved it, and how long the values are kept.
+
+### Q-AI-0313 — Which databases and environments does this cleanup cover, and does it touch production?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Tushar_Patil
+**1. Short Question** — Which databases and environments does this cleanup cover, and does it touch production?
+
+The submission says "the database" without naming it. MView runs both MongoDB (Data_Allocation, Decline_data_to_web, GeoMapPortal, Linkage_data) and PostgreSQL (Archive, MviewDownload, Production, spatiotemporal_analysis). Governance needs the explicit list of servers, databases, and environments in scope before any DROP is approved.
+
+### Q-AI-0314 — Will each backup be proven by an actual test restore, not just a successful backup job?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Tushar_Patil
+**1. Short Question** — Will each backup be proven by an actual test restore, not just a successful backup job?
+
+"Verify that the backups were created successfully" can mean only that the dump command exited cleanly. A backup is not validated until a restore into a scratch schema is performed and row counts match the source. Please state the verification method and evidence per table.
+
+### Q-AI-0315 — Where are the table backups stored, and do any contain mineral-owner PII?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Where are the table backups stored, and do any contain mineral-owner PII?
+
+MviewDownload holds county-level mineral owner tables and Production holds users, subscriptions, and payments. If any dropped table carries PII, its backup file becomes an uncontrolled copy of that data — we need the storage location, access controls, encryption, and retention/destruction date.
+
+### Q-AI-0316 — Will tables be renamed or quarantined for a set period before being hard-dropped?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Will tables be renamed or quarantined for a set period before being hard-dropped?
+
+The existing repository convention already uses an `unused_` prefix to disable legacy API routes without deleting them. A rename-and-wait window (e.g. 30 days) gives a fast rollback if an unnoticed consumer breaks. Confirm whether that pattern applies here or whether tables go straight to DROP.
+
+### Q-AI-0317 — Were dependent objects — views, foreign keys, triggers, and scraper/ETL jobs — checked before calling a table unused?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Were dependent objects — views, foreign keys, triggers, and scraper/ETL jobs — checked before calling a table unused?
+
+A table with no application query can still be read by a view, referenced by a foreign key, or truncated-and-rebuilt by a scheduled scraper or ETL run. Dropping it can break the next nightly cycle rather than the live app. Please document the dependency check performed for each table.
+
+### Q-AI-0318 — What is the rollback plan and post-drop monitoring window if the application breaks?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — What is the rollback plan and post-drop monitoring window if the application breaks?
+
+"Ensure the cleanup does not impact existing application functionality" needs a concrete definition: who watches error logs after the drop, for how long, what the restore procedure and time-to-restore are, and who has authority to trigger the rollback.
