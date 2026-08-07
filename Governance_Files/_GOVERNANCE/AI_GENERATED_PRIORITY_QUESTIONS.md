@@ -2863,3 +2863,57 @@ A table with no application query can still be read by a view, referenced by a f
 **1. Short Question** — What is the rollback plan and post-drop monitoring window if the application breaks?
 
 "Ensure the cleanup does not impact existing application functionality" needs a concrete definition: who watches error logs after the drop, for how long, what the restore procedure and time-to-restore are, and who has authority to trigger the rollback.
+
+### Q-AI-0319 — Do we have permission to display each operator's logo on the Mineral View platform, and who cleared those trademark rights?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Do we have permission to display each operator's logo on the Mineral View platform, and who cleared those trademark rights?
+
+Operator logos were verified and stored in the database for use on landing pages, search results, and operator profile pages. Operator logos are third-party trademarks; a bulk repository used across public pages needs a documented basis for use (fair/nominative use, licence, or permission) and a legal sign-off. Also unclear where the source images came from.
+
+### Q-AI-0320 — Are the backfilled Permit and Completion values marked as derived rather than source data, and were they written straight to production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Are the backfilled Permit and Completion values marked as derived rather than source data, and were they written straight to production?
+
+The report says missing values were "updated wherever reliable data could be identified." Governance needs to know whether these are exact source values or inferred/cross-validated guesses, whether they are flagged/provenance-tagged, whether the writes went to production, and whether a backup or rollback path exists.
+
+### Q-AI-0321 — What is the status of the ownership-data fix you own that is blocking the full dossier batch and the MVEstimate $0/NaN defect?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the status of the ownership-data fix you own that is blocking the full dossier batch and the MVEstimate $0/NaN defect?
+
+Krishna's dossier generation is on hold pending your ownership-data fix (Shannon Deckert's leases tracing to "Charles D. Simmons"), and Vaishnavi reported the text-typed valuation fields and NaN-driven MVEstimate = $0 to you for remediation. Today's report does not mention either item — is this work still open, and what is the target date?
+
+### Q-AI-0322 — Will the mineral-owner activity feed expose any individual owner's name, lease, or valuation, and who reviewed it for privacy and no-advice compliance?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Will the mineral-owner activity feed expose any individual owner's name, lease, or valuation, and who reviewed it for privacy and no-advice compliance?
+
+The activity extraction workflow turns permits, completions, production changes, operator updates, and lease developments into user-facing website content. Needed: whether feed items are personalised from owner records or purely public operational events, whether any MVEstimate figures appear (requiring the estimate / no-investment-advice disclaimer), and who signs off before it goes live.
+
+### Q-AI-0323 — Was a backup taken before consolidating the 2020–2025 yearly owner datasets, and are the original yearly tables being retained?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Was a backup taken before consolidating the 2020–2025 yearly owner datasets, and are the original yearly tables being retained?
+
+Standardising field structures across six years of Texas mineral-owner data can silently drop or coerce values. Governance needs confirmation of a pre-consolidation snapshot, whether the per-year sources remain queryable, and a row-count/field reconciliation between the yearly sources and the master table.
+
+### Q-AI-0324 — Who approves moving the Survey Plat AI extraction to development, and is the Google Drive repository access controlled and cleared for that use?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Who approves moving the Survey Plat AI extraction to development, and is the Google Drive repository access controlled and cleared for that use?
+
+The analysis is positioned as the foundation for a Survey Plat digitisation pipeline. Open items: who owns the go/no-go decision and budget, who can access the Drive folder today, and whether the documents' source and terms permit automated AI extraction and re-publication on the platform.
