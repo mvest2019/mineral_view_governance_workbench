@@ -2755,3 +2755,57 @@ The submission covers validation, documentation, and coordination of approval ch
 **1. Short Question** — Does this crawl-budget plan account for the in-flight marketing site redesign that may change these same URLs?
 
 A replacement marketing prototype is being prepared in parallel. If that launch alters the URL structure, redirects and noindex rules applied now could be overwritten or conflict, and the monitoring baseline would no longer be comparable.
+
+### Q-AI-0307 — Is the completed backend bot filter already live in production, and is it running in log-only or enforcement mode today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Is the completed backend bot filter already live in production, and is it running in log-only or enforcement mode today?
+
+The submission says backend is completed and that rollout should start in log-only mode, but does not state current deployment status. Governance needs to know whether real traffic is already being silently dropped, who approved that release, and who signs off on flipping from log-only to enforcement (and against what review evidence).
+
+### Q-AI-0308 — Who approves deleting historical bot records from `userbehavior_tracking`, and what evidence confirms an IP is a bot before deletion?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Who approves deleting historical bot records from `userbehavior_tracking`, and what evidence confirms an IP is a bot before deletion?
+
+Cleanup step 5 involves removing production rows based on "traffic volume and engagement patterns" plus manual IP verification. Needed: the documented criteria, the named approver, where the backup table lives, and how long the backup is retained before it too is purged.
+
+### Q-AI-0309 — Will previously published analytics and engagement reports be restated once bot records are removed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Will previously published analytics and engagement reports be restated once bot records are removed?
+
+If bot traffic has been counted as genuine user behavior, past session/engagement numbers shared with the team and any downstream reporting were inflated. Decision required: restate, annotate, or leave as-is, and who communicates the change to report consumers.
+
+### Q-AI-0310 — Backend is done but frontend and testing are not — does enforcement go live before those are complete, and who owns them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Backend is done but frontend and testing are not — does enforcement go live before those are complete, and who owns them?
+
+The submission states testing and the `useBehaviorTracker` frontend work are still pending. Clarify the sequencing gate (can backend enforcement ship without frontend protection and a completed test pass), the named owners, and the target dates.
+
+### Q-AI-0311 — Since blocked requests fail silently with 204, how will we detect real users being wrongly filtered out?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Since blocked requests fail silently with 204, how will we detect real users being wrongly filtered out?
+
+Bot detection, payload validation, and the rate limiter all return 204 with no client-visible signal. Without a metric or log for each rejection reason, a false positive (shared/NAT IPs hitting the limiter, an unusual browser UA) would appear as a quiet drop in tracked users. What monitoring and rollback trigger are in place?
+
+### Q-AI-0312 — Does storing the raw `useragent` (and any IP used for cleanup) require privacy review, and what is its retention period?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — Does storing the raw `useragent` (and any IP used for cleanup) require privacy review, and what is its retention period?
+
+The optional `useragent` column adds a new device-fingerprinting field to a table that already holds behavior data, and the cleanup work relies on IP addresses. Confirm whether this is covered by the current privacy policy, who approved it, and how long the values are kept.
