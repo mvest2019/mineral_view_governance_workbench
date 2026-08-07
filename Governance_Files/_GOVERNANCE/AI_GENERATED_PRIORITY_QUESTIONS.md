@@ -2431,3 +2431,57 @@ The "AI-assisted extraction pipeline" does not name the tool or vendor. Need whi
 **1. Short Question** — Who approves the new end-to-end data architecture, and where does the document live?
 
 The report states it "will serve as the primary reference for future development." Need the approver, the storage location, and confirmation of whether it changes current pipeline behavior (naming conventions, collection organization, rebuild-on-run pipelines) or only documents it.
+
+### Q-AI-0271 — Does the downloaded Well Info file contain owner names or other PII, and is Staging loaded with real production records?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the downloaded Well Info file contain owner names or other PII, and is Staging loaded with real production records?
+
+The submission confirms the file was reviewed for correct data and columns, but not what class of data it exports. Governance needs to know whether the export includes mineral-owner names, addresses, or interest details, and whether the Staging dataset is a copy of live production data — both affect where the downloaded test files may be stored and who may hold them.
+
+### Q-AI-0272 — Is there an approved column and file-format specification for the Well Info download that this validation was checked against?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is there an approved column and file-format specification for the Well Info download that this validation was checked against?
+
+"Correct data, columns, and file format" implies a baseline. Confirm whether a signed-off spec exists, or whether correctness was judged by inspection — the latter means there is no repeatable pass/fail criterion for future regressions.
+
+### Q-AI-0273 — Does the download read from the same data source and year as the on-screen table, given the known Linkage download year-mismatch bug?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the download read from the same data source and year as the on-screen table, given the known Linkage download year-mismatch bug?
+
+A live Linkage download defect already exists where the code reads `_2025` while the data is `_2026`. Confirm the Well Info download path was checked for the same class of source/year mismatch, not just that a file was produced.
+
+### Q-AI-0274 — Is the Well Info download gated by subscription tier or an export record cap, and was that gating tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the Well Info download gated by subscription tier or an export record cap, and was that gating tested?
+
+Bulk export of well data is a monetizable asset. Confirm whether Free/Pro/Premium users see the same download, whether any row limit applies, and whether a lower-tier account was used in this run.
+
+### Q-AI-0275 — Were any defects found in this run, and are any still open before the feature ships to production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Were any defects found in this run, and are any still open before the feature ships to production?
+
+The summary states what was validated but reports no outcome. Governance needs the pass/fail result, any logged defect IDs, and whether the Staging result is clean enough to promote.
+
+### Q-AI-0276 — Was an unfiltered full-dataset download tested for row truncation, timeout, or server load?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was an unfiltered full-dataset download tested for row truncation, timeout, or server load?
+
+Testing "with different filters" may not have covered the worst case of no filters applied. Confirm whether a maximum-size export was attempted and whether the file was complete or silently truncated.
