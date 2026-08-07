@@ -2647,3 +2647,57 @@ The "could not reset" failure was diagnosed as a newer request overwriting an ea
 **1. Short Question** — Who reviews and merges `fix/linkage-consolidation-cutover` and `fix/reset-password-error-handling` to production, and by when?
 
 Both fixes are on feature branches (one off `new-dev`, the reset-password one still unpushed). Need the named reviewer, the merge/deploy path to production, and a target date — a security fix sitting only on a local commit is itself a risk.
+
+### Q-AI-0295 — Where else has the incorrect ~1.07 million / 992,993 well count been published, and who retracts it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Where else has the incorrect ~1.07 million / 992,993 well count been published, and who retracts it?
+
+C44 replaces "1.07 million" with a `{{metric:}}` token on the feature-map page, and Nikhil's note shows counting `WellGeoData` (which holds 185,446 never-drilled permits) produces the wrong ~992,993. The same wrong figure may already be live in marketing pages, decks, videos, or SEO content. Needs a sweep and an owner for correcting each instance.
+
+### Q-AI-0296 — Is the rule that `WellGeoData` is never used for published counts enforced in code or CI, or only in a note?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the rule that `WellGeoData` is never used for published counts enforced in code or CI, or only in a note?
+
+The prohibition currently lives in a saved Markdown note (`NIKHIL_NOTE_WellGeoData data source.md`). Without a manifest/CI guard, any future page can recount the same source and reintroduce the wrong figure.
+
+### Q-AI-0297 — Who issues the D-036 ruling on the D-006 vs D-017 conflict, and by what date, before `data-lookup` can ship?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who issues the D-036 ruling on the D-006 vs D-017 conflict, and by what date, before `data-lookup` can ship?
+
+F12 is being built with zero owner rows and a code seam left open pending D-036. Without a named decision owner and date, the page ships permanently incomplete or someone fills the seam without a ruling.
+
+### Q-AI-0298 — Have the requested sample files and any future owner rows been cleared for public display against PII rules?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Have the requested sample files and any future owner rows been cleared for public display against PII rules?
+
+F9 requests sample files + row/record counts for 7 datasets from the data desk, and F12 will eventually display owner rows. Both put real extracted records on public pages — needs privacy review, a redaction rule, and a stated delivery date from the data desk.
+
+### Q-AI-0299 — Is the monthly-refresh statement a binding customer promise, and who approves it if Nikhil's confirmed cadence is slower?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the monthly-refresh statement a binding customer promise, and who approves it if Nikhil's confirmed cadence is slower?
+
+F11 holds the monthly-refresh promise pending Nikhil's cadence confirmation, but it sits beside paid commercial terms (perpetual purchase, 25%/year, 12 months included). If the real cadence differs, the published claim becomes a commercial misstatement — needs an approver and a fallback wording.
+
+### Q-AI-0300 — Who gives final sign-off on the F28 `data` split and the redirect map, and by what date?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who gives final sign-off on the F28 `data` split and the redirect map, and by what date?
+
+F28 depends on team plus Rohit/Gautami sign-off before the 271 KB source is decomposed into `/data`. No date or single approver is named, and the redirect step is what prevents orphaned URLs and SEO loss.
