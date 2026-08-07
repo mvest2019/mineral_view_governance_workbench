@@ -2485,3 +2485,57 @@ The summary states what was validated but reports no outcome. Governance needs t
 **1. Short Question** — Was an unfiltered full-dataset download tested for row truncation, timeout, or server load?
 
 Testing "with different filters" may not have covered the worst case of no filters applied. Confirm whether a maximum-size export was attempted and whether the file was complete or silently truncated.
+
+### Q-AI-0277 — Was the C49 $500 lease-audit price verified only in the prototype, or does the live payment system actually charge $500?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was the C49 $500 lease-audit price verified only in the prototype, or does the live payment system actually charge $500?
+
+The submission confirms $500 "in the prototype." Prototype correctness does not prove the production checkout, price object, or invoice amount matches. Governance needs confirmation of where the authoritative price lives and that it agrees.
+
+### Q-AI-0278 — Which prototype file is now canonical, given the merged prototype and the separate Advisor/Operator files carry pricing independently?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which prototype file is now canonical, given the merged prototype and the separate Advisor/Operator files carry pricing independently?
+
+C50 pricing was confirmed on the merged prototype but the Advisor/Operator prototype files were identified as separate and unverified. Multiple prototype sources holding their own prices is a divergence risk before launch.
+
+### Q-AI-0279 — What exactly is blocking Resources, Q&A, Claim Flow, and Professional Signup, and who owns clearing each blocker?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What exactly is blocking Resources, Q&A, Claim Flow, and Professional Signup, and who owns clearing each blocker?
+
+The submission says dependencies and implementation requirements were documented but does not name the blocking party, the decision needed, or a target date for any of the four.
+
+### Q-AI-0280 — Does C50 verification of the Advisor/Operator prototypes gate launch, and by when will it be done?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does C50 verification of the Advisor/Operator prototypes gate launch, and by when will it be done?
+
+An identified-but-unverified pricing surface left open through cutover means wrong prices could go live on the Advisor/Operator paths.
+
+### Q-AI-0281 — Do the professional pricing pages' "payment paths" reach real checkout, or are they placeholder links in the prototype?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the professional pricing pages' "payment paths" reach real checkout, or are they placeholder links in the prototype?
+
+"Correct prices and payment paths" was confirmed visually. Whether a click actually creates a real charge, a test-mode charge, or nothing at all is a materially different result.
+
+### Q-AI-0282 — Who accepts Story, 404, Owners, Pricing, and Contact as "completed and verified," and where is that evidence recorded?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who accepts Story, 404, Owners, Pricing, and Contact as "completed and verified," and where is that evidence recorded?
+
+Five pages were declared done by the same person who did the work. Governance needs the named approver and the location of the verification record before these pages ship.
