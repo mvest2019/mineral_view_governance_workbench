@@ -3214,3 +3214,57 @@ A baseline is only useful for post-launch monitoring if the number, the date it 
 **1. Short Question** — Does the new redirect destination carry the estimate / no-investment-advice disclaimer that calculator traffic requires?
 
 Users arriving from a "value calculator" URL expect a valuation. Confirm the destination shows the required MVEstimate/no-advice guardrail language.
+
+### Q-AI-0358 — Has the noindex on Coverage and Operator pages already been applied before Ryan confirmed the direction?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Has the noindex on Coverage and Operator pages already been applied before Ryan confirmed the direction?
+
+The submission records the full de-index as a "decision taken" with "noindex now, 301 at cutover", while also listing "Ryan confirming direction" as a blocker. Governance needs to know whether the mechanism was executed ahead of sign-off, since re-indexing recovery is slow and partly outside our control.
+
+### Q-AI-0359 — Who approved submitting the 11 blog removals in Search Console, given blogs produce ~70% of clicks?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approved submitting the 11 blog removals in Search Console, given blogs produce ~70% of clicks?
+
+Removal requests were already submitted against the section identified as the crown jewel. Confirm which specific URLs, who authorised the removal, and that none were high-traffic pages.
+
+### Q-AI-0360 — What are the 301 targets at cutover if the replacement pages don't exist yet?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — What are the 301 targets at cutover if the replacement pages don't exist yet?
+
+The plan is noindex now, 301 at cutover, but the submission also says Ahrefs keyword research is needed "before we can say what replaces the de-indexed pages." Redirecting ~745+ indexed URLs with no defined destination risks mass redirect-to-homepage soft-404s.
+
+### Q-AI-0361 — Do our Coverage owner-roll pages publish individual mineral-owner names, and is that cleared?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do our Coverage owner-roll pages publish individual mineral-owner names, and is that cleared?
+
+MineralHolders was criticised in the same submission for publicly naming people — "the line Ryan won't cross." Since owner-roll pages are named as the highest-CTR growth bet, confirm what personal data those pages expose and who approved it.
+
+### Q-AI-0362 — Why is the Coverage owner-roll cluster being de-indexed when it was flagged as the growth bet?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Why is the Coverage owner-roll cluster being de-indexed when it was flagged as the growth bet?
+
+The first-half findings call coverage owner-rolls the highest-CTR growth bet; the second-half decision de-indexes the whole Coverage section. Clarify whether owner-rolls are carved out of the de-index or intentionally included.
+
+### Q-AI-0363 — What is the abort or rollback trigger if the accepted 2-month traffic loss runs longer or deeper?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — What is the abort or rollback trigger if the accepted 2-month traffic loss runs longer or deeper?
+
+"About 2 months of reduced organic traffic" is accepted as a cost with no stated measurement baseline, checkpoint dates, or threshold at which the phased relaunch is paused or reversed.
