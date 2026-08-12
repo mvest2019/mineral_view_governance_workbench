@@ -2917,3 +2917,30 @@ Standardising field structures across six years of Texas mineral-owner data can 
 **1. Short Question** — Who approves moving the Survey Plat AI extraction to development, and is the Google Drive repository access controlled and cleared for that use?
 
 The analysis is positioned as the foundation for a Survey Plat digitisation pipeline. Open items: who owns the go/no-go decision and budget, who can access the Drive folder today, and whether the documents' source and terms permit automated AI extraction and re-publication on the platform.
+
+### Q-AI-0325 — What actual work does this "testing" entry cover, since the submission has no details?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What actual work does this "testing" entry cover, since the submission has no details?
+
+The submission body is only the word "testing" — no feature, environment, scope, or outcome is recorded. Governance cannot assess risk, coverage, or completion from this entry.
+
+### Q-AI-0326 — Was this a placeholder/system test submission that should be deleted from the governance record?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was this a placeholder/system test submission that should be deleted from the governance record?
+
+If this entry was created to test the Task Tracker → Claude Analysis → Priority Questions workflow rather than to record real work, confirm it and remove it. Otherwise the tracker and any counts or reports built on it are inflated by non-work records.
+
+### Q-AI-0327 — Should the Task Tracker reject submissions this thin instead of accepting them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Should the Task Tracker reject submissions this thin instead of accepting them?
+
+A one-word description passed validation and reached Claude analysis. Decide whether a minimum-content rule (or a "test submission" flag that skips question generation) is needed so placeholder entries do not enter the governance record.
