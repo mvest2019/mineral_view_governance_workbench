@@ -3106,3 +3106,57 @@ County data has been moved and consolidated recently elsewhere in the platform. 
 **1. Short Question** — Who approved the Compare Operator prototype as the build spec, and what are the agreed Core Web Vitals pass/fail targets?
 
 Architecture, performance, and responsive work is being planned against a prototype. Confirm sign-off authority and the numeric acceptance thresholds before development proceeds.
+
+### Q-AI-0346 — Will the Mineral Owner Master table become the single source of truth for the website, and who approves the cutover?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Will the Mineral Owner Master table become the single source of truth for the website, and who approves the cutover?
+
+The report says the master table is intended as the "primary data source" for analytics, website features, and reporting, but the existing per-county and per-year collections still back live features. A governance decision is needed on whether those become deprecated, who signs off on the switch, and how consumers are notified before it happens.
+
+### Q-AI-0347 — What is the record-level unique key used to prevent duplicate Mineral Owner records across yearly datasets?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What is the record-level unique key used to prevent duplicate Mineral Owner records across yearly datasets?
+
+"Avoid duplicate records" is stated as a goal but no matching key is documented. Without a defined identity rule (owner + lease + county + year, or similar), the same owner can be double-counted across years, which would distort ownership counts and any valuation or reporting built on top of the master table.
+
+### Q-AI-0348 — When a daily MongoDB audit check fails, who is alerted and does the failure block downstream use of that data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — When a daily MongoDB audit check fails, who is alerted and does the failure block downstream use of that data?
+
+The audit is described as identifying issues early, but there is no stated threshold, alert recipient, or escalation path. An audit that only produces a report nobody is accountable for reading provides no real control.
+
+### Q-AI-0349 — Which collections and databases are in scope for the daily audit, and is it automated or run manually by one person?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Which collections and databases are in scope for the daily audit, and is it automated or run manually by one person?
+
+Scope and execution ownership are both unstated. Clarify whether the audit runs as a scheduled job or depends on a person running it, and whether collections that are deleted and rebuilt by pipelines are covered on each rebuild.
+
+### Q-AI-0350 — Are Mineral Owner Activities verified against source records before being shown to owners, and who approved dropping the low-value activity types?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Are Mineral Owner Activities verified against source records before being shown to owners, and who approved dropping the low-value activity types?
+
+The refinement removes activities judged "unnecessary or low-value" and reshapes what users see. Confirm the selection criteria were approved by someone other than the implementer, and that each displayed activity is traceable to a verified source record so owners are not shown inaccurate ownership or operational changes.
+
+### Q-AI-0351 — Where is the Mineral Owner Master table being built, and who has access to the owner PII it will contain?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Where is the Mineral Owner Master table being built, and who has access to the owner PII it will contain?
+
+The master table consolidates ownership, lease, county, and district details — clearly PII-bearing. Confirm whether it is being built in production or a staging environment, who can read it today, and whether that access is approved and logged.
