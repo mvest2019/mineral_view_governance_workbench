@@ -3268,3 +3268,57 @@ The first-half findings call coverage owner-rolls the highest-CTR growth bet; th
 **1. Short Question** — What is the abort or rollback trigger if the accepted 2-month traffic loss runs longer or deeper?
 
 "About 2 months of reduced organic traffic" is accepted as a cost with no stated measurement baseline, checkpoint dates, or threshold at which the phased relaunch is paused or reversed.
+
+### Q-AI-0364 — Are the 26 claimers who exceed the Free 1-owner limit actually receiving that access today, meaning the cap is not enforced in product?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Are the 26 claimers who exceed the Free 1-owner limit actually receiving that access today, meaning the cap is not enforced in product?
+
+The finding that 26 of 52 canonical claimers hold more owner records than the Free plan allows implies either the limit is not enforced or these users are already over-provisioned. This is a revenue-leakage and product-gating question that should be answered before it is used as a sales opportunity.
+
+### Q-AI-0365 — Is there an approved Enterprise price, contract path, and owner for the 9 Enterprise-route candidates, or is that route still undefined?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is there an approved Enterprise price, contract path, and owner for the 9 Enterprise-route candidates, or is that route still undefined?
+
+The plan structure stops at Premium (5 owners) with "6+ = Enterprise route," but no Enterprise pricing, terms, or sales owner is stated.
+
+### Q-AI-0366 — Is using claimed-lease, page-tracking, and engagement data to build a named sales-target list covered by our privacy policy and user consent?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is using claimed-lease, page-tracking, and engagement data to build a named sales-target list covered by our privacy policy and user consent?
+
+Segmentation was built from individual mineral-owner records and behavioral signals; using that for direct commercial outreach is a different purpose than service delivery and may need privacy review.
+
+### Q-AI-0367 — Is all claimer outreach paused until Ryan approves, and what is the deadline for that approval?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is all claimer outreach paused until Ryan approves, and what is the deadline for that approval?
+
+Three strategies (Mineral Owner, Professional & Institutional, Claimed Lease → Paid) are all sitting in the same pending-approval state with no stated decision date or hold rule.
+
+### Q-AI-0368 — What is the total claimer population, and why do only 52 canonical claimers have usable capacity evidence?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What is the total claimer population, and why do only 52 canonical claimers have usable capacity evidence?
+
+Governance records 792 claimed leases, but the strategy sizes the opportunity off 52 canonical claimers. The gap between source identities, canonical persons, and those with usable evidence needs to be stated before the segmentation figures are used commercially.
+
+### Q-AI-0369 — Why did the support-first queue change from 6 to 9 actionable cases, and was the earlier figure used in any reporting or outreach?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Why did the support-first queue change from 6 to 9 actionable cases, and was the earlier figure used in any reporting or outreach?
+
+Also unclear: what makes the 2 remaining cases non-actionable, and who owns closing the 11 total open requests.
