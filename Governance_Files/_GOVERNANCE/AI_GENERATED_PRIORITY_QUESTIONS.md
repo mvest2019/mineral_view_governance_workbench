@@ -3160,3 +3160,57 @@ The refinement removes activities judged "unnecessary or low-value" and reshapes
 **1. Short Question** — Where is the Mineral Owner Master table being built, and who has access to the owner PII it will contain?
 
 The master table consolidates ownership, lease, county, and district details — clearly PII-bearing. Confirm whether it is being built in production or a staging environment, who can read it today, and whether that access is approved and logged.
+
+### Q-AI-0352 — Where does `/mineral-rights-value-calculator` now redirect to, and is it a permanent 301?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Where does `/mineral-rights-value-calculator` now redirect to, and is it a permanent 301?
+
+The submission says the destination strategy is "finalized" but never names the destination URL or the redirect type. A 302 or JS redirect would not pass SEO value as claimed.
+
+### Q-AI-0353 — Which exact URLs are approved for `noindex`, and who signs off before it is applied in production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which exact URLs are approved for `noindex`, and who signs off before it is applied in production?
+
+The crawl-budget execution review reorders when `noindex` is applied but does not list the affected pages or name an approver. Applying `noindex` to a revenue or acquisition page is hard to detect and slow to reverse.
+
+### Q-AI-0354 — Has the redirect been applied live yet, and what is the rollback trigger if organic traffic drops?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Has the redirect been applied live yet, and what is the rollback trigger if organic traffic drops?
+
+Unclear whether this was strategy-only or a live production change. Needs a stated monitoring window and a threshold that triggers reversal.
+
+### Q-AI-0355 — What impression or click threshold decides that a page is safe to `noindex` versus kept indexed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What impression or click threshold decides that a page is safe to `noindex` versus kept indexed?
+
+"Checked Search Console impression data first" is a process step, not a decision rule. Without a documented cutoff, the call is subjective and not repeatable.
+
+### Q-AI-0356 — Where is the "Crawled – currently not indexed" baseline recorded, including its as-of date and count?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Where is the "Crawled – currently not indexed" baseline recorded, including its as-of date and count?
+
+A baseline is only useful for post-launch monitoring if the number, the date it was captured, and its storage location are documented and shared.
+
+### Q-AI-0357 — Does the new redirect destination carry the estimate / no-investment-advice disclaimer that calculator traffic requires?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the new redirect destination carry the estimate / no-investment-advice disclaimer that calculator traffic requires?
+
+Users arriving from a "value calculator" URL expect a valuation. Confirm the destination shows the required MVEstimate/no-advice guardrail language.
