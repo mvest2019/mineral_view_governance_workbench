@@ -2998,3 +2998,57 @@ Response times were measured but no thresholds or results are stated. Need the a
 **1. Short Question** — When is the old Map API retired, and who signs off on output parity before cutover?
 
 The new APIs were built from scratch with different counting rules, so parity with the old Map API is not guaranteed. Need the cutover plan, the parity check, and the approver.
+
+### Q-AI-0334 — Were any discrepancies found during today's validation logged as defects with an assigned owner?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Were any discrepancies found during today's validation logged as defects with an assigned owner?
+
+The submission repeatedly mentions "investigating any discrepancies" and "troubleshooting data-related issues" but records no outcome. Governance needs to know whether findings are tracked anywhere beyond the daily note, or whether they close silently.
+
+### Q-AI-0335 — When a scraper fails or runs late, who is notified and what is the escalation deadline?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When a scraper fails or runs late, who is notified and what is the escalation deadline?
+
+Monitoring is described, but not the response path. Clarify who owns a failed run, how quickly it must be escalated, and whether downstream consumers (W-2/permit tables, portal data) are told the data is stale.
+
+### Q-AI-0336 — When PostgreSQL, SQL Server, and MongoDB disagree on a record, which one is authoritative and who decides?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree on a record, which one is authoritative and who decides?
+
+Cross-database consistency checks were performed across three systems, but no rule is stated for resolving a mismatch. Without a declared source of truth, "confirmed consistency" is not verifiable and corrections could be applied to the wrong system.
+
+### Q-AI-0337 — What documented pass/fail criteria define a day's scraped data as "validated"?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — What documented pass/fail criteria define a day's scraped data as "validated"?
+
+Checks for missing, duplicate, invalid, and inconsistent data are listed, but no thresholds or acceptance criteria. Is there a written checklist, or is sign-off based on daily judgment?
+
+### Q-AI-0338 — Since only the past two days of records were reviewed, how are older or multi-day gaps detected?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Since only the past two days of records were reviewed, how are older or multi-day gaps detected?
+
+A rolling two-day validation window would miss a failure discovered late, a backdated correction, or a scraper that silently degraded earlier. Clarify what covers data outside that window.
+
+### Q-AI-0339 — Is this daily manual validation planned to become automated data-quality monitoring, and who owns that?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is this daily manual validation planned to become automated data-quality monitoring, and who owns that?
+
+The same validation cycle is being repeated manually each day. Confirm whether automated checks and alerting are on the roadmap, and who would own building them, so coverage does not depend on one person's daily availability.
