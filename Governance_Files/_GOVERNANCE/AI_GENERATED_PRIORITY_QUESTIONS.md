@@ -3052,3 +3052,57 @@ A rolling two-day validation window would miss a failure discovered late, a back
 **1. Short Question** — Is this daily manual validation planned to become automated data-quality monitoring, and who owns that?
 
 The same validation cycle is being repeated manually each day. Confirm whether automated checks and alerting are on the roadmap, and who would own building them, so coverage does not depend on one person's daily availability.
+
+### Q-AI-0340 — Is the temporary fixture data on the Compare Operator page allowed to reach real users, and how will it be labelled as not-real?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the temporary fixture data on the Compare Operator page allowed to reach real users, and how will it be labelled as not-real?
+
+The submission says fixture data is being used for Compare Operator because the API cannot yet supply historical production comparison data. Governance needs a decision on whether fixture data may ship to any user-facing environment, what on-screen labelling is required, and what removes it before launch.
+
+### Q-AI-0341 — Who owns building the historical production comparison API, and does that gate the Compare Operator launch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who owns building the historical production comparison API, and does that gate the Compare Operator launch?
+
+The API limitation was analyzed but no owner, ticket, or date is recorded. Confirm whether the page can launch without it or is blocked.
+
+### Q-AI-0342 — Does the Operator Listing CSV export include owner or lease PII, and is it gated by subscription tier and rate-limited?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does the Operator Listing CSV export include owner or lease PII, and is it gated by subscription tier and rate-limited?
+
+Bulk export is a data-exfiltration surface. Confirm the exported columns, which tier can download, row limits, and whether exports are logged.
+
+### Q-AI-0343 — Where are the operator logos sourced from, and are we cleared to display those trademarks?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Where are the operator logos sourced from, and are we cleared to display those trademarks?
+
+Operator logos are third-party marks. Confirm the source (scraped, uploaded, licensed), hosting location, and whether legal has cleared their display and any fallback for missing logos.
+
+### Q-AI-0344 — Which Counties API and dataset is canonical for the county binding, given the recent county-collection consolidation?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which Counties API and dataset is canonical for the county binding, given the recent county-collection consolidation?
+
+County data has been moved and consolidated recently elsewhere in the platform. Confirm the single source this integration reads so the listing does not break on the next pipeline rebuild.
+
+### Q-AI-0345 — Who approved the Compare Operator prototype as the build spec, and what are the agreed Core Web Vitals pass/fail targets?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approved the Compare Operator prototype as the build spec, and what are the agreed Core Web Vitals pass/fail targets?
+
+Architecture, performance, and responsive work is being planned against a prototype. Confirm sign-off authority and the numeric acceptance thresholds before development proceeds.
