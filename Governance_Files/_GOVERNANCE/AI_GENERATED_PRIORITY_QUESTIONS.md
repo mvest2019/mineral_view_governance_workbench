@@ -2944,3 +2944,57 @@ If this entry was created to test the Task Tracker → Claude Analysis → Prior
 **1. Short Question** — Should the Task Tracker reject submissions this thin instead of accepting them?
 
 A one-word description passed validation and reached Claude analysis. Decide whether a minimum-content rule (or a "test submission" flag that skips question generation) is needed so placeholder entries do not enter the governance record.
+
+### Q-AI-0328 — Who approved excluding dry holes, permits, service wells, and unclassified wells from the map and all counts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved excluding dry holes, permits, service wells, and unclassified wells from the map and all counts?
+
+This exclusion changes every well count the map and filter rail display, so it can disagree with counts shown elsewhere in the product (dashboards, reports, marketing figures). Need the approver and confirmation that other surfaces are aligned to the same rule.
+
+### Q-AI-0329 — Which database and collections do the new Map APIs read, and are they the canonical well store?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which database and collections do the new Map APIs read, and are they the canonical well store?
+
+Clarify whether these APIs read the consolidated well store or per-county collections, and whether the pipelines that rebuild those collections could break the API's indexes or assumptions.
+
+### Q-AI-0330 — Are the new Map APIs authenticated, rate-limited, and subscription-tier gated, or open to anyone?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Are the new Map APIs authenticated, rate-limited, and subscription-tier gated, or open to anyone?
+
+The Wells, Search, and Single List APIs can return large volumes of lease and operator data; confirm access control and abuse limits before they go live.
+
+### Q-AI-0331 — Texas has 254 counties but verification covered 253 — which county was not tested and why?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Texas has 254 counties but verification covered 253 — which county was not tested and why?
+
+Either the count is a typo or one county is missing from the data/verification set. Needs confirmation so coverage claims are accurate.
+
+### Q-AI-0332 — What are the approved response-time targets, and did any of the five APIs fail them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What are the approved response-time targets, and did any of the five APIs fail them?
+
+Response times were measured but no thresholds or results are stated. Need the agreed SLA and the measured numbers at full data volume, especially for Wells at maximum zoom.
+
+### Q-AI-0333 — When is the old Map API retired, and who signs off on output parity before cutover?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — When is the old Map API retired, and who signs off on output parity before cutover?
+
+The new APIs were built from scratch with different counting rules, so parity with the old Map API is not guaranteed. Need the cutover plan, the parity check, and the approver.
