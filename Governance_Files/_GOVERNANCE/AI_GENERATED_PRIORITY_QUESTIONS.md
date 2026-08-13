@@ -3430,3 +3430,57 @@ The submission says an "approved URL architecture" was implemented but not by wh
 **1. Short Question** — Is there an agreed Lighthouse/TBT threshold that gates release, or is the performance work advisory only?
 
 DOM/TBT bottlenecks were identified and optimizations tested, but no target or decision is recorded. State the pass/fail budget, whether the tested optimizations were accepted or rejected, and whether failing it blocks launch of the operator pages.
+
+### Q-AI-0382 — The well click-through shows a real well header with the rest of the summary static — who approved shipping placeholder content as a well-specific summary?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — The well click-through shows a real well header with the rest of the summary static — who approved shipping placeholder content as a well-specific summary?
+
+The submission states the Insights panel header comes from the real well but "the rest [is] static." Users cannot tell which numbers are real. Needs a decision on labeling it as sample/placeholder, hiding it, or wiring it to real data before release.
+
+### Q-AI-0383 — What exactly does the Export CSV include, and is it gated by subscription tier and free of owner PII?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — What exactly does the Export CSV include, and is it gated by subscription tier and free of owner PII?
+
+Export CSV downloads everything in the current extent. Confirm the field list, whether operator/lease/API-level bulk export is permitted for all tiers, whether any mineral-owner PII can appear, and whether exports are size-capped and logged.
+
+### Q-AI-0384 — Is nine county files plus one district file the intended boundary coverage, and what does the map show outside those counties?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Is nine county files plus one district file the intended boundary coverage, and what does the map show outside those counties?
+
+Boundaries appear hardcoded to nine counties. Clarify whether this is a demo scope or the shipping scope, and how coverage expands to the full Texas footprint without another hardcoded file per county.
+
+### Q-AI-0385 — Since clusters never re-request on a pan and are kept when zooming out, can users see stale or incomplete data without knowing it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Since clusters never re-request on a pan and are kept when zooming out, can users see stale or incomplete data without knowing it?
+
+Data loaded for one extent stays on screen after panning and after zooming out to 4/3. Confirm whether panned-into areas render empty or wrong counts, and whether the UI signals that the visible data does not cover the current view.
+
+### Q-AI-0386 — Where did the district and county boundary files come from, and are they the canonical licensed source?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Where did the district and county boundary files come from, and are they the canonical licensed source?
+
+Need the origin (RRC, TxDOT, census, vendor), the vintage, licensing/attribution terms, and who owns refreshing them when boundaries change.
+
+### Q-AI-0387 — Were the `/map/clusters` and `/map/wells` endpoints load-tested at zoom 10, and are they capped or rate-limited?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Were the `/map/clusters` and `/map/wells` endpoints load-tested at zoom 10, and are they capped or rate-limited?
+
+Individual-well rendering over a wide extent plus the time-lapse replay can pull large payloads. Confirm the max feature count returned, response times against production data volumes, and whether the endpoints are authenticated and rate-limited.
