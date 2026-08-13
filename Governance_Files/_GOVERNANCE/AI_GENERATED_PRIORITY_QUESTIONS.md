@@ -3538,3 +3538,57 @@ The report references "established validation rules and quality standards" but d
 **1. Short Question** — Do the scrapers comply with the source websites' terms of use and rate limits, and who reviewed that?
 
 The submission notes analysis of source website structure changes and response variations. Clarify whether the scraping of these sources is permitted under their terms, whether rate limits are respected, and who owns that legal/compliance review.
+
+### Q-AI-0394 — Did the Oil/Gas mis-classification of 15,945 wells ever reach production, and do other endpoints use the same filter-before-dedup pattern?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Did the Oil/Gas mis-classification of 15,945 wells ever reach production, and do other endpoints use the same filter-before-dedup pattern?
+
+The submission says a query optimisation mis-classified 15,945 wells between Oil and Gas because records were filtered before the de-duplication step. Needed: whether that optimisation exists anywhere else (other map/report endpoints, dashboards, or download exports), whether any user-facing counts or reports were served with the wrong values, and whether a defect record exists beyond this task report.
+
+### Q-AI-0395 — Who decides whether Town and ZIP search moves to the Esri geocoder, and does the toolbar placeholder change until that ships?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who decides whether Town and ZIP search moves to the Esri geocoder, and does the toolbar placeholder change until that ships?
+
+The task flags this as a decision required: the placeholder reads "Town, ZIP or API number" but no city/town/ZIP/address field exists in the well data. Needed: the named decision owner, whether frontend Esri geocoder merging is funded and scheduled, and whether the placeholder text is corrected in the interim so the UI does not promise unsupported input.
+
+### Q-AI-0396 — Is the ~55 s response time a release blocker, and who owns Task 3 and by when?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the ~55 s response time a release blocker, and who owns Task 3 and by when?
+
+The matched-wells endpoint is marked done but responds in ~55 s until Task 3 lands. Needed: whether merge/release is gated on Task 3, the owner and target date for Task 3, and the timeout behaviour of the frontend, gateway, and Vercel/CDN layer at 55 s.
+
+### Q-AI-0397 — Are the two new map endpoints authenticated, subscription-tier gated, and rate limited?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Are the two new map endpoints authenticated, subscription-tier gated, and rate limited?
+
+Both endpoints are new public API routes returning well locations in bulk. Needed: whether they require auth, whether they respect the Free/Pro/Premium gating used elsewhere, whether `limit`/`offset` has a maximum, and whether the lookup endpoint's uncapped prefix queries are rate limited against scraping of the full 1.1M-record well set.
+
+### Q-AI-0398 — Which collections do these endpoints read, and will they survive the pipelines that delete and rebuild collections on each run?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which collections do these endpoints read, and will they survive the pipelines that delete and rebuild collections on each run?
+
+Prior governance records show well collections being renamed, consolidated into `TEXAS_WELLS`, and dropped/rebuilt by pipelines, which has already broken app code without warning. Needed: the exact database and collection names these two endpoints depend on, which indexes they require, and confirmation that those indexes and field names are recreated by the pipeline rather than added manually.
+
+### Q-AI-0399 — How is the lookup endpoint's cache invalidated when well data is refreshed, and what is the result cap shown to users?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — How is the lookup endpoint's cache invalidated when well data is refreshed, and what is the result cap shown to users?
+
+The acceptance evidence shows repeated prefixes served from cache in 0 ms and partial matches "capped". Needed: the cache TTL and invalidation trigger after a data load, the numeric cap value, and whether the UI tells the user results were truncated so they do not conclude a well is missing.
