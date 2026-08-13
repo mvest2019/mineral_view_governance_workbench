@@ -3646,3 +3646,57 @@ The Non-Consent article was scored 85/100 with identified content-quality improv
 **1. Short Question** — Do the 132 KEEP, 52 merge, and 77 drop counts account for every existing community URL, given the map started at 273 rows?
 
 132 + 52 + 77 = 261, which does not reconcile with the original 273-row map. Any unaccounted threads could silently 404 at cutover or be missing from the sitemap.
+
+### Q-AI-0406 — Given the common-name collision issue, what verification rule must a name match pass before a dossier tells a user we found their minerals?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Given the common-name collision issue, what verification rule must a name match pass before a dossier tells a user we found their minerals?
+
+You confirmed name-only matching against the 2025 owner roll is reliable only for distinctive names, and flagged that address corroboration is still missing. Without a documented match-confidence rule, a dossier could attribute another person's ownership and value to the wrong user.
+
+### Q-AI-0407 — Are these prospect dossiers going to be sent to the 198 non-claiming users, and who approved that outreach?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are these prospect dossiers going to be sent to the 198 non-claiming users, and who approved that outreach?
+
+The strategy builds per-user dossiers for people who have never claimed a lease. Whether these are internal analysis artifacts or outbound marketing sent to users changes the consent, disclaimer, and approval requirements.
+
+### Q-AI-0408 — Where is the grouped list of 204 users with member ID, name, and email stored, and who can access it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where is the grouped list of 204 users with member ID, name, and email stored, and who can access it?
+
+This is a bulk PII export of the active user base outside the application. Storage location, access list, and retention need to be recorded.
+
+### Q-AI-0409 — How does `assemble_prospect.py` relate to the existing `assemble_member.py` dossier generator — are we maintaining two dossier tools?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — How does `assemble_prospect.py` relate to the existing `assemble_member.py` dossier generator — are we maintaining two dossier tools?
+
+A member dossier generator (`assemble_member.py`) already exists, with a third parallel script (`build-dossier.mjs`) previously flagged for reconciliation. Confirm which is canonical for owner matching and valuation logic.
+
+### Q-AI-0410 — Do the dossiers show a CAD value or MVEstimate figure, and do they carry the estimate / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Do the dossiers show a CAD value or MVEstimate figure, and do they carry the estimate / no-investment-advice disclaimer?
+
+The generator combines 2025 CAD value, production data, and next-best-action recommendations. A recommendation plus a dollar figure sent to a user is the highest-risk form of the no-advice guardrail.
+
+### Q-AI-0411 — Who reviews and signs off on the answers you prepared for the Workbench-generated questions before they become the governance record?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who reviews and signs off on the answers you prepared for the Workbench-generated questions before they become the governance record?
+
+The answers become the durable governance knowledge base. Clarify whether the submitter's own answers are self-attested or require a reviewer.
