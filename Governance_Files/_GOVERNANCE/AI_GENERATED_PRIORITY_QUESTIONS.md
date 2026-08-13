@@ -3754,3 +3754,57 @@ Outreach triggered by a member's in-product claim activity is a different use of
 **1. Short Question** — Has any Enterprise outreach started before Ryan's approval, and who signs off the 30-day discovery test going live?
 
 The strategy is described as "ready to be shared with Ryan for review and approval" while also containing a finalized 30-day test with target accounts. Confirm no contact has been made yet and name the approver and go/no-go gate.
+
+### Q-AI-0418 — Who approves building the "near me" and county-plus-operators pages, and does our live data coverage actually support what those pages will claim?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves building the "near me" and county-plus-operators pages, and does our live data coverage actually support what those pages will claim?
+
+The submission identifies county-plus-operators as the strongest page type in the niche and "near me" as the real demand phrasing. Acting on this means creating a large set of new location pages. Needs an owner for the build decision, and confirmation that operator/well coverage per county is complete enough that the pages do not assert coverage we do not have.
+
+### Q-AI-0419 — How exactly are the AI assistant citations measured, and who verified the "we are the most-cited site" claim before it is used anywhere externally?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — How exactly are the AI assistant citations measured, and who verified the "we are the most-cited site" claim before it is used anywhere externally?
+
+The AI Visibility Baseline asserts a competitive ranking. Governance needs the method on record: which assistants, which prompts, how many runs, and whether the result is reproducible month to month — otherwise the baseline is not comparable and the claim is not defensible in marketing use.
+
+### Q-AI-0420 — Where are the answers to the 18 governance questions recorded, and who reviews them for accuracy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Where are the answers to the 18 governance questions recorded, and who reviews them for accuracy?
+
+The submission says each answer was verified against the live site and named the document holding the detail. Confirm whether those answers were submitted through the Priority Questions workflow (so they become governance records) or exist only in a side document, and who signs off that a marketing-verified answer is authoritative for engineering/data questions.
+
+### Q-AI-0421 — Where are the two new spreadsheets stored, who can access them, and does the Ahrefs/competitor data in them have sharing restrictions?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Where are the two new spreadsheets stored, who can access them, and does the Ahrefs/competitor data in them have sharing restrictions?
+
+`MineralView_Competitor_Research.xlsx` and `MineralView_AI_Visibility_Baseline.xlsx` need a documented storage location and access list. Also confirm whether exported Ahrefs data may be shared outside the licensed seat, and whether either file will later hold Search Console data tied to member-facing pages.
+
+### Q-AI-0422 — Does the planned master sheet replace the existing monthly organic-traffic report, or is it a second parallel analytics source?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Does the planned master sheet replace the existing monthly organic-traffic report, or is it a second parallel analytics source?
+
+A separate nine-month organic traffic report (Ahrefs + GA + Search Console + internal registrations) is already maintained. Merging competitor keyword data with Search Console into a new master sheet risks two competing numbers for the same metrics. Which sheet is the single source of truth, and who owns it?
+
+### Q-AI-0423 — Is the "no competitor runs paid ads" finding a recommendation to start paid ads, and who approves that spend?
+
+**Status:** OPEN
+**6. Priority** — LOW
+**Employee:** Krishna_Sable
+**1. Short Question** — Is the "no competitor runs paid ads" finding a recommendation to start paid ads, and who approves that spend?
+
+The finding is stated without a conclusion. Clarify whether it is being read as an opportunity or as evidence paid search does not work in this niche, and name who holds the budget decision if a test is proposed.
