@@ -3700,3 +3700,57 @@ The generator combines 2025 CAD value, production data, and next-best-action rec
 **1. Short Question** — Who reviews and signs off on the answers you prepared for the Workbench-generated questions before they become the governance record?
 
 The answers become the durable governance knowledge base. Clarify whether the submitter's own answers are self-attested or require a reviewer.
+
+### Q-AI-0412 — Has the Enterprise pricing anomaly been corrected, and is Sales barred from quoting Enterprise until Ryan and Product confirm?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Has the Enterprise pricing anomaly been corrected, and is Sales barred from quoting Enterprise until Ryan and Product confirm?
+
+The submission says the pricing/QA configuration issue "requires Ryan/Product confirmation before Sales can quote customers." Governance needs to know whether that block is formally in force, whether any prospect or existing customer has already been shown the anomalous price, and who owns the fix.
+
+### Q-AI-0413 — Where is the named Enterprise target-account list stored, and is exporting live Production/CRM member data into a sales strategy document approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Where is the named Enterprise target-account list stored, and is exporting live Production/CRM member data into a sales strategy document approved?
+
+The strategy classifies 10 latent-capacity and 5 conditional accounts using live Production/CRM data. Named accounts plus usage signals are member PII leaving the platform into a shared doc — needs a storage location, access list, and approval.
+
+### Q-AI-0414 — Who in Product owns the decision on what the 1/2/5 "Claim Mineral Owners" entitlement counts, and by what date must it land?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who in Product owns the decision on what the 1/2/5 "Claim Mineral Owners" entitlement counts, and by what date must it land?
+
+The submission states this single clarification determines the final data-derived Enterprise target population, and that Basis B is unconfirmed. Without a named owner and a date, the whole qualification framework and the 30-day test rest on an open assumption.
+
+### Q-AI-0415 — If 0 accounts are above the plan limit under `claimed_owners`, is the claim limit actually enforced in the product today?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — If 0 accounts are above the plan limit under `claimed_owners`, is the claim limit actually enforced in the product today?
+
+A finding of zero over-limit accounts can mean either genuine low usage or that the limit is not enforced (or not measurable) in production. These have opposite implications for revenue leakage and for whether limit-based Enterprise qualification is valid at all.
+
+### Q-AI-0416 — Do the 10 discovery accounts have consent to receive sales outreach, and was targeting them from their platform usage privacy-reviewed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Do the 10 discovery accounts have consent to receive sales outreach, and was targeting them from their platform usage privacy-reviewed?
+
+Outreach triggered by a member's in-product claim activity is a different use of their data than service delivery. Needs confirmation of marketing/sales contact consent and that usage-derived targeting is permitted under the privacy policy.
+
+### Q-AI-0417 — Has any Enterprise outreach started before Ryan's approval, and who signs off the 30-day discovery test going live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Has any Enterprise outreach started before Ryan's approval, and who signs off the 30-day discovery test going live?
+
+The strategy is described as "ready to be shared with Ryan for review and approval" while also containing a finalized 30-day test with target accounts. Confirm no contact has been made yet and name the approver and go/no-go gate.
