@@ -3592,3 +3592,57 @@ Prior governance records show well collections being renamed, consolidated into 
 **1. Short Question** — How is the lookup endpoint's cache invalidated when well data is refreshed, and what is the result cap shown to users?
 
 The acceptance evidence shows repeated prefixes served from cache in 0 ms and partial matches "capped". Needed: the cache TTL and invalidation trigger after a data load, the numeric cap value, and whether the UI tells the user results were truncated so they do not conclude a well is missing.
+
+### Q-AI-0400 — Who approved dropping 77 community threads, and what will those URLs return so we do not create 404s?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approved dropping 77 community threads, and what will those URLs return so we do not create 404s?
+
+The reduced redirect map contains 52 merges and 77 drops. Dropping live indexed URLs is a permanent traffic and content decision: it needs a named approver, a decision on 301 vs 410 vs no-change, and confirmation that the underlying user-generated content is preserved somewhere.
+
+### Q-AI-0401 — Are the 39 valuable pages with 12.7K impressions, including the two top-10 pages, inside the 132 KEEP set or still being excluded?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the 39 valuable pages with 12.7K impressions, including the two top-10 pages, inside the 132 KEEP set or still being excluded?
+
+The submission says ~79 excluded threads contained 39 valuable pages generating 12.7K impressions (including `oil-gas-royalties-by-state` and `liability-insurance-requirements-operator`), yet the recommended sitemap is exactly the 132 KEEP URLs. It is unclear whether those 39 pages are inside the 132 or are being knowingly dropped along with their impressions.
+
+### Q-AI-0402 — Who owns the decision that the new community design has no per-question indexable URLs, and must engineering restore them before launch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns the decision that the new community design has no per-question indexable URLs, and must engineering restore them before launch?
+
+The submission identifies the loss of `/community/<group>/<question-slug>` pages as the primary SEO risk, but the mitigation is a URL-strategy document, not a design change. Keeping existing URLs only works if the new design can actually serve them — who confirms that, and is there a go/no-go gate?
+
+### Q-AI-0403 — What is the source for the 300% penalty figure in the new diagram, and does it match the 100–200% / 300–400% ranges published elsewhere?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — What is the source for the 300% penalty figure in the new diagram, and does it match the 100–200% / 300–400% ranges published elsewhere?
+
+An existing open question already challenges whether the non-consent penalty ranges on another page are citation-backed. A published chart asserting a single 300% penalty may contradict those ranges and needs one canonical, cited figure across the site.
+
+### Q-AI-0404 — What is the minimum audit score required to publish, and were the 85/100 content-quality gaps closed before the page went live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — What is the minimum audit score required to publish, and were the 85/100 content-quality gaps closed before the page went live?
+
+The Non-Consent article was scored 85/100 with identified content-quality improvements, then published the same day. Governance needs the pass threshold and confirmation that the identified gaps were fixed rather than deferred after publish.
+
+### Q-AI-0405 — Do the 132 KEEP, 52 merge, and 77 drop counts account for every existing community URL, given the map started at 273 rows?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Do the 132 KEEP, 52 merge, and 77 drop counts account for every existing community URL, given the map started at 273 rows?
+
+132 + 52 + 77 = 261, which does not reconcile with the original 273-row map. Any unaccounted threads could silently 404 at cutover or be missing from the sitemap.
