@@ -3376,3 +3376,57 @@ This is at least the third oil-education reel in the same explanatory territory.
 **1. Short Question** — Are the prompts, generated clips, and half-finished project file stored where another editor could finish the edit?
 
 A 50%-complete edit held only on one workstation is a single point of failure. Confirm the prompt set, source clips, and the in-progress project file are in shared storage so the reel is recoverable and re-editable if you are unavailable.
+
+### Q-AI-0376 — How will the prototype-only/fabricated operator content be removed or replaced before these pages ship?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — How will the prototype-only/fabricated operator content be removed or replaced before these pages ship?
+
+The submission says the three operator tool pages use typed fixtures and that the Operator Detail work included "handling of prototype-only/fabricated content." Governance needs the exit criteria: who confirms every fixture and fabricated value is replaced by a real data source before launch, and is there a visible "sample data" marker until then?
+
+### Q-AI-0377 — Who signs off on the accuracy of operator comparison statistics before they are published?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who signs off on the accuracy of operator comparison statistics before they are published?
+
+Compare Operator Production and Compare Operator Statistics rank named third-party operators against each other. Wrong or unsourced figures carry reputational and legal exposure. Which data source and methodology are approved, and do these pages carry the estimate / no-investment-advice disclaimer?
+
+### Q-AI-0378 — Are the operator logos licensed or trademark-cleared for use on MineralView?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are the operator logos licensed or trademark-cleared for use on MineralView?
+
+The Operator Listing page now displays operator logos. Where were they sourced from, and has anyone confirmed we may display third-party marks — especially alongside comparative statistics?
+
+### Q-AI-0379 — What data does the updated operator CSV export contain, and is bulk export gated by subscription tier?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What data does the updated operator CSV export contain, and is bulk export gated by subscription tier?
+
+CSV export updates were made without stating scope. Does the export include owner or lease-level records, is row volume capped, and which tier can download it?
+
+### Q-AI-0380 — Who approved the operator URL architecture, and are these pages public/indexable or behind login?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approved the operator URL architecture, and are these pages public/indexable or behind login?
+
+The submission says an "approved URL architecture" was implemented but not by whom or where it is documented. Confirm the approver, and whether operator pages are SEO-indexable public pages or tier-gated, since that changes both crawl exposure and the no-advice guardrails.
+
+### Q-AI-0381 — Is there an agreed Lighthouse/TBT threshold that gates release, or is the performance work advisory only?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is there an agreed Lighthouse/TBT threshold that gates release, or is the performance work advisory only?
+
+DOM/TBT bottlenecks were identified and optimizations tested, but no target or decision is recorded. State the pass/fail budget, whether the tested optimizations were accepted or rejected, and whether failing it blocks launch of the operator pages.
