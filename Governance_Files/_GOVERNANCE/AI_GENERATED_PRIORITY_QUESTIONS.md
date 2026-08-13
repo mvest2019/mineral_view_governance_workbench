@@ -3322,3 +3322,57 @@ Governance records 792 claimed leases, but the strategy sizes the opportunity of
 **1. Short Question** — Why did the support-first queue change from 6 to 9 actionable cases, and was the earlier figure used in any reporting or outreach?
 
 Also unclear: what makes the 2 remaining cases non-actionable, and who owns closing the 11 total open requests.
+
+### Q-AI-0370 — Does the reel address environmental or water-use concerns about hydraulic fracturing, and who cleared that framing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel address environmental or water-use concerns about hydraulic fracturing, and who cleared that framing?
+
+Fracking is a politically and environmentally contentious topic for a U.S. audience. The submission describes hydraulic fracturing scenes as "educational" but says nothing about how environmental impact, water use, or induced-seismicity concerns are handled — either addressed or deliberately omitted. Both choices carry reputational risk and need a named approver for the editorial stance.
+
+### Q-AI-0371 — Who verifies that the drilling, horizontal drilling, and fracturing depiction is technically accurate before this reel publishes?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who verifies that the drilling, horizontal drilling, and fracturing depiction is technically accurate before this reel publishes?
+
+The reel explains a physical extraction process (shale, horizontal wells, fracture stages) through AI-generated subsurface visuals. Nothing in the submission names a technical reviewer for the process explanation or the geology shown. Needed before export, not after.
+
+### Q-AI-0372 — What is the target date to finish the remaining 50%, and does any publish commitment depend on it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — What is the target date to finish the remaining 50%, and does any publish commitment depend on it?
+
+The submission reports ~50% complete with the remainder deferred to "the next editing session," with no date. If a content calendar slot or campaign depends on this reel, the open end-date is a schedule risk that should be recorded.
+
+### Q-AI-0373 — Who wrote and approved the voice-over script that the 10-second visual sections are timed to?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who wrote and approved the voice-over script that the 10-second visual sections are timed to?
+
+Visuals were matched to voice-over timing, which implies a finished script. The submission does not say who authored it or whether the spoken claims were reviewed and signed off separately from the visuals.
+
+### Q-AI-0374 — Does this reel overlap with the earlier oil-formation and "World of Oil" reels, and who checks for duplicate content?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does this reel overlap with the earlier oil-formation and "World of Oil" reels, and who checks for duplicate content?
+
+This is at least the third oil-education reel in the same explanatory territory. Someone should confirm the topics are differentiated and sequenced rather than repeating the same explainer to the same audience.
+
+### Q-AI-0375 — Are the prompts, generated clips, and half-finished project file stored where another editor could finish the edit?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Are the prompts, generated clips, and half-finished project file stored where another editor could finish the edit?
+
+A 50%-complete edit held only on one workstation is a single point of failure. Confirm the prompt set, source clips, and the in-progress project file are in shared storage so the reel is recoverable and re-editable if you are unavailable.
