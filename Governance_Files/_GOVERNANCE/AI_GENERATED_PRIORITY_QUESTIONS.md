@@ -3484,3 +3484,57 @@ Need the origin (RRC, TxDOT, census, vendor), the vintage, licensing/attribution
 **1. Short Question** — Were the `/map/clusters` and `/map/wells` endpoints load-tested at zoom 10, and are they capped or rate-limited?
 
 Individual-well rendering over a wide extent plus the time-lapse replay can pull large payloads. Confirm the max feature count returned, response times against production data volumes, and whether the endpoints are authenticated and rate-limited.
+
+### Q-AI-0388 — Who approves and reviews the backfill/update scripts you run directly against production data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who approves and reviews the backfill/update scripts you run directly against production data?
+
+The submission covers validation, but prior work in this same track included running backfill/update scripts to populate null fields. Governance needs to know who authorizes these production writes, whether the scripts are peer-reviewed, and whether a backup or row-count snapshot is taken before execution.
+
+### Q-AI-0389 — Which specific discrepancies, duplicates, and missing values were actually found today, and where are they tracked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which specific discrepancies, duplicates, and missing values were actually found today, and where are they tracked?
+
+The report states that issues were identified, investigated, and documented, but names no counts, tables, or tracking location. Without a defect list with owners and due dates, these findings are not auditable and cannot be confirmed as closed.
+
+### Q-AI-0390 — Did any incomplete or invalid W-1/W-2 records reach the live product or downstream consumers before they were corrected?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did any incomplete or invalid W-1/W-2 records reach the live product or downstream consumers before they were corrected?
+
+The submission says records were confirmed "available for downstream processing" while also noting missing values and formatting issues. Governance needs to know whether bad data was visible to users or fed into reports/valuations during the window before correction.
+
+### Q-AI-0391 — Is scraper failure detection automated with alerting, or does it depend on your manual daily log review?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is scraper failure detection automated with alerting, or does it depend on your manual daily log review?
+
+Daily manual review of scraper_process_log is a single point of failure. Clarify whether automated alerts exist for failed or delayed jobs, and who performs this monitoring when you are unavailable.
+
+### Q-AI-0392 — What are the documented pass/fail criteria for a daily validation cycle, and who signs off that it passed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — What are the documented pass/fail criteria for a daily validation cycle, and who signs off that it passed?
+
+The report references "established validation rules and quality standards" but does not point to a document. Governance needs the approved thresholds for completeness, uniqueness, and record counts, and the person who accepts the day's result.
+
+### Q-AI-0393 — Do the scrapers comply with the source websites' terms of use and rate limits, and who reviewed that?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Do the scrapers comply with the source websites' terms of use and rate limits, and who reviewed that?
+
+The submission notes analysis of source website structure changes and response variations. Clarify whether the scraping of these sources is permitted under their terms, whether rate limits are respected, and who owns that legal/compliance review.
