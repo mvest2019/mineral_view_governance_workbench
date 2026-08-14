@@ -3808,3 +3808,57 @@ A separate nine-month organic traffic report (Ahrefs + GA + Search Console + int
 **1. Short Question** — Is the "no competitor runs paid ads" finding a recommendation to start paid ads, and who approves that spend?
 
 The finding is stated without a conclusion. Clarify whether it is being read as an opportunity or as evidence paid search does not work in this niche, and name who holds the budget decision if a test is proposed.
+
+### Q-AI-0424 — Which scrapers, tables, and record counts were actually validated today, and what failed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which scrapers, tables, and record counts were actually validated today, and what failed?
+
+This report describes categories of activity but names no specific scraper, source, table, record count, or defect — unlike the 10 July report, which named W-1/W-2 modules and specific fields. Without names and numbers there is no verifiable evidence that a given day's data was checked. Please state the sources covered, volumes validated, and the specific issues found (or explicitly confirm zero findings).
+
+### Q-AI-0425 — Do the corrective actions and fixes you validate write directly to production data, and is each one change-recorded and approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Do the corrective actions and fixes you validate write directly to production data, and is each one change-recorded and approved?
+
+The submission mentions validating corrective actions and confirming resolution through follow-up testing; the prior report mentions running backfill/update scripts on records with null or empty values. Governance needs to know whether these are production writes, who authorizes them, and where the before/after record is kept.
+
+### Q-AI-0426 — When PostgreSQL, SQL Server, and MongoDB disagree on the same record, which one is authoritative and who decides?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree on the same record, which one is authoritative and who decides?
+
+This is the first submission to name SQL Server alongside PostgreSQL and MongoDB as a validation target. A reconciliation practice across three stores requires a stated system of record and a defined resolution path when counts or values diverge.
+
+### Q-AI-0427 — What are the documented pass/fail thresholds and the escalation path when a scraper fails or a quality check breaches them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — What are the documented pass/fail thresholds and the escalation path when a scraper fails or a quality check breaches them?
+
+The report refers to "established quality standards" and "optimal operational efficiency" without numbers. Define the thresholds (e.g. acceptable duplicate rate, null rate, count variance, max runtime), who is notified on breach, and the response time expected.
+
+### Q-AI-0428 — Is this daily validation an automated, repeatable suite, or hand-written SQL rerun each day?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is this daily validation an automated, repeatable suite, or hand-written SQL rerun each day?
+
+If the checks are ad-hoc, coverage varies by day and by person, and the work cannot be handed over or audited. Clarify what exists as saved/scheduled checks versus manual effort, and whether automating them is planned.
+
+### Q-AI-0429 — If a source website change makes a scraper silently return partial data, how would today's checks catch it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — If a source website change makes a scraper silently return partial data, how would today's checks catch it?
+
+A scraper can complete successfully, log no errors, and still load a fraction of the expected rows after a source layout change. Confirm whether volume/trend baselines exist per source, or whether detection depends on someone noticing during manual review.
