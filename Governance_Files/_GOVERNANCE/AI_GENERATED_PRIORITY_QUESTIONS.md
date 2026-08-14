@@ -3916,3 +3916,57 @@ If ANDREWS took 54.8s in production, users were likely hitting timeouts. Also co
 **1. Short Question** — Town and ZIP search are unsupported by the current dataset — was that a committed requirement, and who has been told?
 
 The sidebar/search design may still assume town and ZIP lookup. Confirm this is either removed from the UI spec or tracked as a data-acquisition item with an owner, so it is not silently dropped.
+
+### Q-AI-0436 — Is the 5,000-well display cap a hard server limit, and how does a user know which 5,000 of the 433,406 matches they are seeing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the 5,000-well display cap a hard server limit, and how does a user know which 5,000 of the 433,406 matches they are seeing?
+
+The submission reports "Showing 5,000 of 433,406 matching wells". Governance needs to know whether the cap is enforced server-side, what ordering selects the returned subset (arbitrary, nearest, largest?), and whether a user could reasonably believe the map shows all matching wells. A silently truncated result set is a data-accuracy risk on a screen owners may use to judge activity near their minerals.
+
+### Q-AI-0437 — Which data source feeds the new Oil (bbl), Gas (mcf) and Active wells figures, and has it been reconciled against the production pipeline?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Which data source feeds the new Oil (bbl), Gas (mcf) and Active wells figures, and has it been reconciled against the production pipeline?
+
+New numeric columns and a new summary metric were added. Given known issues elsewhere with text-stored numeric fields, NaN handling, and the TEXAS_WELLS collection consolidation, confirm the source collection/table, the units, the as-of date, and who validated the totals before this reached users.
+
+### Q-AI-0438 — Who approved removing the Reported BOE column and its filter, and does any user, report, or saved filter still depend on it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved removing the Reported BOE column and its filter, and does any user, report, or saved filter still depend on it?
+
+Removing a column and its filter deletes a user-facing capability. Confirm the approver, whether BOE was inaccurate or simply unused, and whether any saved filters, bookmarks, or downstream reports referenced it.
+
+### Q-AI-0439 — Are `/map/matched-wells` and `/map/wells/lookup` authenticated, rate-limited, and gated by subscription tier?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Are `/map/matched-wells` and `/map/wells/lookup` authenticated, rate-limited, and gated by subscription tier?
+
+Both endpoints return bulk well data — one can return results drawn from 433k records, the other resolves partial API numbers. Confirm whether an unauthenticated caller can enumerate the dataset, and which tier is entitled to filtered map results.
+
+### Q-AI-0440 — Were the six fixed bugs live for real users in production, and are they logged as defects with a release date?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Were the six fixed bugs live for real users in production, and are they logged as defects with a release date?
+
+The list includes a crash from a stale hover index and a silently failing zoom. Governance needs to know whether these affected production users, for how long, and whether each has a tracked defect ID rather than only this daily report as its record.
+
+### Q-AI-0441 — Who approved the smart-zoom rules, and can the outlier-coordinate trimming hide legitimate wells from the frame?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved the smart-zoom rules, and can the outlier-coordinate trimming hide legitimate wells from the frame?
+
+The zoom heuristic decides when to reframe vs leave the view alone, caps at zoom 8, and discards outlier coordinates. Confirm the approved thresholds and whether trimmed "outliers" are bad data or real wells that a user would then never see.
