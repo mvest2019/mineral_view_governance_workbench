@@ -4024,3 +4024,57 @@ These pages carry financial, tax, and valuation content. Confirm whether disclai
 **1. Short Question** — Does the content and navigation scope include broken links, 404s, and meta/canonical checks on these SEO-driving pages?
 
 Glossary, News, and Blogs are the main organic traffic assets. Clarify whether link and SEO-metadata regressions are in scope or belong to another owner.
+
+### Q-AI-0448 — Do we have the legal right to resell or license data sourced from the Texas RRC and county appraisal records, and who confirms that before DATA-02 is quoted?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Do we have the legal right to resell or license data sourced from the Texas RRC and county appraisal records, and who confirms that before DATA-02 is quoted?
+
+The strategy treats commercial licensing rights as "requires internal confirmation," but DATA-02 (PINN AI) is described as an active commercial-data opportunity with a sample already scoped. Upstream source terms for scraped/public-record data determine whether resale or redistribution is permitted at all. Needs a named owner (Legal) and a decision date before any commercial-use commitment is made.
+
+### Q-AI-0449 — Is there an approved data licensing agreement or contract template, or must Legal draft one before any custom data deal can close?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is there an approved data licensing agreement or contract template, or must Legal draft one before any custom data deal can close?
+
+The plan defines discovery, qualification, and quote readiness, but no contract artifact is named. Without an approved licensing/redistribution agreement, a quote-ready prospect cannot actually be closed. Clarify whether one exists, who owns it, and whether commercial-use and redistribution terms are covered.
+
+### Q-AI-0450 — Who owns confirming API access, recurring feeds, and statewide custom pricing, and by what date, since DATA-01 and DATA-02 are both blocked on them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who owns confirming API access, recurring feeds, and statewide custom pricing, and by what date, since DATA-01 and DATA-02 are both blocked on them?
+
+The submission repeatedly marks these as "needs internal confirmation" but the 30-day plan puts DATA-01 and DATA-02 first — both explicitly request API and bulk/recurring delivery. Sales cannot progress past discovery without a named owner (Product/Data) and a closing date for each capability gate.
+
+### Q-AI-0451 — Does the Fisher County evaluation sample contain mineral-owner names or other PII, and who approves its release to an external prospect?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Does the Fisher County evaluation sample contain mineral-owner names or other PII, and who approves its release to an external prospect?
+
+A sample dataset sent to PINN AI is an outbound data disclosure. Confirm the exact fields included, whether owner-identifying data is present, whether it is redacted or aggregated, and who signs off (plus whether an NDA is required) before it leaves the company.
+
+### Q-AI-0452 — Which historical buyer invoices remain unsettled, and who reconciles invoiced versus settled amounts before DATA-05 to DATA-08 are re-engaged?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Which historical buyer invoices remain unsettled, and who reconciles invoiced versus settled amounts before DATA-05 to DATA-08 are re-engaged?
+
+The QA pass deliberately avoids "purchased," "sold," and "revenue" wording because settled payment is unconfirmed. That leaves an open question of whether any of these historical buyers have outstanding or failed payments — which materially changes whether they should be approached for expansion. Name the owner of the payment-processor reconciliation.
+
+### Q-AI-0453 — Were the DATA-12 to DATA-16 analytical signals derived from platform user activity, and is using member behavior for sales prospecting disclosed and approved?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Were the DATA-12 to DATA-16 analytical signals derived from platform user activity, and is using member behavior for sales prospecting disclosed and approved?
+
+These are described as analytical signals rather than prospects with verified intent, which suggests they were inferred from internal usage or search data. If registered-account behaviour is being mined to build a prospect list, confirm that this use is covered by the privacy policy and approved.
