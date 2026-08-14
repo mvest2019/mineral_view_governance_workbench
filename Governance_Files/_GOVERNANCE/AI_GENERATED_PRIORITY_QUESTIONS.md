@@ -3862,3 +3862,57 @@ If the checks are ad-hoc, coverage varies by day and by person, and the work can
 **1. Short Question** — If a source website change makes a scraper silently return partial data, how would today's checks catch it?
 
 A scraper can complete successfully, log no errors, and still load a fraction of the expected rows after a source layout change. Confirm whether volume/trend baselines exist per source, or whether detection depends on someone noticing during manual review.
+
+### Q-AI-0430 — Is the 50,000-row matched-wells endpoint authenticated, rate-limited, and tier-gated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the 50,000-row matched-wells endpoint authenticated, rate-limited, and tier-gated?
+
+The default `limit` was raised from 5,000 to 50,000 and a single response is ~4.37 MB. Without auth, per-user rate limits, or a hard max-limit cap, this endpoint can be called repeatedly to bulk-extract the Texas well dataset, and it is also a load/cost risk on the database.
+
+### Q-AI-0431 — Which fields were dropped to cut the row payload from 324 to 112 bytes, and did any consumer depend on them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which fields were dropped to cut the row payload from 324 to 112 bytes, and did any consumer depend on them?
+
+A ~65% payload reduction implies fields were removed or renamed. Confirm this was coordinated with the frontend/map team as a versioned or backward-compatible change rather than a silent breaking change.
+
+### Q-AI-0432 — Who approved replacing Reported BOE with Produced Oil and Produced Gas in the map table?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved replacing Reported BOE with Produced Oil and Produced Gas in the map table?
+
+This changes the numbers users see and the meaning of the column. Confirm whether Produced Oil/Gas reconcile with the values shown in the Lease/Well/Reservoir reports and MVestimate, so the same well does not show different production figures in two places.
+
+### Q-AI-0433 — With both a direct-query path and the read model in place, which one is canonical when their results disagree?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — With both a direct-query path and the read model in place, which one is canonical when their results disagree?
+
+The table API can now answer without the read model, and querying moved from record-to-well folding to record-level. Two independent paths over the same data can drift; confirm counts and summary tiles were reconciled between them and document which path is authoritative.
+
+### Q-AI-0434 — Was the 54.8-second county query live for real users, and what is the agreed response-time target for these endpoints?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the 54.8-second county query live for real users, and what is the agreed response-time target for these endpoints?
+
+If ANDREWS took 54.8s in production, users were likely hitting timeouts. Also confirm whether ~3.2s at page size 500 meets the accepted performance bar, and whether these timings were measured against production data volume.
+
+### Q-AI-0435 — Town and ZIP search are unsupported by the current dataset — was that a committed requirement, and who has been told?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Town and ZIP search are unsupported by the current dataset — was that a committed requirement, and who has been told?
+
+The sidebar/search design may still assume town and ZIP lookup. Confirm this is either removed from the UI spec or tracked as a data-acquisition item with an owner, so it is not silently dropped.
