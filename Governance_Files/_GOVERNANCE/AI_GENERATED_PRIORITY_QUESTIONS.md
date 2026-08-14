@@ -3970,3 +3970,57 @@ The list includes a crash from a stale hover index and a silently failing zoom. 
 **1. Short Question** — Who approved the smart-zoom rules, and can the outlier-coordinate trimming hide legitimate wells from the frame?
 
 The zoom heuristic decides when to reframe vs leave the view alone, caps at zoom 8, and discards outlier coordinates. Confirm the approved thresholds and whether trimmed "outliers" are bad data or real wells that a user would then never see.
+
+### Q-AI-0442 — Will Contact Us testing create real submissions that reach the live inbox and tracking sheet, and how are those test records removed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Will Contact Us testing create real submissions that reach the live inbox and tracking sheet, and how are those test records removed?
+
+Contact Us submissions are processed daily into the internal tracking sheet and followed up on. Test submissions could be mistaken for real leads or skew reporting. Need a documented rule for test data marking and cleanup.
+
+### Q-AI-0443 — Are these four pages being tested on the live mineralview.com or on the redesign prototype?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are these four pages being tested on the live mineralview.com or on the redesign prototype?
+
+Multiple parallel redesign tracks are in flight for the marketing site. Defects logged against the wrong build waste dev time or miss live-site issues.
+
+### Q-AI-0444 — Is the Contact Us form protected by CAPTCHA and rate limiting, and was abuse or injection input tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the Contact Us form protected by CAPTCHA and rate limiting, and was abuse or injection input tested?
+
+A public unprotected form is a spam and injection vector, and it collects personal contact details. Should be an explicit test item, not assumed.
+
+### Q-AI-0445 — Where does News and Blog content come from, and is syndicated or third-party content licensed for republication?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Where does News and Blog content come from, and is syndicated or third-party content licensed for republication?
+
+If News items are pulled from external publishers or AI-generated, licensing and attribution need confirmation before the pages are validated as launch-ready.
+
+### Q-AI-0446 — Is presence of the educational-only / no-investment-advice disclaimer a pass/fail check on Glossary, News, and Blog pages?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is presence of the educational-only / no-investment-advice disclaimer a pass/fail check on Glossary, News, and Blog pages?
+
+These pages carry financial, tax, and valuation content. Confirm whether disclaimer presence is part of the content check or out of QA scope.
+
+### Q-AI-0447 — Does the content and navigation scope include broken links, 404s, and meta/canonical checks on these SEO-driving pages?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the content and navigation scope include broken links, 404s, and meta/canonical checks on these SEO-driving pages?
+
+Glossary, News, and Blogs are the main organic traffic assets. Clarify whether link and SEO-metadata regressions are in scope or belong to another owner.
