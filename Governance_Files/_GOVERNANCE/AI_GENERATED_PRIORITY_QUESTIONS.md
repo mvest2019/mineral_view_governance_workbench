@@ -4132,3 +4132,57 @@ Multiple redesign tracks are already in progress on the same pages. Clarify whet
 **1. Short Question** — Where are the growth, SEO, and sales strategy documents stored, and who signs off before any of it is executed?
 
 The update lists strategy work but no deliverable location or approver. Governance needs the document link and the named decision-maker who converts these into approved actions.
+
+### Q-AI-0460 — Is the /register server error happening in live production, and who owns the fix and by when?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is the /register server error happening in live production, and who owns the fix and by when?
+
+The report says the direct `/register` route "currently produces a server-side error in some situations." If this is live on mineralview.com, genuine sign-ups are being lost today. Needed: confirmation of environment, how long it has been failing, whether it is logged as an engineering defect with an owner, and the target fix date — since Milestone 1 depends on it.
+
+### Q-AI-0461 — Was the earlier ~2 registrations/day figure used in any reporting before it was corrected to 1.52?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Was the earlier ~2 registrations/day figure used in any reporting before it was corrected to 1.52?
+
+The baseline was revised down from ~2/day to ~1.4–1.5/day (1.52 in the clean window) — roughly a 25–30% overstatement. If ~2/day was previously shared with Ryan, investors, or in monthly performance reporting, those numbers need a documented correction.
+
+### Q-AI-0462 — How many accounts were excluded as synthetic, test, internal, or machine-generated, and are they still counted in reported user totals elsewhere?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — How many accounts were excluded as synthetic, test, internal, or machine-generated, and are they still counted in reported user totals elsewhere?
+
+A named exclusion rule was applied to produce the genuine baseline. Governance needs the count removed, the exact exclusion criteria, and confirmation of whether Cerebro, the tracking sheet, and other dashboards still report the uncleaned totals — otherwise two different "user counts" exist side by side.
+
+### Q-AI-0463 — Does the proposed pre-registration owner-record search expose real mineral-owner names to anonymous visitors?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Does the proposed pre-registration owner-record search expose real mineral-owner names to anonymous visitors?
+
+"Search the public record for your name" and owner-record search as a registration trigger would surface owner data before any account exists. Needs a decision on what is shown to unauthenticated users, whether it is limited to public appraisal/RRC records, and privacy sign-off before build.
+
+### Q-AI-0464 — Who approved removing the pricing dependency from free registration, and was the impact on paid conversion measured?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approved removing the pricing dependency from free registration, and was the impact on paid conversion measured?
+
+Milestone 1 removes the pricing path from free sign-up. That path may currently be driving paid-tier awareness and upgrades, so the change trades a Funnel 2 metric against revenue. Needs an owner for the decision and a stated expectation for paid conversion after the change.
+
+### Q-AI-0465 — Which list received the user emails, and was the content and send approved before going out?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Which list received the user emails, and was the content and send approved before going out?
+
+Item 9 records emails sent to Mineral View users with no detail. Needs: recipient list and how it was selected, who approved the content, whether unsubscribe/consent handling was in place, and where the send record is stored.
