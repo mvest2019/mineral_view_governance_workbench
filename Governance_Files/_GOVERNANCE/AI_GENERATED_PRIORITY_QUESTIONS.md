@@ -4078,3 +4078,57 @@ The QA pass deliberately avoids "purchased," "sold," and "revenue" wording becau
 **1. Short Question** — Were the DATA-12 to DATA-16 analytical signals derived from platform user activity, and is using member behavior for sales prospecting disclosed and approved?
 
 These are described as analytical signals rather than prospects with verified intent, which suggests they were inferred from internal usage or search data. If registered-account behaviour is being mined to build a prospect list, confirm that this use is covered by the privacy policy and approved.
+
+### Q-AI-0454 — Which live pages will be noindexed, consolidated, or removed for crawl-budget reasons, and who approves that before it affects traffic?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which live pages will be noindexed, consolidated, or removed for crawl-budget reasons, and who approves that before it affects traffic?
+
+The update mentions indexation and crawl-budget priorities plus "protecting high-performing pages," but not which URLs lose indexation. Deindexing or merging live pages is an irreversible traffic decision and needs a named approver and a before/after ranking check.
+
+### Q-AI-0455 — Does the user-segment sales and marketing work use real member records or PII, and is that data access approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the user-segment sales and marketing work use real member records or PII, and is that data access approved?
+
+Segmenting "different Mineral View user segments" implies pulling registration, claim, or subscription data. Confirm whether real owner PII was exported, where it now lives, and who authorized the access.
+
+### Q-AI-0456 — Do the proposed registration-conversion improvements remove or weaken email verification, consent, or any required signup step?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Do the proposed registration-conversion improvements remove or weaken email verification, consent, or any required signup step?
+
+Funnel optimization usually means cutting signup friction. Confirm no proposed change drops email verification, terms acceptance, or tracking-consent capture, since those are separately governed.
+
+### Q-AI-0457 — What are the current baseline and target free-registration conversion numbers, and which system is the agreed source of truth?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What are the current baseline and target free-registration conversion numbers, and which system is the agreed source of truth?
+
+No figures or targets are stated, so success cannot be judged. Name the baseline, the target, the measurement window, and whether GA, Search Console, Cerebro, or the internal tracking sheet is authoritative when they disagree.
+
+### Q-AI-0458 — How do these website conversion changes coordinate with the in-flight marketing site and portal redesign work, and who resolves conflicts?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — How do these website conversion changes coordinate with the in-flight marketing site and portal redesign work, and who resolves conflicts?
+
+Multiple redesign tracks are already in progress on the same pages. Clarify whether your recommendations apply to the current live site, the prototype, or both, and who merges them into one backlog.
+
+### Q-AI-0459 — Where are the growth, SEO, and sales strategy documents stored, and who signs off before any of it is executed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Where are the growth, SEO, and sales strategy documents stored, and who signs off before any of it is executed?
+
+The update lists strategy work but no deliverable location or approver. Governance needs the document link and the named decision-maker who converts these into approved actions.
