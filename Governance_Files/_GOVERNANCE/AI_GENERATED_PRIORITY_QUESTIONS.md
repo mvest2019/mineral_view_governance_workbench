@@ -4564,3 +4564,57 @@ The calculator produces a financial figure a mineral owner could act on. Confirm
 **1. Short Question** — Who owns fixing the broken internal links and thin content found on the live JOA, JIB, and AFE pages, and by when?
 
 The audit identified broken internal linking, thin sections, and a flat heading structure on three pages that are already live. The submission records the findings but no remediation owner or date. Also confirm where the 9-item QA checklist is stored and whether it is now a required gate before any glossary page goes live.
+
+### Q-AI-0508 — Who approves the coverage-page de-index, and what is the redirect or 410 plan so existing traffic and backlinks are not lost?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves the coverage-page de-index, and what is the redirect or 410 plan so existing traffic and backlinks are not lost?
+
+The de-index decision was "confirmed" on new evidence, but the submission does not name the approver or say what happens to the removed owners/wells/production URLs. Removing indexed pages is hard to reverse and can cost organic traffic permanently.
+
+### Q-AI-0509 — Where will feedback-form submissions (email, counties, pain points) be stored, and is that collection covered by the privacy policy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Where will feedback-form submissions (email, counties, pain points) be stored, and is that collection covered by the privacy policy?
+
+The form collects role, counties, pain points and optional email from real visitors. Storage location, retention, who can read it, and privacy-policy coverage are not stated.
+
+### Q-AI-0510 — Who approves publishing the announcement ribbon and "Mineral View Next" page on the live site?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves publishing the announcement ribbon and "Mineral View Next" page on the live site?
+
+This is public-facing messaging that tells current users the product is being rebuilt. Sign-off authority and the go-live gate are not stated.
+
+### Q-AI-0511 — Does the New Mexico and Oklahoma demand finding imply expanding beyond our Texas-only data, and who decides and by when?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Does the New Mexico and Oklahoma demand finding imply expanding beyond our Texas-only data, and who decides and by when?
+
+Listed as pending for Ryan with no date. This is a scope decision that blocks phase-1 rebuild planning.
+
+### Q-AI-0512 — Was the form's tested submit and confirmation flow wired to a real backend, or a mock, given the wiring option is still undecided?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Was the form's tested submit and confirmation flow wired to a real backend, or a mock, given the wiring option is still undecided?
+
+The handoff lists three form wiring options as an open decision, yet the submit flow is described as tested — clarify what was actually exercised so "tested" is not read as production-ready.
+
+### Q-AI-0513 — Which of the three coverage documents is canonical, and where are they stored for review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Which of the three coverage documents is canonical, and where are they stored for review?
+
+A decision memo, an evidence file, and a file marked WORKING are listed together with no location or precedence, risking decisions being made from the draft.
