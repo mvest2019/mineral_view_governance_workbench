@@ -4240,3 +4240,57 @@ The submission mixes planning, research, and "execution" without naming a single
 **1. Short Question** — What are the baseline and target numbers for "improve reach, engagement, and visibility," and who reviews them?
 
 The stated goal has no measurable definition. Confirm the current baseline per platform, the target, the reporting cadence, and who signs off that social output is working.
+
+### Q-AI-0472 — Who reviews the AI-generated "What Changed" summaries for accuracy before mineral owners see them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who reviews the AI-generated "What Changed" summaries for accuracy before mineral owners see them?
+
+The Operator Detail page now renders AI-generated summaries of production and operational changes. Governance needs a named reviewer or validation rule, since an incorrect AI statement about an operator's activity is published content about a real company.
+
+### Q-AI-0473 — Do the AI-generated operator change summaries carry the educational-only / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the AI-generated operator change summaries carry the educational-only / no-investment-advice disclaimer?
+
+Other MineralView surfaces that present interpreted data are required to show the estimate / no-advice disclaimer. Confirm whether the "What Changed" AI narrative is in scope for that rule.
+
+### Q-AI-0474 — Is the "Where Pioneer operates across Texas" map title hard-coded to Pioneer, or does it follow the selected operator?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the "Where Pioneer operates across Texas" map title hard-coded to Pioneer, or does it follow the selected operator?
+
+A hard-coded operator name would show "Pioneer" on every operator's detail page, which would be a visible data-accuracy defect naming the wrong company.
+
+### Q-AI-0475 — What does the Operator Detail hero show when the page is opened directly by URL, since operator data is passed through the route?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What does the Operator Detail hero show when the page is opened directly by URL, since operator data is passed through the route?
+
+Logo and hero data sourced from route state passed by the Operator Listing page will be missing on direct link, refresh, bookmark, or shared/SEO traffic. Confirm the fallback fetch and whether it was tested.
+
+### Q-AI-0476 — Is the Compare Operator Statistics page gated by subscription tier, and which tiers can access it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the Compare Operator Statistics page gated by subscription tier, and which tiers can access it?
+
+The page is being built now; the gating decision should be confirmed before development completes rather than retrofitted.
+
+### Q-AI-0477 — Are the third-party operator logos displayed on the hero and listing pages licensed for our use?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are the third-party operator logos displayed on the hero and listing pages licensed for our use?
+
+Operator logos are trademarks of real companies. Confirm where the logo assets came from and whether their use on MineralView has been cleared.
