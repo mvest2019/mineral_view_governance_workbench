@@ -4618,3 +4618,57 @@ The handoff lists three form wiring options as an open decision, yet the submit 
 **1. Short Question** — Which of the three coverage documents is canonical, and where are they stored for review?
 
 A decision memo, an evidence file, and a file marked WORKING are listed together with no location or precedence, risking decisions being made from the draft.
+
+### Q-AI-0514 — Who owns building the P0 owner-search instrumentation, and by what date, given that Workstream B and the contextual recovery emails are blocked until it exists?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who owns building the P0 owner-search instrumentation, and by what date, given that Workstream B and the contextual recovery emails are blocked until it exists?
+
+Phase 2 explicitly blocks contextual recovery emails and completion-cause diagnosis until owner-search events are instrumented. The requirement is defined but no owner, sprint, or date is recorded — without that, Workstream B has no start condition.
+
+### Q-AI-0515 — Has Ryan reviewed and approved the Phase 1 document, and is that sign-off a gate before Phase 2 goes to Marketing, Product, and CRM?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Has Ryan reviewed and approved the Phase 1 document, and is that sign-off a gate before Phase 2 goes to Marketing, Product, and CRM?
+
+Phase 1 is described as "internally QA-ready for Ryan's review" while Phase 2 strategy, CTAs, emails, and CRM states were already built on top of it. Clarify whether Phase 2 is provisional until Ryan signs off, and where both documents are stored.
+
+### Q-AI-0516 — Who resolves the four open data-quality items (`userType='user'`, incomplete `userid` capture, professional-user classification, plan-limit effects on unclaimed leases), and do they invalidate the Funnel 3 numbers until answered?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who resolves the four open data-quality items (`userType='user'`, incomplete `userid` capture, professional-user classification, plan-limit effects on unclaimed leases), and do they invalidate the Funnel 3 numbers until answered?
+
+These were flagged for Dev/Product clarification but the activation and completion figures were computed on top of them. Need a named owner, a deadline, and a statement of whether the baseline must be restated if the definitions change.
+
+### Q-AI-0517 — Was this Funnel 3 analysis run against production data containing mineral-owner PII, and where are the cohort lists and help-request contents now stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Was this Funnel 3 analysis run against production data containing mineral-owner PII, and where are the cohort lists and help-request contents now stored?
+
+The work reads individual user registrations, claim-page visits, owner records, and help requests. Confirm the access was read-only and approved, and confirm whether any extract with names, emails, or owner records was copied into a doc, sheet, or Drive folder outside the database.
+
+### Q-AI-0518 — Do the proposed Funnel 3 lifecycle emails respect existing marketing consent and unsubscribe status for users who only registered and never claimed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Do the proposed Funnel 3 lifecycle emails respect existing marketing consent and unsubscribe status for users who only registered and never claimed?
+
+The framework adds behavioral-trigger emails plus suppression rules for completed users, but does not state whether registration alone constitutes consent to this messaging, or how existing opt-outs are honoured. Needs a decision before CRM build.
+
+### Q-AI-0519 — Is a 49-user all-time non-completer cohort a sufficient basis for the Phase 2 strategy, and what happens to the strategy if the owner-search hypothesis turns out to be wrong?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is a 49-user all-time non-completer cohort a sufficient basis for the Phase 2 strategy, and what happens to the strategy if the owner-search hypothesis turns out to be wrong?
+
+The completion workstream, CTAs, and educational content are all shaped around owner search/matching failure, which is correctly labelled unverified. State the fallback and the evidence threshold that would confirm or retire the hypothesis.
