@@ -4510,3 +4510,57 @@ The summary is cached L1 → Redis and carries figures that change on data refre
 **1. Short Question** — Who approved the lease-selection fallback rule that decides which lease's numbers the panel shows?
 
 When `lease` and `recordType` are absent, the API picks one of several completions/permits under the same API-10 and reports the choice in `meta.selectedBy`. Showing the wrong lease's production under another's name is the stated main risk, so the default selection rule needs a business owner's sign-off — and confirmation the panel actually surfaces `meta.selectedBy`/`leases` to the user rather than silently displaying one option.
+
+### Q-AI-0502 — Who owns integrating the calculator CSS/JS, and by when will the live LOE page stop showing it as plain text?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns integrating the calculator CSS/JS, and by when will the live LOE page stop showing it as plain text?
+
+The LOE glossary page is published live but the LOE per BOE calculator renders as plain text because the CMS strips `<style>` and `<script>`. A broken widget is visible to real visitors right now. Need a named owner on the dev side, a target date, and a decision on whether to hide the calculator markup until the fix ships.
+
+### Q-AI-0503 — Was the LOE page published live despite scoring 53/100, and what is the minimum passing score for publish?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Was the LOE page published live despite scoring 53/100, and what is the minimum passing score for publish?
+
+The submission records a 53/100 score plus documented content gaps, and then a live publish. Clarify whether the gaps were closed before publish, who approved publishing below score, and what the QA checklist's pass/fail threshold actually is.
+
+### Q-AI-0504 — Who fact-checks glossary content before publish, given 2 factual errors and an unsourced claim were caught in the LOE draft?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who fact-checks glossary content before publish, given 2 factual errors and an unsourced claim were caught in the LOE draft?
+
+Errors were found in the Related Terms section and an unsourced claim was removed. This suggests review currently depends on one person catching them. Need the named reviewer/sign-off step for factual and sourcing accuracy, and whether already-published glossary pages should be re-checked for the same class of error.
+
+### Q-AI-0505 — Has dev or security approved injecting raw CSS and JavaScript into CMS pages via React useEffect?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Has dev or security approved injecting raw CSS and JavaScript into CMS pages via React useEffect?
+
+The proposed workaround bypasses the CMS's own stripping of `<style>`/`<script>`, which exists as a sanitization control. Confirm whether an approved, reusable pattern exists for embedded calculators (component vs. injected script) rather than a per-page script injection.
+
+### Q-AI-0506 — Does the LOE per BOE calculator carry the educational-only / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the LOE per BOE calculator carry the educational-only / no-investment-advice disclaimer?
+
+The calculator produces a financial figure a mineral owner could act on. Confirm the disclaimer is present on output, and that the formula and its assumptions were reviewed by someone with domain sign-off.
+
+### Q-AI-0507 — Who owns fixing the broken internal links and thin content found on the live JOA, JIB, and AFE pages, and by when?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns fixing the broken internal links and thin content found on the live JOA, JIB, and AFE pages, and by when?
+
+The audit identified broken internal linking, thin sections, and a flat heading structure on three pages that are already live. The submission records the findings but no remediation owner or date. Also confirm where the 9-item QA checklist is stored and whether it is now a required gate before any glossary page goes live.
