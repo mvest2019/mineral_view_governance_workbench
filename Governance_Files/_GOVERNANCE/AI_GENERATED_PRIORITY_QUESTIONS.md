@@ -4294,3 +4294,57 @@ The page is being built now; the gating decision should be confirmed before deve
 **1. Short Question** — Are the third-party operator logos displayed on the hero and listing pages licensed for our use?
 
 Operator logos are trademarks of real companies. Confirm where the logo assets came from and whether their use on MineralView has been cleared.
+
+### Q-AI-0478 — Is there account lockout or rate limiting on repeated failed logins, and was it tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is there account lockout or rate limiting on repeated failed logins, and was it tested?
+
+The submission covers invalid-credential and authentication error handling but does not mention brute-force protection. Without a documented lockout/throttle rule there is no pass/fail criterion for this test.
+
+### Q-AI-0479 — Do the login error messages reveal whether an email address is registered?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the login error messages reveal whether an email address is registered?
+
+Distinct error text for "unknown email" vs "wrong password" allows user enumeration against the mineral-owner member base. Confirm the expected message wording and who approved it.
+
+### Q-AI-0480 — Has tracking data recorded before this fix already been polluted by past Act-as-User sessions, and does it need cleanup?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Has tracking data recorded before this fix already been polluted by past Act-as-User sessions, and does it need cleanup?
+
+The change stops future contamination, but historical page-view and engagement-time records attributed to real users may still include internal impersonation activity. Confirm whether a backfill or correction is required and who owns it.
+
+### Q-AI-0481 — Does the Act-as-User suppression also cover Google Analytics, Clarity, and Cerebro, or only the internal tracking API?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the Act-as-User suppression also cover Google Analytics, Clarity, and Cerebro, or only the internal tracking API?
+
+Behaviour data feeds several downstream systems. If suppression is only applied at the internal collection, internal sessions may still surface in third-party analytics and internal dashboards.
+
+### Q-AI-0482 — What happens if the Act-as-User flag is missing or fails — does the event default to being recorded against the real user?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What happens if the Act-as-User flag is missing or fails — does the event default to being recorded against the real user?
+
+The fail-open vs fail-closed behaviour determines whether a partial failure silently reintroduces the original defect. Confirm the expected default and whether that negative path was tested.
+
+### Q-AI-0483 — What is the approved session lifetime for "Stay Signed In," and does Google Sign-In bypass email verification or link to existing accounts?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is the approved session lifetime for "Stay Signed In," and does Google Sign-In bypass email verification or link to existing accounts?
+
+Persistent sessions expose owner data on shared devices, and OAuth sign-in can create a second account or skip verification for an email that already registered with a password. Both need a documented expected behaviour to test against.
