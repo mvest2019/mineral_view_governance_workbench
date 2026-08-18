@@ -4456,3 +4456,57 @@ Area results now count wells by bore crossing but exclude permits entirely. Clar
 **1. Short Question** — Who approved moving Reserve Integrity off the red/amber risk colours, and does the mint ramp still pass contrast and colour-blind checks?
 
 Red/amber carried severity meaning; a single-hue light-to-dark mint ramp may not. Confirm the design sign-off, that the risk signal is still conveyed non-visually (label or value), and that the ramp meets the accessibility bar being applied to the rest of the redesign.
+
+### Q-AI-0496 — Who merges the Component_Allocation connection fix to `main`, and by when?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who merges the Component_Allocation connection fix to `main`, and by when?
+
+The production-series defect fix (binding `Component_Allocation` to the **EF_SpAnalysis** connection instead of the map connection) is explicitly noted as **not yet in `main`**. Until it merges, `main` still returns an empty series for every well. Needs a named reviewer, a target date, and confirmation that dev/prod are not diverging on the DB binding.
+
+### Q-AI-0497 — Who approved the breaking changes to `/map/matched-wells`, and are frontend clients cut over yet?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved the breaking changes to `/map/matched-wells`, and are frontend clients cut over yet?
+
+Two breaking contract changes shipped: `limit` lost its default (clients must stop sending it, `meta.limit` can be `null`) and eight fields (`lease`, `leaseKey`, `operator`, `operatorNumber`, `field`, `fieldNumber`, `wtype`, `play`) were removed. Governance needs: who signed off, whether the filter rail already reads those fields, and whether there is a versioning/deprecation window rather than a hard cut.
+
+### Q-AI-0498 — Was the always-empty production series live for real users, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the always-empty production series live for real users, and for how long?
+
+The defect is described as "found and fixed post-deploy," meaning the endpoint was deployed returning an empty array for every well — indistinguishable from a well with genuinely no production. Need the deploy window, whether any user-facing panel or report consumed it, and whether anyone made a decision on the wrong picture.
+
+### Q-AI-0499 — Is the now-uncapped `/map/matched-wells` authenticated, tier-gated, and rate-limited?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the now-uncapped `/map/matched-wells` authenticated, tier-gated, and rate-limited?
+
+Removing the default cap lets one request return the full selection — 28,835 rows / ~6 MB / 8.3 s cold, with guards only at 50,000 (unfiltered) and a 200,000 mechanical backstop. That is effectively a bulk-export path over the 493,648-well dataset. Need confirmation of auth, subscription gating, rate limits, and whether concurrent uncapped requests were load-tested against production capacity.
+
+### Q-AI-0500 — What is the cache TTL and invalidation rule for the summary endpoint's L1/Redis layers?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What is the cache TTL and invalidation rule for the summary endpoint's L1/Redis layers?
+
+The summary is cached L1 → Redis and carries figures that change on data refresh (`lastMonthOil`, reserves, R/P, `performance`). Need the TTL, how the cache is invalidated when the monthly production or reserve data reloads, and confirmation the cache key includes `lease`/`recordType` so one lease's cached numbers can't be served under another's name.
+
+### Q-AI-0501 — Who approved the lease-selection fallback rule that decides which lease's numbers the panel shows?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved the lease-selection fallback rule that decides which lease's numbers the panel shows?
+
+When `lease` and `recordType` are absent, the API picks one of several completions/permits under the same API-10 and reports the choice in `meta.selectedBy`. Showing the wrong lease's production under another's name is the stated main risk, so the default selection rule needs a business owner's sign-off — and confirmation the panel actually surfaces `meta.selectedBy`/`leases` to the user rather than silently displaying one option.
