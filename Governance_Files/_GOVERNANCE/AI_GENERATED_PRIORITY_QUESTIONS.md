@@ -4402,3 +4402,57 @@ Missing values, duplicates, and inconsistencies are described as investigated, b
 **1. Short Question** — Is there automated alerting on scraper failure, or is a break only caught by the next day's manual log review?
 
 All detection described is manual and daily. If a source website layout change silently breaks extraction, the current process appears to allow up to a full day of missing or wrong permit/completion data before anyone notices.
+
+### Q-AI-0490 — Were the wrong-location well bores and the 0-well drawn-area count live for real users in production, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Were the wrong-location well bores and the 0-well drawn-area count live for real users in production, and for how long?
+
+The submission says bores were missing a `spatialReference` that "put every line in the Atlantic" and that drawn-area counts reported 0 over a screen full of wells. Both are user-visible correctness defects. Governance needs to know whether these shipped to production, when they were introduced, whether any user decisions or exports were made off the wrong output, and whether they are logged as defects.
+
+### Q-AI-0491 — Is the new Well Summary CSV export gated by subscription tier, and does it contain owner PII or MVEstimate values?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the new Well Summary CSV export gated by subscription tier, and does it contain owner PII or MVEstimate values?
+
+A working Export of "the well's facts" was added to the Insights tab. Clarify what columns it emits, whether any owner names or valuation figures are included, whether it is tier-gated or record-capped like other downloads, and whether the estimate / no-investment-advice wording applies.
+
+### Q-AI-0492 — Who owns fixing the last-page 400 caused by the service's page 2000 / pageSize 100 caps, and are those caps documented?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who owns fixing the last-page 400 caused by the service's page 2000 / pageSize 100 caps, and are those caps documented?
+
+The 400 was diagnosed but the report does not say it was fixed. Confirm whether the UI now clamps within the caps, whether the API contract documents them, and who owns the server-side fix and its target date.
+
+### Q-AI-0493 — Who approved restricting well bores to Horizontal/Directional, and what do users see for vertical wells now?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved restricting well bores to Horizontal/Directional, and what do users see for vertical wells now?
+
+Filtering out other wellbore profiles removes map data that was previously drawn. Confirm the decision owner, whether vertical wells are still discoverable, and whether the restriction is explained in the UI rather than silently hiding wells.
+
+### Q-AI-0494 — Who approved dropping permits as "uncountable" in measure-area, and is that exclusion shown to the user?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved dropping permits as "uncountable" in measure-area, and is that exclusion shown to the user?
+
+Area results now count wells by bore crossing but exclude permits entirely. Clarify who signed off, whether the counting rule (bore crossing vs. surface hole) is the approved methodology, and whether the card states that permits are not included so a user does not read the count as complete activity.
+
+### Q-AI-0495 — Who approved moving Reserve Integrity off the red/amber risk colours, and does the mint ramp still pass contrast and colour-blind checks?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved moving Reserve Integrity off the red/amber risk colours, and does the mint ramp still pass contrast and colour-blind checks?
+
+Red/amber carried severity meaning; a single-hue light-to-dark mint ramp may not. Confirm the design sign-off, that the risk signal is still conveyed non-visually (label or value), and that the ramp meets the accessibility bar being applied to the rest of the redesign.
