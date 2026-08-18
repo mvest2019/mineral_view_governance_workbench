@@ -4186,3 +4186,57 @@ Milestone 1 removes the pricing path from free sign-up. That path may currently 
 **1. Short Question** — Which list received the user emails, and was the content and send approved before going out?
 
 Item 9 records emails sent to Mineral View users with no detail. Needs: recipient list and how it was selected, who approved the content, whether unsubscribe/consent handling was in place, and where the send record is stored.
+
+### Q-AI-0466 — Which "other active accounts" are being managed alongside Mineral View, and is that work approved as in-scope?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which "other active accounts" are being managed alongside Mineral View, and is that work approved as in-scope?
+
+The report says content was planned and executed for "Mineral View and other active accounts" but never names them. Governance cannot tell whether these are Mineral View brand sub-accounts, client accounts, or unrelated brands, nor who authorized the time split.
+
+### Q-AI-0467 — Is anyone replying to comments and DMs from mineral owners, and are there approved response guidelines?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Is anyone replying to comments and DMs from mineral owners, and are there approved response guidelines?
+
+"Engagement opportunities across LinkedIn, Facebook, and Instagram" implies two-way interaction. Replies to owners risk giving valuation or investment advice, or exposing member/lease details in a public thread. Needs a documented reply policy and an escalation path for questions that must go to support or legal.
+
+### Q-AI-0468 — Who holds the login credentials for the Mineral View LinkedIn, Facebook, and Instagram accounts, and how is access revoked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who holds the login credentials for the Mineral View LinkedIn, Facebook, and Instagram accounts, and how is access revoked?
+
+Publishing access to brand accounts is a control point. Confirm whether credentials sit in a shared vault, whether MFA is enabled, how many people can publish, and what the offboarding revocation step is.
+
+### Q-AI-0469 — Where is the social media content calendar that lists each planned post, its approver, and its publish date?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Where is the social media content calendar that lists each planned post, its approver, and its publish date?
+
+The report describes planning, research, and refinement but points to no tracker or calendar artifact. Without one there is no record of what is queued, what was approved, or what actually shipped.
+
+### Q-AI-0470 — Was anything actually published today, or is all of this still drafts pending review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Was anything actually published today, or is all of this still drafts pending review?
+
+The submission mixes planning, research, and "execution" without naming a single deliverable or link. Clarify the live-vs-draft status of each item so anything already public can be checked against brand and disclaimer requirements.
+
+### Q-AI-0471 — What are the baseline and target numbers for "improve reach, engagement, and visibility," and who reviews them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What are the baseline and target numbers for "improve reach, engagement, and visibility," and who reviews them?
+
+The stated goal has no measurable definition. Confirm the current baseline per platform, the target, the reporting cadence, and who signs off that social output is working.
