@@ -4348,3 +4348,57 @@ The fail-open vs fail-closed behaviour determines whether a partial failure sile
 **1. Short Question** — What is the approved session lifetime for "Stay Signed In," and does Google Sign-In bypass email verification or link to existing accounts?
 
 Persistent sessions expose owner data on shared devices, and OAuth sign-in can create a second account or skip verification for an email that already registered with a password. Both need a documented expected behaviour to test against.
+
+### Q-AI-0484 — Which scrapers failed, were delayed, or are still broken today, and what is the recovery plan?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which scrapers failed, were delayed, or are still broken today, and what is the recovery plan?
+
+The report says failed/delayed/interrupted jobs were identified and analyzed, but no specific job names, counts, causes, or resolution status are given. Governance needs the actual list of failures, which ones are still open, and the expected data gap in W-1/W-2 while they remain down.
+
+### Q-AI-0485 — Were the scraper extraction-logic changes deployed to production, and who reviewed and approved them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Were the scraper extraction-logic changes deployed to production, and who reviewed and approved them?
+
+Item 6 states scraper modifications were tested and validated after source website changes. It is unclear whether those changes were committed, code-reviewed, and released, or are still local. Uncontrolled scraper changes directly affect the accuracy of all downstream permit and completion data.
+
+### Q-AI-0486 — When PostgreSQL, SQL Server, and MongoDB disagree, which one is the system of record?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree, which one is the system of record?
+
+Item 5 describes cross-checking data across three database environments. There is no stated rule for which store wins when they diverge, or how a mismatch is reconciled and by whom.
+
+### Q-AI-0487 — Did any backfill or corrective scripts write to production, and is there a record of what they changed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did any backfill or corrective scripts write to production, and is there a record of what they changed?
+
+The prior daily report for this work describes running backfill/update scripts against records with null or empty values. Governance needs to know whether these run against production, who approves each run, whether a before/after record or rollback exists, and how many rows were modified.
+
+### Q-AI-0488 — Are the data-quality issues found each day logged as tracked defects with an owner, or only in the daily summary?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the data-quality issues found each day logged as tracked defects with an owner, or only in the daily summary?
+
+Missing values, duplicates, and inconsistencies are described as investigated, but there is no stated defect log or assignee. Without a tracker, recurring extraction or pipeline defects have no closure path.
+
+### Q-AI-0489 — Is there automated alerting on scraper failure, or is a break only caught by the next day's manual log review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is there automated alerting on scraper failure, or is a break only caught by the next day's manual log review?
+
+All detection described is manual and daily. If a source website layout change silently breaks extraction, the current process appears to allow up to a full day of missing or wrong permit/completion data before anyone notices.
