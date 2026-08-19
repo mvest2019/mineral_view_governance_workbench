@@ -4726,3 +4726,57 @@ If AI-generated visuals or on-screen text reference identifiable operators, site
 **1. Short Question** — What engagement or conversion metric will be used to judge this reel after publishing, and who reports it?
 
 Several reels have been produced without a stated success measure. Define the metric (views, saves, click-throughs to MineralView.com, registrations) and the owner who reports it back.
+
+### Q-AI-0526 — What generates the permit AI Summary, and who verifies its five findings before users see them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — What generates the permit AI Summary, and who verifies its five findings before users see them?
+
+The new Permit view ends with an AI Summary — headline, five numbered findings with tone badges, and a Basis note. Governance needs to know which model/service produces it, what data it reads, whether the Basis note is machine-generated or authored, and who signs off on accuracy before it reaches mineral owners.
+
+### Q-AI-0527 — Does the permit AI Summary carry the educational-only / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the permit AI Summary carry the educational-only / no-investment-advice disclaimer?
+
+Tone badges and findings on a permit record can read as interpretation or advice about a property. Confirm the required disclaimer is present on the permit view and that legal has cleared the wording of AI-generated findings.
+
+### Q-AI-0528 — Were the reversed surface/bottom-hole well marks live for real users, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Were the reversed surface/bottom-hole well marks live for real users, and for how long?
+
+The report states the RRC convention was corrected because the profile mark and well symbol had been reversed. If that shipped, users may have read well locations incorrectly. Confirm whether it reached production, the exposure window, and whether any user decision or report was based on it.
+
+### Q-AI-0529 — Which environment, branch, and build does this Map Explorer work run on, and has it shipped to production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Which environment, branch, and build does this Map Explorer work run on, and has it shipped to production?
+
+The submission mixes bug fixes, a rewrite, and a brand-new Permit record. Governance needs the branch/URL and whether this is the prototype or live mineralview.com, plus who approves the cutover.
+
+### Q-AI-0530 — Does restricting bores to Horizontal/Directional profiles hide vertical wells from users, and who approved that?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Does restricting bores to Horizontal/Directional profiles hide vertical wells from users, and who approved that?
+
+Limiting well paths to two profiles removes data from the map view. Confirm this is display-only (no records dropped), whether vertical wells are still counted in the 'wells in view' stats, and who signed off on the scope change.
+
+### Q-AI-0531 — Where does the new permit record data come from, and is the Permit view gated by subscription tier?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Where does the new permit record data come from, and is the Permit view gated by subscription tier?
+
+The Completion/Permit links and full permit view are new surfaces. Confirm the upstream source (scraped RRC W-1 data vs. another store), its freshness/as-of date, and which tiers can open it.
