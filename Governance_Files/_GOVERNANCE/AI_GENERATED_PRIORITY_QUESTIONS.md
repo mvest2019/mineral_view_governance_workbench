@@ -5050,3 +5050,57 @@ A published cash-flow reel invites valuation and advice questions in replies. Go
 **1. Short Question** — What are the target reach and engagement metrics for this reel, and where are the results reported?
 
 The report cites improving reach, engagement, and Mineral View awareness as the goal, but no baseline, target, or reporting destination is stated, so performance cannot be assessed.
+
+### Q-AI-0562 — Which of the four landing page versions and which ribbon colour option is approved to ship, and who makes that call?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Which of the four landing page versions and which ribbon colour option is approved to ship, and who makes that call?
+
+Three ribbon colour options and four landing page versions now exist, with the fourth merged version renamed "Mineral View 2.0". The submission does not name a decision owner or a decision date, so it is unclear what actually goes live.
+
+### Q-AI-0563 — Which live production figures on the page are still unconfirmed, and are they blocked from publishing until the data team signs off?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Which live production figures on the page are still unconfirmed, and are they blocked from publishing until the data team signs off?
+
+Figures were pulled from the production database into the public-facing data section and some were flagged as needing data-team confirmation. Publishing unconfirmed production numbers on a marketing page is a public accuracy risk — also needs an as-of date and a refresh owner.
+
+### Q-AI-0564 — Do the value estimate, royalty comparison and production decline card images use a real member's data, and do they carry the estimate / no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the value estimate, royalty comparison and production decline card images use a real member's data, and do they carry the estimate / no-advice disclaimer?
+
+These card images are marketing artifacts derived from platform outputs. Confirm whether the numbers shown are illustrative or from a real owner record, and whether the required disclaimer appears on or beside the images.
+
+### Q-AI-0565 — Who owns working through Ryan's feedback document, and what is the deadline before this page can go live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who owns working through Ryan's feedback document, and what is the deadline before this page can go live?
+
+The feedback was received but explicitly deferred to "the next iteration" with no owner or date. It is unclear whether any of it is a launch blocker.
+
+### Q-AI-0566 — Who approved using Cloudinary for image hosting, and who owns that account, its cost and its access?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approved using Cloudinary for image hosting, and who owns that account, its cost and its access?
+
+A Cloudinary upload and delivery approach was documented for the card image set. This introduces a third-party delivery dependency on the public site — needs an approved account owner, billing owner and credential handling.
+
+### Q-AI-0567 — Who supplies the four remaining card images, and do the empty slots block launch?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who supplies the four remaining card images, and do the empty slots block launch?
+
+Only two of six card images are integrated; four slots are placeholders. Needs a named supplier, a date, and a decision on whether the page can go live with placeholders.
