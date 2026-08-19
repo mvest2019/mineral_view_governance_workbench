@@ -4996,3 +4996,57 @@ Presentations may contain member or owner-specific material; confirm the present
 **1. Short Question** — Was the compare/presentation work tested against production data volumes, and is the operator dropdown search server-side or client-side?
 
 A client-side search over the full operator list plus unpaginated compare calls is a known performance risk; state what was measured rather than asserted to "not affect page performance".
+
+### Q-AI-0556 — Does the Cash Flow reel show real member royalty figures or illustrative sample numbers?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the Cash Flow reel show real member royalty figures or illustrative sample numbers?
+
+The reel is described as a "Mineral View Cash Flow reel" and is already published. Governance needs to know whether any dollar amounts, royalty streams, or account screens shown came from real mineral-owner records (PII / member data exposure) or from clearly synthetic sample data.
+
+### Q-AI-0557 — Has legal reviewed the "Cash Flow" framing so it does not read as an income projection or investment advice?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Has legal reviewed the "Cash Flow" framing so it does not read as an income projection or investment advice?
+
+Cash-flow content implies expected future income. The platform operates under an educational-only / no-investment-advice guardrail, and this reel is already live on public channels.
+
+### Q-AI-0558 — Who outside the social media and video team fact-checked the reel's financial claims before publishing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who outside the social media and video team fact-checked the reel's financial claims before publishing?
+
+The report states the reel was reviewed and finalized by the same person who directed and published it. Identify the independent reviewer (product, data, or legal) and whether that review happened before the publish step.
+
+### Q-AI-0559 — Does the reel accurately describe a cash-flow feature that exists in the product today, and which tier includes it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the reel accurately describe a cash-flow feature that exists in the product today, and which tier includes it?
+
+If the reel markets a cash-flow / royalty-income capability, confirm it is live in the portal, not a prototype or redesign concept, and confirm whether it is gated behind Pro/Premium so viewers are not promised something the free tier does not deliver.
+
+### Q-AI-0560 — Who monitors comments and DMs on this reel, especially viewers asking what their minerals are worth?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Who monitors comments and DMs on this reel, especially viewers asking what their minerals are worth?
+
+A published cash-flow reel invites valuation and advice questions in replies. Governance needs a named owner and an approved response policy so no unqualified valuation or advice is given in public comment threads.
+
+### Q-AI-0561 — What are the target reach and engagement metrics for this reel, and where are the results reported?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — What are the target reach and engagement metrics for this reel, and where are the results reported?
+
+The report cites improving reach, engagement, and Mineral View awareness as the goal, but no baseline, target, or reporting destination is stated, so performance cannot be assessed.
