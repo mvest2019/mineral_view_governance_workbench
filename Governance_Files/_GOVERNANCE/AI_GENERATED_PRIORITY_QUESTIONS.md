@@ -4780,3 +4780,57 @@ Limiting well paths to two profiles removes data from the map view. Confirm this
 **1. Short Question** — Where does the new permit record data come from, and is the Permit view gated by subscription tier?
 
 The Completion/Permit links and full permit view are new surfaces. Confirm the upstream source (scraped RRC W-1 data vs. another store), its freshness/as-of date, and which tiers can open it.
+
+### Q-AI-0532 — Do the page-view and previous-page-URL records already written by internal "Act as User" sessions before this fix get purged or flagged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the page-view and previous-page-URL records already written by internal "Act as User" sessions before this fix get purged or flagged?
+
+The fix stops new internal activity from being recorded, but historical user-behaviour data collected before deployment may still contain internal page views and internal previous-page URLs attributed to real members. Needs a decision on cleanup/backfill and on whether analytics built from that period are usable.
+
+### Q-AI-0533 — How does the code detect an internal or act-as session, and was it verified this check cannot misfire and silently stop tracking real users?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — How does the code detect an internal or act-as session, and was it verified this check cannot misfire and silently stop tracking real users?
+
+If detection relies on a hard-coded account list, role flag, or header, a false positive would silently drop legitimate tracking with no error. Confirm the detection rule, who maintains it, and how a wrongly-skipped real user would be noticed.
+
+### Q-AI-0534 — Does the act-as skip also suppress other audit trails, and are impersonated actions logged anywhere as impersonation?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the act-as skip also suppress other audit trails, and are impersonated actions logged anywhere as impersonation?
+
+Skipping tracking for internal sessions is correct for analytics but removes the record of who accessed a member's account. Clarify whether Cerebro activity logs, search history, and other trails are also skipped, and whether a separate impersonation audit log exists.
+
+### Q-AI-0535 — Which environment was the Login/Registration retesting run in, and did it create real accounts or data that need cleanup?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which environment was the Login/Registration retesting run in, and did it create real accounts or data that need cleanup?
+
+The submission does not state the environment for task 2, unlike task 1 which is explicitly Production. If registration testing ran against production, the test accounts and any verification emails need an identified cleanup owner.
+
+### Q-AI-0536 — Which Login/Registration issues are still unresolved after this retest, and do any of them block go-live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which Login/Registration issues are still unresolved after this retest, and do any of them block go-live?
+
+Task 2 is In Progress and says remaining issues were sent back to development without listing them or their severity. A named open list with a blocking/non-blocking call is needed for release decisions.
+
+### Q-AI-0537 — Did the Login page testing cover failed-login lockout, brute-force throttling, and account-enumeration in error messages?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Did the Login page testing cover failed-login lockout, brute-force throttling, and account-enumeration in error messages?
+
+The description covers field validations, mandatory fields, and navigation, but not authentication abuse paths. Confirm whether these were in scope and, if not, who owns testing them.
