@@ -4888,3 +4888,57 @@ Treating Drive as a standing source creates a production dependency on a manuall
 **1. Short Question** — What baseline are Decline Curve and Spot Feed outputs validated against before downstream consumption?
 
 The report says outputs were reviewed for connectivity and completeness, but not what defines a correct value. Name the reference dataset or expected-value check, and who signs off, so "validation" in this flow is a pass/fail gate rather than a visual review.
+
+### Q-AI-0544 — Did the records with missing or invalid mandatory fields reach the live portal before they were backfilled?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did the records with missing or invalid mandatory fields reach the live portal before they were backfilled?
+
+The submission reports missing values, duplicates, and invalid entries found during daily checks, but not whether users saw that bad data first. Need to know the user-facing exposure window and whether any correction is required.
+
+### Q-AI-0545 — Who approves the backfill and update scripts that write to production during validation?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who approves the backfill and update scripts that write to production during validation?
+
+Validation is described as read-only checking, but insert/update/reprocessing operations are also being confirmed. Clarify approval, review, and rollback for any write executed against production data.
+
+### Q-AI-0546 — When PostgreSQL, SQL Server, and MongoDB disagree, which one is the system of record and who fixes the drift?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When PostgreSQL, SQL Server, and MongoDB disagree, which one is the system of record and who fixes the drift?
+
+Cross-database reconciliation is performed daily, but no canonical source or remediation owner is named for mismatches.
+
+### Q-AI-0547 — Is there a documented pass/fail specification for W-1 and W-2 validation, or is completeness judged case by case?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is there a documented pass/fail specification for W-1 and W-2 validation, or is completeness judged case by case?
+
+Fields, identifiers, and relationships are described as meeting 'expected quality' — the expected values, mandatory-field list, and thresholds need to be written down so results are repeatable and auditable.
+
+### Q-AI-0548 — Where are failed or delayed scraper jobs and validation discrepancies logged, and who owns closing them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are failed or delayed scraper jobs and validation discrepancies logged, and who owns closing them?
+
+Issues are 'identified for further investigation' and documented in daily summaries, but there is no named defect tracker, owner, or turnaround expectation for the open items.
+
+### Q-AI-0549 — Is there automated alerting for scraper failures, or is this manual daily review the only way a gap is detected?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is there automated alerting for scraper failures, or is this manual daily review the only way a gap is detected?
+
+If detection depends on one person running checks each day, missed or non-working days leave silent data gaps. Clarify whether monitoring/alerting exists and who covers absences.
