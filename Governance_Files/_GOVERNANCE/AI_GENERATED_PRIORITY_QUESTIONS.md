@@ -4942,3 +4942,57 @@ Issues are 'identified for further investigation' and documented in daily summar
 **1. Short Question** — Is there automated alerting for scraper failures, or is this manual daily review the only way a gap is detected?
 
 If detection depends on one person running checks each day, missed or non-working days leave silent data gaps. Clarify whether monitoring/alerting exists and who covers absences.
+
+### Q-AI-0550 — Which branch and environment do these Compare Operator pages live on, and are they behind a feature flag until reviewed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which branch and environment do these Compare Operator pages live on, and are they behind a feature flag until reviewed?
+
+The update does not name a branch, PR, or deployment target for either Compare Operator page. Governance needs to know whether this work is already reachable by real users or still gated.
+
+### Q-AI-0551 — Are the Compare Operator Statistics and Presentation pages gated by subscription tier, and which tier was used for testing?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Are the Compare Operator Statistics and Presentation pages gated by subscription tier, and which tier was used for testing?
+
+Operator comparison and presentations look like premium analytics. Existing governance shows Free/Pro/Premium tiers exist but does not say where these pages sit.
+
+### Q-AI-0552 — Who approved the "less colorful" restyle, given the standing rule to keep MineralView branding, typography, and palette unchanged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approved the "less colorful" restyle, given the standing rule to keep MineralView branding, typography, and palette unchanged?
+
+Other redesign tracks are explicitly required to leave branding and colour palette untouched. This update changes colours on a live portal page — confirm the approval path and whether the subtle-colour scheme still meets WCAG AA contrast.
+
+### Q-AI-0553 — Which data source backs the compare-operators statistics, and who verified the figures are correct for 2 vs 3 operators?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which data source backs the compare-operators statistics, and who verified the figures are correct for 2 vs 3 operators?
+
+Governance already records valuation/statistics defects ($0 and NaN MVEstimate, $26,340 vs $26,369, wrong claimed-lease counts). Confirm the compare API's numbers were reconciled against the source and that missing operator data does not render as 0.
+
+### Q-AI-0554 — Do the Compare Operator Presentation records or filters expose any owner PII, and is the presentations API access-controlled?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Do the Compare Operator Presentation records or filters expose any owner PII, and is the presentations API access-controlled?
+
+Presentations may contain member or owner-specific material; confirm the presentations and operator-names APIs require authentication and are not enumerable by direct call.
+
+### Q-AI-0555 — Was the compare/presentation work tested against production data volumes, and is the operator dropdown search server-side or client-side?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was the compare/presentation work tested against production data volumes, and is the operator dropdown search server-side or client-side?
+
+A client-side search over the full operator list plus unpaginated compare calls is a known performance risk; state what was measured rather than asserted to "not affect page performance".
