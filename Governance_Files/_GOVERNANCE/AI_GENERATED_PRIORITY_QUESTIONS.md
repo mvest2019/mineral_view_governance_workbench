@@ -4672,3 +4672,57 @@ The framework adds behavioral-trigger emails plus suppression rules for complete
 **1. Short Question** — Is a 49-user all-time non-completer cohort a sufficient basis for the Phase 2 strategy, and what happens to the strategy if the owner-search hypothesis turns out to be wrong?
 
 The completion workstream, CTAs, and educational content are all shaped around owner search/matching failure, which is correctly labelled unverified. State the fallback and the evidence threshold that would confirm or retire the hypothesis.
+
+### Q-AI-0520 — Does the "America's Oil Fields" national framing match MineralView's Texas-only data coverage?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the "America's Oil Fields" national framing match MineralView's Texas-only data coverage?
+
+The reel is titled and framed nationally, but the platform's wells, permits, and MVEstimate data are Texas-focused. Confirm whether the reel promises coverage the product does not deliver for non-Texas viewers, and who approved the national framing.
+
+### Q-AI-0521 — Was any internal, member, or unreleased MineralView information entered into ChatGPT while drafting this script?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Was any internal, member, or unreleased MineralView information entered into ChatGPT while drafting this script?
+
+ChatGPT is a third-party service. Confirm that only public or generic information was used as input, and that no owner data, internal figures, or unreleased roadmap details were pasted in.
+
+### Q-AI-0522 — Is this the same in-progress reel previously reported at 50%, or a different one?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is this the same in-progress reel previously reported at 50%, or a different one?
+
+Multiple reports describe a reel at roughly 50% completion. Clarify whether this is continued work on the same asset or a separate deliverable, and how percent-complete is measured and verified.
+
+### Q-AI-0523 — Does the patriotic 🇺🇸 framing carry any political or energy-policy message that needs brand sign-off?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the patriotic 🇺🇸 framing carry any political or energy-policy message that needs brand sign-off?
+
+Flag-forward oil-industry content can read as a political stance. Confirm whether the reel takes any position on energy policy, and who cleared the tone for the brand.
+
+### Q-AI-0524 — Does the reel show or name any real operator, company, or specific oil field location?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel show or name any real operator, company, or specific oil field location?
+
+If AI-generated visuals or on-screen text reference identifiable operators, sites, or basins, confirm accuracy and whether any endorsement or association could be implied.
+
+### Q-AI-0525 — What engagement or conversion metric will be used to judge this reel after publishing, and who reports it?
+
+**Status:** OPEN
+**6. Priority** — LOW
+**Employee:** Tejas_Zurange
+**1. Short Question** — What engagement or conversion metric will be used to judge this reel after publishing, and who reports it?
+
+Several reels have been produced without a stated success measure. Define the metric (views, saves, click-throughs to MineralView.com, registrations) and the owner who reports it back.
