@@ -4834,3 +4834,57 @@ Task 2 is In Progress and says remaining issues were sent back to development wi
 **1. Short Question** — Did the Login page testing cover failed-login lockout, brute-force throttling, and account-enumeration in error messages?
 
 The description covers field validations, mandatory fields, and navigation, but not authentication abuse paths. Confirm whether these were in scope and, if not, who owns testing them.
+
+### Q-AI-0538 — Does this MVestimate end-to-end work include fixing the known NaN and $0 valuation defects, and by when?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Does this MVestimate end-to-end work include fixing the known NaN and $0 valuation defects, and by when?
+
+Governance knowledge records that valuation fields stored as text produced zero totals and that depleted leases with `NaN` values cause "MVEstimate = $0"; both were reported to you for remediation. The report describes generating and analyzing the MVestimate flow but does not say whether these live defects are now in scope, fixed, or still open.
+
+### Q-AI-0539 — When will the ownership-data fix land that is blocking the full dossier batch generation?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — When will the ownership-data fix land that is blocking the full dossier batch generation?
+
+The dossier data-layer work is on hold pending your ownership-data fix (leases tracing to "Charles D. Simmons" across three addresses, confirmed by Ryan). Today's report covers architecture and calculation flows but gives no status or date for that fix.
+
+### Q-AI-0540 — Do the Google Drive source documents contain mineral-owner PII, and who has access to those folders?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Do the Google Drive source documents contain mineral-owner PII, and who has access to those folders?
+
+The architecture makes Google Drive the origin of the data lifecycle. Existing practice keeps member-PII dossier files on a shared Drive folder with external email addresses granted access, so folder scope, access list, and retention need to be stated for any Drive-sourced pipeline.
+
+### Q-AI-0541 — Where is the Google Drive data architecture documented, and who approves it before development starts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Where is the Google Drive data architecture documented, and who approves it before development starts?
+
+The report describes a designed architecture and end-to-end flow but names no diagram, document, repo, or approver. Without a stored artifact and an accepting owner, the design cannot be reviewed or held as the baseline for the automation it is meant to enable.
+
+### Q-AI-0542 — Is Google Drive an approved permanent input to production data, or only an interim manual step?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Is Google Drive an approved permanent input to production data, or only an interim manual step?
+
+Treating Drive as a standing source creates a production dependency on a manually managed, human-editable store with no versioning or audit trail. Confirm whether this is the intended long-term design or a bridge until a governed ingestion path exists.
+
+### Q-AI-0543 — What baseline are Decline Curve and Spot Feed outputs validated against before downstream consumption?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — What baseline are Decline Curve and Spot Feed outputs validated against before downstream consumption?
+
+The report says outputs were reviewed for connectivity and completeness, but not what defines a correct value. Name the reference dataset or expected-value check, and who signs off, so "validation" in this flow is a pass/fail gate rather than a visual review.
