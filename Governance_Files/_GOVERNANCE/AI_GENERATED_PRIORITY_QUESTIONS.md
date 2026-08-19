@@ -5104,3 +5104,57 @@ A Cloudinary upload and delivery approach was documented for the card image set.
 **1. Short Question** — Who supplies the four remaining card images, and do the empty slots block launch?
 
 Only two of six card images are integrated; four slots are placeholders. Needs a named supplier, a date, and a decision on whether the page can go live with placeholders.
+
+### Q-AI-0568 — Does the registry-based fix bypass the CMS's tag-stripping sanitization, and did anyone review that as an XSS risk?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the registry-based fix bypass the CMS's tag-stripping sanitization, and did anyone review that as an XSS risk?
+
+The CMS stripped `<style>` and `<script>` tags — that is usually a deliberate security control. The fix moves CSS/JS delivery outside the CMS. Needs confirmation that this was a reviewed and approved change to how executable code reaches production pages, not a workaround, and who owns the registry going forward.
+
+### Q-AI-0569 — What source of truth was used to confirm the calculator's 4 test-case results were correct?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — What source of truth was used to confirm the calculator's 4 test-case results were correct?
+
+"All calculations were correct" needs a reference: an approved formula spec, a finance/engineering sign-off, or a manual model. Also unclear whether 4 cases cover edge inputs (zero, blank, negative, very large decimal values).
+
+### Q-AI-0570 — Are Microsoft Clarity session recordings masking owner names, lease IDs, and form inputs, and is third-party session replay disclosed in the privacy policy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are Microsoft Clarity session recordings masking owner names, lease IDs, and form inputs, and is third-party session replay disclosed in the privacy policy?
+
+Clarity is an external vendor receiving replay of real user sessions, including logged-in mineral-owner journeys. Needs confirmation of masking configuration, retention, and privacy-policy coverage naming the vendor.
+
+### Q-AI-0571 — Who reviews and approves the ~1,900-word Operating Expense glossary content before it publishes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who reviews and approves the ~1,900-word Operating Expense glossary content before it publishes?
+
+The page defines accounting/operational mechanics that overlap with LOE and CapEx pages. Needs a named subject-matter reviewer and confirmation of whether it is already live or still pending approval.
+
+### Q-AI-0572 — Does the calculator's output display the educational-only / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the calculator's output display the educational-only / no-investment-advice disclaimer?
+
+If the calculator produces a dollar figure for a mineral owner, it needs the same estimate/no-advice guardrail applied elsewhere on the site. Which calculator this is and what value it outputs is not stated.
+
+### Q-AI-0573 — Where does the daily tracking sheet live, and who can access the registrant, lease-claim, and inquiry PII in it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where does the daily tracking sheet live, and who can access the registrant, lease-claim, and inquiry PII in it?
+
+The sheet aggregates new registrations, lease claim requests, paid-user activity, and Contact Us submissions — effectively a daily PII export outside the platform. Needs storage location, access list, and retention rule.
