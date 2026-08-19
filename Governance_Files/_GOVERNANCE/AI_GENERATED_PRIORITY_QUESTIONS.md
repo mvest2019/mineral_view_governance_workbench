@@ -5158,3 +5158,57 @@ If the calculator produces a dollar figure for a mineral owner, it needs the sam
 **1. Short Question** — Where does the daily tracking sheet live, and who can access the registrant, lease-claim, and inquiry PII in it?
 
 The sheet aggregates new registrations, lease claim requests, paid-user activity, and Contact Us submissions — effectively a daily PII export outside the platform. Needs storage location, access list, and retention rule.
+
+### Q-AI-0574 — Is the 4–5% registration conversion target an officially approved goal, and who owns it with what deadline?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is the 4–5% registration conversion target an officially approved goal, and who owns it with what deadline?
+
+The research is framed as a bridge from ~1.6% to 4–5%, but the submission does not say who set or approved that target, by when it must be reached, or whether it is a company commitment or a working aspiration. Without an approved owner and date, the staged execution plan has no accountability.
+
+### Q-AI-0575 — How is a "genuine registration" defined, and does the 1.61% baseline exclude bot, spam, and duplicate signups?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — How is a "genuine registration" defined, and does the 1.61% baseline exclude bot, spam, and duplicate signups?
+
+The research explicitly separates registration-page progression from "actual completed genuine registrations" and fixes ~1.6%/1.61% as the reporting convention. The definition and exclusion rules behind that number need to be written down and approved, or the baseline and every future lift claim will be disputed.
+
+### Q-AI-0576 — Who approves the proposed Premium trial and 15-day referral rewards, given they give away paid subscription value?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approves the proposed Premium trial and 15-day referral rewards, given they give away paid subscription value?
+
+3-day/7-day/14-day trials, feature unlocks, report credits, and 15 days of Premium per referral all have direct revenue and pricing impact. The submission lists them as experiment hypotheses but names no approver or budget cap for giving away paid tiers.
+
+### Q-AI-0577 — Does the family/co-owner/heir referral loop need privacy and legal review before users are prompted to invite other owners?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Does the family/co-owner/heir referral loop need privacy and legal review before users are prompted to invite other owners?
+
+Inviting heirs, co-owners, executors and trustees means one user supplying another identifiable mineral owner's contact details, and sharing lease or ownership reports may disclose third-party data. Referral terms, consent, unsubscribe handling and anti-spam obligations likely need review before any experiment launches.
+
+### Q-AI-0578 — What owner data may be shown to unauthenticated visitors under the free-vs-gated strategy, and who signed off on that exposure?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What owner data may be shown to unauthenticated visitors under the free-vs-gated strategy, and who signed off on that exposure?
+
+The free / preview / masked / gated framework decides how much real owner-record and valuation data is visible before registration. That is a privacy and no-advice decision as much as a conversion one, and the submission does not name who approves the final gating line.
+
+### Q-AI-0579 — Who owns and funds the "no-regret" current-site fixes, and do they still proceed if the replacement site launches soon?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who owns and funds the "no-regret" current-site fixes, and do they still proceed if the replacement site launches soon?
+
+The research splits current-site recommendations into changes worth making now versus work that should wait for the replacement site. No owner, priority order, or cutoff date is given for the now-list, so it risks being dropped if the coming-soon launch date moves in.
