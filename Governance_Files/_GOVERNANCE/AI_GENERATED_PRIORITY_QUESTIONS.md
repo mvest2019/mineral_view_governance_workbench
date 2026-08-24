@@ -5806,3 +5806,57 @@ Item 3 records channels as running, paused, or awaiting an owner but does not sa
 **1. Short Question** — After folding the two June off-page documents into this one, which version is canonical and are the originals retired?
 
 The document now exists in the governance workbench and was shared with Nikhil, while two June source documents still exist. Without marking the merged file as canonical and the originals superseded, teams will work from stale off-page plans.
+
+### Q-AI-0646 — Who approves the follow-up email drafts before they are sent to real registered users?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approves the follow-up email drafts before they are sent to real registered users?
+
+Drafts are prepared but not sent. Governance needs a named approver and a record of the final approved copy before outbound contact with real claimed-lease users.
+
+### Q-AI-0647 — How was the list of registered-and-claimed-but-unpaid users extracted, and is that PII use approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — How was the list of registered-and-claimed-but-unpaid users extracted, and is that PII use approved?
+
+Building a targeted outreach segment means pulling user records, claim status, and subscription status. Clarify the source (Cerebro, production DB, CRM), who pulled it, and whether marketing use of that data is approved.
+
+### Q-AI-0648 — Is the Mineral View 2.0 launch confirmed with a date we can state to customers in email?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is the Mineral View 2.0 launch confirmed with a date we can state to customers in email?
+
+The drafts inform users about an upcoming 2.0 launch while the redesign, pricing, and go-live cutover are still open decisions. Announcing it externally creates a commitment.
+
+### Q-AI-0649 — Does Altered AI's real-time voice conversion require disclosing to callers that the voice is AI-altered?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Does Altered AI's real-time voice conversion require disclosing to callers that the voice is AI-altered?
+
+Using an accent/voice conversion tool on live customer calls raises consent, call-recording, and disclosure questions that need a decision before it is used on the Grasshopper calling workflow.
+
+### Q-AI-0650 — Who approved buying and using Altered AI, and what is the decision deadline if support cannot fix the audio?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approved buying and using Altered AI, and what is the decision deadline if support cannot fix the audio?
+
+Testing has now hit a blocking audio defect across sessions. Clarify tool approval, cost, and the fallback plan/date if real-time conversion is not made to work.
+
+### Q-AI-0651 — Who signed off that the Funnel 2 spec is implementation-ready, and where is the approved version stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who signed off that the Funnel 2 spec is implementation-ready, and where is the approved version stored?
+
+"Implementation-ready" is a gate. Name the sign-off owner, the frozen document location/version, and the engineering owner who receives it.
