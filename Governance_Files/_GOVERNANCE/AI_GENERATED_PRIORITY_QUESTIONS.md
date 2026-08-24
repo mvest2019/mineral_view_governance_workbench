@@ -5320,3 +5320,57 @@ The report describes verification activities but no acceptance threshold. Clarif
 **1. Short Question** — Is our scraping of the source websites compliant with their terms of use and rate limits, and who confirms that when extraction logic changes?
 
 Items 6 and 7 cover researching source websites and adapting to structure changes. Governance should record who verifies that access frequency and method remain permitted, particularly after a site redesign forces new extraction logic.
+
+### Q-AI-0592 — Was the 5-mile "What's Near My Land" 503 failing for real users in production, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the 5-mile "What's Near My Land" 503 failing for real users in production, and for how long?
+
+The fix was verified on staging only. Governance needs to know whether live members were getting 503s on 5-mile nearby searches, since the same class of issue (Well Info / Linkage download returning empty) has already been raised separately.
+
+### Q-AI-0593 — Is `LeaseRadiusData` now the canonical ring source, and what still reads `Adjacent_Lease_Activity`?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is `LeaseRadiusData` now the canonical ring source, and what still reads `Adjacent_Lease_Activity`?
+
+Switching the data source changes the counts users see. Confirm which collection is authoritative, whether both are maintained by the pipelines, and whether any other endpoint or report still reads the old one.
+
+### Q-AI-0594 — Does the new whole-state wells time-lapse endpoint require authentication and tier gating, or is the full statewide dataset open to anyone?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does the new whole-state wells time-lapse endpoint require authentication and tier gating, or is the full statewide dataset open to anyone?
+
+`GET /api/v1/map/timelapse/wells` returns all wells with coordinates and completion dates in one response — effectively a bulk export. Confirm auth, subscription gating, and rate limiting before it leaves dev.
+
+### Q-AI-0595 — How do the new daily-versioned caches invalidate when the nightly pipelines delete and rebuild the underlying collections?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — How do the new daily-versioned caches invalidate when the nightly pipelines delete and rebuild the underlying collections?
+
+Time-lapse and cluster caching are both keyed on a daily version. If a scraper or ETL run rebuilds a collection mid-day, users could be served stale or partially-rebuilt data until the next version rollover. Who owns the invalidation trigger?
+
+### Q-AI-0596 — Does clamping `totalPages` hide records that users can no longer reach, and who approved the maximum page limit?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does clamping `totalPages` hide records that users can no longer reach, and who approved the maximum page limit?
+
+Clamping stops the HTTP 400, but if the result set is larger than the capped page window those rows become unreachable in the table. Confirm the cap value is an approved product decision and that the UI tells the user results were truncated.
+
+### Q-AI-0597 — Is the new Redis cache provisioned, secured, and approved for production, or does it exist only in dev?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is the new Redis cache provisioned, secured, and approved for production, or does it exist only in dev?
+
+Cluster caching now depends on Redis and request coalescing. Confirm the production instance exists, is access-controlled and not publicly reachable, its credentials are in environment variables, and there is a defined behaviour if Redis is unavailable.
