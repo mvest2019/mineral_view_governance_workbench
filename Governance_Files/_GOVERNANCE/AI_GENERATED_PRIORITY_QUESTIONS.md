@@ -5644,3 +5644,57 @@ Removing these from public marketing pages changes what prospects see and can br
 **1. Short Question** — Going forward, is marketing/v44.html or the extracted output the source of truth for these pages?
 
 The new `scripts/extract-proto.py` pipeline generates page files from prototype revisions, and multiple extraction bugs (CSS comments, ID rules, router styles, dynamic classes) were already found. Governance needs to know which artifact developers edit, who owns the script and the CSS completeness audit, and what happens to hand-edits when the next prototype revision lands.
+
+### Q-AI-0628 — Should the three documented compare-operators-production defects be fixed now, and who owns them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Should the three documented compare-operators-production defects be fixed now, and who owns them?
+
+The submission flags three unfixed issues (wrong `type` on empty results, duplicate county rows without `search_text`, silent default sort on removed fields) and explicitly asks for a decision. No owner, ticket, or target date is recorded.
+
+### Q-AI-0629 — Who approved removing `mmboe`, `total_boe`, `BOEValues`, and the six quarter fields from live API responses?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Who approved removing `mmboe`, `total_boe`, `BOEValues`, and the six quarter fields from live API responses?
+
+Five response fields were deleted across `details`, `production-graph`, and `search` on the stated assumption that no client reads them. Governance needs to know who verified that against the actual frontend and mobile consumers, and who approved the breaking change.
+
+### Q-AI-0630 — Was frontend told that oil/gas values are now unit-tagged strings instead of raw numbers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Was frontend told that oil/gas values are now unit-tagged strings instead of raw numbers?
+
+`production-by-county` and parts of the other endpoints now return values like `"1,907,873.826 (MBBL)"`. Any client doing arithmetic, sorting, or charting on those fields will break even though the endpoint still returns 200.
+
+### Q-AI-0631 — Were these six changes reviewed and merged to `main` by someone else, or self-merged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Were these six changes reviewed and merged to `main` by someone else, or self-merged?
+
+The report states all six feature branches were merged into `main` the same day. Governance needs to confirm whether a code review gate existed, and whether `main` deploys straight to production.
+
+### Q-AI-0632 — Was the prefix-match lease search load-tested, and is there a minimum input length or result cap?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — Was the prefix-match lease search load-tested, and is there a minimum input length or result cap?
+
+A single-character query like `1` now matches every lease starting with 1. Even with a left-anchored regex index scan, the result set size and response payload could be very large; confirm whether a limit, pagination, or minimum query length is enforced.
+
+### Q-AI-0633 — Which scale is canonical per endpoint, and where is that documented for consumers?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — Which scale is canonical per endpoint, and where is that documented for consumers?
+
+The same figure is now returned in MBBL/MMCF for operator-wide requests but MMBBL/BCF when a county is sent, varying by endpoint. Confirm this scale matrix is documented and that `oil_unit`/`gas_unit`/`boe_unit` field names are consistent across all endpoints.
