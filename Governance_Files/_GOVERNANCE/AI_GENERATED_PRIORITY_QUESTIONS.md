@@ -5482,3 +5482,57 @@ Glossary pages on other topics have already produced citation and accuracy issue
 **1. Short Question** — Where is the internal daily tracking sheet stored, and who has access, given it holds registrations, lease claims, and Contact Us inquiries?
 
 This sheet aggregates mineral-owner PII outside the platform. Confirm its location, access list, and whether that access is approved.
+
+### Q-AI-0610 — Who reviewed and approved this Payout glossary page before it was published live to mineralview.com?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who reviewed and approved this Payout glossary page before it was published live to mineralview.com?
+
+The page was published to production and verified (HTTP 200, 18 H2s, 6 FAQs) by the same person who wrote it. There is no named reviewer or publish approver in the report. Governance needs to know who holds sign-off authority for publishing new glossary pages to the live marketing site.
+
+### Q-AI-0611 — Who approved publishing statistics derived from our internal MongoDB production data on a public page?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approved publishing statistics derived from our internal MongoDB production data on a public page?
+
+The 60%/76% decline figures, the 86% multi-well claim, and the 2.16x flat-rate overstatement were derived by screening internal MongoDB collections (1,457 completions, 942 leases, 362 wells). Publishing internally derived aggregates externally is a data-disclosure decision, and the methodology (peak-aligned, 12 clean months, 61 clean curves) needs a documented, reproducible source before it is cited publicly.
+
+### Q-AI-0612 — Does the published calculator actually compute for users, given the CMS strips `<script>` tags?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the published calculator actually compute for users, given the CMS strips `<script>` tags?
+
+The report says the CMS strips `<style>` and `<script>`, that the calculator was rebuilt as a single HTML file using only existing CSS, and that 'static calculator figures' (16 months / flat 11.0 months / 100% -> 75%) display correctly — yet it also reports 8 interactive test scenarios (0% decline, empty state, APO > BPO). Clarify whether live users get a working calculator or a fixed illustrative example, because the two are very different promises.
+
+### Q-AI-0613 — Was the named-well version (MOTHRA B #2H, EOG, Karnes County) ever shared or published anywhere before it was anonymized?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Was the named-well version (MOTHRA B #2H, EOG, Karnes County) ever shared or published anywhere before it was anonymized?
+
+A specific operator and well were recommended and then withdrawn for privacy reasons. Confirm the named version never reached a draft URL, shared doc, or external reviewer — and clarify what privacy rule applies here, since RRC production records are public filings.
+
+### Q-AI-0614 — Does the payout calculator state its assumptions and carry the educational-only / no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the payout calculator state its assumptions and carry the educational-only / no-advice disclaimer?
+
+The calculator outputs a payout-timing number that a mineral owner could act on. It needs its inputs and assumptions (decline model, which costs are recoverable, BPO/APO treatment) visible on the page, plus the standard estimate / no-investment-advice language.
+
+### Q-AI-0615 — Was the inaccurate 'Mineral View shows payout status' claim ever live, and do other pages repeat it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Was the inaccurate 'Mineral View shows payout status' claim ever live, and do other pages repeat it?
+
+The report says an inaccurate claim was corrected — Mineral View shows production decline, not payout status, because payout accounts are private. Confirm whether that claim was published to users before correction, and whether other glossary, blog, or SEO pages carry the same wrong statement and need the same fix.
