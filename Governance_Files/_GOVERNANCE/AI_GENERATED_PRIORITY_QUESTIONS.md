@@ -5590,3 +5590,57 @@ The AI-written read travels inside the exported PDF, which leaves the platform a
 **1. Short Question** — How is the extent cache invalidated so users are not shown stale wells after a data refresh or filter change?
 
 Panning or zooming inside an already-loaded box reuses cached wells. Clarify the cache lifetime and invalidation rule, since pipelines rebuild well collections and stale results could be mistaken for current activity.
+
+### Q-AI-0622 — Are these rebuilt marketing pages already public now that they are merged into Master, and who approved that release?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Are these rebuilt marketing pages already public now that they are merged into Master, and who approved that release?
+
+The submission states all changes are committed and merged into `Master` with a clean tree, while the same report still lists unresolved items (broken links, nested interactive element, hardcoded figures, unavailable features shown). Governance needs to know whether `Master` auto-deploys to the live marketing site and who signed off on shipping with these items open.
+
+### Q-AI-0623 — Are exports, Lease Audits, and Portfolio Audits being advertised on the public pages before they exist, and who approves that?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Are exports, Lease Audits, and Portfolio Audits being advertised on the public pages before they exist, and who approves that?
+
+The report flags paid features in the comparison table that are not on the cards, plus exports, Lease Audits, and Portfolio Audits as "not currently available." Advertising unbuilt features on a public pricing page is a customer-representation risk and needs a named approver and a fix-or-remove decision.
+
+### Q-AI-0624 — Which hardcoded claims figures are shown on these pages, and who verified them before they went live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Which hardcoded claims figures are shown on these pages, and who verified them before they went live?
+
+The open items include moving hardcoded claims figures behind the content API. Until that happens, static numbers are being presented publicly as fact — we need the current values, their source, and who validated them.
+
+### Q-AI-0625 — Do the prototype links pointing to unserved routes currently 404 for real visitors, and when will they be fixed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Do the prototype links pointing to unserved routes currently 404 for real visitors, and when will they be fixed?
+
+Prototype links to routes that are not served will produce dead ends or 404s on live marketing pages. Need confirmation of whether they are reachable today, the list of affected links, and a fix or removal date.
+
+### Q-AI-0626 — Who approved removing Dashboard, My Leases, and The Weekly Report from the public marketing pages?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Who approved removing Dashboard, My Leases, and The Weekly Report from the public marketing pages?
+
+Removing these from public marketing pages changes what prospects see and can break existing inbound links or campaigns. Need the approver and confirmation of whether any old URLs need redirects.
+
+### Q-AI-0627 — Going forward, is marketing/v44.html or the extracted output the source of truth for these pages?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Going forward, is marketing/v44.html or the extracted output the source of truth for these pages?
+
+The new `scripts/extract-proto.py` pipeline generates page files from prototype revisions, and multiple extraction bugs (CSS comments, ID rules, router styles, dynamic classes) were already found. Governance needs to know which artifact developers edit, who owns the script and the CSS completeness audit, and what happens to hand-edits when the next prototype revision lands.
