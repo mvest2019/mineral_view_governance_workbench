@@ -5374,3 +5374,57 @@ Clamping stops the HTTP 400, but if the result set is larger than the capped pag
 **1. Short Question** — Is the new Redis cache provisioned, secured, and approved for production, or does it exist only in dev?
 
 Cluster caching now depends on Redis and request coalescing. Confirm the production instance exists, is access-controlled and not publicly reachable, its credentials are in environment variables, and there is a defined behaviour if Redis is unavailable.
+
+### Q-AI-0598 — What data is sent to Gemini for the "What Changed" section, and who approved Gemini as a production AI provider?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What data is sent to Gemini for the "What Changed" section, and who approved Gemini as a production AI provider?
+
+The submission says the Gemini provider/model configuration was corrected to enable "What Changed" in production. Governance needs to know whether operator, lease, or owner-identifiable data leaves MineralView to Google, under what account and terms, and who approved that provider for production use.
+
+### Q-AI-0599 — Is the Gemini-generated "What Changed" text reviewed for accuracy, and does it carry the educational-only / no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the Gemini-generated "What Changed" text reviewed for accuracy, and does it carry the educational-only / no-advice disclaimer?
+
+"What Changed" is now live and machine-generated from `/operators/details`. Clarify whether any human or automated accuracy check gates it, and whether it is covered by the platform's no-investment-advice guardrails.
+
+### Q-AI-0600 — Who approved removing the Active status filter, and can inactive operator or lease records now be mistaken for current?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who approved removing the Active status filter, and can inactive operator or lease records now be mistaken for current?
+
+The filter was removed because it was hiding records, but removing it changes what users see. Confirm the decision owner and whether inactive/expired records are now clearly labeled rather than presented as current.
+
+### Q-AI-0601 — How long were the incorrect county production, chart, and Oil/Gas column values live in production, and were they used in any reports?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — How long were the incorrect county production, chart, and Oil/Gas column values live in production, and were they used in any reports?
+
+Multiple API data-mapping and sorting defects were fixed. Governance needs the exposure window and confirmation that no downstream report, valuation, or customer communication carried the wrong figures.
+
+### Q-AI-0602 — Does the Governance Workbench troubleshooting documentation contain the actual `CLAUDE_BRIDGE_TOKEN` or `.env` values, and where is it stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does the Governance Workbench troubleshooting documentation contain the actual `CLAUDE_BRIDGE_TOKEN` or `.env` values, and where is it stored?
+
+Troubleshooting steps and commands were documented for future reference. Confirm the doc holds only placeholders, and state where it lives and who can read it.
+
+### Q-AI-0603 — Is the Claude Bridge reachable only from localhost, and what data or systems can it access once authenticated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the Claude Bridge reachable only from localhost, and what data or systems can it access once authenticated?
+
+The bridge auth issue was resolved via a static token and a `/health` endpoint. Clarify whether the bridge is bound to localhost or exposed publicly, whether `/health` is unauthenticated, and what repositories or databases a holder of the token can reach.
