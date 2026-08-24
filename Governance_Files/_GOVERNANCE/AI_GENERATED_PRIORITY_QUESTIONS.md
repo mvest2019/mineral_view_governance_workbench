@@ -5428,3 +5428,57 @@ Troubleshooting steps and commands were documented for future reference. Confirm
 **1. Short Question** — Is the Claude Bridge reachable only from localhost, and what data or systems can it access once authenticated?
 
 The bridge auth issue was resolved via a static token and a `/health` endpoint. Clarify whether the bridge is bound to localhost or exposed publicly, whether `/health` is unauthenticated, and what repositories or databases a holder of the token can reach.
+
+### Q-AI-0604 — Does the registry-based fix bypass the CMS's stripping of `<style>` and `<script>` tags, and was that security reviewed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the registry-based fix bypass the CMS's stripping of `<style>` and `<script>` tags, and was that security reviewed?
+
+The CMS strips `<style>`/`<script>` as a sanitization control. A registry-based approach that delivers CSS/JS around that control needs confirmation that it cannot be used to inject arbitrary script into public pages, and sign-off from whoever owns the CMS content-security policy.
+
+### Q-AI-0605 — Do the Microsoft Clarity session recordings mask owner names, emails, and lease data, and is that recording disclosed in the privacy policy?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Do the Microsoft Clarity session recordings mask owner names, emails, and lease data, and is that recording disclosed in the privacy policy?
+
+Session replay captures on-screen content and inputs. Confirm field masking is enabled for authenticated portal pages, what the retention period is, and that the privacy policy covers it.
+
+### Q-AI-0606 — What source of truth were the calculator's 4 test cases checked against, and who signed off that the formula is correct?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — What source of truth were the calculator's 4 test cases checked against, and who signed off that the formula is correct?
+
+"All calculations correct" needs a named reference — an approved formula spec or an independent calculation — not just self-consistency, since the calculator is now live in production.
+
+### Q-AI-0607 — Which calculator is this, and does its output require the educational-only / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Which calculator is this, and does its output require the educational-only / no-investment-advice disclaimer?
+
+If it produces royalty, value, or income figures for mineral owners, it falls under the existing no-advice guardrails; confirm the disclaimer is present on the live page.
+
+### Q-AI-0608 — Who fact-checked the ~1,900-word Operating Expense glossary content, and has it been published yet?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who fact-checked the ~1,900-word Operating Expense glossary content, and has it been published yet?
+
+Glossary pages on other topics have already produced citation and accuracy issues. Confirm a subject-matter reviewer approved the OpEx content and the `/glossary/operating-expense` slug decision before publication.
+
+### Q-AI-0609 — Where is the internal daily tracking sheet stored, and who has access, given it holds registrations, lease claims, and Contact Us inquiries?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Where is the internal daily tracking sheet stored, and who has access, given it holds registrations, lease claims, and Contact Us inquiries?
+
+This sheet aggregates mineral-owner PII outside the platform. Confirm its location, access list, and whether that access is approved.
