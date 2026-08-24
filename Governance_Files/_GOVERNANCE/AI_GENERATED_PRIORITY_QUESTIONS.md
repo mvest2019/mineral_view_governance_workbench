@@ -5698,3 +5698,57 @@ A single-character query like `1` now matches every lease starting with 1. Even 
 **1. Short Question** — Which scale is canonical per endpoint, and where is that documented for consumers?
 
 The same figure is now returned in MBBL/MMCF for operator-wide requests but MMBBL/BCF when a county is sent, varying by endpoint. Confirm this scale matrix is documented and that `oil_unit`/`gas_unit`/`boe_unit` field names are consistent across all endpoints.
+
+### Q-AI-0634 — How long has GA4 been recording $0 revenue, and was any reporting or decision made using that missing purchase data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — How long has GA4 been recording $0 revenue, and was any reporting or decision made using that missing purchase data?
+
+The August 20 $200 Professional plan purchase never reached GA4 and purchase tracking was never configured, so GA4 revenue has likely been $0 since launch. Governance needs the start date of the blind period, confirmation of which reports/dashboards showed GA4 revenue, and a written statement that internal transaction records are the sole source of truth for the affected period.
+
+### Q-AI-0635 — Who publishes the GTM purchase tag and who owns the checkout-side code, and by what date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who publishes the GTM purchase tag and who owns the checkout-side code, and by what date?
+
+The GTM trigger/tag remains in draft and unpublished, and the confirmation-page code is only handed off. Revenue tracking stays broken until both land. Need a named GTM publisher, a named developer owner, a target date, and who validates with a real purchase afterward.
+
+### Q-AI-0636 — Who approved permanently 410-ing 9 articles (11 live URLs) on the production site, and where is the HTML archive stored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approved permanently 410-ing 9 articles (11 live URLs) on the production site, and where is the HTML archive stored?
+
+410 Gone is irreversible for live content. Archiving was recommended but not confirmed as done. Need the named approver, confirmation the archive exists before execution, and who performs the change on production.
+
+### Q-AI-0637 — Has the Search Console Links report been checked for backlinks to the 19 URLs before any removal is executed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Has the Search Console Links report been checked for backlinks to the 19 URLs before any removal is executed?
+
+External backlinks were flagged as the one risk that could not be verified from the dataset. This is an open prerequisite, not a completed check — who runs it, and does a found backlink move a URL from 410 to 301?
+
+### Q-AI-0638 — Are the zero `spendingtime` values and 98% self-repeating click events a tracking defect, and who owns fixing them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the zero `spendingtime` values and 98% self-repeating click events a tracking defect, and who owns fixing them?
+
+Both findings mean the production `userbehavior` table cannot support engagement or navigation analysis. Governance needs to know whether this is a known defect, which existing reports or past conclusions relied on this data, and who is assigned the fix.
+
+### Q-AI-0639 — Who approves the new 6-category blog structure, and what happens to the old category URLs and sitemap?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approves the new 6-category blog structure, and what happens to the old category URLs and sitemap?
+
+The restructure was created and delivered but no approver is named, and replacing five categories with six changes live index URLs. Need the sign-off owner and a redirect/sitemap plan for the retired category pages.
