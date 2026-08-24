@@ -5536,3 +5536,57 @@ The calculator outputs a payout-timing number that a mineral owner could act on.
 **1. Short Question** — Was the inaccurate 'Mineral View shows payout status' claim ever live, and do other pages repeat it?
 
 The report says an inaccurate claim was corrected — Mineral View shows production decline, not payout status, because payout accounts are private. Confirm whether that claim was published to users before correction, and whether other glossary, blog, or SEO pages carry the same wrong statement and need the same fix.
+
+### Q-AI-0616 — Did the screenshots captured from the running build contain real well, lease, or mineral-owner data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Did the screenshots captured from the running build contain real well, lease, or mineral-owner data?
+
+The feature guide images were captured from the running product. If any show real records, owner names, or MVEstimate values, they are now published assets on a public page and need a redaction review.
+
+### Q-AI-0617 — Was the temporary screenshot route ever deployed or reachable outside local development before it was removed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the temporary screenshot route ever deployed or reachable outside local development before it was removed?
+
+A temporary route was added to capture screenshots and then removed. Confirm whether it shipped to a deployed environment, whether it was authenticated, and whether it is fully gone from all branches.
+
+### Q-AI-0618 — Does the AI summary now embedded in the downloadable PDF carry the educational-only / no-investment-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the AI summary now embedded in the downloadable PDF carry the educational-only / no-investment-advice disclaimer?
+
+The AI-written read travels inside the exported PDF, which leaves the platform and can be forwarded. Confirm the disclaimer is inside the captured node, not only on screen.
+
+### Q-AI-0619 — Who reviews the AI-generated permit and completion summaries for factual accuracy before users can download them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who reviews the AI-generated permit and completion summaries for factual accuracy before users can download them?
+
+`lib/ai-summary.ts` serves both `/api/permit-summary` and `/api/completion-summary`. Clarify the provider/model used, whether it is on the approved-tools list, and who owns accuracy sign-off given hallucination risk on regulatory records.
+
+### Q-AI-0620 — Are the nearby-lease lookup, filings list, and CSV download gated by subscription tier or export limits?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Are the nearby-lease lookup, filings list, and CSV download gated by subscription tier or export limits?
+
+`/map/leases/{key}/nearby` exposes stats, filings and closest-bore data at 1/3/5 miles plus a CSV export. Confirm the gating and any row cap, and whether the endpoint is authenticated and rate-limited.
+
+### Q-AI-0621 — How is the extent cache invalidated so users are not shown stale wells after a data refresh or filter change?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — How is the extent cache invalidated so users are not shown stale wells after a data refresh or filter change?
+
+Panning or zooming inside an already-loaded box reuses cached wells. Clarify the cache lifetime and invalidation rule, since pipelines rebuild well collections and stale results could be mistaken for current activity.
