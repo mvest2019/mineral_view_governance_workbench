@@ -5212,3 +5212,57 @@ The free / preview / masked / gated framework decides how much real owner-record
 **1. Short Question** — Who owns and funds the "no-regret" current-site fixes, and do they still proceed if the replacement site launches soon?
 
 The research splits current-site recommendations into changes worth making now versus work that should wait for the replacement site. No owner, priority order, or cutoff date is given for the now-list, so it risks being dropped if the coming-soon launch date moves in.
+
+### Q-AI-0580 — Who gave legal sign-off on the division order explanation before this reel is published?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who gave legal sign-off on the division order explanation before this reel is published?
+
+A division order is a binding legal instrument that affects how an owner is paid. The reel explains what it is and tells owners to review it carefully. Governance needs a named reviewer who confirmed the explanation is accurate and does not read as legal advice.
+
+### Q-AI-0581 — Do any visuals show a real division order document with owner names, decimal interests, or operator details?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Do any visuals show a real division order document with owner names, decimal interests, or operator details?
+
+The task says visuals and clips were arranged to the script. If any on-screen document, screen recording, or mock-up came from real member or production data, it may expose mineral-owner PII in a public reel.
+
+### Q-AI-0582 — Who verified that Mineral View actually delivers the lease and well organization capability the reel claims?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who verified that Mineral View actually delivers the lease and well organization capability the reel claims?
+
+The reel makes a product capability claim. It needs confirmation that the feature is live for the tier a viewer would land on, so the reel is not marketing something unreleased or gated.
+
+### Q-AI-0583 — Does the reel tell owners whether to sign, withhold, or negotiate a division order?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel tell owners whether to sign, withhold, or negotiate a division order?
+
+"Review it carefully" may shade into instruction. If the script recommends any action on signing or contesting terms, that needs explicit clearance and a no-legal-advice disclaimer on screen.
+
+### Q-AI-0584 — Does the reel state that division order rules and owner rights vary by state?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel state that division order rules and owner rights vary by state?
+
+Texas has statutory division order provisions that differ from other states. A general explainer without a jurisdiction caveat can mislead non-Texas viewers.
+
+### Q-AI-0585 — Does the reel's definition match the website glossary entry for Division Order, and who checks that?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel's definition match the website glossary entry for Division Order, and who checks that?
+
+Content writing maintains authoritative glossary pages on the same mechanics. Video and site content should not carry conflicting definitions; name the owner who reconciles them.
