@@ -5752,3 +5752,57 @@ Both findings mean the production `userbehavior` table cannot support engagement
 **1. Short Question** — Who approves the new 6-category blog structure, and what happens to the old category URLs and sitemap?
 
 The restructure was created and delivered but no approver is named, and replacing five categories with six changes live index URLs. Need the sign-off owner and a redirect/sitemap plan for the retired category pages.
+
+### Q-AI-0640 — What exactly makes an account "contaminated," and do previously reported funnel numbers need to be restated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — What exactly makes an account "contaminated," and do previously reported funnel numbers need to be restated?
+
+The refreshed conversion funnel excludes contaminated accounts, but the exclusion rule, the number of accounts removed, and the effect on earlier published baselines are not recorded. Without a written rule the funnel cannot be reproduced, and any prior reporting built on the unfiltered figures may now be wrong.
+
+### Q-AI-0641 — Who has final sign-off on the operator vs oil-and-gas-company slug, and by what date must it be locked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who has final sign-off on the operator vs oil-and-gas-company slug, and by what date must it be locked?
+
+The submission states this structure gates the website migration, Ryan's prototype, and multiple frontend, backend and data-science decisions. It needs a named decision owner and a hard date, otherwise the dependent teams will settle it during implementation — the exact outcome the finalisation is meant to prevent.
+
+### Q-AI-0642 — Who approved making operator comparison public, removed, or portal-only, since that changes a live user-facing feature?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approved making operator comparison public, removed, or portal-only, since that changes a live user-facing feature?
+
+Item 6 lists three very different outcomes for operator comparison. Moving it behind the portal is a product and subscription-gating decision, not an SEO one, and needs an owner outside the URL workstream.
+
+### Q-AI-0643 — Who approves the "quality visitor" definition, and which system measures it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves the "quality visitor" definition, and which system measures it?
+
+The Funnel-1 traffic target now depends on a quality-visitor definition. If the definition is not approved and tied to a specific measurable source (GA, Ahrefs, or internal registrations), the target cannot be verified as met or missed.
+
+### Q-AI-0644 — Which marketing channels are currently paused or without an owner, and who is accountable for assigning them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Which marketing channels are currently paused or without an owner, and who is accountable for assigning them?
+
+Item 3 records channels as running, paused, or awaiting an owner but does not say who resolves the unowned ones or whether any have live spend continuing while unattended.
+
+### Q-AI-0645 — After folding the two June off-page documents into this one, which version is canonical and are the originals retired?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — After folding the two June off-page documents into this one, which version is canonical and are the originals retired?
+
+The document now exists in the governance workbench and was shared with Nikhil, while two June source documents still exist. Without marking the merged file as canonical and the originals superseded, teams will work from stale off-page plans.
