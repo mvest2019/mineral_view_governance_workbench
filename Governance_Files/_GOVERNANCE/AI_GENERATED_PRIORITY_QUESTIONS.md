@@ -5266,3 +5266,57 @@ Texas has statutory division order provisions that differ from other states. A g
 **1. Short Question** — Does the reel's definition match the website glossary entry for Division Order, and who checks that?
 
 Content writing maintains authoritative glossary pages on the same mechanics. Video and site content should not carry conflicting definitions; name the owner who reconciles them.
+
+### Q-AI-0586 — Which scraper jobs failed or ran late today, who owns fixing them, and is there automated alerting instead of a manual daily check?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which scraper jobs failed or ran late today, who owns fixing them, and is there automated alerting instead of a manual daily check?
+
+The submission says failed or delayed jobs were "identified for further investigation" but names no jobs, owner, or deadline. Daily monitoring that depends on one person reading logs is a single point of failure — clarify whether failures raise an alert and who is accountable for remediation.
+
+### Q-AI-0587 — Were the scraper modifications tested against production data or a safe test environment, and who reviews extraction-logic changes before they run?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Were the scraper modifications tested against production data or a safe test environment, and who reviews extraction-logic changes before they run?
+
+Item 6 describes testing scraper modifications after website structure changes. Clarify the environment used, whether any writes hit production tables, and who approves changed extraction logic before it is scheduled.
+
+### Q-AI-0588 — Where are the data-quality issues found during validation logged, and who reviews and closes them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the data-quality issues found during validation logged, and who reviews and closes them?
+
+Missing, duplicate, incorrect, and inconsistent records were identified, plus W-1 permit differences that were "analyzed." Without a tracked defect list these findings stay in a daily note and never reach an owner.
+
+### Q-AI-0589 — When the PostgreSQL, SQL Server, and MongoDB consistency check finds a mismatch, which system is the source of truth and how is the mismatch corrected?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — When the PostgreSQL, SQL Server, and MongoDB consistency check finds a mismatch, which system is the source of truth and how is the mismatch corrected?
+
+Item 5 confirms records are compared across three systems but not what happens when they disagree. Name the authoritative store per dataset and the correction procedure.
+
+### Q-AI-0590 — What are the pass/fail criteria for signing off a daily scraping cycle, and can unvalidated data reach the live portal before that sign-off?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — What are the pass/fail criteria for signing off a daily scraping cycle, and can unvalidated data reach the live portal before that sign-off?
+
+The report describes verification activities but no acceptance threshold. Clarify what counts as a passing cycle and whether newly scraped W-1/W-2 records are visible to users before validation completes.
+
+### Q-AI-0591 — Is our scraping of the source websites compliant with their terms of use and rate limits, and who confirms that when extraction logic changes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is our scraping of the source websites compliant with their terms of use and rate limits, and who confirms that when extraction logic changes?
+
+Items 6 and 7 cover researching source websites and adapting to structure changes. Governance should record who verifies that access frequency and method remain permitted, particularly after a site redesign forces new extraction logic.
