@@ -5968,3 +5968,57 @@ This determines whether the directory is an SEO surface subject to content guard
 **1. Short Question** — Does the Forgot Password response reveal whether an email is registered, and is it rate-limited?
 
 Error handling and validation messages were in scope. Confirm whether the response distinguishes registered from unregistered emails (account enumeration) and whether repeated reset requests are throttled to prevent email-bombing a member.
+
+### Q-AI-0664 — Does the new Owners Search API expose mineral-owner PII, and who approved its access rules, tier gating, and rate limits?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does the new Owners Search API expose mineral-owner PII, and who approved its access rules, tier gating, and rate limits?
+
+The submission covers an architecture analysis for an Owners Search API over a large owner dataset, but does not state who may call it, whether results are restricted by subscription tier, or whether owner names/addresses are returned. Owner records are PII and need an approved access decision before build.
+
+### Q-AI-0665 — If Owners Search results are cached, where is that PII cached and what are its retention and invalidation rules?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — If Owners Search results are cached, where is that PII cached and what are its retention and invalidation rules?
+
+Caching was evaluated as part of the "common and scalable approach." Caching owner search responses means storing PII outside the database — the cache location, TTL, and purge path on owner-data corrections need to be documented and approved.
+
+### Q-AI-0666 — Who approved switching the Well Type filter from fluid categories to `well_icons`, and what happens to users' saved filters and shared links using the old values?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved switching the Well Type filter from fluid categories to `well_icons`, and what happens to users' saved filters and shared links using the old values?
+
+This is a user-facing behavior change (`wtype=Oil` now matches `well_icons` exactly). Saved filters, bookmarks, and any external links built on the previous fluid-category values may silently return nothing.
+
+### Q-AI-0667 — Were the distinct `well_icons` values checked for nulls, blanks, and typos before being shown to users as the filter list?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were the distinct `well_icons` values checked for nulls, blanks, and typos before being shown to users as the filter list?
+
+The filter list is now generated directly from distinct production values, so any junk or inconsistent rows in `well_icons` become visible filter options. Confirm whether a canonical value list exists or whether raw distinct values are surfaced as-is.
+
+### Q-AI-0668 — Were the hardcoded Reserve Integrity and Cohort EUR values shown to real users as if they were their own data, and will the switch to dynamic values change numbers users already saw?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were the hardcoded Reserve Integrity and Cohort EUR values shown to real users as if they were their own data, and will the switch to dynamic values change numbers users already saw?
+
+The submission notes these figures are currently hardcoded in the frontend. If members were shown static values in the Well Insights popup, that is a data-accuracy issue that may need disclosure alongside the API cutover.
+
+### Q-AI-0669 — Why was `feature/wells-recompletion-date` branched from `main` while other work targets `Development`, and who merges the three parallel changes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Why was `feature/wells-recompletion-date` branched from `main` while other work targets `Development`, and who merges the three parallel changes?
+
+Three code changes are in flight (Well Type filter, Well Insights API, Map Wells recompletion date) with at least one branched off a different base. Confirm the canonical base branch and the merge/release order so the changes do not diverge or overwrite each other.
