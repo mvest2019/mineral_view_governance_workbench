@@ -5914,3 +5914,57 @@ Division order statutes and payment rules differ by state. A national reel that 
 **1. Short Question** — Does the reel suggest owners delay or withhold signing, and was that risk to their payment timing reviewed?
 
 "Review before you sign" messaging can lead owners to hold a division order, which may delay royalty payments. Confirm whether the script addresses that consequence and who approved the framing.
+
+### Q-AI-0658 — Is the Forgot Password flow live for real users while the reset step is unimplemented?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the Forgot Password flow live for real users while the reset step is unimplemented?
+
+The submission states password reset after clicking the email link is not implemented. If the flow is enabled in production, users requesting a reset receive a link that goes nowhere — a dead end for locked-out members. Confirm which environments have Forgot Password enabled today and whether it should be hidden or messaged until the reset step ships.
+
+### Q-AI-0659 — Who owns building the missing password reset step, and by what date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who owns building the missing password reset step, and by what date?
+
+Validation of the journey beyond the email-link stage is pending on development work. Needed: named owner, target date, and whether this is a launch blocker or can ship after go-live.
+
+### Q-AI-0660 — Are the operator logos shown in the Operator Directory licensed for our use?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are the operator logos shown in the Operator Directory licensed for our use?
+
+Logo display was in scope for testing, but operator logos are third-party trademarks. Confirm where the logos are sourced from, whether we have permission to display them, and who approved that.
+
+### Q-AI-0661 — Which data source and as-of date feed the Operator Directory, and who confirms operator accuracy?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which data source and as-of date feed the Operator Directory, and who confirms operator accuracy?
+
+Data accuracy was listed as a test area, but no reference source is named. Testing cannot pass/fail on accuracy without an agreed source of truth and a subject-matter owner who signs off on operator names, counts, and details.
+
+### Q-AI-0662 — Is the Operator Directory public and search-indexed, or gated by subscription tier?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is the Operator Directory public and search-indexed, or gated by subscription tier?
+
+This determines whether the directory is an SEO surface subject to content guardrails, or a paid feature that must be tested for tier gating. Confirm which tier/account type the testing used.
+
+### Q-AI-0663 — Does the Forgot Password response reveal whether an email is registered, and is it rate-limited?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the Forgot Password response reveal whether an email is registered, and is it rate-limited?
+
+Error handling and validation messages were in scope. Confirm whether the response distinguishes registered from unregistered emails (account enumeration) and whether repeated reset requests are throttled to prevent email-bombing a member.
