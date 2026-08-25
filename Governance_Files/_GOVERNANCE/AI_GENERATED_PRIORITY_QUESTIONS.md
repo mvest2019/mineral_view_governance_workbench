@@ -5860,3 +5860,57 @@ Testing has now hit a blocking audio defect across sessions. Clarify tool approv
 **1. Short Question** — Who signed off that the Funnel 2 spec is implementation-ready, and where is the approved version stored?
 
 "Implementation-ready" is a gate. Name the sign-off owner, the frozen document location/version, and the engineering owner who receives it.
+
+### Q-AI-0652 — Who gave legal or land sign-off on the division order definitions and "before you sign" guidance in this reel?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Who gave legal or land sign-off on the division order definitions and "before you sign" guidance in this reel?
+
+A division order is a binding legal document. The reel tells mineral owners what to check before signing, which is guidance a viewer may act on. Governance needs a named reviewer (legal or a land/division-order SME) who verified the content before publishing.
+
+### Q-AI-0653 — Does this reel carry a no-legal-advice disclaimer, given it advises owners on signing a legal document?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does this reel carry a no-legal-advice disclaimer, given it advises owners on signing a legal document?
+
+Existing guardrails cover "educational only / no investment advice." Advising on whether and how to sign a division order edges into legal advice, which may need its own on-screen disclaimer.
+
+### Q-AI-0654 — Does the reel show a sample division order containing a real owner name, decimal interest, operator, or lease?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel show a sample division order containing a real owner name, decimal interest, operator, or lease?
+
+If a real or realistic document image was used, it may expose member PII or an identifiable operator. Confirm the sample is fully fictional or cleared.
+
+### Q-AI-0655 — Does the reel imply Mineral View data can be used to verify a division order's decimal interest or ownership?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel imply Mineral View data can be used to verify a division order's decimal interest or ownership?
+
+The reel positions Mineral View as the place to check lease and well information before signing. There are open data-integrity defects (ownership traced to the wrong owner, linkage year mismatch, MVEstimate $0/NaN). If viewers rely on platform data to check a binding legal instrument, the accuracy bar is higher than for general education.
+
+### Q-AI-0656 — Is the division order guidance state-specific, and does the reel state which state's rules it describes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is the division order guidance state-specific, and does the reel state which state's rules it describes?
+
+Division order statutes and payment rules differ by state. A national reel that describes Texas mechanics without saying so could mislead owners in other states.
+
+### Q-AI-0657 — Does the reel suggest owners delay or withhold signing, and was that risk to their payment timing reviewed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel suggest owners delay or withhold signing, and was that risk to their payment timing reviewed?
+
+"Review before you sign" messaging can lead owners to hold a division order, which may delay royalty payments. Confirm whether the script addresses that consequence and who approved the framing.
