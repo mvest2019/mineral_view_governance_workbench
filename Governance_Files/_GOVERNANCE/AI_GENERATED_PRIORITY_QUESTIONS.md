@@ -6022,3 +6022,57 @@ The submission notes these figures are currently hardcoded in the frontend. If m
 **1. Short Question** — Why was `feature/wells-recompletion-date` branched from `main` while other work targets `Development`, and who merges the three parallel changes?
 
 Three code changes are in flight (Well Type filter, Well Insights API, Map Wells recompletion date) with at least one branched off a different base. Confirm the canonical base branch and the merge/release order so the changes do not diverge or overwrite each other.
+
+### Q-AI-0670 — Was the temporary screenshot capture route ever deployed or reachable in production, and is there proof it is gone from every environment?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the temporary screenshot capture route ever deployed or reachable in production, and is there proof it is gone from every environment?
+
+The submission says a capture route was added to the running app to take screenshots and "removed each time." Governance needs to know whether that route existed only locally or on a deployed environment, whether it required authentication, and what confirms no copy remains in any branch or deployed build.
+
+### Q-AI-0671 — Was the removed 48 MB time-lapse endpoint live in production, and was any other client or report depending on it before deletion?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the removed 48 MB time-lapse endpoint live in production, and was any other client or report depending on it before deletion?
+
+The previous time-lapse implementation and its endpoint were deleted and replaced with a client-side replay over `/map/wells`. Needed: who approved removing the endpoint, whether it was serving production traffic, and how it was verified that no other consumer (portal, reports, external caller) still calls it.
+
+### Q-AI-0672 — Do the newly captured screenshots on this public guide page show real well, lease, or owner records rather than sample data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the newly captured screenshots on this public guide page show real well, lease, or owner records rather than sample data?
+
+New captures were taken from the running app for the table, API search, Share menu and filter bar, composited over the Esri view. If `/map-explorer` is publicly reachable, any real records baked into those images are published permanently. Confirm whether the source data was production or test, and whether owner-identifying values appear in the table or search captures.
+
+### Q-AI-0673 — Do the 36 feature points and six download cards advertise capabilities that are actually gated behind paid tiers or export caps?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do the 36 feature points and six download cards advertise capabilities that are actually gated behind paid tiers or export caps?
+
+The guide presents all 36 feature points and "every export the map offers" alongside free-account, pricing and plans CTAs. Governance needs confirmation that each advertised feature and download is available at the tier the page implies, and who signed off on the claims in the three CTA panels.
+
+### Q-AI-0674 — Who approved replacing `/map-explorer` in place with the guide, and what happened to the route's previous content and inbound links?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved replacing `/map-explorer` in place with the guide, and what happened to the route's previous content and inbound links?
+
+The new landing page was built in-place at an existing route. Needed: the approver for the in-place replacement, whether the prior page is still reachable anywhere, and whether URL/redirect/SEO parity was checked for a route that may already be indexed and linked.
+
+### Q-AI-0675 — What share of wells have no `recompletionDate`, and is the year-grouped replay accurate enough to present as activity history?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — What share of wells have no `recompletionDate`, and is the year-grouped replay accurate enough to present as activity history?
+
+The time-lapse now replays only the wells already loaded in view, grouped by year on `recompletionDate`, with undated wells reported separately. Clarify the field's provenance and completeness, and whether a viewport-limited, partially-dated replay could be read by users as a complete history of drilling or recompletion activity.
