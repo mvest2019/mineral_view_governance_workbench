@@ -6076,3 +6076,57 @@ The new landing page was built in-place at an existing route. Needed: the approv
 **1. Short Question** — What share of wells have no `recompletionDate`, and is the year-grouped replay accurate enough to present as activity history?
 
 The time-lapse now replays only the wells already loaded in view, grouped by year on `recompletionDate`, with undated wells reported separately. Clarify the field's provenance and completeness, and whether a viewport-limited, partially-dated replay could be read by users as a complete history of drilling or recompletion activity.
+
+### Q-AI-0676 — Does using Altered voice conversion on live US customer calls require disclosure or consent, and who approved it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Does using Altered voice conversion on live US customer calls require disclosure or consent, and who approved it?
+
+The submission sets up real-time voice conversion for the customer follow-up calling workflow. Altering an agent's voice on outbound calls to US consumers raises disclosure, recording-consent, and misrepresentation questions that need a named approver before it goes live.
+
+### Q-AI-0677 — Was real member data pasted into Claude to draft the personalized follow-up emails, and is that approved?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Was real member data pasted into Claude to draft the personalized follow-up emails, and is that approved?
+
+"Reviewed individual user context and journey stage" implies member names, claims, or lease details were shared with an external AI tool. Confirm what data was used and whether that transfer is approved and logged.
+
+### Q-AI-0678 — Is the anonymous visitor identification and user stitching in Funnel 2 disclosed in the privacy policy, and can visitors opt out?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is the anonymous visitor identification and user stitching in Funnel 2 disclosed in the privacy policy, and can visitors opt out?
+
+The spec finalizes anonymous visitor IDs, stitching to logged-in users, and anonymous owner search/unlock tracking. Needed: consent basis, retention period, and whether search terms containing owner names are stored.
+
+### Q-AI-0679 — Who approved the claim-lease email campaign content, and is the recipient list opt-in with a working unsubscribe?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approved the claim-lease email campaign content, and is the recipient list opt-in with a working unsubscribe?
+
+The campaign is already scheduled. Confirm the send date, the exact audience filter, the approver of the messaging, and CAN-SPAM compliance before it reaches paying and claimed-lease users.
+
+### Q-AI-0680 — Does the new "official visitor denominator" change previously reported funnel numbers, and who signs off on the restated figures?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Does the new "official visitor denominator" change previously reported funnel numbers, and who signs off on the restated figures?
+
+Version 1.1 finalizes an official denominator and userType handling. If it differs from what analytics reported before, prior funnel/conversion reporting may need restating.
+
+### Q-AI-0681 — What account details were shared with Grasshopper support, and what is the interim workaround while calling is down?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What account details were shared with Grasshopper support, and what is the interim workaround while calling is down?
+
+The escalation email included "required account and issue details" to a third-party vendor. Confirm no credentials or customer data were included, and state how customer follow-up calls are being handled until resolution.
