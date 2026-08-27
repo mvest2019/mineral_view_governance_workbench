@@ -6130,3 +6130,57 @@ Version 1.1 finalizes an official denominator and userType handling. If it diffe
 **1. Short Question** — What account details were shared with Grasshopper support, and what is the interim workaround while calling is down?
 
 The escalation email included "required account and issue details" to a third-party vendor. Confirm no credentials or customer data were included, and state how customer follow-up calls are being handled until resolution.
+
+### Q-AI-0682 — Was the filter bug that wiped or replaced selections live for real users, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the filter bug that wiped or replaced selections live for real users, and for how long?
+
+The report describes fixes where closing the panel wiped the selection and a search pick replaced applied filters instead of joining them. If that behaviour shipped, users may have viewed and downloaded map results under filters they did not intend. Need confirmation of whether this reached production, the exposure window, and whether any exported or reported figures were affected.
+
+### Q-AI-0683 — Does the `POST /api/v1/watches` endpoint exist in the backend, and is it authenticated, rate-limited, and tier-gated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does the `POST /api/v1/watches` endpoint exist in the backend, and is it authenticated, rate-limited, and tier-gated?
+
+Save watch now posts to a new service endpoint. Governance needs to know the endpoint is real and deployed, who owns it, whether it requires an authenticated session, whether unauthenticated or scripted calls can create unlimited watch records, and whether watches are restricted by subscription tier like other gated features.
+
+### Q-AI-0684 — Which environment, branch, and build does this Map work target — the 4th-view prototype or the production Well Explorer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Which environment, branch, and build does this Map work target — the 4th-view prototype or the production Well Explorer?
+
+Earlier Map work was described as the 4th view of the Well Explorer prototype. Clarify whether these changes are prototype-only or already merged toward production, and who accepts them before release, so this does not collide with the parallel portal redesign tracks.
+
+### Q-AI-0685 — Where do the nearby-activity figures and the new `newCompletions` field come from, and is it the same source and year as the reports?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Where do the nearby-activity figures and the new `newCompletions` field come from, and is it the same source and year as the reports?
+
+Given the known Linkage download year-mismatch (`_2025` vs `_2026`) and the well-store consolidation work, confirm the data source, as-of date, and radius logic behind the nearby card so the map does not contradict the Well Info and Field Reports for the same wells.
+
+### Q-AI-0686 — What does a saved watch actually do — does it send emails or alerts, and what is its retention and opt-out?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — What does a saved watch actually do — does it send emails or alerts, and what is its retention and opt-out?
+
+If watches trigger notifications to mineral owners, we need the approved notification content, frequency, unsubscribe path, and how long watch records (which encode a user's area of interest) are retained.
+
+### Q-AI-0687 — Who signs off the measure-area and distance calculation methods now published in the new info tooltips?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Who signs off the measure-area and distance calculation methods now published in the new info tooltips?
+
+The tooltips state the method used to derive each figure, which makes the methodology user-facing. Confirm who reviewed the area, radius, and sub-tenth-mile distance calculations for accuracy, and whether these figures need the estimate / no-advice framing applied elsewhere.
