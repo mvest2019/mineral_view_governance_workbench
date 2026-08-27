@@ -6184,3 +6184,57 @@ If watches trigger notifications to mineral owners, we need the approved notific
 **1. Short Question** — Who signs off the measure-area and distance calculation methods now published in the new info tooltips?
 
 The tooltips state the method used to derive each figure, which makes the methodology user-facing. Confirm who reviewed the area, radius, and sub-tenth-mile distance calculations for accuracy, and whether these figures need the estimate / no-advice framing applied elsewhere.
+
+### Q-AI-0688 — Does the new GTM purchase tag send any customer PII, such as email or name, into GA4?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the new GTM purchase tag send any customer PII, such as email or name, into GA4?
+
+The tag was built as Custom HTML reading values from the checkout page and two different backend payment systems. GA4's terms prohibit sending personally identifiable data. Confirm exactly which fields the script reads and pushes (transaction_id, value, currency, items) and that no email, name, member ID, or lease identifier is included.
+
+### Q-AI-0689 — Has a real customer purchase actually fired the event in GA4, or is verification still pending?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Has a real customer purchase actually fired the event in GA4, or is verification still pending?
+
+The report says GTM Version 26 is live and GA4 Realtime was opened to watch for the first `purchase` event, but does not state that one was observed. Until a real transaction is confirmed end to end, the fix is deployed but unverified. Who confirms it, and by when?
+
+### Q-AI-0690 — Is transaction_id deduplication in place so a page refresh or retry cannot double-count revenue?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Is transaction_id deduplication in place so a page refresh or retry cannot double-count revenue?
+
+A Custom HTML listener on a confirmation page can fire more than once (refresh, back-navigation, retry). Confirm the tag sends a stable unique transaction_id from both Braintree and the second payment system, and that firing priority/trigger settings prevent duplicate purchase events inflating reported revenue.
+
+### Q-AI-0691 — Who approved publishing GTM Version 26 to the live site, and what is the rollback plan if it breaks?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approved publishing GTM Version 26 to the live site, and what is the rollback plan if it breaks?
+
+Custom HTML tags execute arbitrary JavaScript on the live site. The report notes a script issue was found and corrected before saving. Record who gave publish approval, whether anyone other than the author reviewed the script, and how to roll back to Version 25 if a defect appears.
+
+### Q-AI-0692 — How far back does the missing purchase data go, and were any revenue reports produced from it?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — How far back does the missing purchase data go, and were any revenue reports produced from it?
+
+No purchase-tracking code existed anywhere in the codebase, so GA4 revenue was blank for the entire period before this fix. Establish the start date of the gap, whether any past reporting or decisions relied on that empty data, and whether historical revenue will be backfilled from Braintree or simply annotated as unavailable.
+
+### Q-AI-0693 — Does the new IDC and depletion-allowance tax content need review and a no-tax-advice disclaimer before publishing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Does the new IDC and depletion-allowance tax content need review and a no-tax-advice disclaimer before publishing?
+
+The proposed CapEx additions cover tax treatment of intangible drilling costs and the percentage depletion allowance for royalty owners. Confirm who is qualified to sign off on that content, whether it carries the educational-only / no-tax-or-investment-advice disclaimer, and who owns integrating the two sections still marked 'copy provided, pending integration'.
