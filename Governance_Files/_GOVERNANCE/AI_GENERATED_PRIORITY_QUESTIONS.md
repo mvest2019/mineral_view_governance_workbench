@@ -6238,3 +6238,57 @@ No purchase-tracking code existed anywhere in the codebase, so GA4 revenue was b
 **1. Short Question** — Does the new IDC and depletion-allowance tax content need review and a no-tax-advice disclaimer before publishing?
 
 The proposed CapEx additions cover tax treatment of intangible drilling costs and the percentage depletion allowance for royalty owners. Confirm who is qualified to sign off on that content, whether it carries the educational-only / no-tax-or-investment-advice disclaimer, and who owns integrating the two sections still marked 'copy provided, pending integration'.
+
+### Q-AI-0694 — Does POST /owners/claim verify that the caller owns the `member_id` in the request body, so one user cannot claim leases for another member?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does POST /owners/claim verify that the caller owns the `member_id` in the request body, so one user cannot claim leases for another member?
+
+The portal-format body takes `member_id` plus `mineralOwners`. If the endpoint trusts that field instead of the authenticated session, any caller could create claims against another member's account. Confirm the auth check and whether it was tested.
+
+### Q-AI-0695 — Are GET and DELETE /watches/:id restricted to the watch's owner, or can any authenticated user read or delete someone else's watch by ID?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Are GET and DELETE /watches/:id restricted to the watch's owner, or can any authenticated user read or delete someone else's watch by ID?
+
+The staging test ran POST → GET → DELETE on a single record, which would not surface a cross-user access problem. Watches carry a location and an email address.
+
+### Q-AI-0696 — Is `Activity_Test` really the approved production source for permit and completion notifications, given the "Test" name?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is `Activity_Test` really the approved production source for permit and completion notifications, given the "Test" name?
+
+The notification CLI scans `Activity_Test` after the daily ETL. Confirm this is the canonical production collection and not a leftover test collection, since a wrong source means members get missed or false alerts.
+
+### Q-AI-0697 — What happens to existing rows in `owner_address_corrections`, and does anything still read that table after the write moved to `public.address_corrections`?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — What happens to existing rows in `owner_address_corrections`, and does anything still read that table after the write moved to `public.address_corrections`?
+
+Cutover needs a decision on backfill/migration of historical corrections and on any downstream consumer, report, or operator-side job still reading the old table.
+
+### Q-AI-0698 — Do the activity-watch emails have an approved opt-out/unsubscribe path and a per-member send cap before this runs daily against real addresses?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Do the activity-watch emails have an approved opt-out/unsubscribe path and a per-member send cap before this runs daily against real addresses?
+
+The CLI sends via MailerService on every ETL cycle. Confirm unsubscribe handling, volume limits on a busy activity day, and that staging testing could not have emailed real members.
+
+### Q-AI-0699 — Who approves creating the `activity_watch` table on production and reviews the two still-unmerged branches before this goes live?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approves creating the `activity_watch` table on production and reviews the two still-unmerged branches before this goes live?
+
+`feature/well-summary-location-fields` and `feature/activity-watch-notifications` are pushed but not merged, and `npm run watches:init` performs a schema change on production Postgres. Name the reviewer/approver and the target date.
