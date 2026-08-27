@@ -6292,3 +6292,57 @@ The CLI sends via MailerService on every ETL cycle. Confirm unsubscribe handling
 **1. Short Question** — Who approves creating the `activity_watch` table on production and reviews the two still-unmerged branches before this goes live?
 
 `feature/well-summary-location-fields` and `feature/activity-watch-notifications` are pushed but not merged, and `npm run watches:init` performs a schema change on production Postgres. Name the reviewer/approver and the target date.
+
+### Q-AI-0700 — Were the Claim Lease follow-up emails approved and sent with unsubscribe/opt-out handling to real subscribers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Were the Claim Lease follow-up emails approved and sent with unsubscribe/opt-out handling to real subscribers?
+
+The task states follow-up emails were already sent to real users who claimed leases. Need to confirm who approved the copy and recipient list, which system/sender sent them, and that CAN-SPAM/unsubscribe and marketing-consent requirements were met before send, not after.
+
+### Q-AI-0701 — Do the Funnel 3 numbers exclude internal, test, and act-as-user accounts?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Do the Funnel 3 numbers exclude internal, test, and act-as-user accounts?
+
+Known issues exist with internal act-as-user sessions and QA-created accounts polluting registration and tracking data. Confirm what filters were applied to the registration and claim baselines, or the conversion rate may be understated/overstated.
+
+### Q-AI-0702 — Are the Funnel 3 data-integrity findings logged as engineering defects, or is the document their only record?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Are the Funnel 3 data-integrity findings logged as engineering defects, or is the document their only record?
+
+The summary mentions 'data integrity findings' but not where they are tracked. If they only live in the shared document, they will not be triaged or fixed.
+
+### Q-AI-0703 — Who owns the failed help requests found in the claim queue, and are those users still waiting for a response?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who owns the failed help requests found in the claim queue, and are those users still waiting for a response?
+
+The analysis reviewed help-request failure patterns during the claim process. Clarify whether unanswered or failed requests were escalated, whether there is a response SLA, and who is closing them out.
+
+### Q-AI-0704 — Where is the Funnel 3 document stored, and does it contain owner names, emails, or lease identifiers?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Where is the Funnel 3 document stored, and does it contain owner names, emails, or lease identifiers?
+
+The document was shared with Ryan and Nikhil. Confirm the storage location, access controls, and whether it holds member PII that should be kept out of git and general-access folders.
+
+### Q-AI-0705 — Who prioritizes the engineering and product recommendations from Funnel 3, and by what date?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who prioritizes the engineering and product recommendations from Funnel 3, and by what date?
+
+Recommendations to reduce claim friction were defined but no owner, backlog, or deadline is stated. Without that, the analysis stops at review.
