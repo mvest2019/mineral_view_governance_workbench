@@ -6346,3 +6346,57 @@ The document was shared with Ryan and Nikhil. Confirm the storage location, acce
 **1. Short Question** — Who prioritizes the engineering and product recommendations from Funnel 3, and by what date?
 
 Recommendations to reduce claim friction were defined but no owner, backlog, or deadline is stated. Without that, the analysis stops at review.
+
+### Q-AI-0706 — Is this QA against the live production Map Explorer or the new 4th-view redesign prototype?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is this QA against the live production Map Explorer or the new 4th-view redesign prototype?
+
+A parallel track is developing a redesigned 4th view of the Map/Well Explorer (rail navigation, new Filters/Style/Saved/Paths panels). It is unclear whether these test results apply to the current production map or to that prototype, which changes how the defects should be routed.
+
+### Q-AI-0707 — Which data source do the Map, Table, and Insights each read from, and were counts reconciled across all three?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which data source do the Map, Table, and Insights each read from, and were counts reconciled across all three?
+
+"Data consistency" is claimed but the source is not named. Known risks: the 259 per-county collections were consolidated into `TEXAS_WELLS`, centroid fields were renamed in production, and a Linkage download reads `_2025` while data is `_2026`. Any of these can make map, table, and insights disagree.
+
+### Q-AI-0708 — How many issues were found, at what severity, and do any of them block a release?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — How many issues were found, at what severity, and do any of them block a release?
+
+The report says issues were documented but gives no count, severity/priority, or blocking status, so triage and go/no-go cannot be assessed.
+
+### Q-AI-0709 — Does the Map Explorer expose owner names or other mineral-owner PII to free or logged-out users?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the Map Explorer expose owner names or other mineral-owner PII to free or logged-out users?
+
+Map parcels and popups may surface ownership data. Confirm what an unauthenticated or Free-tier user can see, and whether that was explicitly tested.
+
+### Q-AI-0710 — Are Map Tools, Insights, and Table exports gated by subscription tier, and was that gating tested?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are Map Tools, Insights, and Table exports gated by subscription tier, and was that gating tested?
+
+Tier/feature gating has no single documented source. State which tier the test account used and whether Free vs Pro vs Premium behaviour was verified for each sub-feature.
+
+### Q-AI-0711 — What is left to finish this In-Progress QA, and by when is sign-off expected?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is left to finish this In-Progress QA, and by when is sign-off expected?
+
+Status is In Progress with no remaining scope or target date. Clarify what is untested (e.g. map performance at full-state zoom with all wells loaded, retest of fixes) and whether any launch or release depends on this sign-off.
