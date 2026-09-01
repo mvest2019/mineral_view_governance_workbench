@@ -6499,3 +6499,57 @@ If any footage is real (not AI or generic stock), confirm no recognizable compan
 **1. Short Question** — Is this the same half-finished 50% reel reported previously, or a separate reel now also at 50%?
 
 Two in-progress reels are reported at 50% completion; clarify whether this is one deliverable or two so status tracking and the remaining-work estimate are accurate.
+
+### Q-AI-0723 — Does the new statewide owner/address search expose mineral-owner PII beyond what a user's subscription tier or claim scope should allow?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does the new statewide owner/address search expose mineral-owner PII beyond what a user's subscription tier or claim scope should allow?
+
+`/owners/same-name` now supports statewide search with the county dependency removed, real address filtering, row caps removed, and per-lease lease numbers, interest values, and operators returned. This widens the amount of owner PII any single query can return. Needs confirmation of tier gating, result limits, and privacy approval before this ships.
+
+### Q-AI-0724 — Who approves pushing and deploying `feat/cascading-facets`, and by what date does that approval gate close?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approves pushing and deploying `feat/cascading-facets`, and by what date does that approval gate close?
+
+The branch is complete with 407/407 tests passing, typecheck and lint clean, but is explicitly held "awaiting approval before push/deploy." No named approver or deadline is recorded.
+
+### Q-AI-0725 — Were removing row caps and disabling search caching load-tested against production, given the bottlenecks you already measured on statewide and bare-name searches?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were removing row caps and disabling search caching load-tested against production, given the bottlenecks you already measured on statewide and bare-name searches?
+
+The submission reports removing row caps and disabling search caching, then separately reports measuring production performance and finding remaining bottlenecks around statewide/bare-name searches and large-county browsing. That reads as a known unresolved performance risk being carried forward.
+
+### Q-AI-0726 — Were the wrong map/table counts, missing well fields, and broken well-status filtering visible to real users in production, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were the wrong map/table counts, missing well fields, and broken well-status filtering visible to real users in production, and for how long?
+
+Four defects (multi-lease union, matched-wells fields, well-status filtering, operator/field facet counts, table vs. map counts) were fixed and verified on staging only. If those wrong counts or incomplete CSV/tooltip/timelapse exports reached users, any downstream reporting or exported files may need correcting.
+
+### Q-AI-0727 — Does switching operator lookup from `WellGeoData` to production filings change operator values already shown to users in reports and downloads?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does switching operator lookup from `WellGeoData` to production filings change operator values already shown to users in reports and downloads?
+
+Changing the authoritative source for operator names can silently alter values users have already seen, saved, or exported. Needs a statement on which source is canonical, whether the two disagree, and whether any consumers (reports, CSV downloads, dossiers) depend on the old values.
+
+### Q-AI-0728 — Does the facet cache warm-up fix the root cause of the intermittent "Failed to fetch," or only hide it until the cache expires?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Does the facet cache warm-up fix the root cause of the intermittent "Failed to fetch," or only hide it until the cache expires?
+
+The fix is described as adding warm-up rather than resolving the underlying timeout or query cost, and cascading facets add scope-aware cache keys that multiply the number of cache entries needing warming. Clarify whether the original failure can still surface on a cold or evicted scope.
