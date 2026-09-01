@@ -6400,3 +6400,57 @@ Tier/feature gating has no single documented source. State which tier the test a
 **1. Short Question** — What is left to finish this In-Progress QA, and by when is sign-off expected?
 
 Status is In Progress with no remaining scope or target date. Clarify what is untested (e.g. map performance at full-state zoom with all wells loaded, retest of fixes) and whether any launch or release depends on this sign-off.
+
+### Q-AI-0712 — Can a shared Map Explorer link be opened by someone without a login or without the sender's subscription tier?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Can a shared Map Explorer link be opened by someone without a login or without the sender's subscription tier?
+
+The link restores the applied filter, the open well record, and the search API number. It needs to be confirmed whether the recipient must be authenticated and whether tier gating (claimed leases, MVEstimate, restricted fields) is re-checked on arrival, or whether the link itself grants access to what the sender could see.
+
+### Q-AI-0713 — Does removing URL rewriting while browsing break the page-URL user-behavior tracking and analytics already in place?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Does removing URL rewriting while browsing break the page-URL user-behavior tracking and analytics already in place?
+
+The app no longer updates the address bar as the user browses. Internal tracking, Google Analytics, and Clarity record Current/Previous Page URLs — confirm whether Map Explorer navigation is still distinguishable in those records or now collapses into a single URL.
+
+### Q-AI-0714 — Do share links expire or get revoked, and do the API numbers and lease identifiers they carry end up in server logs, referrers, or analytics?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Do share links expire or get revoked, and do the API numbers and lease identifiers they carry end up in server logs, referrers, or analytics?
+
+A share link embeds a specific well/API number and filter state. Needed: retention/expiry rules, whether the link is loggable PII, and whether it keeps working after the underlying record or filter data changes.
+
+### Q-AI-0715 — Was the hand-written zip/OOXML spreadsheet writer reviewed for formula injection and Excel compatibility before shipping?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the hand-written zip/OOXML spreadsheet writer reviewed for formula injection and Excel compatibility before shipping?
+
+A self-contained writer with no dependencies now backs both the map export and the table's "Export this page". Confirm cell values beginning with `=`, `+`, `-`, or `@` are neutralised, and which Excel/Sheets/Numbers versions the output was verified to open cleanly in.
+
+### Q-AI-0716 — Is the paged `filters/operator` endpoint access-controlled, and does the 22,609 operator count match the canonical source?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the paged `filters/operator` endpoint access-controlled, and does the 22,609 operator count match the canonical source?
+
+Server-side search across all operators is now exposed to the client a page at a time. Confirm whether the endpoint is authenticated and rate-limited (it enumerates the full operator registry), and who verified the 22,609 total against the system of record.
+
+### Q-AI-0717 — Are the recalculated distances and acreages labelled as approximate so they are not mistaken for surveyed or legal measurements?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Are the recalculated distances and acreages labelled as approximate so they are not mistaken for surveyed or legal measurements?
+
+Measured distance and tract values are recomputed on the recipient's map rather than copied, so sender and recipient can see different numbers for the same shared shape. Confirm whether a tolerance/disclaimer is shown and that these figures are not used anywhere as authoritative acreage.
