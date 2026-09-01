@@ -6553,3 +6553,57 @@ Changing the authoritative source for operator names can silently alter values u
 **1. Short Question** — Does the facet cache warm-up fix the root cause of the intermittent "Failed to fetch," or only hide it until the cache expires?
 
 The fix is described as adding warm-up rather than resolving the underlying timeout or query cost, and cascading facets add scope-aware cache keys that multiply the number of cache entries needing warming. Clarify whether the original failure can still surface on a cold or evicted scope.
+
+### Q-AI-0729 — Before the server-side masking was added, was gated production-by-county and lease data reachable by unentitled users in production?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Before the server-side masking was added, was gated production-by-county and lease data reachable by unentitled users in production?
+
+Closing the Funnel 2 gating gaps on Operator Detail implies the masking was previously client-side only. Need to confirm whether the underlying API returned full data to free/unauthenticated users, for how long, and whether any other gated panel still relies on client-side hiding.
+
+### Q-AI-0730 — Is the new portal at `/mineralownersite` replacing the existing Mineral Owner Portal, or will both run in parallel?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the new portal at `/mineralownersite` replacing the existing Mineral Owner Portal, or will both run in parallel?
+
+A duplicate portal creates two sources of truth for gating, density, and owner data. Need the canonical decision, the cutover plan, and who signs off.
+
+### Q-AI-0731 — Which 4 Operator defects remain open out of 51, and do any of them block the Operator pages go-live?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Which 4 Operator defects remain open out of 51, and do any of them block the Operator pages go-live?
+
+Progress moved 28/51 → 47/51. The remaining items and their severity are not stated, so release readiness cannot be assessed.
+
+### Q-AI-0732 — Was the hidden MVEstimate disclaimer live for real users, and for how long, before it was restored?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Was the hidden MVEstimate disclaimer live for real users, and for how long, before it was restored?
+
+A hidden estimate / no-investment-advice disclaimer on a page showing valuation figures is a compliance exposure, not just a UI defect. Need the environment, the exposure window, and whether any remediation is required.
+
+### Q-AI-0733 — Where is the "reference build" the portal was copied from, and who approved it as the source of truth for the five funnel states and four densities?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Where is the "reference build" the portal was copied from, and who approved it as the source of truth for the five funnel states and four densities?
+
+The funnel states, densities, and navigation behavior were implemented "from the reference" with no cited spec. Need the artifact location and its approver so the built behavior can be verified against an accepted definition.
+
+### Q-AI-0734 — Does the `compare-operator-performance` rename with a 308 redirect cover sitemap, canonical tags, and existing internal or external links to the old route?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Does the `compare-operator-performance` rename with a 308 redirect cover sitemap, canonical tags, and existing internal or external links to the old route?
+
+The old Operator comparison route may be indexed or linked from marketing pages and campaigns. Confirm the redirect is permanent, one-hop, and that sitemap/canonical/internal links were updated so SEO ranking is not lost.
