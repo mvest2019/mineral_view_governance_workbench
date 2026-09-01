@@ -6715,3 +6715,57 @@ Repeated zoom/pan/marker testing consumes tile and geocoding quota. Governance n
 **1. Short Question** — Was map load performance measured at high marker density on mobile, and what is the pass threshold?
 
 Responsiveness testing covered layout and interaction but not render time, marker clustering limits, or behaviour on slow mobile networks — the most likely real-world failure mode for a data-heavy map.
+
+### Q-AI-0747 — Who approved the follow-up email content and recipient list before it was sent to real claim-lease subscribers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approved the follow-up email content and recipient list before it was sent to real claim-lease subscribers?
+
+The submission says follow-up emails were already sent to claim lease subscribers. Outbound contact with real paying/registered mineral owners needs a named approver for both the copy and the send list, and confirmation of whether it went via the CRM or ad-hoc.
+
+### Q-AI-0748 — Did the follow-up emails include an unsubscribe path and honour each subscriber's existing email-consent preference?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Did the follow-up emails include an unsubscribe path and honour each subscriber's existing email-consent preference?
+
+Feedback-solicitation email that also 'encourages further engagement' is promotional in effect, so opt-out and consent handling need to be confirmed.
+
+### Q-AI-0749 — Which data source, environment, and date range back the Funnel 3 (Registration → Owner Claim) numbers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Which data source, environment, and date range back the Funnel 3 (Registration → Owner Claim) numbers?
+
+Needed to know whether the finalized funnel analysis was built from production data, Cerebro, Google Analytics, or the internal tracking sheet — and whether the claimed-lease counts used are the corrected figures.
+
+### Q-AI-0750 — Who accepts the finalized Funnel 3 recommendations, and what were the "necessary revisions" that changed the earlier conclusions?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who accepts the finalized Funnel 3 recommendations, and what were the "necessary revisions" that changed the earlier conclusions?
+
+The submission says the analysis was revised and validated but does not say what changed, who validated it, or who converts the recommendations into an approved backlog.
+
+### Q-AI-0751 — What is the Altered team's role, and what platform or data access have they been granted for setup and testing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — What is the Altered team's role, and what platform or data access have they been granted for setup and testing?
+
+An external or partner team involved in platform setup and testing needs its scope, environment, and any production/PII access documented and approved.
+
+### Q-AI-0752 — Where is the subscriber feedback from these emails stored, and does that record contain owner names or lease details?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Where is the subscriber feedback from these emails stored, and does that record contain owner names or lease details?
+
+Replies collecting user experience after claiming leases will likely tie feedback to identifiable owners; the storage location, access list, and retention need to be stated.
