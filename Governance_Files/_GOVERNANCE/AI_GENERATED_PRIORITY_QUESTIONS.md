@@ -6607,3 +6607,57 @@ The funnel states, densities, and navigation behavior were implemented "from the
 **1. Short Question** — Does the `compare-operator-performance` rename with a 308 redirect cover sitemap, canonical tags, and existing internal or external links to the old route?
 
 The old Operator comparison route may be indexed or linked from marketing pages and campaigns. Confirm the redirect is permanent, one-hop, and that sitemap/canonical/internal links were updated so SEO ranking is not lost.
+
+### Q-AI-0735 — Which scraper jobs failed, were delayed, or interrupted today, and who owns rerunning and backfilling the missed records?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which scraper jobs failed, were delayed, or interrupted today, and who owns rerunning and backfilling the missed records?
+
+The submission says failed/delayed/interrupted processes were "identified for further investigation" but names none and assigns no owner. Governance needs the specific job list, a defect/ticket reference, and confirmation that missed days were reprocessed rather than silently skipped.
+
+### Q-AI-0736 — Is there a pass/fail gate that stops incomplete or failed scraped data from reaching the live site and MVEstimate?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is there a pass/fail gate that stops incomplete or failed scraped data from reaching the live site and MVEstimate?
+
+Validation is described as after-the-fact checking. It is unclear whether a failed data-quality check actually blocks publication, or whether unvalidated W-1/W-2 data can flow to user-facing pages and valuations before anyone reviews it.
+
+### Q-AI-0737 — What is SQL Server's role in the data flow, and why is it not part of the documented PostgreSQL/MongoDB topology?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — What is SQL Server's role in the data flow, and why is it not part of the documented PostgreSQL/MongoDB topology?
+
+Cross-database verification now covers PostgreSQL, SQL Server, and MongoDB, but governance records only describe PostgreSQL and MongoDB. Clarify what SQL Server holds, who owns it, and whether it was included in the firewall/allowlist hardening and credential rotation.
+
+### Q-AI-0738 — Are scraper failures raised by automated alerting, or only discovered during this daily manual log review?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are scraper failures raised by automated alerting, or only discovered during this daily manual log review?
+
+If detection depends on a person reading `scraper_process_log` each day, an overnight or weekend failure could go unnoticed for days. Confirm whether monitoring/alerting exists and what the maximum detection delay is.
+
+### Q-AI-0739 — Who reviews, approves, and deploys scraper code changes made in response to source-website structure changes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Who reviews, approves, and deploys scraper code changes made in response to source-website structure changes?
+
+The submission mentions testing scraper modifications after website structure changes. Governance needs the review and deployment path — whether extraction-logic changes go through code review and a test environment before running against production data.
+
+### Q-AI-0740 — Where are the W-1 permit discrepancies and data-quality issues recorded, and who is accountable for closing them?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Where are the W-1 permit discrepancies and data-quality issues recorded, and who is accountable for closing them?
+
+Discrepancies, missing values, and inconsistent records are said to be analyzed and documented, but the location of that record (sheet, ticket system, repo file) and the remediation owner are not stated, so open issues cannot be tracked to closure.
