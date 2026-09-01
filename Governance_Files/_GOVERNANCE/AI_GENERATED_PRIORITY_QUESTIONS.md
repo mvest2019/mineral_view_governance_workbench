@@ -6661,3 +6661,57 @@ The submission mentions testing scraper modifications after website structure ch
 **1. Short Question** — Where are the W-1 permit discrepancies and data-quality issues recorded, and who is accountable for closing them?
 
 Discrepancies, missing values, and inconsistent records are said to be analyzed and documented, but the location of that record (sheet, ticket system, repo file) and the remediation owner are not stated, so open issues cannot be tracked to closure.
+
+### Q-AI-0741 — Which Map Explorer build was tested — the live site or the new 4th-view redesign prototype?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which Map Explorer build was tested — the live site or the new 4th-view redesign prototype?
+
+A redesigned 4th view of the Map / Well Explorer (icon rail, panels, Saved Filters, Well Paths) is being built in parallel. It is unclear whether this QA run covers the live Map Explorer or that prototype, which changes who owns any defects found.
+
+### Q-AI-0742 — Do the data-related issues found on the map trace back to known backend data problems, and are they logged as engineering defects?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the data-related issues found on the map trace back to known backend data problems, and are they logged as engineering defects?
+
+The submission says data-related issues were identified but not what they were. Known open data issues (county-collection consolidation, year-mismatch on downloads, empty collections) could explain wrong markers or counts, so these need to reach engineering rather than sit in a UI defect sheet.
+
+### Q-AI-0743 — Does map search return owner names or lease records, and was it checked that results stay within the signed-in user's entitlement?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does map search return owner names or lease records, and was it checked that results stay within the signed-in user's entitlement?
+
+Search on a map surface can expose owner/lease records. Needed: confirmation of what record types search returns and whether unentitled or unauthenticated users can retrieve them.
+
+### Q-AI-0744 — What is the target completion date and definition of done for this In Progress testing, and does it gate a release?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — What is the target completion date and definition of done for this In Progress testing, and does it gate a release?
+
+Status is In Progress with no stated exit criteria, remaining scope, or release dependency.
+
+### Q-AI-0745 — Which map tile/basemap provider and API key does Map Explorer use, and is that key domain-restricted and quota-monitored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which map tile/basemap provider and API key does Map Explorer use, and is that key domain-restricted and quota-monitored?
+
+Repeated zoom/pan/marker testing consumes tile and geocoding quota. Governance needs to know the provider, whether the key is restricted to our domains, and whether QA usage is charged or capped.
+
+### Q-AI-0746 — Was map load performance measured at high marker density on mobile, and what is the pass threshold?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was map load performance measured at high marker density on mobile, and what is the pass threshold?
+
+Responsiveness testing covered layout and interaction but not render time, marker clustering limits, or behaviour on slow mobile networks — the most likely real-world failure mode for a data-heavy map.
