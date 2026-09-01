@@ -6454,3 +6454,48 @@ Server-side search across all operators is now exposed to the client a page at a
 **1. Short Question** — Are the recalculated distances and acreages labelled as approximate so they are not mistaken for surveyed or legal measurements?
 
 Measured distance and tract values are recomputed on the recipient's map rather than copied, so sender and recipient can see different numbers for the same shared shape. Confirm whether a tolerance/disclaimer is shown and that these figures are not used anywhere as authoritative acreage.
+
+### Q-AI-0718 — Does the reel promise lease-level activity that Mineral View can actually deliver for every user's lease?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel promise lease-level activity that Mineral View can actually deliver for every user's lease?
+
+The hook "Know What's Happening Under Your Lease" implies per-lease activity coverage. Confirm the platform's real coverage (Texas-only? claimed leases only? which counties) so the reel does not over-promise.
+
+### Q-AI-0719 — Does the reel imply alerts or notifications for new lease activity that the product does not yet provide?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel imply alerts or notifications for new lease activity that the product does not yet provide?
+
+If the voiceover suggests owners will be told when something happens under their lease, confirm whether that notification feature exists today or is roadmap-only.
+
+### Q-AI-0720 — Does the reel state how current the well, permit, and production data shown actually is?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Does the reel state how current the well, permit, and production data shown actually is?
+
+Governance records show pipelines rebuild collections and at least one year-mismatch defect exists. Any on-screen "live"/"real-time" framing needs an as-of date or qualifier.
+
+### Q-AI-0721 — Do the rig floor, wellhead, and field operation visuals show identifiable operators, sites, or workers who have not given release?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Do the rig floor, wellhead, and field operation visuals show identifiable operators, sites, or workers who have not given release?
+
+If any footage is real (not AI or generic stock), confirm no recognizable company marks, site signage, or faces appear without a signed release.
+
+### Q-AI-0722 — Is this the same half-finished 50% reel reported previously, or a separate reel now also at 50%?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tejas_Zurange
+**1. Short Question** — Is this the same half-finished 50% reel reported previously, or a separate reel now also at 50%?
+
+Two in-progress reels are reported at 50% completion; clarify whether this is one deliverable or two so status tracking and the remaining-work estimate are accurate.
