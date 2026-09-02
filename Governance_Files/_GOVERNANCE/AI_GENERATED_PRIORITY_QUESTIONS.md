@@ -7093,3 +7093,57 @@ Determines whether the matching bug can silently grant entitlement to the wrong 
 **1. Short Question** — Which environment and source of truth was this verification run against, and how many users remain unvalidated behind "almost all"?
 
 "Almost all user data has been validated" has no count or completion criteria, and the source used to confirm owner name, address, owner number, and decimal interest is unstated. Needs a number validated vs. pending and a named system of record.
+
+### Q-AI-0789 — Is the CRM admin sign-up hole a reportable security incident, and how was "no misuse" verified?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Krishna_Sable
+**1. Short Question** — Is the CRM admin sign-up hole a reportable security incident, and how was "no misuse" verified?
+
+The submission says a stranger could have gained admin access to the CRM and that no misuse occurred, but not what evidence supports that. Governance needs: what logs were reviewed, over what time window, how long the hole was open, and whether legal/leadership have been told and a breach-notification decision recorded.
+
+### Q-AI-0790 — Was every existing CRM account audited for unauthorized or unintended admin privileges?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Krishna_Sable
+**1. Short Question** — Was every existing CRM account audited for unauthorized or unintended admin privileges?
+
+The sign-up form defaulted new users to admin, so any account created while it was live may hold admin rights. Confirm a full account-and-role audit was run (not just the two test admins), and share the resulting list of legitimate CRM admins.
+
+### Q-AI-0791 — Who approved shipping these security changes straight to production, and were sessions and API keys invalidated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approved shipping these security changes straight to production, and were sessions and API keys invalidated?
+
+All seven CRM changes went live the same day, including account deletions. Clarify who reviewed/approved them, whether a backup or export was taken before deleting the two test-admin accounts, and whether existing sessions, tokens, and API keys were revoked so a pre-fix admin session cannot still be active.
+
+### Q-AI-0792 — What data could a CRM admin account reach, and does it include mineral-owner PII?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — What data could a CRM admin account reach, and does it include mineral-owner PII?
+
+The severity of the exposure depends entirely on scope. Document what the CRM holds (owner names, emails, claim requests, lease data, valuation figures) and which of that an admin-level account could read or export.
+
+### Q-AI-0793 — Do the click.mineralview.com tracking links expose recipient identity, and who controls its DNS and email authentication?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Do the click.mineralview.com tracking links expose recipient identity, and who controls its DNS and email authentication?
+
+Moving tracking onto a mineralview.com subdomain ties campaign links to the main brand domain. Confirm the tracking URLs don't carry owner names, emails, or lease identifiers in the path or query string, who holds the DNS records, and that SPF/DKIM/DMARC alignment and domain reputation were reviewed with the dev team.
+
+### Q-AI-0794 — Who approves the re-engagement emails before scheduling, and do they carry unsubscribe and no-advice language?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves the re-engagement emails before scheduling, and do they carry unsubscribe and no-advice language?
+
+These are hand-written, personalized emails to real quiet owners, including edge cases on royalty questions and heirs. Confirm the recipient count, who signs off on the drafts and the send window, and that each email includes a working unsubscribe link and the estimate / no-investment-advice disclaimer if any value figures appear.
