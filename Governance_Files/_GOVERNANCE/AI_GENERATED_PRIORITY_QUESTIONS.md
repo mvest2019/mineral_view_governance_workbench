@@ -6877,3 +6877,57 @@ Calls to real mineral owners create an unlogged channel unless recorded centrall
 **1. Short Question** — Which Workbench Governance questions are still pending, and what is the date by which they will be answered?
 
 The update says pending points were reviewed but not which remain open or their deadline.
+
+### Q-AI-0765 — Which specific defect IDs are in scope for this retest, and where is the defect log holding the updated statuses?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which specific defect IDs are in scope for this retest, and where is the defect log holding the updated statuses?
+
+The submission says defect statuses were updated based on retesting, but names no defect IDs, tracker, or sheet. Governance needs a traceable list (original defect → fix → retest result → new status) and one authoritative location for it, otherwise "retested" is unverifiable.
+
+### Q-AI-0766 — Are any of the still-reproducible map defects currently live for real users in production?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Are any of the still-reproducible map defects currently live for real users in production?
+
+The task states some defects were still reproducible after the fix. Please state, for each one, whether it is present in production today, its user-facing impact, and whether it has been re-opened and escalated to development.
+
+### Q-AI-0767 — Is this retesting against the current live Map Explorer or the redesigned 4th-view Map/Well Explorer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Is this retesting against the current live Map Explorer or the redesigned 4th-view Map/Well Explorer?
+
+A separate track is actively rebuilding the Map/Well Explorer 4th view (rail navigation, filters, saved filters, well paths). Confirm which implementation, branch, and build were retested, so fixes are not verified against a UI that is being replaced.
+
+### Q-AI-0768 — Was map marker and well data re-verified after the county-collection consolidation and centroid field renames?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Was map marker and well data re-verified after the county-collection consolidation and centroid field renames?
+
+Known production changes — the 259 per-county collections consolidated into `TEXAS_WELLS` and renamed centroid fields — previously broke map-dependent code. Confirm whether markers, counts, and well positions were checked against the current data source, or whether only UI behavior was retested.
+
+### Q-AI-0769 — Who defined the list of "impacted map features" used to scope the regression pass?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who defined the list of "impacted map features" used to scope the regression pass?
+
+Regression scope is described broadly (UI, filters, search, zoom, navigation, markers). Clarify who approved that scope, whether it was derived from the developers' change list or chosen by QA, and which map features were deliberately excluded.
+
+### Q-AI-0770 — Who has authority to close a retested defect, and what evidence is required to mark it Fixed?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Who has authority to close a retested defect, and what evidence is required to mark it Fixed?
+
+Define whether QA, the developer, or Nikhil closes a defect after retest, and the minimum evidence attached (screenshot/recording, environment, build ID). Also confirm where that evidence is stored, since map screenshots may include owner or lease data.
