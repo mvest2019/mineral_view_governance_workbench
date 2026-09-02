@@ -7039,3 +7039,57 @@ Dashboard parity, `drawDashChart()`, and `DASH_LEASES` were all re-derived from 
 **1. Short Question** — Who reviews and approves merging `feature/mineral-owner-portal-build`, and does it replace the live portal?
 
 Given the parallel portal redesign tracks already in flight, the merge target, reviewer, and go-live decision need to be named before this branch lands.
+
+### Q-AI-0783 — Has a full production scan been run to find other users affected by the name-only claim match, or is member 3604 the only known case?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Tushar_Patil
+**1. Short Question** — Has a full production scan been run to find other users affected by the name-only claim match, or is member 3604 the only known case?
+
+The submission describes the root cause as generic (matching by owner name only), which means any duplicate owner name in the source data could produce the same wrong-owner claim. A one-off finding needs a population-level check before it can be called contained.
+
+### Q-AI-0784 — Did member 3604 gain visibility into another mineral owner's lease and interest data, and has that incorrect claim been revoked?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Tushar_Patil
+**1. Short Question** — Did member 3604 gain visibility into another mineral owner's lease and interest data, and has that incorrect claim been revoked?
+
+Claiming a different owner's leases is a potential PII / entitlement exposure, not just a data-accuracy bug. Needs a decision on revoking the bad claim, whether the affected real owner must be notified, and whether the exposure window is known.
+
+### Q-AI-0785 — Is the memberClaimLease / fetchAndGroupOwnerLeases matching defect logged as an engineering defect with an assigned owner and fix date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Is the memberClaimLease / fetchAndGroupOwnerLeases matching defect logged as an engineering defect with an assigned owner and fix date?
+
+The submission says the root cause is documented in code comments only, with no changes made. Governance needs it tracked as a defect, not as an annotation in dashboard.js.
+
+### Q-AI-0786 — Is this the same root cause as the earlier ownership issue where one member's leases traced to the same owner name across three addresses?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Is this the same root cause as the earlier ownership issue where one member's leases traced to the same owner name across three addresses?
+
+A prior task reported leases tracing to owner "Charles D. Simmons" across 3 addresses, confirmed by Ryan and being fixed at source by Nikhil. If that is the same name-only matching flaw, the two must be merged into one fix rather than tracked separately.
+
+### Q-AI-0787 — Does a lease claim grant access automatically, or is there a manual approval gate before a user sees the claimed owner's data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Tushar_Patil
+**1. Short Question** — Does a lease claim grant access automatically, or is there a manual approval gate before a user sees the claimed owner's data?
+
+Determines whether the matching bug can silently grant entitlement to the wrong records, and whether a temporary manual review is needed until the fix ships.
+
+### Q-AI-0788 — Which environment and source of truth was this verification run against, and how many users remain unvalidated behind "almost all"?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Tushar_Patil
+**1. Short Question** — Which environment and source of truth was this verification run against, and how many users remain unvalidated behind "almost all"?
+
+"Almost all user data has been validated" has no count or completion criteria, and the source used to confirm owner name, address, owner number, and decimal interest is unstated. Needs a number validated vs. pending and a named system of record.
