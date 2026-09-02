@@ -6985,3 +6985,57 @@ SR 9 and SR 63 unified on `well_status` inside the Map module, but downloads, re
 **1. Short Question** — Which defect-sheet items fell into the "data-reality" category, and who owns fixing those at the source?
 
 The analysis split issues into backend, frontend, and data-reality, but only backend fixes are reported here — the data-reality items appear to have no named owner or target date.
+
+### Q-AI-0777 — Is the new Production & Forecast page driven by real production data or hardcoded sample data?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is the new Production & Forecast page driven by real production data or hardcoded sample data?
+
+The 113-month chart, 10-lease table, map, and dark scorecard all need a stated data source. If any of it is mock or reference-ZIP sample data, that must be flagged before anyone treats the page as real.
+
+### Q-AI-0778 — What else was silently lost in the auto-merge besides the 580 lines of Production CSS?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What else was silently lost in the auto-merge besides the 580 lines of Production CSS?
+
+A merge that silently dropped 580 lines is a process failure, not a one-off. Was the full merge diff audited for other losses, and what check prevents a repeat?
+
+### Q-AI-0779 — What forecast methodology backs the new Forecast view, and who validated it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What forecast methodology backs the new Forecast view, and who validated it?
+
+Showing owners a forward production curve is a projection. Which decline model or data pipeline produces it, and does it carry the estimate / no-investment-advice disclaimer?
+
+### Q-AI-0780 — Is `/mineralownersite/production` gated by login and subscription tier, and was that tested?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Is `/mineralownersite/production` gated by login and subscription tier, and was that tested?
+
+A new page with lease-level production, a map, and a scorecard needs explicit confirmation that it is not reachable by unauthenticated or free-tier users.
+
+### Q-AI-0781 — What is the reference ZIP, who produced it, and is it the approved source of truth for parity?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — What is the reference ZIP, who produced it, and is it the approved source of truth for parity?
+
+Dashboard parity, `drawDashChart()`, and `DASH_LEASES` were all re-derived from it. If the ZIP is not an approved, versioned artifact, parity work has no auditable baseline.
+
+### Q-AI-0782 — Who reviews and approves merging `feature/mineral-owner-portal-build`, and does it replace the live portal?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Aboli_Mundralkar
+**1. Short Question** — Who reviews and approves merging `feature/mineral-owner-portal-build`, and does it replace the live portal?
+
+Given the parallel portal redesign tracks already in flight, the merge target, reviewer, and go-live decision need to be named before this branch lands.
