@@ -6823,3 +6823,57 @@ Specifically: the `/glossary` hub having no crawlable anchors, H1, or JSON-LD in
 **1. Short Question** — Since 35 of 50 glossary pages were published inside the reporting window, is the earlier glossary performance analysis now formally superseded?
 
 The definitional (103 clicks / 95,604 impressions) vs owner-focused (151 clicks / 23,286 impressions) comparison and the revised pilot keyword list both rest on that same short-window data. Need confirmation of whether those conclusions stand or must be re-derived after the clean re-export.
+
+### Q-AI-0759 — Does the Altered voice/accent conversion testing send any real user call recordings or employee voice samples to the vendor, and is consent on file?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Does the Altered voice/accent conversion testing send any real user call recordings or employee voice samples to the vendor, and is consent on file?
+
+The submission records a meeting with the Altered team on voice/accent conversion testing and tool setup, but not what audio was used for testing. Voice data is biometric-adjacent PII and a third-party vendor is an external processor.
+
+### Q-AI-0760 — Which tool sent the follow-up emails to Mineral View users, and did every message include unsubscribe and consent handling?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which tool sent the follow-up emails to Mineral View users, and did every message include unsubscribe and consent handling?
+
+Bulk outreach to registered users and claimed-lease owners is regulated (CAN-SPAM/unsubscribe). Need the sending platform, the list source, and confirmation that opt-out was honoured.
+
+### Q-AI-0761 — Who approved the paid-conversion messaging in these emails, and does it make any valuation or earnings claim needing the no-advice disclaimer?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Who approved the paid-conversion messaging in these emails, and does it make any valuation or earnings claim needing the no-advice disclaimer?
+
+The stated focus is engagement and future paid conversion to mineral owners. Any implied worth/return claim needs the educational-only, no-investment-advice guardrail.
+
+### Q-AI-0762 — Which environment and date range does the revised Funnel 3 (Registration → Claim Owner) analysis draw from, and who signs off on the numbers?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Ajay_Landge
+**1. Short Question** — Which environment and date range does the revised Funnel 3 (Registration → Claim Owner) analysis draw from, and who signs off on the numbers?
+
+Revisions were incorporated but the data source, cohort window, and accepting reviewer are not recorded — and prior counts (e.g. Claimed Leases 1586 vs 792) have been wrong before.
+
+### Q-AI-0763 — Are the outreach calls logged in the CRM with a script, and who authorised access to the user contact list used?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Are the outreach calls logged in the CRM with a script, and who authorised access to the user contact list used?
+
+Calls to real mineral owners create an unlogged channel unless recorded centrally; contact-list access is PII access.
+
+### Q-AI-0764 — Which Workbench Governance questions are still pending, and what is the date by which they will be answered?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Ajay_Landge
+**1. Short Question** — Which Workbench Governance questions are still pending, and what is the date by which they will be answered?
+
+The update says pending points were reviewed but not which remain open or their deadline.
