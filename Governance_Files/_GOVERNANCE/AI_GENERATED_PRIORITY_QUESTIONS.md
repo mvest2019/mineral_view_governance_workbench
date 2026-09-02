@@ -6769,3 +6769,57 @@ An external or partner team involved in platform setup and testing needs its sco
 **1. Short Question** — Where is the subscriber feedback from these emails stored, and does that record contain owner names or lease details?
 
 Replies collecting user experience after claiming leases will likely tie feedback to identifiable owners; the storage location, access list, and retention need to be stated.
+
+### Q-AI-0753 — Who owns re-exporting the Search Console data, and were any SEO decisions already made on the numbers now known to be wrong?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who owns re-exporting the Search Console data, and were any SEO decisions already made on the numbers now known to be wrong?
+
+Country-level clicks totalled ~54 against a reported global total of 528, and 30,360 impressions for Working Interest were mislabelled as U.S. impressions. Need a single owner, a consistent filter definition, and a date by which the corrected pull exists before further decisions rest on it.
+
+### Q-AI-0754 — Were `glossaryclickgap.html` and `glossaryglobalvsus.html` shared with the team or client before the six errors were found, and do they need to be reissued or withdrawn?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Were `glossaryclickgap.html` and `glossaryglobalvsus.html` shared with the team or client before the six errors were found, and do they need to be reissued or withdrawn?
+
+Six defects were identified including a major impressions-labelling error, conflicting MMBtu figures, and an incorrect traffic percentage. If these reports already circulated, there is a correction obligation and a record of what was retracted.
+
+### Q-AI-0755 — Who approves the 301 redirect for the live indexed `capital-expenditure` page, and how will lost impressions or rankings be detected afterwards?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approves the 301 redirect for the live indexed `capital-expenditure` page, and how will lost impressions or rankings be detected afterwards?
+
+This removes a published, indexed URL. Needs a named approver, a decision on where the content is merged (AFE vs Operating Expense/LOE), and a monitoring window. Note the page is also currently missing from the sitemap — is that a separate defect?
+
+### Q-AI-0756 — Who approves and deploys the 51 rewritten meta titles, and what is the before/after measurement and rollback plan?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Who approves and deploys the 51 rewritten meta titles, and what is the before/after measurement and rollback plan?
+
+Rewriting every glossary title at once changes SERP presentation site-wide, including pages already ranking on page one (Decimal Interest #2, Post-Production Costs #4, NPRI #5, PDP #5). Ranking pages carry the most downside risk from an untested title change.
+
+### Q-AI-0757 — Are the glossary crawlability findings logged as engineering defects with an owner and a due date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Rohit_Pandey
+**1. Short Question** — Are the glossary crawlability findings logged as engineering defects with an owner and a due date?
+
+Specifically: the `/glossary` hub having no crawlable anchors, H1, or JSON-LD in raw HTML; the homepage having no crawlable link to the glossary; 13 term pages with zero inbound internal links; and the client-rendered unlinked author page. These are code fixes, not content fixes, so they need to sit in the development backlog rather than only in this report.
+
+### Q-AI-0758 — Since 35 of 50 glossary pages were published inside the reporting window, is the earlier glossary performance analysis now formally superseded?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Rohit_Pandey
+**1. Short Question** — Since 35 of 50 glossary pages were published inside the reporting window, is the earlier glossary performance analysis now formally superseded?
+
+The definitional (103 clicks / 95,604 impressions) vs owner-focused (151 clicks / 23,286 impressions) comparison and the revised pilot keyword list both rest on that same short-window data. Need confirmation of whether those conclusions stand or must be re-derived after the clean re-export.
