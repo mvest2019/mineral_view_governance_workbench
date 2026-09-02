@@ -6931,3 +6931,57 @@ Regression scope is described broadly (UI, filters, search, zoom, navigation, ma
 **1. Short Question** — Who has authority to close a retested defect, and what evidence is required to mark it Fixed?
 
 Define whether QA, the developer, or Nikhil closes a defect after retest, and the minimum evidence attached (screenshot/recording, environment, build ID). Also confirm where that evidence is stored, since map screenshots may include owner or lease data.
+
+### Q-AI-0771 — Were these fixes deployed to production or only to dev, given the summary says merged to main but each item says "Deployed to dev"?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were these fixes deployed to production or only to dev, given the summary says merged to main but each item says "Deployed to dev"?
+
+The header states fixes were "merged/deployed to `main` through the day," while SR 9, 63, 33 and 64 are each marked "✅ Deployed to dev." Governance needs one clear answer on which environment real users are running, and whether a production deploy is still outstanding.
+
+### Q-AI-0772 — Was the well-type filter returning the wrong wells for real users, and for how long before commit `e7f951c`?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the well-type filter returning the wrong wells for real users, and for how long before commit `e7f951c`?
+
+SR 75 describes multiple `well_icons` conditions overwriting each other, meaning `wtype` filtering was silently wrong. Need the user-facing impact window and whether any exports, reports, or decisions were made on the bad results.
+
+### Q-AI-0773 — Who approves the pending SR 75 deployment, and by what date does it ship?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approves the pending SR 75 deployment, and by what date does it ship?
+
+`e7f951c` is the only fix still marked ⏳ Pending deployment, so the defect remains live wherever the fix is not deployed.
+
+### Q-AI-0774 — Who approved dropping the `street`, `city`, and `zip` search parameters, and have all API consumers been updated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved dropping the `street`, `city`, and `zip` search parameters, and have all API consumers been updated?
+
+`ac10ce1` collapses owner address search into a single `address` parameter on `owneraddress_sanitized` — a breaking contract change. Need confirmation the frontend and any external consumers were migrated, and that `owneraddress_sanitized` is populated and indexed for all owner records.
+
+### Q-AI-0775 — Is `well_status` now the single canonical status field, and who owns retiring the old status fields still used elsewhere?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Is `well_status` now the single canonical status field, and who owns retiring the old status fields still used elsewhere?
+
+SR 9 and SR 63 unified on `well_status` inside the Map module, but downloads, reports, and other services may still read the legacy field and drift back out of sync.
+
+### Q-AI-0776 — Which defect-sheet items fell into the "data-reality" category, and who owns fixing those at the source?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Which defect-sheet items fell into the "data-reality" category, and who owns fixing those at the source?
+
+The analysis split issues into backend, frontend, and data-reality, but only backend fixes are reported here — the data-reality items appear to have no named owner or target date.
