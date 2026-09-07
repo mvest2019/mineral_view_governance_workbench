@@ -7525,3 +7525,57 @@ The baseline is stated as the foundation for later stages. Need the storage loca
 **1. Short Question** — Is Grasshopper call data being recorded or retained outside the CRM, and is CRM–calling integration an approved CRM 2.0 decision?
 
 Calling sits entirely outside Pursuit CRM 1.0. Clarify what call records/recordings exist in Grasshopper, who can access them, retention, and whether integrating them into CRM 2.0 is decided or still open.
+
+### Q-AI-0837 — Has selling the mineral owner data been cleared by legal and privacy before pricing options go further?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Krishna_Sable
+**1. Short Question** — Has selling the mineral owner data been cleared by legal and privacy before pricing options go further?
+
+The submission sets out options for selling the mineral owner data and lists what must be confirmed before pricing. Monetizing owner records is a different use than displaying them on the platform. Needed: written confirmation on source-data licence terms (county/state records vs. derived data), whether any PII (names, addresses, contact details) may be included or must be stripped, and who has authority to approve a data sale.
+
+### Q-AI-0838 — Was the batch 2 recipient list checked against unsubscribe, opt-out, and prior removal requests before sending?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Was the batch 2 recipient list checked against unsubscribe, opt-out, and prior removal requests before sending?
+
+A removal request was explicitly excluded from the Contact Us filtering, which implies a suppression list exists. Confirm the re-engagement segment of non-claiming owners was screened against it, and that every sent email carried a working unsubscribe and correct sender identification.
+
+### Q-AI-0839 — Have the figures the data dictionary says must not be quoted already been published in marketing, decks, or the site?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Have the figures the data dictionary says must not be quoted already been published in marketing, decks, or the site?
+
+The dictionary records which figures to use for owners, counties, wells, operators and value, and which must not be quoted. If disallowed figures are already live externally, a correction list and owner are needed.
+
+### Q-AI-0840 — Why did Contact Us submissions go unanswered, and what is the new SLA and owner so it does not recur?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Krishna_Sable
+**1. Short Question** — Why did Contact Us submissions go unanswered, and what is the new SLA and owner so it does not recur?
+
+Genuine owner enquiries were identified as never having received a reply, and some were judged too old to answer. Needed: root cause (no routing, no owner, no alert), the agreed response SLA, and a decision on whether the too-old group is permanently written off.
+
+### Q-AI-0841 — Who reviewed and approved the CRM change deployed so Contact Us leads can be scheduled like members?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who reviewed and approved the CRM change deployed so Contact Us leads can be scheduled like members?
+
+A code/config change was built and deployed to a production CRM by marketing. Confirm review, testing, and release sign-off, and whether Contact Us leads now inherit member email automation they never consented to.
+
+### Q-AI-0842 — Who approves the final URL architecture, page cap, and indexing decisions before any pages are built?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Krishna_Sable
+**1. Short Question** — Who approves the final URL architecture, page cap, and indexing decisions before any pages are built?
+
+The counting model, page-cap constraint, county rollout alignment, indexing calls for operator/well/coverage/tools, and measured title-and-description overlap between hub and dataset pages all need one sign-off. The measured overlap is a duplicate-content risk — state whether it must be resolved before the first indexed wave.
