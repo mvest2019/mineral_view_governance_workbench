@@ -7363,3 +7363,57 @@ County was dropped because the page guide does not require it. Household groupin
 **1. Short Question** — Was removing the browse row caps load-tested, given results jumped from 4,861 to 30,888 rows for a single county?
 
 Uncapped browse results could cause timeouts, payload bloat, or server load in production. Confirm testing and whether an approved upper bound or pagination policy exists.
+
+### Q-AI-0819 — Is the new demo-state-menu shipped in the production toolbar where real users could switch their own plan state?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Pooja_Wable
+**1. Short Question** — Is the new demo-state-menu shipped in the production toolbar where real users could switch their own plan state?
+
+The new `demo-state-menu.tsx` exposes the five owner funnel states (not claimed, free · claimed, Premium trial, trial ended, paid) from the live toolbar and persists the choice. Confirm whether it is build-flagged/internal-only, or reachable in production — and if reachable, whether it only changes UI presentation or can grant Premium-tier views without payment.
+
+### Q-AI-0820 — Can a user select Pro mode to unlock features that are supposed to be paid-tier only?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Can a user select Pro mode to unlock features that are supposed to be paid-tier only?
+
+Ultra → Essentials → Detailed → Pro gates facets, Tools, Export Excel, Time-lapse, Share image/print, forecast figures and the analytical cards. Clarify whether mode is purely a user display preference layered on top of subscription entitlement, or whether it is the only thing gating any of these — especially Export Excel, forecast, and the analytical cards.
+
+### Q-AI-0821 — Who approved the final four-mode ladder and the feature-by-feature mode table?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Who approved the final four-mode ladder and the feature-by-feature mode table?
+
+The structure was revised at least twice (four modes, then reordered with Ultra as simplest) and the table was delivered twice. Name the approver and where the approved table is stored, so it becomes the single reference for what each mode shows.
+
+### Q-AI-0822 — Was the lease/operator search bug that cancelled the request live in production, and for how long?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pooja_Wable
+**1. Short Question** — Was the lease/operator search bug that cancelled the request live in production, and for how long?
+
+The empty-filter effect cancelled the in-flight request so the map never framed the searched wells. Confirm whether real users experienced failed lease/operator searches in production, and whether this is logged as a defect with the fix scheduled for release.
+
+### Q-AI-0823 — Were the incorrect cluster tooltip shares shown to real users, and does any report use those figures?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Were the incorrect cluster tooltip shares shown to real users, and does any report use those figures?
+
+Shares previously excluded the 'Other' category and were not computed against the bubble's own total, so they did not add up to the headline. Confirm whether these wrong percentages were visible in production and whether any screenshot, demo, or report relied on them.
+
+### Q-AI-0824 — Which environment and dataset was used for the 'verified in a running map' testing?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pooja_Wable
+**1. Short Question** — Which environment and dataset was used for the 'verified in a running map' testing?
+
+Verification covered facets, tools, exports, Time-lapse and column counts of 4 · 6 · 7 · 9. State the build/branch and whether it ran against production data containing real owner or lease records, or against staging/mock data.
