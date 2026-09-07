@@ -7471,3 +7471,57 @@ Krishna's dossier generator is on hold pending your ownership-data fix (Shannon'
 **1. Short Question** — Did the team task verification find any daily task report that did not match the actual work performed, and how is that handled?
 
 The report states the verification helped ensure "task updates accurately represented the actual work performed," which implies some did not. Governance needs to know whether any mismatches were found, whether the affected reports were corrected, and what the escalation path is — since these same daily reports feed this governance record.
+
+### Q-AI-0831 — Do the subscription and payment-data inconsistencies found in the CRM affect live billing, and are they logged as defects?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Do the subscription and payment-data inconsistencies found in the CRM affect live billing, and are they logged as defects?
+
+The analysis reports subscription and payment-data inconsistencies but not their blast radius. Need confirmation whether any real customer was over/under-charged or shown a wrong plan, and whether each inconsistency is tracked as an engineering defect with an owner.
+
+### Q-AI-0832 — Who approved telling external users that "Mineral View 2.0 is launching soon," and is there a committed launch date?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approved telling external users that "Mineral View 2.0 is launching soon," and is there a committed launch date?
+
+This is a public commitment made to real subscribers. Need the approver and the date being implied, since multiple redesign tracks are still in prototype with open P0 items.
+
+### Q-AI-0833 — Were the follow-up emails sent through the CRM with unsubscribe and opt-out honored, and are the sends logged?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Were the follow-up emails sent through the CRM with unsubscribe and opt-out honored, and are the sends logged?
+
+Personalised outreach to claimed-lease subscribers must respect existing marketing consent/opt-out state and be recorded against each customer record for audit and future frequency control.
+
+### Q-AI-0834 — Who approves deleting or flagging the internal/test accounts and duplicate customer records found in the CRM?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Who approves deleting or flagging the internal/test accounts and duplicate customer records found in the CRM?
+
+The analysis identified test accounts, duplicates, and incomplete customer data. Clarify whether cleanup is in scope, who authorises writes to production customer records, and whether any of these accounts have polluted reported metrics.
+
+### Q-AI-0835 — Where is the "Pursuit CRM 1.0 — Current-State Baseline" document stored, and who signs off before CRM 2.0 scoping begins?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Where is the "Pursuit CRM 1.0 — Current-State Baseline" document stored, and who signs off before CRM 2.0 scoping begins?
+
+The baseline is stated as the foundation for later stages. Need the storage location, access controls (it describes customer data gaps and PII), and the named accepter.
+
+### Q-AI-0836 — Is Grasshopper call data being recorded or retained outside the CRM, and is CRM–calling integration an approved CRM 2.0 decision?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Gautammi_Kamath
+**1. Short Question** — Is Grasshopper call data being recorded or retained outside the CRM, and is CRM–calling integration an approved CRM 2.0 decision?
+
+Calling sits entirely outside Pursuit CRM 1.0. Clarify what call records/recordings exist in Grasshopper, who can access them, retention, and whether integrating them into CRM 2.0 is decided or still open.
