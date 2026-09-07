@@ -7417,3 +7417,57 @@ Shares previously excluded the 'Other' category and were not computed against th
 **1. Short Question** — Which environment and dataset was used for the 'verified in a running map' testing?
 
 Verification covered facets, tools, exports, Time-lapse and column counts of 4 · 6 · 7 · 9. State the build/branch and whether it ran against production data containing real owner or lease records, or against staging/mock data.
+
+### Q-AI-0825 — Which specific gaps or inconsistencies did the Dashboard, Alerts, Activities and Weekly Report analysis find, and where are they recorded?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Which specific gaps or inconsistencies did the Dashboard, Alerts, Activities and Weekly Report analysis find, and where are they recorded?
+
+The report says the pre-development verification identified "potential gaps or inconsistencies" but does not list any. Without a written record of the findings, the development team cannot act on them and the verification cannot be audited or re-checked later.
+
+### Q-AI-0826 — Were any discrepancies found while comparing state Production data to its source, and were they corrected or accepted as-is?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Were any discrepancies found while comparing state Production data to its source, and were they corrected or accepted as-is?
+
+The report describes "identifying potential discrepancies" and then confirms the dataset as accurate and cleared for downstream analytics and user-facing features. If discrepancies were found and not fixed, the sign-off needs to state what was accepted and why.
+
+### Q-AI-0827 — Did the data update and database maintenance write directly to production, and was a backup or rollback plan in place first?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Did the data update and database maintenance write directly to production, and was a backup or rollback plan in place first?
+
+The report describes processing changes, validating updated records, and quality checks that looked for missing values and unexpected changes — but does not name the environment, the datasets touched, who approved the writes, or how the update would be reversed if it introduced bad data.
+
+### Q-AI-0828 — Is the ownership-data fix that Krishna's full dossier batch is waiting on now complete?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Is the ownership-data fix that Krishna's full dossier batch is waiting on now complete?
+
+Krishna's dossier generator is on hold pending your ownership-data fix (Shannon's leases tracing to owner "Charles D. Simmons" across 3 addresses). Vaishnavi also reported the valuation-fields-stored-as-text and MVEstimate `NaN` issues to you. Today's report covers data updates and verification but does not say whether these open items were addressed.
+
+### Q-AI-0829 — Which state, tables, and record sample were used for the production source verification, and where is the evidence stored?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Which state, tables, and record sample were used for the production source verification, and where is the evidence stored?
+
+"State-level Production data compared against the corresponding source" gives no scope: which state, which tables/collections, how many records were compared, and against which source system or filing. This matters because the outcome is being used to clear the dataset for reporting and platform features.
+
+### Q-AI-0830 — Did the team task verification find any daily task report that did not match the actual work performed, and how is that handled?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Nikhil_Salunke
+**1. Short Question** — Did the team task verification find any daily task report that did not match the actual work performed, and how is that handled?
+
+The report states the verification helped ensure "task updates accurately represented the actual work performed," which implies some did not. Governance needs to know whether any mismatches were found, whether the affected reports were corrected, and what the escalation path is — since these same daily reports feed this governance record.
