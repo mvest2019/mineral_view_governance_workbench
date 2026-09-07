@@ -7147,3 +7147,57 @@ Moving tracking onto a mineralview.com subdomain ties campaign links to the main
 **1. Short Question** — Who approves the re-engagement emails before scheduling, and do they carry unsubscribe and no-advice language?
 
 These are hand-written, personalized emails to real quiet owners, including edge cases on royalty questions and heirs. Confirm the recipient count, who signs off on the drafts and the send window, and that each email includes a working unsubscribe link and the estimate / no-investment-advice disclaimer if any value figures appear.
+
+### Q-AI-0795 — Which Map build is this defect testing against — the current live map or the new Well Explorer 4th view?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Which Map build is this defect testing against — the current live map or the new Well Explorer 4th view?
+
+A Map redesign (Well Explorer 4th view: 54px rail, 290px panel, Saved Filters, Well Paths) is in active development in parallel. Defects logged against the wrong build could be already-fixed, already-removed, or not-yet-shipped UI. Please state the exact build/branch/URL and date tested.
+
+### Q-AI-0796 — Do the test claims created during /claim testing become real claim records, and how are they removed?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Do the test claims created during /claim testing become real claim records, and how are they removed?
+
+Inbound lease claim requests are reconciled against an internal tracking sheet and treated as the platform's core activation event. Test claims made against real owner leases would inflate activation and paid-user reporting unless flagged or purged.
+
+### Q-AI-0797 — Where is the approved specification for the account-based claim restrictions being validated?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Where is the approved specification for the account-based claim restrictions being validated?
+
+"Account-based restrictions" needs a documented pass/fail source: how many records an account may claim, which tier (Free/Pro/Premium) allows what, and what the user sees when blocked. Without it, restriction defects can't be confirmed as defects.
+
+### Q-AI-0798 — For same-name records, who verifies rightful ownership before a claim is accepted?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — For same-name records, who verifies rightful ownership before a claim is accepted?
+
+Same-name handling is an ownership-attribution risk, not just a UI case — an ownership-mismatch issue has already been found where leases traced to a different owner across multiple addresses. Is claim approval automatic or manually reviewed, and by whom?
+
+### Q-AI-0799 — Does the address-correction flow write back to production owner records, and who approves that change?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Does the address-correction flow write back to production owner records, and who approves that change?
+
+If a user-submitted address correction updates the source owner data (county appraisal-derived records), it needs an approval and audit trail. Confirm whether corrections are stored as a request or applied directly.
+
+### Q-AI-0800 — Can Find Your Record search be used before sign-in, and does it expose owner names or addresses to anonymous visitors?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Utkarsha_Chougule
+**1. Short Question** — Can Find Your Record search be used before sign-in, and does it expose owner names or addresses to anonymous visitors?
+
+Search and owner results on /claim may return PII (owner name, address) to unauthenticated users. Confirm what an anonymous visitor can see and whether that exposure is approved.
