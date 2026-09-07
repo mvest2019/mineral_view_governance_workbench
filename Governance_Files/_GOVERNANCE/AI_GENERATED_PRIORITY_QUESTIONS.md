@@ -7255,3 +7255,57 @@ The security hardening on record covers MongoDB and PostgreSQL only. This submis
 **1. Short Question** — Are the source websites' terms of use and rate limits reviewed before scraper logic is changed in response to site structure changes?
 
 The task includes reviewing website structure changes and testing scraper modifications. Confirm there is a checked position on permitted access and request volume for each source, and who owns that call.
+
+### Q-AI-0807 — Is the UI-only Settings page reachable by real signed-in owners, and who approved shipping controls that do nothing when clicked?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Is the UI-only Settings page reachable by real signed-in owners, and who approved shipping controls that do nothing when clicked?
+
+The submission states all interactive/state logic, validation, and the Saved toast were removed, leaving 27 setting rows that cannot persist anything. If `/mineralownersite/settings` is live in the portal, owners may believe they have changed a preference when nothing is saved.
+
+### Q-AI-0808 — Do any of the 27 setting rows control privacy, marketing-email consent, data sharing, or account deletion that must legally function before launch?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Do any of the 27 setting rows control privacy, marketing-email consent, data sharing, or account deletion that must legally function before launch?
+
+Consent and deletion controls that appear functional but are UI-only are a compliance risk, not just a UX gap. The card/row inventory should be reviewed to flag any row that cannot ship non-functional.
+
+### Q-AI-0809 — What is the plan and target date to wire Settings to real APIs, and who owns that backend work?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Pragati_Dhumal
+**1. Short Question** — What is the plan and target date to wire Settings to real APIs, and who owns that backend work?
+
+"Zero client components" is a deliberate interim state. Governance needs the follow-on ticket, owner, and gate before Settings is considered done.
+
+### Q-AI-0810 — Do the self-contained Professional and Detailed HTML exports contain any real owner names, leases, or MVEstimate values, and where are they shared?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Do the self-contained Professional and Detailed HTML exports contain any real owner names, leases, or MVEstimate values, and where are they shared?
+
+Fully inlined standalone files are easy to email or upload and impossible to revoke. Confirm the content is mock-only and state the storage/sharing location.
+
+### Q-AI-0811 — Can the client-side persona/density switcher expose higher-tier views to a user who has not paid for that tier?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Can the client-side persona/density switcher expose higher-tier views to a user who has not paid for that tier?
+
+The task added a lightweight persona-switching script, portal-gating keys, and a `compact` option to `ViewTierSwitch`. If tier presentation is switchable client-side in the real portal, gating may be bypassable.
+
+### Q-AI-0812 — Were the missing `alerts` and `leases` portal routes broken for real users in production, and for how long?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Pragati_Dhumal
+**1. Short Question** — Were the missing `alerts` and `leases` portal routes broken for real users in production, and for how long?
+
+These were added as part of "portal defects fixed," which suggests related links previously 404'd. Confirm whether this affected live users and whether it should be logged as a production defect.
