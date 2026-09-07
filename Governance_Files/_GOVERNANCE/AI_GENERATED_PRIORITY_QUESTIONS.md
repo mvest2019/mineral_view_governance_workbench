@@ -7201,3 +7201,57 @@ If a user-submitted address correction updates the source owner data (county app
 **1. Short Question** — Can Find Your Record search be used before sign-in, and does it expose owner names or addresses to anonymous visitors?
 
 Search and owner results on /claim may return PII (owner name, address) to unauthenticated users. Confirm what an anonymous visitor can see and whether that exposure is approved.
+
+### Q-AI-0801 — Did any of the missing, duplicate, or mismatched W-2/W-1 records reach user-facing reports or MVEstimate before validation caught them?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Did any of the missing, duplicate, or mismatched W-2/W-1 records reach user-facing reports or MVEstimate before validation caught them?
+
+The submission describes finding missing and mismatched records and correcting them after the fact. Governance needs to know whether bad data was live to members in between, and whether any correction or notice is owed.
+
+### Q-AI-0802 — Which database is the system of record when PostgreSQL, SQL Server, and MongoDB disagree during the cross-database consistency checks?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Which database is the system of record when PostgreSQL, SQL Server, and MongoDB disagree during the cross-database consistency checks?
+
+Cross-system comparison only produces a fix if there is an agreed authoritative source. Without it, "synchronization" corrections may propagate the wrong value.
+
+### Q-AI-0803 — Are the backfill/update scripts version-controlled and reviewed, and is a backup taken before they write to production records?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the backfill/update scripts version-controlled and reviewed, and is a backup taken before they write to production records?
+
+Prior reporting confirms these scripts reprocess and populate null/empty values directly in production tables. Need to know where the script code lives, who reviews it, and what the rollback path is if a backfill is wrong.
+
+### Q-AI-0804 — Is scraper failure or delay detected by automated alerting, or does it depend on someone reading the logs each day?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is scraper failure or delay detected by automated alerting, or does it depend on someone reading the logs each day?
+
+The daily cycle is currently described as manual log review. If a day is missed or the reviewer is unavailable, a failed scrape could go unnoticed and leave a silent data gap.
+
+### Q-AI-0805 — Is SQL Server covered by the same firewall allowlist reduction and credential rotation already applied to MongoDB and PostgreSQL?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Riya_Wankhade
+**1. Short Question** — Is SQL Server covered by the same firewall allowlist reduction and credential rotation already applied to MongoDB and PostgreSQL?
+
+The security hardening on record covers MongoDB and PostgreSQL only. This submission is the first mention of a SQL Server environment holding the same scraped data.
+
+### Q-AI-0806 — Are the source websites' terms of use and rate limits reviewed before scraper logic is changed in response to site structure changes?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Riya_Wankhade
+**1. Short Question** — Are the source websites' terms of use and rate limits reviewed before scraper logic is changed in response to site structure changes?
+
+The task includes reviewing website structure changes and testing scraper modifications. Confirm there is a checked position on permitted access and request volume for each source, and who owns that call.
