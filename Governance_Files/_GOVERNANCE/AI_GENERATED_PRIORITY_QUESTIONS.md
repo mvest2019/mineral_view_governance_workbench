@@ -7309,3 +7309,57 @@ The task added a lightweight persona-switching script, portal-gating keys, and a
 **1. Short Question** — Were the missing `alerts` and `leases` portal routes broken for real users in production, and for how long?
 
 These were added as part of "portal defects fixed," which suggests related links previously 404'd. Confirm whether this affected live users and whether it should be logged as a production defect.
+
+### Q-AI-0813 — Was the $19 billion lease double-count ever shown to users or used in any reporting before the fix?
+
+**Status:** OPEN
+**6. Priority** — CRITICAL
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was the $19 billion lease double-count ever shown to users or used in any reporting before the fix?
+
+The submission reports a $19B double-count in Claim Lease estimates where leases spanning multiple owner rows were valued repeatedly. Governance needs to know whether this figure ever reached members, dossiers, marketing, or internal reporting, and whether any correction is owed.
+
+### Q-AI-0814 — Where will the Claim Lease bundle built in a local Downloads folder be committed, and who reviews it?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Where will the Claim Lease bundle built in a local Downloads folder be committed, and who reviews it?
+
+The 24-file bundle (`server.py`, `mv/`, `tools/`, `web/`) currently lives at `C:\Users\User\Downloads\claim`, outside any repository. Needs a canonical repo/branch, code review owner, and confirmation it is backed up.
+
+### Q-AI-0815 — If the Claim Lease backend is read-only, how is an actual lease claim persisted and who approves that write path?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — If the Claim Lease backend is read-only, how is an actual lease claim persisted and who approves that write path?
+
+A read-only Mongo guard is described alongside a working `claim` endpoint and 5 completed claim steps. Clarify whether claims are written anywhere, and who owns/approves the eventual production write path.
+
+### Q-AI-0816 — Were the plugged-wells-shown-as-Unknown and Oil/Gas tile miscount bugs live in production for real users?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Were the plugged-wells-shown-as-Unknown and Oil/Gas tile miscount bugs live in production for real users?
+
+The status bug affected 12 of 22 sampled wells and the tile logic caused a 42,754-record difference. Confirm whether these were production-facing, for how long, and whether any user-facing correction is needed.
+
+### Q-AI-0817 — Who approved removing the county requirement from Claim Lease search, and does name/house-number/ZIP matching alone risk wrong-owner matches?
+
+**Status:** OPEN
+**6. Priority** — HIGH
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Who approved removing the county requirement from Claim Lease search, and does name/house-number/ZIP matching alone risk wrong-owner matches?
+
+County was dropped because the page guide does not require it. Household grouping now relies on name, house number, and ZIP — confirm this decision was approved and does not widen same-name collisions.
+
+### Q-AI-0818 — Was removing the browse row caps load-tested, given results jumped from 4,861 to 30,888 rows for a single county?
+
+**Status:** OPEN
+**6. Priority** — MEDIUM
+**Employee:** Vaishnavi_Dhawale
+**1. Short Question** — Was removing the browse row caps load-tested, given results jumped from 4,861 to 30,888 rows for a single county?
+
+Uncapped browse results could cause timeouts, payload bloat, or server load in production. Confirm testing and whether an approved upper bound or pagination policy exists.
